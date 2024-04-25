@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Exceptions\" />
+    <Folder Include="Common\Mappings\" />
+    <Folder Include="DTOs\Booking\" />
+    <Folder Include="DTOs\Email\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Features\Booking\Commands\CreatedBooking\" />
+    <Folder Include="Features\Booking\Commands\DeleteBooking\" />
+    <Folder Include="Features\Booking\Commands\UpdateBooking\" />
+    <Folder Include="Features\Booking\Queries\GetAllBookings\" />
+    <Folder Include="Features\Booking\Queries\GetBookingById\" />
+    <Folder Include="Features\Booking\Queries\GetBookingByMember\" />
+    <Folder Include="Interfaces\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoligBlik.Domain\BoligBlik.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
