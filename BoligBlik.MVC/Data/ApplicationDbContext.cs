@@ -10,4 +10,7 @@ namespace BoligBlik.MVC.Data
         {
         }
     }
+
+    // Add-Migration InitialMigration -Context BookMyHomeContext -Project BookMyHome.DatabaseMigration
+    // Update-Database -Context BookMyHomeContext -Project BookMyHome.DatabaseMigration
 }
