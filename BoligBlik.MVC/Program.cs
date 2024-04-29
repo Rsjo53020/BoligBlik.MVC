@@ -1,24 +1,57 @@
 using BoligBlik.MVC.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 
 namespace BoligBlik.MVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            // Add services to the container -- move to a ServiceExtension.cs
+            var connectionString = builder.Configuration
+                .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            // move to a ServiceExtension.cs
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(connectionString));
+
+            // move to a ServiceExtension.cs
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //flyt til en ServiceExtension.cs (identities) 
+            builder.Services.AddDefaultIdentity<IdentityUser>(
+                    options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //// move to a ServiceExtension.cs
+            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            //    {
+            //        options.Password.RequiredUniqueChars = 0;
+            //        options.Password.RequireUppercase = false;
+            //        options.Password.RequiredLength = 8;
+            //        options.Password.RequireNonAlphanumeric = false;
+            //        options.Password.RequireDigit = false;
+            //        options.Password.RequireLowercase = false;
+            //    })
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
             builder.Services.AddControllersWithViews();
+
+            // move to a ServiceExtension.cs
+            builder.Services.AddAuthorization(options => options
+                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));
+            builder.Services.AddAuthorization(options => options
+                .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Member")));
+
+            // Add more claims as necessary
 
             var app = builder.Build();
 
@@ -45,6 +78,21 @@ namespace BoligBlik.MVC
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var roles = new[] { "Admin", "Manager", "Member" };
+
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+
+                }
+
+            }
 
             app.Run();
         }
