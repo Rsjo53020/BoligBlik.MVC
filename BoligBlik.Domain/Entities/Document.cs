@@ -16,5 +16,7 @@ namespace BoligBlik.Domain.Entities
         public string Description { get; set; }
         [Required]
         public string Category { get; set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

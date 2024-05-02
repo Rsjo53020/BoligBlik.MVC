@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BoligBlik.Domain.Value;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Domain.Entities
 {
@@ -23,5 +23,8 @@ namespace BoligBlik.Domain.Entities
         [Required]
         public Item Item { get; set; }
         public Payment Payment { get; set; }
+        public Address Address { get; set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

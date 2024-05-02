@@ -19,5 +19,7 @@ namespace BoligBlik.Domain.Entities
         public string Subject { get; set; }
         [Required]
         public string Body { get; set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace BoligBlik.Domain.Entities
         public string Rules { get; set; }
         public string Repairs { get; set; }
         public Byte[] Image { get; set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
