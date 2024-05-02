@@ -35,5 +35,10 @@ namespace BoligBlik.MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult NewBooking()
+        {
+            return View();
+        }
     }
 }

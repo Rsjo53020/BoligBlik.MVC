@@ -56,6 +56,7 @@
             <div class="container">
 
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
+                    @* <a href="/Home/Index" class="navbar-brand"> *@
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <h1 class="text-white fw-bold d-block">U<span class="text-secondary">IN</span>K</h1>
                     </a>
@@ -67,22 +68,22 @@
 
                             <!-- Board Start -->
                             {
-                                <div class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
-                                    <div class="dropdown-menu rounded">
-                                        <a asp-area="" asp-controller="Home" asp-action="Management" class="dropdown-item">Bestyrelsen</a>
-                                        <a href="Claims.cshtml" class="dropdown-item">Rettigheder</a>
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
+                                <div class="dropdown-menu rounded">
+                                    <a href="/Home/Management" class="dropdown-item">Bestyrelsen ></a>
+                                    <a href="/Home/Claims" class="dropdown-item">Rettigheder</a>
 
-                                    </div>
                                 </div>
+                            </div>
                             }
                             <!-- Board End -->
                             <!-- Booking Start -->
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="NewBooking.cshtml" class="dropdown-item">Ny Booking</a>
-                                    <a href="YoursBookinger.cshtml" class="dropdown-item">Dine Bookinger</a>
+                                    <a href="/Home/NewBooking" class="dropdown-item">Ny Booking</a>
+                                    <a href="/Home/YoursBookings" class="dropdown-item">Dine Bookinger</a>
                                 </div>
                             </div>
                             <!-- Booking End -->
@@ -90,8 +91,8 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="Bylaws.cshtml" class="dropdown-item">Vedtægter</a>
-                                    <a href="BoardMinutes.cshtml" class="dropdown-item">Bestyrelses Refetater</a>
+                                    <a href="/Bylaws" class="dropdown-item">Vedtægter</a>
+                                    <a href="/Home/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
                                 </div>
                             </div>
                             <!-- Documents End -->

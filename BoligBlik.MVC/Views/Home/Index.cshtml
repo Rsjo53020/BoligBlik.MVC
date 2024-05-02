@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@if (AuthorizationService.AuthorizeAsync(User, "MemberPolicy").Result.Succeeded)
+@if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
 {
 
     <!-- Carousel Start -->
