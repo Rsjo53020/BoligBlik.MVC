@@ -3,42 +3,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
 {
-    public class BookingController : Controller
+    public class DocumentsController : Controller
     {
-        // GET: BookingController
+        // GET: DocumentsController
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: BookingController/Details/5
-        public IActionResult Details(int id)
+        // GET: DocumentsController/Details/5
+        public IActionResult Bylaws()
         {
             return View();
         }
 
-        // GET: BookingController/NewBooking (Create)
-        public IActionResult YoursBookings()
-        {
-            //try
-            //{
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-            return View();
-        }
-        public IActionResult NewBooking()
+        // GET: DocumentsController/BoardMinutes
+        public IActionResult BoardMinutes()
         {
             return View();
         }
 
-        // POST: BookingController/Create
+        // POST: DocumentsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult NewBooking(IFormCollection collection)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
@@ -50,16 +38,16 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        // GET: BookingController/Edit/5
-        public IActionResult Edit(int id)
+        // GET: DocumentsController/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: BookingController/Edit/5
+        // POST: DocumentsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -71,13 +59,13 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        // GET: BookingController/Delete/5
+        // GET: DocumentsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: BookingController/Delete/5
+        // POST: DocumentsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -47,7 +47,7 @@ namespace BoligBlik.MVC
 
             // move to a ServiceExtension.cs
             builder.Services.AddAuthorization(options => options
-                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin", "1")));
+                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));
             builder.Services.AddAuthorization(options => options
                 .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Member")));
 
@@ -79,20 +79,20 @@ namespace BoligBlik.MVC
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                var roles = new[] { "Admin", "Manager", "Member" };
+            //    var roles = new[] { "Admin", "Manager", "Member" };
 
-                foreach (var role in roles)
-                {
-                    if (!await roleManager.RoleExistsAsync(role))
-                        await roleManager.CreateAsync(new IdentityRole(role));
+            //    foreach (var role in roles)
+            //    {
+            //        if (!await roleManager.RoleExistsAsync(role))
+            //            await roleManager.CreateAsync(new IdentityRole(role));
 
-                }
+            //    }
 
-            }
+            //}
 
             app.Run();
         }

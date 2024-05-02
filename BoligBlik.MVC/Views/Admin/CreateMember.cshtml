@@ -1,0 +1,64 @@
+﻿@model BoligBlik.MVC.Models.CreateMemberViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div align="center">
+    <h1>Nye Bestyrelsesmedlem</h1>
+</div>
+
+
+<div b-4vb01akm2h="" class="container" align="center">
+    <main b-4vb01akm2h="" role="main" class="pb-3">
+        <h5>Rettigheder</h5>
+        <div class="row">
+            <div class="col-md-4">
+                <section>
+                    <form id="account" method="post" novalidate="novalidate">
+                      <hr>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" placeholder="Fornavn Efternavn">
+                            <label class="form-label" for="Input_name"> Fuldenavn fra DB </label>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Input.Neme" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" placeholder="role">
+                            <label class="form-label" for="Input_Role">Rolle</label>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Input.Role" data-valmsg-replace="true"></span>
+                        </div>
+                        <div>
+                            <button id="login-submit" type="submit" class="w-50 btn btn-lg btn-primary">Tilføj rettigheder</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                    
+
+                    <h5>List over alle medlemmer</h5>
+                    <div>
+                        <p>
+                            Sorte i med medlemmer ud fra chekboksene
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="checkbox mb-3">
+                        <label class="form-label" for="Input_NewMember">
+                            <input class="form-check-input" type="checkbox" data-val="true" data-val-required="Nye medlemmer uden rettigheder.">
+                            Nye medlemmer uden rettigheder?
+                        </label>
+                    </div>
+                    <div class="checkbox mb-3">
+                        <label class="form-label" for="Input_NewMember">
+                            <input class="form-check-input" type="checkbox" data-val="true" data-val-required="Nye medlemmer uden rettigheder.">
+                            ret rettigheder?
+                        </label>
+                    </div>
+                    <hr>
+                </section>
+            </div>
+        </div>
+
+
+    </main>
+</div>

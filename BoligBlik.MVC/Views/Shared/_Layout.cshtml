@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -56,9 +57,9 @@
             <div class="container">
 
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
-                    @* <a href="/Home/Index" class="navbar-brand"> *@
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <h1 class="text-white fw-bold d-block">U<span class="text-secondary">IN</span>K</h1>
+                   @*  <a href="Home/Index" class="navbar-brand"> *@
+                   <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <h1 class="text-white fw-bold d-block">U<span class="text-secondary">NI</span>K</h1>
                     </a>
                     <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -71,8 +72,8 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Home/Management" class="dropdown-item">Bestyrelsen ></a>
-                                    <a href="/Home/Claims" class="dropdown-item">Rettigheder</a>
+                                    <a href="/Admin/Management" class="dropdown-item">Bestyrelsen</a>
+                                    <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
 
                                 </div>
                             </div>
@@ -82,8 +83,8 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Home/NewBooking" class="dropdown-item">Ny Booking</a>
-                                    <a href="/Home/YoursBookings" class="dropdown-item">Dine Bookinger</a>
+                                    <a href="/Booking/NewBooking" class="dropdown-item">Ny Booking</a>
+                                    <a href="/Booking/YoursBookings" class="dropdown-item">Dine Bookinger</a>
                                 </div>
                             </div>
                             <!-- Booking End -->
@@ -91,8 +92,8 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Bylaws" class="dropdown-item">Vedtægter</a>
-                                    <a href="/Home/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
+                                    <a href="/Documents/Bylaws" class="dropdown-item">Vedtægter</a>
+                                    <a href="/Documents/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
                                 </div>
                             </div>
                             <!-- Documents End -->
@@ -138,7 +139,7 @@
         <div class="container pt-5 pb-4">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <a href="index.cshtml">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <h1 class="text-white fw-bold d-block">U<span class="text-secondary">NI</span>K</h1>
                     </a>
                     <p class="mt-4 text-light">SoMe.</p>
