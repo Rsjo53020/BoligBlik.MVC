@@ -16,6 +16,11 @@
     <Folder Include="DTOs\Booking\" />
     <Folder Include="DTOs\Email\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Features\BoardMember\Commands\DeleteBoardMember\" />
+    <Folder Include="Features\BoardMember\Commands\UpdateBoardMember\" />
+    <Folder Include="Features\BoardMember\Queries\GetAllBoardMember\" />
+    <Folder Include="Features\BoardMember\Queries\GetBoardMemberById\" />
+    <Folder Include="Features\BoardMember\Queries\GetBoardMemberByName\" />
     <Folder Include="Features\Booking\Commands\CreatedBooking\" />
     <Folder Include="Features\Booking\Commands\DeleteBooking\" />
     <Folder Include="Features\Booking\Commands\UpdateBooking\" />
