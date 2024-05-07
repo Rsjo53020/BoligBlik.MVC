@@ -4,19 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class Document
+    public class Document : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         [Required]
-        public string Category { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public String Category { get; set; }
+
+        public string FilePath { get; set; }
+
+        public Document() : base(Guid.NewGuid())
+        {
+        }
     }
 }

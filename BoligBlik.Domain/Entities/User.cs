@@ -1,12 +1,11 @@
 ﻿using BoligBlik.Domain.Value;
 using System.ComponentModel.DataAnnotations;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class User
+    public class User : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -19,7 +18,10 @@ namespace BoligBlik.Domain.Entities
         public string FormerRole { get; set; }
         public string Role { get; set; }
         public Address Address { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+
+        public User() : base(Guid.NewGuid())
+        {
+            
+        }
     }
 }

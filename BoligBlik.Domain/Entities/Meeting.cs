@@ -4,20 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class Meeting
+    public class Meeting : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public DateTime Start { get; set; }
         [Required]
         public DateTime End { get; set; }
         [Required]
         public string Description { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+
+        public Meeting() : base(Guid.NewGuid())
+        {
+        }
     }
 }
