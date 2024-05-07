@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Risk-Analysis.xlsx
+/Gantt-diagram_over_user-stories.xlsx
+/sprint fordeling.xlsx
+/User_story_point.docx
+/Spørgsmål til SUM.pdf
