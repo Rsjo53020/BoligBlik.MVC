@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoligBlik.Application\BoligBlik.Application.csproj" />
+    <ProjectReference Include="..\BoligBlik.Infrastructure\BoligBlik.Infrastructure.csproj" />
+    <ProjectReference Include="..\BoligBlik.Persistence\BoligBlik.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,9 @@
 
+using BoligBlik.Persistence.Extensions;
+using BoligBlik.Infrastructure.Extensions;
+using BoligBlik.Infrastructure.Extensions;
+
+
 namespace BoligBlik.WebAPI
 {
     public class Program
@@ -8,9 +13,16 @@ namespace BoligBlik.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddPersistenceLayer(builder.Configuration);
+            builder.Services.AddInfrastructureLayer();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+
+
+
+
+            // Learn more about configuing Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

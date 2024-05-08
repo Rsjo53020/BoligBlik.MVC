@@ -24,7 +24,7 @@ namespace BoligBlik.Domain.Entities
 
         }
 
-        internal Message(User sender, User reciever, string subject, string body) : base(id)
+        internal Message(Guid id, User sender, User reciever, string subject, string body) : base(id)
         {
             this.Sender = sender;
             this.Reciever = reciever;

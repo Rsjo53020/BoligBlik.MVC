@@ -19,16 +19,15 @@
 		         </PackageReference>		
 	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contexts\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\BoligBlik.Application\BoligBlik.Application.csproj" />
     <ProjectReference Include="..\BoligBlik.Domain\BoligBlik.Domain.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

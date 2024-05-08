@@ -8,6 +8,7 @@ namespace BoligBlik.MVC.Controllers
         // GET: BookingController
         public IActionResult Index()
         {
+
             return View();
         }
 
