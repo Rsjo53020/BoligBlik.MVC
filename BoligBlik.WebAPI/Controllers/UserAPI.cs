@@ -47,7 +47,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpGet("{email}")]
-        public UserGetDTO GetUser(string email)
+        public UserGetDTO GetUser([FromQuery]string email)
         {
             var result = _userGet.Read(email);
             return result;
