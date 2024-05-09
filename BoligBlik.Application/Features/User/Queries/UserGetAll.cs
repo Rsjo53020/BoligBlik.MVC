@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.DTOs.User;
+﻿using BoligBlik.Application.Dto.User;
 using BoligBlik.Application.Features.User.Queries.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.User.Queries
 {
     public class UserGetAll : IUserGetAll
     {
-        public IEnumerable<UserGetDTO> ReadAll()
+        public IEnumerable<UserGetDto> ReadAll()
         {
             throw new NotImplementedException();
         }

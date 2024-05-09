@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.DTOs.User;
+﻿using BoligBlik.Application.Dto.User;
 using BoligBlik.Application.Features.User.Commands.Interfaces;
 using BoligBlik.Application.Features.User.Queries.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,7 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
         [HttpPost()]
-        public ActionResult PostUser(UserRequestDTO request)
+        public ActionResult PostUser(UserRequestDto request)
         {
             try
             {
@@ -47,21 +47,21 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpGet("{email}")]
-        public UserGetDTO GetUser([FromQuery]string email)
+        public UserGetDto GetUser([FromQuery]string email)
         {
             var result = _userGet.Read(email);
             return result;
         }
 
         [HttpGet()]
-        public IEnumerable<UserGetDTO> GetAllUsers() 
+        public IEnumerable<UserGetDto> GetAllUsers() 
         {
             var result = _userGetAll.ReadAll();
             return result;
         }
 
         [HttpPut()]
-        public ActionResult PutUser([FromBody]UserRequestDTO request)
+        public ActionResult PutUser([FromBody]UserRequestDto request)
         {
             try
             {

@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.DTOs.User;
+﻿using BoligBlik.Application.Dto.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace BoligBlik.Application.Features.User.Commands.Interfaces
 {
     public interface IUserUpdate
     {
-        void Update(UserRequestDTO request);
+        void Update(UserRequestDto request);
     }
 }

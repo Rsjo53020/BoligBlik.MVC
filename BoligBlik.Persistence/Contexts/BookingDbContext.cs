@@ -8,27 +8,27 @@ namespace BoligBlik.Persistence.Contexts
 {
     public class BookingDbContext : DbContext
     {
-        public BookingDbContext(){}
-        public BookingDbContext(DbContextOptions<BookingDbContext> options)
-            : base(options)
-        {
 
-        }
-        public DbSet<BookingDates> BookingDates { get; set; }
-
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<PostalCode> PostalCodes { get; set; }
-
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Item> Items { get; set; }
-
-        public DbSet<Payment> Payments { get; set; }
-
+        public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
+
+        public BookingDbContext() { }
+        //public DbSet<BookingDates> BookingDates { get; set; }
+
+        //public DbSet<Address> Addresses { get; set; }
+        //public DbSet<PostalCode> PostalCodes { get; set; }
+
+        public DbSet<Booking> Bookings { get; set; }
+        //public DbSet<Item> Items { get; set; }
+
+        //public DbSet<Payment> Payments { get; set; }
+
+
 
 
     }

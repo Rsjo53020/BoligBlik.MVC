@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.DTOs.User
+namespace BoligBlik.Application.Dto.Booking
 {
-    public class UserGetDTO
+    public class BookingDto
     {
+        public int Id { get; set; }
     }
 }

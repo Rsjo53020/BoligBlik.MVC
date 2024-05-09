@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Infrastructure.Services;
 
 namespace BoligBlik.Infrastructure.Extensions
 {
@@ -13,8 +12,7 @@ namespace BoligBlik.Infrastructure.Extensions
 
         private static void AddServices(this IServiceCollection services)
         {
-            services
-                .AddScoped<IBookingDomainService, BookingDomainService>();
+            
         }
     }
 }

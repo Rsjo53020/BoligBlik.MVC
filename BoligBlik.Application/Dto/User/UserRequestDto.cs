@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.DTOs.User
+namespace BoligBlik.Application.Dto.User
 {
-    public class UserRequestDTO
+    public class UserRequestDto
     {
     }
 }
