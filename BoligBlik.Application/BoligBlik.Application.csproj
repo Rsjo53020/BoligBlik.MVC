@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Dto\Email\**" />
+    <EmbeddedResource Remove="Dto\Email\**" />
+    <None Remove="Dto\Email\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
 	</ItemGroup>
@@ -13,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Common\Exceptions\" />
     <Folder Include="Common\Mappings\" />
-    <Folder Include="Dto\Email\" />
     <Folder Include="Features\BoardMember\Commands\DeleteBoardMember\" />
     <Folder Include="Features\BoardMember\Commands\UpdateBoardMember\" />
     <Folder Include="Features\BoardMember\Queries\GetAllBoardMember\" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.Dto.Ithem
 {
-    public class IthemDto
+    public class ItemDto
     {
     }
 }
