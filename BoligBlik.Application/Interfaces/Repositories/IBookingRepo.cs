@@ -12,7 +12,7 @@ namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBookingRepo
     {
-        Task CreateAsync(Booking booking);
+        void Create(Booking booking);
         Task<IEnumerable<Booking>> ReadAllAsync();
         
         void UpdateBooking(Booking booking);

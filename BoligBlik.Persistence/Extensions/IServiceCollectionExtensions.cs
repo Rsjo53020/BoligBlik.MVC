@@ -23,7 +23,11 @@ namespace BoligBlik.Persistence.Extensions
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IBookingDomainService, BookingDomainService>();
-            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddTransient<IUnitOfWork, UnitOfWork>(p =>
+            {
+                var db = p.GetService<BookingDbContext>();
+                return new UnitOfWork(db);
+            });
             services.AddScoped<IBookingRepo, BookingRepo>();
 
 

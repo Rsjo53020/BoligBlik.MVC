@@ -1,83 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using BoligBlik.Application.Dto.Booking;
+using BoligBlik.Application.Interfaces;
+using BoligBlik.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace BoligBlik.WebAPI.Controllers
 {
+
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookingController : Controller
     {
-        // GET: BookingController
-        public ActionResult Index()
-        {
-            return View();
-        }
+        private readonly IMapper _mapper;
+        private readonly IBookingCommandService _bookingCommand;
 
-        // GET: BookingController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: BookingController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: BookingController/Create
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Post(CreateBookingDto createBookingDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _bookingCommand.CreateBooking(createBookingDto);
+                return Ok();
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return BadRequest(e.Message);
             }
+          
         }
 
-        // GET: BookingController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BookingController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: BookingController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BookingController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
+        
     }
 }
