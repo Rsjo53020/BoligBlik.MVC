@@ -30,7 +30,8 @@ namespace BoligBlik.Domain.Entities
 
         internal Booking() : base(Guid.NewGuid()) { }
 
-        internal Booking(Guid id, BookingDates bookingDates, /*DateOnly creationDate, DateTime startTime, DateTime endTime Boolean approved*/ Item item, Payment payment, Address address) : base(id)
+        internal Booking(Guid id, BookingDates bookingDates, /*DateOnly creationDate, DateTime startTime, DateTime endTime Boolean approved*/ 
+            Item item, Payment payment, Address address) : base(id)
         {
             this.BookingDates = bookingDates;
             //this.CreationDate = creationDate;

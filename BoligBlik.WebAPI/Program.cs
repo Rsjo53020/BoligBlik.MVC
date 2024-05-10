@@ -36,6 +36,7 @@ namespace BoligBlik.WebAPI
             builder.Services.AddScoped<IUserUpdate, UserUpdate>();
             builder.Services.AddScoped<IUserDelete, UserDelete>();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
