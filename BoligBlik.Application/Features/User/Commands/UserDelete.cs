@@ -9,7 +9,7 @@ namespace BoligBlik.Application.Features.User.Commands
 {
     public class UserDelete : IUserDelete
     {
-        public void Delete(Guid ID)
+        public void Delete(Guid userId)
         {
             throw new NotImplementedException();
         }

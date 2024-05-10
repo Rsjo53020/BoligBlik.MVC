@@ -9,6 +9,6 @@ namespace BoligBlik.Application.Features.User.Queries.Interfaces
 {
     public interface IUserGet
     {
-        UserGetDto Read(string email);
+        GetUserDto Get(string email);
     }
 }

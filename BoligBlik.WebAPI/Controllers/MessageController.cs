@@ -6,16 +6,16 @@ namespace BoligBlik.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MessageAPI : ControllerBase
+    public class MessageController : ControllerBase
     {
         private readonly IMessageService _messageService;
 
-        public MessageAPI(IMessageService messageService)
+        public MessageController(IMessageService messageService)
         {
             _messageService = messageService;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public IActionResult SendMessage(CreateMessageDto request)
         {
             CreateMessageDto createMessageDto = new CreateMessageDto

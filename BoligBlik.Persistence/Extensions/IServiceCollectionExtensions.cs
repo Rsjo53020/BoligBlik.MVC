@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using BoligBlik.Persistence.Repositories;
 using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces;
+using BoligBlik.Infrastructure.Services;
 
 
 namespace BoligBlik.Persistence.Extensions
@@ -30,6 +32,9 @@ namespace BoligBlik.Persistence.Extensions
             });
             services.AddScoped<IBookingRepo, BookingRepo>();
 
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepo, UserRepo>();
+
 
         }
 
@@ -41,5 +46,7 @@ namespace BoligBlik.Persistence.Extensions
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BookingDbContext).Assembly.FullName)));
         }
+
+
     }
 }

@@ -2,11 +2,12 @@
 using BoligBlik.Application.Dto.Message;
 using System.Net;
 using BoligBlik.Application.Features.Message.Commands;
+using BoligBlik.Application.Interfaces;
 using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Infrastructure.Services
 {
-    internal class MessageService : MessageCreate
+    internal class MessageService : IMessageService
     {
         public void SendMessage(CreateMessageDto request)
         {
