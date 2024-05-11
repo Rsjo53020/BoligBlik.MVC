@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.User.Queries
 {
     public class UserGet : IUserGet
     {
-        public UserGetDto Read(string email)
+        public GetUserDto Get(string email)
         {
             throw new NotImplementedException();
         }

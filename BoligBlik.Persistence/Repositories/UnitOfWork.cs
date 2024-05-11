@@ -2,20 +2,20 @@
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using System.Transactions;
+using IsolationLevel = System.Data.IsolationLevel;
 
 namespace BoligBlik.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IBookingRepo Bookings { get; }
         private readonly BookingDbContext _dbContext;
         private IDbContextTransaction? _beginTransaction;
 
 
-        public UnitOfWork(BookingDbContext dbContext, IBookingRepo bookings)
+        public UnitOfWork(BookingDbContext dbContext)
         {
             _dbContext = dbContext;
-            Bookings = bookings;
         }
 
         public void Rollback()
@@ -23,25 +23,24 @@ namespace BoligBlik.Persistence.Repositories
             _beginTransaction.Rollback();
         }
 
-        public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        public async Task SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void BeginTransaction()
+        public void BeginTransaction(IsolationLevel isolationLevel)
         {
             _beginTransaction = _dbContext.Database.BeginTransaction();
         }
 
-        public async Task CommitChangesAsync(CancellationToken cancellationToken)
+        public async Task CommitChangesAsync()
         {
             if (_beginTransaction is null)
             {
                 return;
             }
 
-            await _beginTransaction.CommitAsync(cancellationToken);
+            await _beginTransaction.CommitAsync();
         }
 
         public void Dispose()

@@ -9,6 +9,6 @@ namespace BoligBlik.Application.Features.User.Commands.Interfaces
 {
     public interface IUserCreate
     {
-        void Create(UserRequestDto request);
+        void Create(CreateUserDto request);
     }
 }

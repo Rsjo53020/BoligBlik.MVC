@@ -7,6 +7,7 @@ using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Domain.Value;
 using BoligBlik.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoligBlik.Persistence.Services
 {
@@ -32,6 +33,12 @@ namespace BoligBlik.Persistence.Services
                 (booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.endTime));
         }
 
+
+       public IEnumerable<Booking> OtherBookings(Booking booking)
+        {
+            return _dbContext.Bookings.AsNoTracking()
+                .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
+        }
         public DateTime NowTime()
         {
             return DateTime.Now;

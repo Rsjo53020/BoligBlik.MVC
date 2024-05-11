@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.User.Queries
 {
     public class UserGetAll : IUserGetAll
     {
-        public IEnumerable<UserGetDto> ReadAll()
+        public IEnumerable<GetUserDto> GetAll()
         {
             throw new NotImplementedException();
         }

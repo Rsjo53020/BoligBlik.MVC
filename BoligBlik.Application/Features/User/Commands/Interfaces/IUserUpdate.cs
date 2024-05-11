@@ -9,6 +9,6 @@ namespace BoligBlik.Application.Features.User.Commands.Interfaces
 {
     public interface IUserUpdate
     {
-        void Update(UserRequestDto request);
+        void Update(UpdateUserDto request);
     }
 }

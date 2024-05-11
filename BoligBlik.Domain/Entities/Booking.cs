@@ -7,29 +7,55 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class Booking : Entity
+    public class Booking
     {
         private readonly IBookingDomainService _bookingDomainService;
+
+        [Key]
+        public Guid Id { get; }
         public BookingDates BookingDates { get; set; }
-        public Address Address { get; set; }
+        public bool Approved { get; private set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; private set; }
 
 
-        //hvorfor??
-        //[Required]
-        //public Boolean Approved { get; set; }
+        //public Address Address { get; set; }
+        //public User user { get; set; }
+        //public Payment payment { get; set; }
+        ////public Item item { get; set; }
 
-        internal Booking() : base(Guid.NewGuid()) { }
 
-        internal Booking(Guid id, BookingDates bookingDates, /*DateOnly creationDate, DateTime startTime, DateTime endTime Boolean approved*/ Item item, Payment payment, Address address) : base(id)
+        internal Booking() { }
+
+        public Booking(BookingDates bookingDates, bool approved, /*Item item, Payment patment, Address address, User user, */ IBookingDomainService bookingDomainService)
         {
             this.BookingDates = bookingDates;
+            this.Approved = approved;
+
             //this.Item = item;
             //this.Payment = payment;
             //this.Address = address;
+            //this.User = user
             _bookingDomainService = bookingDomainService;
 
             ValidateBooking();
         }
+
+
+        //public static Booking Create(BookingDates bookingDates, bool approved, IBookingDomainService bookingDomainService)
+        //{
+        //    if (bookingDates == null) throw new ArgumentNullException(nameof(bookingDates));
+
+
+        //    if (bookingDates == null) throw new ArgumentNullException(nameof(bookingDates));
+
+        //    var booking = new Booking(bookingDates, approved, bookingDomainService);
+        //    if (bookingDomainService.IsBookingOverlapping(booking))
+        //        throw new BookingIsOverlappingException("Booking overlaps with existing booking");
+
+        //    return booking;
+        //}
 
         private void ValidateBooking()
         {
@@ -41,36 +67,9 @@ namespace BoligBlik.Domain.Entities
                 throw new BookingIsOverlappingException("Booking overlaps with existing booking");
             }
 
-            
 
-
-            //public static Booking Create(BookingDates bookingDates, Item item, Payment payment, Address address,
-            //   IBookingDomainService bookingDomainService)
-            //{
-            //    //creationDate = DateOnly.FromDateTime(DateTime.Now);
-            //    if (bookingDates == null) throw new ArgumentNullException(nameof(bookingDates));
-
-            //    //if (endTime == null) throw new ArgumentNullException(nameof(endTime));
-
-            //    if (item == null) throw new ArgumentNullException(nameof(item));
-
-            //    if (address == null) throw new ArgumentNullException(nameof(address));
-
-
-            //    var domainService = services.GetService<_>();
-
-            //    if (domainService == null) throw new ArgumentNullException(nameof(domainService));
-
-            //    var booking = new Booking(Guid.NewGuid(),bookingDates, item, payment, address, bookingDomainService);
-
-            //    if (_bookingDomainService.IsBookingOverlapping(domainService.OtherBookings(booking)))
-            //    {
-            //        throw new BookingIsOverlappingException("Booking overlaps with existing booking");
-            //    }
-
-            //    return booking;
         }
-      
+
 
         public void ValidateTimeInput(string parameter, DateTime dateTime)
         {

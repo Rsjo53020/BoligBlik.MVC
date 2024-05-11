@@ -24,11 +24,12 @@ namespace BoligBlik.Persistence.Repositories
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<Booking>();
         }
-        public async Task CreateAsync(Booking booking)
+        public void Create(Booking booking)
         {
             try
             {
-                await _dbSet.AddAsync(booking);
+                _dbContext.AddAsync(booking);
+                _dbContext.SaveChangesAsync();
 
             }
             catch (SqlException ex)

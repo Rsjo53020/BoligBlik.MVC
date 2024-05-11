@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Domain.Exceptions
 {
-    internal class TimeInPastException : Exception
+    public class TimeInPastException : Exception
     {
         public TimeInPastException(string message) : base(message) { }
-}
+    }
 }

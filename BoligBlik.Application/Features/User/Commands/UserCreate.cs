@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.User.Commands
 {
     public class UserCreate : IUserCreate
     {
-        public void Create(UserRequestDto request)
+        public void Create(CreateUserDto request)
         {
             throw new NotImplementedException();
         }

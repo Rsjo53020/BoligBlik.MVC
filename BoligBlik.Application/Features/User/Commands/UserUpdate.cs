@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.User.Commands
 {
     public class UserUpdate : IUserUpdate
     {
-        public void Update(UserRequestDto request)
+        public void Update(UpdateUserDto request)
         {
             throw new NotImplementedException();
         }

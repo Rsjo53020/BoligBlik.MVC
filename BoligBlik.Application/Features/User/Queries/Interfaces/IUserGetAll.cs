@@ -9,6 +9,6 @@ namespace BoligBlik.Application.Features.User.Queries.Interfaces
 {
     public interface IUserGetAll
     {
-        IEnumerable<UserGetDto> ReadAll();
+        IEnumerable<GetUserDto> GetAll();
     }
 }
