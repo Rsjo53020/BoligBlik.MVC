@@ -1,12 +1,6 @@
-using BoligBlik.Application.Features.User.Commands;
-using BoligBlik.Application.Features.User.Commands.Interfaces;
-using BoligBlik.Application.Features.User.Queries;
-using BoligBlik.Application.Features.User.Queries.Interfaces;
-using BoligBlik.Application.Interfaces;
 using BoligBlik.Persistence.Extensions;
 using BoligBlik.Infrastructure.Extensions;
-using BoligBlik.Infrastructure.Extensions;
-using Microsoft.Identity.Client;
+using BoligBlik.Application.Extensions;
 
 
 namespace BoligBlik.WebAPI
@@ -20,6 +14,7 @@ namespace BoligBlik.WebAPI
             // Add services to the container.
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddInfrastructureLayer();
+            builder.Services.AddApplicationLayer();
             builder.Services.AddControllers();
 
 

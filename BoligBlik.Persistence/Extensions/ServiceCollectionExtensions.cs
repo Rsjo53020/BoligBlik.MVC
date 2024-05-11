@@ -6,12 +6,12 @@ using BoligBlik.Persistence.Repositories;
 using BoligBlik.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BoligBlik.Persistence.Repositories;
-using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces;
 using BoligBlik.Infrastructure.Services;
 using BoligBlik.Application.Interfaces.BoardMember.Commands;
 using BoligBlik.Application.Interfaces.BoardMember.Queries;
+using BoligBlik.Persistence.Repositories.Commands;
+using BoligBlik.Persistence.Repositories.Queries;
 
 
 namespace BoligBlik.Persistence.Extensions
@@ -24,8 +24,8 @@ namespace BoligBlik.Persistence.Extensions
             services.AddDbContext(configuration);
 
             //BoardMembers
-            services.AddScoped<IBoardMemberCommandRepo,  IBoardMemberCommandRepo>();
-            services.AddScoped<IBoardMemberQuerieRepo, IBoardMemberQuerieRepo>();
+            services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
+            services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
         }
 
         private static void AddRepositories(this IServiceCollection services)

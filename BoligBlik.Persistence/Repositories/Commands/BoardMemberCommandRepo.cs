@@ -21,9 +21,6 @@ namespace BoligBlik.Persistence.Repositories.Commands
         {
             throw new NotImplementedException();
         }
-
-
-
         public void UpdateBoardMemberParameters(BoardMember boardMember)
         {
             throw new NotImplementedException();
