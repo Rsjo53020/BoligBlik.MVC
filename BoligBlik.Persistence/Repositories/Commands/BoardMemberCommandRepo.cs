@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.BoardMember.Commands;
+﻿using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using System;

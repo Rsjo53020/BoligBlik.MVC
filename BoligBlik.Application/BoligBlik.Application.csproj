@@ -8,23 +8,23 @@
 
   <ItemGroup>
     <Compile Remove="Dto\Email\**" />
-    <Compile Remove="Features\BoardMember\Commands\DeleteBoardMember\**" />
-    <Compile Remove="Features\BoardMember\Commands\UpdateBoardMember\**" />
-    <Compile Remove="Features\BoardMember\Queries\GetAllBoardMember\**" />
-    <Compile Remove="Features\BoardMember\Queries\GetBoardMemberById\**" />
-    <Compile Remove="Features\BoardMember\Queries\GetBoardMemberByName\**" />
+    <Compile Remove="Features\BoardMembers\Commands\DeleteBoardMember\**" />
+    <Compile Remove="Features\BoardMembers\Commands\UpdateBoardMember\**" />
+    <Compile Remove="Features\BoardMembers\Queries\GetAllBoardMember\**" />
+    <Compile Remove="Features\BoardMembers\Queries\GetBoardMemberById\**" />
+    <Compile Remove="Features\BoardMembers\Queries\GetBoardMemberByName\**" />
     <EmbeddedResource Remove="Dto\Email\**" />
-    <EmbeddedResource Remove="Features\BoardMember\Commands\DeleteBoardMember\**" />
-    <EmbeddedResource Remove="Features\BoardMember\Commands\UpdateBoardMember\**" />
-    <EmbeddedResource Remove="Features\BoardMember\Queries\GetAllBoardMember\**" />
-    <EmbeddedResource Remove="Features\BoardMember\Queries\GetBoardMemberById\**" />
-    <EmbeddedResource Remove="Features\BoardMember\Queries\GetBoardMemberByName\**" />
+    <EmbeddedResource Remove="Features\BoardMembers\Commands\DeleteBoardMember\**" />
+    <EmbeddedResource Remove="Features\BoardMembers\Commands\UpdateBoardMember\**" />
+    <EmbeddedResource Remove="Features\BoardMembers\Queries\GetAllBoardMember\**" />
+    <EmbeddedResource Remove="Features\BoardMembers\Queries\GetBoardMemberById\**" />
+    <EmbeddedResource Remove="Features\BoardMembers\Queries\GetBoardMemberByName\**" />
     <None Remove="Dto\Email\**" />
-    <None Remove="Features\BoardMember\Commands\DeleteBoardMember\**" />
-    <None Remove="Features\BoardMember\Commands\UpdateBoardMember\**" />
-    <None Remove="Features\BoardMember\Queries\GetAllBoardMember\**" />
-    <None Remove="Features\BoardMember\Queries\GetBoardMemberById\**" />
-    <None Remove="Features\BoardMember\Queries\GetBoardMemberByName\**" />
+    <None Remove="Features\BoardMembers\Commands\DeleteBoardMember\**" />
+    <None Remove="Features\BoardMembers\Commands\UpdateBoardMember\**" />
+    <None Remove="Features\BoardMembers\Queries\GetAllBoardMember\**" />
+    <None Remove="Features\BoardMembers\Queries\GetBoardMemberById\**" />
+    <None Remove="Features\BoardMembers\Queries\GetBoardMemberByName\**" />
   </ItemGroup>
 
 	<ItemGroup>

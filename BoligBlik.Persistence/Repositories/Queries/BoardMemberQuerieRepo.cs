@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.BoardMember.Queries;
+﻿using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

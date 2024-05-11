@@ -1,11 +1,12 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
-using BoligBlik.Application.Interfaces.BoardMember.Mappers;
+using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
+using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Features.BoardMember.Mappers
+namespace BoligBlik.Application.Features.BoardMembers.Mappers
 {
     public class BoardMemberDTOmapper : IBoardMemberDTOMapper
     {
-        public Domain.Entities.BoardMember MapAddUserToBoardMemberToModel(AddUserToBoardMemberDTO DTO)
+        public BoardMember MapAddUserToBoardMemberToModel(AddUserToBoardMemberDTO DTO)
         {
             throw new NotImplementedException();
         }
@@ -14,9 +15,9 @@ namespace BoligBlik.Application.Features.BoardMember.Mappers
         /// </summary>
         /// <param name="DTO"></param>
         /// <returns></returns>
-        public Domain.Entities.BoardMember MapCreateBoardMemberToModel(CreateBoardMemberDTO DTO)
+        public BoardMember MapCreateBoardMemberToModel(CreateBoardMemberDTO DTO)
         {
-            Domain.Entities.BoardMember user = new()
+            BoardMember user = new()
             {
                 Title = DTO.Title,
                 Description = DTO.Description,
@@ -24,17 +25,17 @@ namespace BoligBlik.Application.Features.BoardMember.Mappers
             return user;
         }
 
-        public Domain.Entities.BoardMember MapDeleteBoardMemberToModel(DeleteBoardMemberDTO DTO)
+        public BoardMember MapDeleteBoardMemberToModel(DeleteBoardMemberDTO DTO)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Entities.BoardMember MapUpdateBoardMemberparametersToModel(UpdateBoardMemberParametersDTO DTO)
+        public BoardMember MapUpdateBoardMemberparametersToModel(UpdateBoardMemberParametersDTO DTO)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Entities.BoardMember MapUpdateBoardMemberToModel(UpdateBoardmemberDTO DTO)
+        public BoardMember MapUpdateBoardMemberToModel(UpdateBoardmemberDTO DTO)
         {
             throw new NotImplementedException();
         }

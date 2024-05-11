@@ -1,7 +1,7 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
-using BoligBlik.Application.Interfaces.BoardMember.Mappers;
+using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
 
-namespace BoligBlik.Application.Features.BoardMember.Mappers
+namespace BoligBlik.Application.Features.BoardMembers.Mappers
 {
     public class BoardMemberMapper : IBoardMemberMapper
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Interfaces.BoardMember.Queries
+namespace BoligBlik.Application.Interfaces.BoardMembers.Queries
 {
     public interface IBoardMemberQuerieRepo
     {

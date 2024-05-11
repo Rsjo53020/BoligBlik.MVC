@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Interfaces.BoardMember.Commands
+namespace BoligBlik.Application.Interfaces.BoardMembers.Commands
 {
     public interface IBoardMemberCommandService
     {

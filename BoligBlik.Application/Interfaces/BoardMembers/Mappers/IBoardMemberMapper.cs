@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Interfaces.BoardMember.Mappers
+namespace BoligBlik.Application.Interfaces.BoardMembers.Mappers
 {
     public interface IBoardMemberMapper
     {
-        public BoardMemberDTO MapModelToBoardMemberDTO(Domain.Entities.BoardMember boardMember);
+        public BoardMemberDTO MapModelToBoardMemberDTO(BoardMember boardMember);
     }
 }

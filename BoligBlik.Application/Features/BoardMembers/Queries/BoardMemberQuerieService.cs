@@ -1,13 +1,8 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
-using BoligBlik.Application.Interfaces.BoardMember.Mappers;
-using BoligBlik.Application.Interfaces.BoardMember.Queries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
+using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 
-namespace BoligBlik.Application.Features.BoardMember.Queries
+namespace BoligBlik.Application.Features.BoardMembers.Queries
 {
     public class BoardMemberQuerieService : IBoardMemberQuerieService
     {

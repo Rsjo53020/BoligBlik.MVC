@@ -1,17 +1,11 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
-using BoligBlik.Application.Interfaces.BoardMember.Commands;
-using BoligBlik.Application.Interfaces.BoardMember.Mappers;
+using BoligBlik.Application.Interfaces.BoardMembers.Commands;
+using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
 using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Features.BoardMember.Commands
+namespace BoligBlik.Application.Features.BoardMembers.Commands
 {
     public class BoardMemberCommandService : IBoardMemberCommandService
     {

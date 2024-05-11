@@ -1,8 +1,6 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
-using BoligBlik.Application.Dto.User;
-using BoligBlik.Application.Interfaces.BoardMember.Commands;
-using BoligBlik.Application.Interfaces.BoardMember.Queries;
-using Microsoft.AspNetCore.Http;
+using BoligBlik.Application.Interfaces.BoardMembers.Commands;
+using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.WebAPI.Controllers

@@ -6,17 +6,16 @@ using BoligBlik.Persistence.Repositories;
 using BoligBlik.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BoligBlik.Application.Interfaces;
 using BoligBlik.Infrastructure.Services;
-using BoligBlik.Application.Interfaces.BoardMember.Commands;
-using BoligBlik.Application.Interfaces.BoardMember.Queries;
+using BoligBlik.Application.Interfaces.BoardMembers.Commands;
+using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using BoligBlik.Persistence.Repositories.Commands;
 using BoligBlik.Persistence.Repositories.Queries;
 
 
 namespace BoligBlik.Persistence.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class IServiceCollectionExtensions
     {
         public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
