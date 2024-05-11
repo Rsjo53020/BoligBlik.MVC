@@ -3,7 +3,7 @@ using BoligBlik.Application.Interfaces.BoardMember.Mappers;
 
 namespace BoligBlik.Application.Features.BoardMember.Mappers
 {
-    public class DTOToModels : IDTOToModels
+    public class BoardMemberDTOmapper : IBoardMemberDTOMapper
     {
         public Domain.Entities.BoardMember MapAddUserToBoardMemberToModel(AddUserToBoardMemberDTO DTO)
         {

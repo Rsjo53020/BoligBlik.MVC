@@ -22,8 +22,8 @@ namespace BoligBlik.Application.Extensions.BoardMember
             services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
 
             //Mappers
-            services.AddScoped<IDTOToModels, DTOToModels>();
-            services.AddScoped<IModelsToDTO, ModelsToDTO>();
+            services.AddScoped<IBoardMemberDTOMapper, BoardMemberDTOmapper>();
+            services.AddScoped<IBoardMemberMapper, BoardMemberMapper>();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.Interfaces.BoardMember.Mappers
 {
-    public interface IModelsToDTO
+    public interface IBoardMemberMapper
     {
         public BoardMemberDTO MapModelToBoardMemberDTO(Domain.Entities.BoardMember boardMember);
     }

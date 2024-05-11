@@ -1,5 +1,6 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMember.Commands;
+using BoligBlik.Application.Interfaces.BoardMember.Mappers;
 using BoligBlik.Application.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,16 @@ namespace BoligBlik.Application.Features.BoardMember.Commands
     {
         //UnitOfWork
         private readonly IUnitOfWork _uow;
-        public BoardMemberCommandService(IUnitOfWork uow)
+        //Mappers
+        private readonly IBoardMemberDTOMapper _mapper;
+        //Repositories
+        private readonly IBoardMemberCommandRepo _boardMemberRepo;
+        public BoardMemberCommandService(IUnitOfWork uow, IBoardMemberMapper boardMemberMapper, 
+            IBoardMemberDTOMapper boardmemberDTOMapper, IBoardMemberCommandRepo boardMemberCommandRepo)
         {
             _uow = uow;   
+            _mapper = boardmemberDTOMapper;
+            _boardMemberRepo = boardMemberCommandRepo;
         }
         public void AddUserToBoardMember(AddUserToBoardMemberDTO request)
         {

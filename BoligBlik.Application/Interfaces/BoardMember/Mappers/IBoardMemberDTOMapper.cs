@@ -4,7 +4,7 @@ using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.BoardMember.Mappers
 {
-    public interface IDTOToModels
+    public interface IBoardMemberDTOMapper
     {
         public Domain.Entities.BoardMember MapCreateBoardMemberToModel(CreateBoardMemberDTO DTO);
         public Domain.Entities.BoardMember MapUpdateBoardMemberToModel(UpdateBoardmemberDTO DTO);

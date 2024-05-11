@@ -1,5 +1,7 @@
 ﻿using BoligBlik.Application.Dto.BoardMember;
 using BoligBlik.Application.Dto.User;
+using BoligBlik.Application.Interfaces.BoardMember.Commands;
+using BoligBlik.Application.Interfaces.BoardMember.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +11,13 @@ namespace BoligBlik.WebAPI.Controllers
     [ApiController]
     public class BoardMemberController : ControllerBase
     {
-        public BoardMemberController()
+        private readonly IBoardMemberCommandService _commandService;
+        private readonly IBoardMemberQuerieService _querieService;
+        public BoardMemberController(IBoardMemberCommandService boardMemberCommandService,
+            IBoardMemberQuerieService boardMemberQuerieService)
         {
-            
+            _commandService = boardMemberCommandService;
+            _querieService = boardMemberQuerieService;
         }
 
         [HttpPost]
@@ -23,13 +29,13 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public BoardMemberDTO GetBoardMember([FromQuery]string title)
         {
-
+            return _querieService.ReadBoardMember(title);
         }
 
         [HttpGet]
         public IEnumerable<BoardMemberDTO> GetAllBoardMembers()
         {
-
+            return _querieService.ReadAllBoardMembers();
         }
 
         [HttpPut]
