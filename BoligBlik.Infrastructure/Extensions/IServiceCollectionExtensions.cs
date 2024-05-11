@@ -18,4 +18,4 @@ namespace BoligBlik.Infrastructure.Extensions
             services.AddTransient<IMessageService, MessageService>();
         }
     }
-}
+} 

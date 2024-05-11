@@ -2,7 +2,7 @@
 {
     public class CreateMessageDto
     {
-        public DateTime CreatedAt { get; set; }
+        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public Domain.Entities.User Sender { get; set; }
         public MessageRecipientDto Recipient { get; set; }
         public string Subject { get; set; }

@@ -9,7 +9,7 @@ namespace BoligBlik.Application.Dto.User
 {
     public class DeleteUserDto
     {
-        public DateTime DeletedAt { get; set; } = DateTime.Now;
+        public DateOnly DeletedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public int UserId { get; set; }
         public string Reason { get; set; }
         public DateTime DeletionDate { get; set; }
