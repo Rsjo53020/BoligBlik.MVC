@@ -23,6 +23,7 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public ActionResult PostBoardMember([FromBody] CreateBoardMemberDTO request)
         {
+            _commandService.CreateBoardMember(request);
             return Created();
         }
 
@@ -41,24 +42,28 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateBoardMember([FromBody] UpdateBoardmemberDTO request)
         {
+            _commandService.UpdateBoardMember(request);
             return Ok();
         }
 
         [HttpDelete]
         public ActionResult DeleteBoardMember([FromBody]DeleteBoardMemberDTO request)
         {
+            _commandService.DeleteBoardMember(request);
             return Ok();
         }
 
         [HttpPut]
         public ActionResult AddUserToMember([FromBody] AddUserToBoardMemberDTO request)
         {
+            _commandService.AddUserToBoardMember(request);
             return Ok();
         }
 
         [HttpPut]
         public ActionResult UpdateBoardmemberParameters([FromBody] UpdateBoardMemberParametersDTO request) 
         {
+            _commandService.UpdateBoardMemberPatameters(request);
             return Ok(); 
         }
     }

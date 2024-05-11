@@ -2,8 +2,11 @@
 using BoligBlik.Application.Interfaces.BoardMember.Commands;
 using BoligBlik.Application.Interfaces.BoardMember.Mappers;
 using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Domain.Entities;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +21,8 @@ namespace BoligBlik.Application.Features.BoardMember.Commands
         private readonly IBoardMemberDTOMapper _mapper;
         //Repositories
         private readonly IBoardMemberCommandRepo _boardMemberRepo;
+        //Logger
+        private readonly ILogger<BoardMemberCommandService> _logger;
         public BoardMemberCommandService(IUnitOfWork uow, IBoardMemberMapper boardMemberMapper, 
             IBoardMemberDTOMapper boardmemberDTOMapper, IBoardMemberCommandRepo boardMemberCommandRepo)
         {
@@ -25,29 +30,116 @@ namespace BoligBlik.Application.Features.BoardMember.Commands
             _mapper = boardmemberDTOMapper;
             _boardMemberRepo = boardMemberCommandRepo;
         }
-        public void AddUserToBoardMember(AddUserToBoardMemberDTO request)
-        {
-            throw new NotImplementedException();
-        }
 
+        /// <summary>
+        /// Create a boardMember as a role
+        /// </summary>
+        /// <param name="request"></param>
         public void CreateBoardMember(CreateBoardMemberDTO request)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                //map to model
+                var boardMember = _mapper.MapCreateBoardMemberToModel(request);
 
-        public void DeleteBoardMember(DeleteBoardMemberDTO request)
-        {
-            throw new NotImplementedException();
-        }
+                _boardMemberRepo.CreateBoardMember(boardMember);
 
+                _uow.CommitChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("could not create BoardMember", ex);
+            }
+        }
+        /// <summary>
+        /// Update Boardmember
+        /// </summary>
+        /// <param name="request"></param>
         public void UpdateBoardMember(UpdateBoardmemberDTO request)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                //map to model
+                var boardMember = _mapper.MapUpdateBoardMemberToModel(request);
 
-        public void UpdateBoardmemberPatameters(UpdateBoardMemberParametersDTO request)
+                _boardMemberRepo.DeleteBoardMember(boardMember);
+
+                _uow.CommitChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("could not update BoardMember", ex);
+            }
+        }
+        /// <summary>
+        /// delete BoardMember
+        /// </summary>
+        /// <param name="request"></param>
+        public void DeleteBoardMember(DeleteBoardMemberDTO request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                //map to model
+                var boardMember = _mapper.MapDeleteBoardMemberToModel(request);
+
+                _boardMemberRepo.DeleteBoardMember(boardMember);
+
+                _uow.CommitChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("could not delete BoardMember", ex);
+            }
+        }
+        /// <summary>
+        /// Attach a user to boardMember
+        /// </summary>
+        /// <param name="request"></param>
+        public void AddUserToBoardMember(AddUserToBoardMemberDTO request)
+        {
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                //map to model
+                var boardMember = _mapper.MapAddUserToBoardMemberToModel(request);
+
+                _boardMemberRepo.AddUserToBoardMember(boardMember);
+
+                _uow.CommitChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("could not attach user to BoardMember", ex);
+            }
+        }
+        /// <summary>
+        /// updates parameters of board member
+        /// </summary>
+        /// <param name="request"></param>
+        public void UpdateBoardMemberPatameters(UpdateBoardMemberParametersDTO request)
+        {
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                //map to model
+                var boardMember = _mapper.MapUpdateBoardMemberparametersToModel(request);
+
+                _boardMemberRepo.UpdateBoardMemberParameters(boardMember);
+
+                _uow.CommitChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("could not update BoardMember parameters", ex);
+            }
         }
     }
 }

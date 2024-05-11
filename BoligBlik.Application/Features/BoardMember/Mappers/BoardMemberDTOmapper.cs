@@ -9,10 +9,19 @@ namespace BoligBlik.Application.Features.BoardMember.Mappers
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// map CreateBoardMemberDTO to BoardMember
+        /// </summary>
+        /// <param name="DTO"></param>
+        /// <returns></returns>
         public Domain.Entities.BoardMember MapCreateBoardMemberToModel(CreateBoardMemberDTO DTO)
         {
-            throw new NotImplementedException();
+            Domain.Entities.BoardMember user = new()
+            {
+                Title = DTO.Title,
+                Description = DTO.Description,
+            };
+            return user;
         }
 
         public Domain.Entities.BoardMember MapDeleteBoardMemberToModel(DeleteBoardMemberDTO DTO)

@@ -8,7 +8,8 @@ namespace BoligBlik.Application.Interfaces.BoardMember.Queries
 {
     public interface IBoardMemberQuerieRepo
     {
-        IEnumerable<Domain.Entities.BoardMember> ReadAllBoardMembers();
         Domain.Entities.BoardMember ReadBoardMember(string title);
+        IEnumerable<Domain.Entities.BoardMember> ReadAllBoardMembers();
+        
     }
 }

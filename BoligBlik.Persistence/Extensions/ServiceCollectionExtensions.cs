@@ -10,16 +10,22 @@ using BoligBlik.Persistence.Repositories;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces;
 using BoligBlik.Infrastructure.Services;
+using BoligBlik.Application.Interfaces.BoardMember.Commands;
+using BoligBlik.Application.Interfaces.BoardMember.Queries;
 
 
 namespace BoligBlik.Persistence.Extensions
 {
-    public static class IServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddRepositories();
             services.AddDbContext(configuration);
+
+            //BoardMembers
+            services.AddScoped<IBoardMemberCommandRepo,  IBoardMemberCommandRepo>();
+            services.AddScoped<IBoardMemberQuerieRepo, IBoardMemberQuerieRepo>();
         }
 
         private static void AddRepositories(this IServiceCollection services)
@@ -45,6 +51,10 @@ namespace BoligBlik.Persistence.Extensions
             services.AddDbContext<BookingDbContext>(options =>
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BookingDbContext).Assembly.FullName)));
+
+            services.AddDbContext<BoligBlikContext>(options =>
+                options.UseSqlServer(connectionString,
+                    builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
         }
 
 
