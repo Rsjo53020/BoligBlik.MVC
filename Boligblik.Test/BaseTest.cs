@@ -11,7 +11,7 @@ namespace Boligblik.Test
     {
         protected static readonly Assembly DomainAssembly = typeof(User).Assembly;
         protected static readonly Assembly ApplicationAssembly = typeof(IBookingRepo).Assembly;
-        protected static readonly Assembly InfrastructureAssembly = typeof(IServiceCollectionExtensions).Assembly;
+        protected static readonly Assembly InfrastructureAssembly = typeof(ServiceCollectionExtensions).Assembly;
         protected static readonly Assembly PersistanceAssembly = typeof(BookingDomainService).Assembly;
         protected static readonly Assembly PresentationAssembly = typeof(Program).Assembly;
     }
