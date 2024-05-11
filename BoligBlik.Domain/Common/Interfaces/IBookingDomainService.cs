@@ -9,7 +9,8 @@ namespace BoligBlik.Domain.Common.Interfaces
 {
     public interface IBookingDomainService
     {
-        IEnumerable<Booking> OtherBookings(Booking booking);
+       public bool IsBookingOverlapping(Booking booking);
 
+       public DateTime NowTime();
     }
 }

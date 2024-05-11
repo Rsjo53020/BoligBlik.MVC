@@ -1,7 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Domain.Common.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
+using BoligBlik.Persistence.Repositories;
+using BoligBlik.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using BoligBlik.Persistence.Repositories;
+using BoligBlik.Application.Interfaces.Repositories;
+
 
 namespace BoligBlik.Persistence.Extensions
 {
@@ -15,7 +22,11 @@ namespace BoligBlik.Persistence.Extensions
 
         private static void AddRepositories(this IServiceCollection services)
         {
-            
+            services.AddScoped<IBookingDomainService, BookingDomainService>();
+            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped<IBookingRepo, BookingRepo>();
+
+
         }
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
