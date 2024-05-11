@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Infrastructure.Services
+namespace BoligBlik.Application.Features.User
 {
     public class UserService : IUserService
     {

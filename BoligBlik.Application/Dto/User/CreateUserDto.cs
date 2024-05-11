@@ -9,7 +9,7 @@ namespace BoligBlik.Application.Dto.User
 {
     public class CreateUserDto
     {
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

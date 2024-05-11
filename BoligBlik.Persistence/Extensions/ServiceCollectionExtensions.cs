@@ -38,7 +38,6 @@ namespace BoligBlik.Persistence.Extensions
             });
             services.AddScoped<IBookingRepo, BookingRepo>();
 
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepo, UserRepo>();
 
 
