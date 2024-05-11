@@ -16,7 +16,7 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IBookingCommandService _bookingCommand;
 
-        
+
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -32,10 +32,10 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-          
+
         }
 
-       
-        
+
+
     }
 }

@@ -6,7 +6,7 @@ using IUserService = BoligBlik.Application.Interfaces.IUserService;
 
 namespace BoligBlik.Infrastructure.Extensions
 {
-    public static class IServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddInfrastructureLayer(this IServiceCollection services)
         {
