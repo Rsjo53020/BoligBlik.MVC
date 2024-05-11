@@ -11,9 +11,11 @@ namespace BoligBlik.Application.Extensions.User
 {
     public static class UserServiceCollectionExtentions
     {
-        public static void AddUsersService(this IServiceCollection services)
+        public static IServiceCollection AddUsersService(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+
+            return services;
         }
     }
 }

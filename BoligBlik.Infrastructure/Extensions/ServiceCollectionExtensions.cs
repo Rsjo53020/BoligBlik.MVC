@@ -1,21 +1,22 @@
 ﻿using BoligBlik.Application.Interfaces;
-using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Infrastructure.Services;
-using IUserService = BoligBlik.Application.Interfaces.IUserService;
 
 namespace BoligBlik.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddInfrastructureLayer(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
         {
             services.AddServices();
+            return services;
         }
 
-        private static void AddServices(this IServiceCollection services)
+        private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<IMessageService, MessageService>();
+
+            return services;
         }
     }
 } 

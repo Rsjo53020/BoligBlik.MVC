@@ -17,7 +17,7 @@ namespace BoligBlik.Persistence.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddRepositories();
             services.AddDbContext(configuration);
@@ -25,9 +25,11 @@ namespace BoligBlik.Persistence.Extensions
             //BoardMembers
             services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
             services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
+
+            return services;
         }
 
-        private static void AddRepositories(this IServiceCollection services)
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IBookingDomainService, BookingDomainService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>(p =>
@@ -39,10 +41,12 @@ namespace BoligBlik.Persistence.Extensions
 
             services.AddScoped<IUserRepo, UserRepo>();
 
+            return services;
+
 
         }
 
-        public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -53,6 +57,8 @@ namespace BoligBlik.Persistence.Extensions
             services.AddDbContext<BoligBlikContext>(options =>
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
+
+            return services;
         }
 
 
