@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.DTO.Adress
 {
-    public class AddressDto
+    public class AddressDTO
     {
         public string Street { get; set; }
 

@@ -29,7 +29,7 @@ namespace BoligBlik.Application.Features.Booking.Commands
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var bookingDates = new BookingDates(createBookingDTO.CreationDate, createBookingDTO.StartTime, createBookingDTO.EndTime);
-                var booking = new Domain.Entities.Booking(bookingDates, createBookingDTO.Approved, _bookingDomainService);
+                var booking = new Domain.Entities.Booking(Guid.NewGuid(), bookingDates, createBookingDTO.Approved, _bookingDomainService, createBookingDTO.RowVersion);
                 _bookingRepo.Create(booking);
 
                 _unitOfWork.CommitChangesAsync();

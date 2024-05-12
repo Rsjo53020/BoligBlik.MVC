@@ -24,5 +24,7 @@ namespace BoligBlik.Application.DTO.Booking
         public DateTime EndTime { get; set; }
 
         public bool Approved { get; set; }
-        }
+
+        public byte[] RowVersion { get; set; } = new byte[10];
+    }
 }
