@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Dto.Ithem;
+﻿using BoligBlik.Application.DTO.Ithem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Booking
+namespace BoligBlik.Application.DTO.Booking
 {
 
-    public class CreateBookingDto
+    public class CreateBookingDTO
     {
         //[Required]
         //public Guid AddressId { get; set; }

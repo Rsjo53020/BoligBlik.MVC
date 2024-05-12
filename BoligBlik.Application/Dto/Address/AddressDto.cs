@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Address
+namespace BoligBlik.Application.DTO.Adress
 {
     public class AddressDto
     {
@@ -15,6 +15,7 @@ namespace BoligBlik.Application.Dto.Address
         public string DoorNumber { get; set; }
 
         public string City { get; set; }
+        public string Country { get; set; }
         public string PostalCode { get; set; }
         public string UserID { get; set; }
     }

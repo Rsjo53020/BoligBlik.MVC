@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoligBlik.Application.Dto.Ithem;
+using BoligBlik.Application.DTO.Ithem;
 
-namespace BoligBlik.Application.Dto.Booking
+namespace BoligBlik.Application.DTO.Booking
 {
-    public class BookingDto
+    public class BookingDTO
     {
         [Required]
         public Guid Id { get; set; }
@@ -22,7 +22,7 @@ namespace BoligBlik.Application.Dto.Booking
         //[Required]
         //public Guid ItemId { get; set; } 
 
-        //public IEnumerable<ItemDto> Item { get; set; }
+        //public IEnumerable<ItemDTO> Item { get; set; }
 
         //[Required]
         //public Guid AdressId { get; set; }

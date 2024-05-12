@@ -6,21 +6,30 @@ using BoligBlik.Persistence.Repositories;
 using BoligBlik.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BoligBlik.Persistence.Repositories;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Infrastructure.Services;
+using BoligBlik.Application.Interfaces.BoardMembers.Commands;
+using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+using BoligBlik.Persistence.Repositories.Commands;
+using BoligBlik.Persistence.Repositories.Queries;
 
 
 namespace BoligBlik.Persistence.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddRepositories();
             services.AddDbContext(configuration);
+
+            //BoardMembers
+            services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
+            services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
+
+            return services;
         }
 
-        private static void AddRepositories(this IServiceCollection services)
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IBookingDomainService, BookingDomainService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>(p =>
@@ -30,16 +39,28 @@ namespace BoligBlik.Persistence.Extensions
             });
             services.AddScoped<IBookingRepo, BookingRepo>();
 
+            services.AddScoped<IUserRepo, UserRepo>();
+
+            return services;
+
 
         }
 
-        public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             services.AddDbContext<BookingDbContext>(options =>
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BookingDbContext).Assembly.FullName)));
+
+            services.AddDbContext<BoligBlikContext>(options =>
+                options.UseSqlServer(connectionString,
+                    builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
+
+            return services;
         }
+
+
     }
 }

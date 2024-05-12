@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BoligBlik.Application\BoligBlik.Application.csproj" />
     <ProjectReference Include="..\BoligBlik.Domain\BoligBlik.Domain.csproj" />
+    <ProjectReference Include="..\BoligBlik.Infrastructure\BoligBlik.Infrastructure.csproj" />
   </ItemGroup>
 
 

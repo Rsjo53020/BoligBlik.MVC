@@ -28,7 +28,7 @@ namespace BoligBlik.Domain.Entities
 
         internal Booking() { }
 
-        public Booking(BookingDates bookingDates, bool approved, /*Item item, Payment patment, Address address, User user, */ IBookingDomainService bookingDomainService)
+        internal Booking(Guid id, BookingDates bookingDates, /*Item item, Payment payment, Address address,*/ IBookingDomainService bookingDomainService) : base(id)
         {
             this.BookingDates = bookingDates;
             this.Approved = approved;

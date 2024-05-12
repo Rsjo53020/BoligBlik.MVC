@@ -1,18 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoligBlik.Application.Extensions.BoardMembers;
+using BoligBlik.Application.Extensions.User;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BoligBlik.Application.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static void AddApplicationLayer(this IServiceCollection services)
-
+        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
-
+            //Add features
+            BoardMemberServiceCollection.AddBoardMember(services);
+            UserServiceCollectionExtentions.AddUsersService(services);
+            return services;
         }
     }
 }

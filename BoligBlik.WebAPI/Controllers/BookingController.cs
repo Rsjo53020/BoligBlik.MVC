@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BoligBlik.Application.Dto.Booking;
+using BoligBlik.Application.DTO.Booking;
 using BoligBlik.Application.Interfaces;
 using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -16,26 +16,26 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IBookingCommandService _bookingCommand;
 
-        
+
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Post(CreateBookingDto createBookingDto)
+        public ActionResult Post(CreateBookingDTO createBookingDTO)
         {
             try
             {
-                _bookingCommand.CreateBooking(createBookingDto);
+                _bookingCommand.CreateBooking(createBookingDTO);
                 return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-          
+
         }
 
-       
-        
+
+
     }
 }
