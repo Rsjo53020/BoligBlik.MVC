@@ -23,7 +23,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Mappers
             {
                 ID = boardMember.Id,
                 Title = boardMember.Title,
-                Member = _userToDTOMapper.UserToDTO(boardMember.Member),
+                //Member = _userToDTOMapper.UserToDTO(boardMember.Member),
                 Description = boardMember.Description,
                 StartDate = boardMember.StartDate,
                 Image = boardMember.Image,
