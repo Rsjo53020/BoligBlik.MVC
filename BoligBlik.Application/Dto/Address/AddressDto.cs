@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Adress
+namespace BoligBlik.Application.DTO.Adress
 {
-    public class AddressDto
+    public class AddressDTO
     {
         public string StreetName { get; set; }
         public string StreetNumber { get; set; }

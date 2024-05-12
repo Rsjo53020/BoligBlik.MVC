@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.BoardMember
+namespace BoligBlik.Application.DTO.BoardMember
 {
     public class UpdateBoardMemberParametersDTO
     {

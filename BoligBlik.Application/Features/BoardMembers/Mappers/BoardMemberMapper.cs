@@ -1,13 +1,14 @@
-﻿using BoligBlik.Application.Dto.BoardMember;
+﻿using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
+using BoligBlik.Application.Interfaces.Users.Mappers;
 
 namespace BoligBlik.Application.Features.BoardMembers.Mappers
 {
     public class BoardMemberMapper : IBoardMemberMapper
     {
         //mapper
-        private readonly IUserToDTOMapper _userToDTOMapper;
-        public BoardMemberMapper(IUserToDTOMapper userToDTOMapper)
+        private readonly IUserDTOMapper _userToDTOMapper;
+        public BoardMemberMapper(IUserDTOMapper userToDTOMapper)
         {
             _userToDTOMapper = userToDTOMapper;
         }

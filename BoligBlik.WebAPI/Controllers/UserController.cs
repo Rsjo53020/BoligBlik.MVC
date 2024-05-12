@@ -1,55 +1,53 @@
-﻿using BoligBlik.Application.Dto.User;
-using BoligBlik.Application.Interfaces;
+﻿using BoligBlik.Application.DTO.User;
+using BoligBlik.Application.Interfaces.Users.Commands;
+using BoligBlik.Application.Interfaces.Users.Queries;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using BoligBlik.Application.Interfaces.Repositories;
 
 namespace BoligBlik.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserCommandService _commandService;
+        private readonly IUserQuerieService _querieService;
 
-        public UsersController(IUserService userService)
+        public UserController(IUserCommandService userCommandService,
+            IUserQuerieService userQuerieService)
         {
-            _userService = userService;
+            _commandService = userCommandService;
+            _querieService = userQuerieService;
         }
 
-        [HttpPost("create")] 
-        public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserDto request)
+        [HttpPost("Create User")]
+        public ActionResult PostUser([FromBody] CreateUserDTO request)
         {
-            await _userService.CreateUserAsync(request);
+            _commandService.CreateUserAsync(request);
+            return Created();
+        }
+
+        [HttpGet("Get User")]
+        public UserDTO GetUser([FromQuery] string email)
+        {
+            return _querieService.ReadUser(email);
+        }
+
+        [HttpGet("Get Users")]
+        public IEnumerable<UserDTO> GetAllUsers()
+        {
+            return _querieService.ReadAllUsers();
+        }
+
+        [HttpPut("Update User")]
+        public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
+        {
+            _commandService.UpdateUserAsync(request);
             return Ok();
         }
 
-        [HttpPut("update")] 
-        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserDto request)
+        [HttpDelete("Delete User")]
+        public ActionResult DeleteUser([FromBody] DeleteUserDTO request)
         {
-            await _userService.UpdateUserAsync(request);
+            _commandService.DeleteUserAsync(request);
             return Ok();
-        }
-
-        [HttpDelete("{email}")] 
-        public async Task<IActionResult> DeleteUserAsync(string email)
-        {
-            await _userService.DeleteUserAsync(email);
-            return Ok();
-        }
-
-        [HttpGet("all")] 
-        public async Task<IActionResult> GetAllUsersAsync()
-        {
-            var users = await _userService.GetAllUsersAsync();
-            return Ok(users);
-        }
-
-        [HttpGet("{email}")] 
-        public async Task<IActionResult> GetUserAsync(string email)
-        {
-            var user = await _userService.GetUserAsync(email);
-            return Ok(user);
         }
     }
 }

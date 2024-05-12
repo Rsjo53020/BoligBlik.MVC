@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Booking
+namespace BoligBlik.Application.DTO.Booking
 {
-    public class UpdateBookingDto
+    public class UpdateBookingDTO
     {
         public Guid Id { get; set; }
         public DateTime StartTime { get; set; }

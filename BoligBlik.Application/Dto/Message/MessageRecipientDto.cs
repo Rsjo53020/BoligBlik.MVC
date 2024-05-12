@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Message
+namespace BoligBlik.Application.DTO.Message
 {
-    public class MessageRecipientDto
+    public class MessageRecipientDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

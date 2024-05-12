@@ -1,13 +1,9 @@
-﻿using BoligBlik.Application.Dto.Adress;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoligBlik.Application.DTO.Adress;
 
-namespace BoligBlik.Application.Dto.User
+namespace BoligBlik.Application.DTO.User
 {
-    public class UpdateUserDto
+    // DTO for updating a user
+    public class UpdateUserDTO
     {
         public DateOnly UpdatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public string FirstName { get; set; }
@@ -16,6 +12,6 @@ namespace BoligBlik.Application.Dto.User
         public string EmailAddress { get; set; }
         public string FormerRole { get; set; }
         public string Role { get; set; }
-        public AddressDto Address { get; set; }
+        public AddressDTO Address { get; set; }
     }
 }

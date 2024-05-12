@@ -1,13 +1,9 @@
-﻿using BoligBlik.Application.Dto.Adress;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoligBlik.Application.DTO.Adress;
 
-namespace BoligBlik.Application.Dto.User
+namespace BoligBlik.Application.DTO.User
 {
-    public class GetUserDto
+    // DTO for getting a user
+    public class GetUserDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,6 +11,6 @@ namespace BoligBlik.Application.Dto.User
         public string EmailAddress { get; set; }
         public string FormerRole { get; set; }
         public string Role { get; set; }
-        public AddressDto Address { get; set; }
+        public AddressDTO Address { get; set; }
     }
 }

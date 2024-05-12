@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Dto.Ithem
+namespace BoligBlik.Application.DTO.Ithem
 {
-    public class ItemDto
+    public class ItemDTO
     {
     }
 }

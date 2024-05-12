@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Dto.Message;
+﻿using BoligBlik.Application.DTO.Message;
 using BoligBlik.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +16,9 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public IActionResult SendMessage(CreateMessageDto request)
+        public IActionResult SendMessage(CreateMessageDTO request)
         {
-            CreateMessageDto createMessageDto = new CreateMessageDto
+            CreateMessageDTO createMessageDTO = new CreateMessageDTO
             {
                 Sender = request.Sender,
                 Recipient = request.Recipient,
@@ -26,7 +26,7 @@ namespace BoligBlik.WebAPI.Controllers
                 Body = request.Body
             };
 
-            _messageService.SendMessage(createMessageDto);
+            _messageService.SendMessage(createMessageDTO);
             return Ok();
         }
     }

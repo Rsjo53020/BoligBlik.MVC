@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.Dto.Message;
+﻿using BoligBlik.Application.DTO.Message;
 
 namespace BoligBlik.Application.Interfaces
 {
+    /// <summary>
+    /// Interface for the MessageService
+    /// </summary>
     public interface IMessageService
     {
-        void SendMessage(CreateMessageDto request);
+        void SendMessage(CreateMessageDTO request);
     }
 }

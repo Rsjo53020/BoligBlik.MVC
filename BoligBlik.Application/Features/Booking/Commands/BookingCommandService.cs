@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using System.Net;
-using BoligBlik.Application.Dto.Booking;
+using BoligBlik.Application.DTO.Booking;
 using BoligBlik.Application.Interfaces;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Common.Interfaces;
@@ -23,13 +23,13 @@ namespace BoligBlik.Application.Features.Booking.Commands
             _bookingRepo = bookingRepo;
         }
 
-        public void CreateBooking(CreateBookingDto createBookingDto)
+        public void CreateBooking(CreateBookingDTO createBookingDTO)
         {
             try
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-                var bookingDates = new BookingDates(createBookingDto.CreationDate, createBookingDto.StartTime, createBookingDto.EndTime);
-                var booking = new Domain.Entities.Booking(bookingDates, createBookingDto.Approved, _bookingDomainService);
+                var bookingDates = new BookingDates(createBookingDTO.CreationDate, createBookingDTO.StartTime, createBookingDTO.EndTime);
+                var booking = new Domain.Entities.Booking(bookingDates, createBookingDTO.Approved, _bookingDomainService);
                 _bookingRepo.Create(booking);
 
                 _unitOfWork.CommitChangesAsync();
@@ -42,12 +42,12 @@ namespace BoligBlik.Application.Features.Booking.Commands
 
         }
 
-        public void UpdateBooking(UpdateBookingDto updateBookingDto)
+        public void UpdateBooking(UpdateBookingDTO updateBookingDTO)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteBooking(DeleteBookingDto deleteBookingDto)
+        public void DeleteBooking(DeleteBookingDTO deleteBookingDTO)
         {
             throw new NotImplementedException();
         }

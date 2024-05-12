@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.Features.User;
-using BoligBlik.Application.Interfaces;
+﻿using BoligBlik.Application.Features.User.Commands;
+using BoligBlik.Application.Features.User.Mapper;
+using BoligBlik.Application.Interfaces.Users.Commands;
+using BoligBlik.Application.Interfaces.Users.Mappers;
+using BoligBlik.Application.Interfaces.Users.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BoligBlik.Application.Extensions.User
@@ -13,7 +11,13 @@ namespace BoligBlik.Application.Extensions.User
     {
         public static IServiceCollection AddUsersService(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            //Services
+            services.AddScoped<IUserCommandService, UserCommandService>();
+            services.AddScoped<IUserQuerieService, IUserQuerieService>();
+
+            //Mappers
+            services.AddScoped<IUserDTOMapper, UserDTOMapper>();
+            services.AddScoped<IUserMapper, UserMapper>();
 
             return services;
         }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Domain.Value;
+﻿using BoligBlik.Domain.Value;
 
-namespace BoligBlik.Application.Dto.User
+namespace BoligBlik.Application.DTO.User
 {
-    public class UserDto
+    // DTO for User
+    public class UserDTO
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

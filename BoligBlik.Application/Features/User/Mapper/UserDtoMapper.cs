@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.Dto.User;
+﻿using BoligBlik.Application.DTO.User;
+using BoligBlik.Application.Interfaces.Users.Mappers;
 
 namespace BoligBlik.Application.Features.User.Mapper
 {
-    public class UserDtoMapper
+    public class UserDTOMapper : IUserDTOMapper
     {
-        public static UserDto MapToDto(Domain.Entities.User user)
-        {
-            return new UserDto
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-                EmailAddress = user.EmailAddress,
-                FormerRole = user.FormerRole,
-                Role = user.Role,
-                Address = user.Address
-            };
-        }
 
-        public static Domain.Entities.User MapToEntity(UserDto userDto)
+        // This method maps a CreateUserDTO object to a User object
+        public Domain.Entities.User MapCreateUserToModel(CreateUserDTO request)
         {
             return new Domain.Entities.User
             {
-                Id = userDto.Id,
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                PhoneNumber = userDto.PhoneNumber,
-                EmailAddress = userDto.EmailAddress,
-                FormerRole = userDto.FormerRole,
-                Role = userDto.Role,
-                Address = userDto.Address
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                EmailAddress = request.EmailAddress,
+                PhoneNumber = request.PhoneNumber,
+                Role = request.Role,
+            };
+        }
+
+        // This method maps an UpdateUserDTO object to a User object
+        public Domain.Entities.User MapUpdateUserToModel(UpdateUserDTO request)
+        {
+            return new Domain.Entities.User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                EmailAddress = request.EmailAddress,
+                PhoneNumber = request.PhoneNumber,
+                Role = request.Role,
+            };
+        }
+
+        // This method maps a DeleteUserDTO object to a UserDTO object
+        public UserDTO MapDeleteUserToModel(DeleteUserDTO request)
+        {
+            return new UserDTO
+            {
+                Id = request.UserId,
             };
         }
     }

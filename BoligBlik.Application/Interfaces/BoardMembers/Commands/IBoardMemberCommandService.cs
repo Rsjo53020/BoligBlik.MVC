@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Dto.BoardMember;
+﻿using BoligBlik.Application.DTO.BoardMember;
 using System;
 using System.Collections.Generic;
 using System.Linq;

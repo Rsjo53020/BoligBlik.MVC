@@ -1,15 +1,13 @@
 ﻿using System.Net.Mail;
-using BoligBlik.Application.Dto.Message;
+using BoligBlik.Application.DTO.Message;
 using System.Net;
-using BoligBlik.Application.Features.Message.Commands;
 using BoligBlik.Application.Interfaces;
-using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Infrastructure.Services
 {
     internal class MessageService : IMessageService
     {
-        public void SendMessage(CreateMessageDto request)
+        public void SendMessage(CreateMessageDTO request)
         {
             MailMessage message = new MailMessage(request.Sender.EmailAddress, request.Recipient.EmailAdress, request.Subject, request.Body);
 
