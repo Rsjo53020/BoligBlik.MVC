@@ -2,6 +2,7 @@
 using BoligBlik.Domain.Value;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using BoligBlik.Persistence.Contexts.EntityConfigurations;
 
 
 namespace BoligBlik.Persistence.Contexts
@@ -13,8 +14,7 @@ namespace BoligBlik.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new BookingConfirguration());
         }
 
         public BookingDbContext() { }
