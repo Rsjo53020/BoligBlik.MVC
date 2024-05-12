@@ -57,7 +57,7 @@ namespace BoligBlik.Application.Features.User.Commands
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.MapDeleteUserToModel(request);
-                await _userRepo.DeleteUserAsync(user);
+                await _userRepo.DeleteUserAsync(user); 
                 await _uow.CommitChangesAsync();
             }
             catch (Exception ex)

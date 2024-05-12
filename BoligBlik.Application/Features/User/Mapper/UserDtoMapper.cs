@@ -27,6 +27,7 @@ namespace BoligBlik.Application.Features.User.Mapper
         {
             return new Domain.Entities.User
             {
+                Id = request.Id,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 EmailAddress = request.EmailAddress,
@@ -37,9 +38,9 @@ namespace BoligBlik.Application.Features.User.Mapper
         /// <summary>
         /// This method maps a DeleteUserDTO object to a UserDTO object
         /// </summary>
-        public UserDTO MapDeleteUserToModel(DeleteUserDTO request)
+        public Domain.Entities.User MapDeleteUserToModel(DeleteUserDTO request)
         {
-            return new UserDTO
+            return new Domain.Entities.User
             {
                 Id = request.UserId,
             };
