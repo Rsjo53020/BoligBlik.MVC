@@ -1,5 +1,6 @@
-﻿using BoligBlik.Application.DTO.User;
+﻿using BoligBlik.Application.Dto.User;
 using BoligBlik.Application.Interfaces.Users.Mappers;
+using BoligBlik.Application.DTO.User;
 
 namespace BoligBlik.Application.Features.User.Mapper
 {
@@ -42,6 +43,11 @@ namespace BoligBlik.Application.Features.User.Mapper
             {
                 Id = request.UserId,
             };
+        }
+
+        public Domain.Entities.User MapUserToModel(UserDto user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.DTO.BoardMember;
+﻿using BoligBlik.Application.Dto.BoardMember;
+using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Domain.Entities;
 
 

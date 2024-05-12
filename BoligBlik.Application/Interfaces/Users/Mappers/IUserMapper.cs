@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.DTO.User;
+﻿using BoligBlik.Application.Dto.User;
+using BoligBlik.Application.DTO.User;
 
 namespace BoligBlik.Application.Interfaces.Users.Mappers
 {

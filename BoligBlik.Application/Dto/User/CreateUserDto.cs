@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.DTO.Adress;
+﻿using BoligBlik.Application.Dto.Adress;
 
 namespace BoligBlik.Application.DTO.User
 {
