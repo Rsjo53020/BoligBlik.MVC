@@ -44,6 +44,7 @@ namespace BoligBlik.Application.Features.Booking.Commands
 
         public void UpdateBooking(UpdateBookingDTO updateBookingDTO)
         {
+          
             throw new NotImplementedException();
         }
 

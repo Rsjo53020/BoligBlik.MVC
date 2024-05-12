@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BoligBlik.Application.DTO.Booking;
 using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,13 @@ namespace BoligBlik.Application.Features.Booking.Queries
     public class BookingQueriesServices : IBookingQuerieService
     {
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly BookingDbContext _bookingDbContext;
+        private readonly IBookingRepo _bookingRepo;
+        private readonly IMapper _mapper;
 
-        public BookingQueriesServices(IUnitOfWork unitOfWork)
+        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingRepo bookingRepo)
         {
             _unitOfWork = unitOfWork;
+            _bookingRepo = bookingRepo;
         }
 
         //public IEnumerable<Domain.Entities.Booking> Bookings(Domain.Entities.Booking booking)
@@ -26,14 +29,23 @@ namespace BoligBlik.Application.Features.Booking.Queries
         //    return _bookingDbContext.Bookings.AsNoTracking()
         //        .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
         //}
-        public BookingDTO ReadBooking(BookingDTO bookingDto)
+        public async Task<BookingDTO> ReadBooking(BookingDTO bookingDto)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BookingDTO> ReadAllBooking()
+        public async Task<IEnumerable<BookingDTO>> ReadAllBooking()
         {
-            throw new NotImplementedException();
+            //må jeg det??
+            List<BookingDTO> bookingList = new List<BookingDTO>();
+            var bookings = await _bookingRepo.ReadAllAsync();
+
+            foreach (var Item in bookings)
+            {
+                bookingList.Add(_mapper.Map<BookingDTO>(Item));
+            }
+
+            return bookingList;
         }
     }
 }

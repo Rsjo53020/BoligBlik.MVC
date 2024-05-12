@@ -6,6 +6,7 @@ using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BoligBlik.WebAPI.Controllers
 {
@@ -23,12 +24,12 @@ namespace BoligBlik.WebAPI.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Post(CreateBookingDTO createBookingDTO)
+        public async Task<IActionResult> Post(CreateBookingDTO createBookingDTO)
         {
             try
             {
-                _bookingCommand.CreateBooking(createBookingDTO);
-                return Ok();
+              _bookingCommand.CreateBooking(createBookingDTO);
+                return Ok(createBookingDTO);
             }
             catch (Exception e)
             {
@@ -36,13 +37,13 @@ namespace BoligBlik.WebAPI.Controllers
             }
 
         }
-        [HttpGet("id")]
-        public IActionResult GetBooking([FromQuery] BookingDTO id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BookingDTO>> GetBooking([FromQuery] BookingDTO id)
         {
             try
             {
-                _bookingQuerie.ReadBooking(id);
-                return Ok();
+                
+                return await _bookingQuerie.ReadBooking(id);
             }
             catch (Exception e)
             {
@@ -66,23 +67,21 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
 
-        [HttpPut("updateBooking")]
-        public ActionResult UpdateBooking([FromBody] UpdateBookingDTO updateBookingDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] UpdateBookingDTO updateBookingDto)
         {
-            try
+            if (id != updateBookingDto.Id)
             {
-                _bookingCommand.UpdateBooking(updateBookingDto);
-                return Ok();
+                return BadRequest();
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            
+            _bookingCommand.UpdateBooking(updateBookingDto);
 
+            return Ok(updateBookingDto);
         }
 
         [HttpDelete]
-        public IActionResult DeleteBooking([FromBody] DeleteBookingDTO deleteBookingDto)
+        public async Task<IActionResult> DeleteBooking([FromBody] DeleteBookingDTO deleteBookingDto)
         {
             try
             {
