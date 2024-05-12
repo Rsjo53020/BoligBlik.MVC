@@ -5,7 +5,9 @@ namespace BoligBlik.Application.Features.User.Mapper
 {
     public class UserMapper : IUserMapper
     {
-        // this method maps the UserDTO to the User model
+        /// <summary>
+        /// This method maps the UserDTO to the User model
+        /// </summary>
         public UserDTO MapModelToUserDTO(Domain.Entities.User user)
         {
             var userDTO = new UserDTO

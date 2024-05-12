@@ -5,8 +5,9 @@ namespace BoligBlik.Application.Features.User.Mapper
 {
     public class UserDTOMapper : IUserDTOMapper
     {
-
-        // This method maps a CreateUserDTO object to a User object
+        /// <summary>
+        /// This method maps a CreateUserDTO object to a User object
+        /// </summary>
         public Domain.Entities.User MapCreateUserToModel(CreateUserDTO request)
         {
             return new Domain.Entities.User
@@ -18,8 +19,9 @@ namespace BoligBlik.Application.Features.User.Mapper
                 Role = request.Role,
             };
         }
-
-        // This method maps an UpdateUserDTO object to a User object
+        /// <summary>
+        /// This method maps an UpdateUserDTO object to a User object
+        /// </summary>
         public Domain.Entities.User MapUpdateUserToModel(UpdateUserDTO request)
         {
             return new Domain.Entities.User
@@ -31,8 +33,9 @@ namespace BoligBlik.Application.Features.User.Mapper
                 Role = request.Role,
             };
         }
-
-        // This method maps a DeleteUserDTO object to a UserDTO object
+        /// <summary>
+        /// This method maps a DeleteUserDTO object to a UserDTO object
+        /// </summary>
         public UserDTO MapDeleteUserToModel(DeleteUserDTO request)
         {
             return new UserDTO

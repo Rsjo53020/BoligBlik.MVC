@@ -16,7 +16,9 @@ namespace BoligBlik.Application.Features.User.Commands
         private readonly IUserCommandRepo _userRepo;
         private readonly ILogger<BoardMemberCommandService> _logger;
 
-        // Constructor 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public UserCommandService(IUnitOfWork uow, IUserDTOMapper userDTOMapper, IUserCommandRepo userCommandRepo)
         {
             _uow = uow;
@@ -24,7 +26,9 @@ namespace BoligBlik.Application.Features.User.Commands
             _userRepo = userCommandRepo;
         }
 
-        // this method creates a user using Unit of Work pattern
+        /// <summary>
+        /// this method creates a user using Unit of Work pattern
+        /// </summary>
         public async Task<bool> CreateUserAsync(CreateUserDTO request)
         {
             try
@@ -44,7 +48,9 @@ namespace BoligBlik.Application.Features.User.Commands
             }
         }
 
-        // this method Deletes a user using Unit of Work pattern
+        /// <summary>
+        /// this method Deletes a user using Unit of Work pattern
+        /// </summary>
         public async Task DeleteUserAsync(DeleteUserDTO request)
         {
             try
@@ -61,7 +67,9 @@ namespace BoligBlik.Application.Features.User.Commands
             }
         }
 
-        // this method updates a user using Unit of Work pattern
+        /// <summary>
+        /// this method updates a user using Unit of Work pattern
+        /// </summary>
         public async Task UpdateUserAsync(UpdateUserDTO request)
         {
             try

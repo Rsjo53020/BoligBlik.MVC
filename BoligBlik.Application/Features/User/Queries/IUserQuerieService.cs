@@ -4,23 +4,22 @@ using BoligBlik.Application.Interfaces.Users.Queries;
 
 namespace BoligBlik.Application.Features.User.Queries
 {
-    /// <summary>
-    /// this class is responsible for the user queries
-    /// </summary>
     public class UserQuerieService : IUserQuerieService
     {
-        // depencies
+        //Dependencies
         private readonly IUserQuerieRepo _userRepo;
         private readonly IUserMapper _mapper;
 
-        // constructor
+        //Constructor
         public UserQuerieService(IUserMapper userDTOMapper, IUserQuerieRepo userQuerieRepo)
         {
             _mapper = userDTOMapper;
             _userRepo = userQuerieRepo;
         }
 
-        // this method reads a user by Email
+        /// <summary>
+        /// This method reads a user by Email
+        /// </summary>
         public UserDTO ReadUser(string email)
         {
             var user = _userRepo.ReadUser(email);
@@ -28,7 +27,9 @@ namespace BoligBlik.Application.Features.User.Queries
             return userDTO;
         }
 
-        // this method reads all users
+        /// <summary>
+        /// This method reads all users
+        /// </summary>
         public IEnumerable<UserDTO> ReadAllUsers()
         {
             var users = _userRepo.ReadAllUsers();

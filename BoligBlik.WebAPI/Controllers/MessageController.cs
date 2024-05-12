@@ -1,5 +1,5 @@
 ﻿using BoligBlik.Application.DTO.Message;
-using BoligBlik.Application.Interfaces;
+using BoligBlik.Application.Interfaces.Message;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.WebAPI.Controllers
@@ -8,13 +8,18 @@ namespace BoligBlik.WebAPI.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
+        //dependencies
         private readonly IMessageService _messageService;
 
+        //constructor
         public MessageController(IMessageService messageService)
         {
             _messageService = messageService;
         }
 
+        /// <summary>
+        /// Send a message
+        /// </summary>
         [HttpPost("Create")]
         public IActionResult SendMessage(CreateMessageDTO request)
         {

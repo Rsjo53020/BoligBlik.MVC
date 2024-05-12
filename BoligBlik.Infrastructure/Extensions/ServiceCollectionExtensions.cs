@@ -1,9 +1,11 @@
 ﻿using BoligBlik.Application.Interfaces;
+using BoligBlik.Application.Interfaces.Message;
 using Microsoft.Extensions.DependencyInjection;
-using BoligBlik.Infrastructure.Services;
+using BoligBlik.Infrastructure.Services.Message;
 
 namespace BoligBlik.Infrastructure.Extensions
 {
+
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
@@ -14,7 +16,7 @@ namespace BoligBlik.Infrastructure.Extensions
 
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddTransient<IMessageService, MessageService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             return services;
         }
