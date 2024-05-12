@@ -6,11 +6,13 @@ using BoligBlik.Persistence.Repositories;
 using BoligBlik.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BoligBlik.Infrastructure.Services;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+using BoligBlik.Application.Interfaces.Users.Commands;
+using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Persistence.Repositories.Commands;
 using BoligBlik.Persistence.Repositories.Queries;
+using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
 
 namespace BoligBlik.Persistence.Extensions
@@ -22,6 +24,11 @@ namespace BoligBlik.Persistence.Extensions
             services.AddRepositories();
             services.AddDbContext(configuration);
 
+
+
+            //Users
+            services.AddScoped<IUserCommandRepo, UserCommandRepo>();
+            services.AddScoped<IUserQuerieService, UserQuerieService>();
 
 
             return services;
@@ -37,7 +44,7 @@ namespace BoligBlik.Persistence.Extensions
             });
             services.AddScoped<IBookingRepo, BookingRepo>();
 
-            services.AddScoped<IUserRepo, UserRepo>();
+
 
             //BoardMembers
             services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();

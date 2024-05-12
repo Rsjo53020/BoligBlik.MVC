@@ -7,8 +7,8 @@ namespace BoligBlik.Application.Features.BoardMembers.Mappers
     public class BoardMemberMapper : IBoardMemberMapper
     {
         //mapper
-        private readonly IUserDTOMapper _userToDTOMapper;
-        public BoardMemberMapper(IUserDTOMapper userToDTOMapper)
+        private readonly IUserMapper _userToDTOMapper;
+        public BoardMemberMapper(IUserMapper userToDTOMapper)
         {
             _userToDTOMapper = userToDTOMapper;
         }
@@ -23,7 +23,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Mappers
             {
                 ID = boardMember.Id,
                 Title = boardMember.Title,
-                Member = _userToDTOMapper.UserToDTO(boardMember.Member),
+                Member = _userToDTOMapper.MapModelToUserDTO(boardMember.Member),
                 Description = boardMember.Description,
                 StartDate = boardMember.StartDate,
                 Image = boardMember.Image,

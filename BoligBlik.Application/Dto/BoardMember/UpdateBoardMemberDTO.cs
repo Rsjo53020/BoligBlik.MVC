@@ -10,7 +10,7 @@ namespace BoligBlik.Application.DTO.BoardMember
     public class UpdateBoardmemberDTO
     {
         public Guid ID { get; set; }
-        public GetUserDTO User { get; set; }
+        public UserDTO User { get; set; }
         public DateOnly StartDate { get; set; }
         public Byte[] RowVersion { get; set; }
     }

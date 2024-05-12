@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Ithem;
+using BoligBlik.Application.DTO.Item;
 
 namespace BoligBlik.Application.DTO.Booking
 {
