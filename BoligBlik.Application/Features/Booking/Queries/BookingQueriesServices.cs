@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Application.DTO.Booking;
 using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Domain.Entities;
@@ -25,5 +26,14 @@ namespace BoligBlik.Application.Features.Booking.Queries
         //    return _bookingDbContext.Bookings.AsNoTracking()
         //        .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
         //}
+        public BookingDTO ReadBooking(BookingDTO bookingDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BookingDTO> ReadAllBooking()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

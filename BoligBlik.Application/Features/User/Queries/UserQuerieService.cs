@@ -4,6 +4,7 @@ using BoligBlik.Application.Interfaces.Users.Queries;
 
 namespace BoligBlik.Application.Features.User.Queries
 {
+    //navnet på klasse forkert
     public class UserQuerieService : IUserQuerieService
     {
         //Dependencies

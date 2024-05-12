@@ -10,17 +10,16 @@ namespace BoligBlik.Application.Extensions.BoardMembers
 {
     public static class BoardMemberServiceCollection
     {
-        public static IServiceCollection AddBoardMember(this IServiceCollection services)
+        public static void AddBoardMember(this IServiceCollection services)
         {
-            //Services
-            services.AddScoped<IBoardMemberCommandService, BoardMemberCommandService>();
-            services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
+            ////Services
+            //services.AddScoped<IBoardMemberCommandService, BoardMemberCommandService>();
+            //services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
 
-            //Mappers
-            services.AddScoped<IBoardMemberDTOMapper, BoardMemberDTOmapper>();
-            services.AddScoped<IBoardMemberMapper, BoardMemberMapper>();
+            ////Mappers
+            //services.AddScoped<IBoardMemberDTOMapper, BoardMemberDTOmapper>();
+            //services.AddScoped<IBoardMemberMapper, BoardMemberMapper>();
 
-            return services;
         }
     }
 }

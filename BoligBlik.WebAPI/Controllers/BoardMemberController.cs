@@ -25,19 +25,19 @@ namespace BoligBlik.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet]
+        [HttpGet("new")]
         public BoardMemberDTO GetBoardMember([FromQuery]string title)
         {
             return _querieService.ReadBoardMember(title);
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public IEnumerable<BoardMemberDTO> GetAllBoardMembers()
         {
             return _querieService.ReadAllBoardMembers();
         }
 
-        [HttpPut]
+        [HttpPut("updateMember")]
         public ActionResult UpdateBoardMember([FromBody] UpdateBoardmemberDTO request)
         {
             _commandService.UpdateBoardMember(request);
@@ -51,14 +51,14 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("newMember")]
         public ActionResult AddUserToMember([FromBody] AddUserToBoardMemberDTO request)
         {
             _commandService.AddUserToBoardMember(request);
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("Parameters")]
         public ActionResult UpdateBoardmemberParameters([FromBody] UpdateBoardMemberParametersDTO request) 
         {
             _commandService.UpdateBoardMemberPatameters(request);

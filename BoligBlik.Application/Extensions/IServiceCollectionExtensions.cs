@@ -6,12 +6,11 @@ namespace BoligBlik.Application.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
+        public static void AddApplicationLayer(this IServiceCollection services)
         {
             //Add features
-            BoardMemberServiceCollection.AddBoardMember(services);
-            UserServiceCollectionExtentions.AddUsersService(services);
-            return services;
+            //BoardMemberServiceCollection.AddBoardMember(services);
+            //UserServiceCollectionExtentions.AddUsersService(services);
         }
     }
 }

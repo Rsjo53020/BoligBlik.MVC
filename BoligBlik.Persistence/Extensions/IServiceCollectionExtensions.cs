@@ -12,49 +12,47 @@ using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Persistence.Repositories.Commands;
 using BoligBlik.Persistence.Repositories.Queries;
-using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
+//using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
 
 namespace BoligBlik.Persistence.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddRepositories();
             services.AddDbContext(configuration);
 
-
-
-            //Users
-            services.AddScoped<IUserCommandRepo, UserCommandRepo>();
-            services.AddScoped<IUserQuerieService, UserQuerieService>();
-
-
-            return services;
         }
 
-        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        private static void AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IBookingDomainService, BookingDomainService>();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>(p =>
             {
                 var db = p.GetService<BookingDbContext>();
                 return new UnitOfWork(db);
             });
+
+            //Booking Repo
             services.AddScoped<IBookingRepo, BookingRepo>();
+            services.AddScoped<IBookingDomainService, BookingDomainService>();
 
-
+            //Users
+            services.AddScoped<IUserCommandRepo, UserCommandRepo>();
+            services.AddScoped<IUserQuerieRepo, UserQuerieRepo>();
 
             //BoardMembers
             services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
             services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
-            return services;
 
 
+            //fremgår to steder dette IoC tilhører database !!!
+            //services.AddScoped<IUserQuerieService, UserQuerieService>();
         }
 
-        public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+        public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -65,8 +63,6 @@ namespace BoligBlik.Persistence.Extensions
             services.AddDbContext<BoligBlikContext>(options =>
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
-
-            return services;
         }
 
 
