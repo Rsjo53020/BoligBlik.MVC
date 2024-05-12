@@ -1,5 +1,4 @@
-﻿using BoligBlik.Application.Dto.User;
-using BoligBlik.Application.Interfaces.Users.Mappers;
+﻿using BoligBlik.Application.Interfaces.Users.Mappers;
 using BoligBlik.Application.DTO.User;
 
 namespace BoligBlik.Application.Features.User.Mapper
@@ -46,7 +45,7 @@ namespace BoligBlik.Application.Features.User.Mapper
             };
         }
 
-        public Domain.Entities.User MapUserToModel(UserDto user)
+        public Domain.Entities.User MapUserToModel(UserDTO user)
         {
             throw new NotImplementedException();
         }

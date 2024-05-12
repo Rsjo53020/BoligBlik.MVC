@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.DTO.Ithem;
+﻿using BoligBlik.Application.DTO.Item;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

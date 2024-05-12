@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Dto.BoardMember;
+﻿using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.BoardMembers.Mappers
