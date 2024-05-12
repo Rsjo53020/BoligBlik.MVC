@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.Booking;
-using BoligBlik.Application.Interfaces;
+using BoligBlik.Application.Interfaces.Booking;
 using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

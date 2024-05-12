@@ -1,6 +1,6 @@
 ﻿using BoligBlik.Application.DTO.Booking;
 
-namespace BoligBlik.Application.Interfaces
+namespace BoligBlik.Application.Interfaces.Booking
 {
     public interface IBookingCommandService
     {

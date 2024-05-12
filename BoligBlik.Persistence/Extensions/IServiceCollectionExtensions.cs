@@ -22,9 +22,7 @@ namespace BoligBlik.Persistence.Extensions
             services.AddRepositories();
             services.AddDbContext(configuration);
 
-            //BoardMembers
-            services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
-            services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
+
 
             return services;
         }
@@ -41,6 +39,9 @@ namespace BoligBlik.Persistence.Extensions
 
             services.AddScoped<IUserRepo, UserRepo>();
 
+            //BoardMembers
+            services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
+            services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
             return services;
 
 

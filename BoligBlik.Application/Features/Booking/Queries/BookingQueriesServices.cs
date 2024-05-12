@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Domain.Entities;
+using BoligBlik.Application.Interfaces.Booking;
 
 namespace BoligBlik.Application.Features.Booking.Queries
 {
-    public class BookingQueries
+    public class BookingQueriesServices : IBookingQuerieService
     {
         private readonly IUnitOfWork _unitOfWork;
         //private readonly BookingDbContext _bookingDbContext;
 
-        public BookingQueries(IUnitOfWork unitOfWork)
+        public BookingQueriesServices(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

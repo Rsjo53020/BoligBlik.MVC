@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Net;
 using BoligBlik.Application.DTO.Booking;
-using BoligBlik.Application.Interfaces;
+using BoligBlik.Application.Interfaces.Booking;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Value;
