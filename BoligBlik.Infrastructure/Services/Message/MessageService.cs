@@ -13,7 +13,7 @@ namespace BoligBlik.Infrastructure.Services.Message
         public void SendMessage(CreateMessageDTO request)
         {
             // create a MailMessage object with the sender, recipient, subject and body
-            MailMessage message = new MailMessage(request.Sender.EmailAddress, request.Recipient.EmailAdress, request.Subject, request.Body);
+            MailMessage message = new MailMessage(request.Sender, request.Recipient, request.Subject, request.Body);
 
             // create a SmtpClient object 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587)

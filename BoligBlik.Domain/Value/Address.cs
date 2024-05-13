@@ -8,6 +8,6 @@ using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Domain.Value
 {
-    public record Address(Guid DAWAId, string Street, string HouseNumber, string Floor, string DoorNumber,
-        PostalCode PostalCode);
+    public record Address(Guid DAWAId, string Street, string HouseNumber, string Floor, string DoorNumber
+        , string City, string PostalcodeNumber);
 }

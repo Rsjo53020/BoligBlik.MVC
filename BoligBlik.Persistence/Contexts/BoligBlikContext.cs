@@ -20,13 +20,9 @@ namespace BoligBlik.Persistence.Contexts
         public DbSet<Document> Documents { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
-        public DbSet<Message> Messages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<BookingDates> BookingDates { get; set; }
-        public DbSet<PostalCode> PostalCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
