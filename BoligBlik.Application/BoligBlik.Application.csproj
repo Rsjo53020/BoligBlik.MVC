@@ -34,12 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="Features\Booking\Commands\CreateBooking\" />
-    <Folder Include="Features\Booking\Commands\DeleteBooking\" />
-    <Folder Include="Features\Booking\Commands\UpdateBooking\" />
-    <Folder Include="Features\Booking\Queries\GetAllBookings\" />
-    <Folder Include="Features\Booking\Queries\GetBookingById\" />
-    <Folder Include="Features\Booking\Queries\GetBookingByMember\" />
   </ItemGroup>
 
   <ItemGroup>

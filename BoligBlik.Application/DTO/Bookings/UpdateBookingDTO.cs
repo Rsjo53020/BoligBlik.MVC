@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.DTO.Booking
+namespace BoligBlik.Application.DTO.Bookings
 {
-    public class DeleteBookingDTO
+    public class UpdateBookingDTO
     {
         public Guid Id { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public byte[] RowVersion { get; set; } = [];
     }
 }

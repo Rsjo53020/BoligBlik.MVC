@@ -9,7 +9,7 @@ using BoligBlik.Domain.Value;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace BoligBlik.Persistence.Services
+namespace BoligBlik.Persistence.Repositories.Bookings
 {
     public class BookingDomainService : IBookingDomainService
     {
@@ -25,20 +25,15 @@ namespace BoligBlik.Persistence.Services
         {
             return _dbContext.Bookings.Any(other =>
                 //This checks if the end date of the given booking is between the start and end date of another booking
-                (booking.BookingDates.endTime <= other.BookingDates.endTime && booking.BookingDates.endTime >= other.BookingDates.startTime) ||
+                booking.BookingDates.endTime <= other.BookingDates.endTime && booking.BookingDates.endTime >= other.BookingDates.startTime ||
                 //This checks if the start date of the given booking is between the start and end date of another booking
-                (booking.BookingDates.startTime >= other.BookingDates.startTime && booking.BookingDates.startTime <= other.BookingDates.endTime) ||
+                booking.BookingDates.startTime >= other.BookingDates.startTime && booking.BookingDates.startTime <= other.BookingDates.endTime ||
                 //This checks if the given booking contains another booking,
                 //i.e. its start date is before or equal to the start date of the other booking and its end date is after or equal to the end date of the other booking
-                (booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.endTime));
+                booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.endTime);
         }
 
 
-       public IEnumerable<Booking> OtherBookings(Booking booking)
-        {
-            return _dbContext.Bookings.AsNoTracking()
-                .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
-        }
         public DateTime NowTime()
         {
             return DateTime.Now;

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Booking;
+using BoligBlik.Application.DTO.Bookings;
 
-namespace BoligBlik.Application.Interfaces.Booking
+namespace BoligBlik.Application.Interfaces.Bookings
 {
     public interface IBookingQuerieService
     {

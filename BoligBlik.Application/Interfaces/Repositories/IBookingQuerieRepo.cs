@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.Interfaces.Repositories
 {
-    public interface IBookingRepo
+    public interface IBookingQuerieRepo
     {
-        void Create(Domain.Entities.Booking booking);
-        Task<IEnumerable<Domain.Entities.Booking>> ReadAllAsync();
+        //void Create(Booking booking);
+        Task<IEnumerable<Booking>> ReadAllAsync();
+        Task<Booking> ReadBooking(Guid id);
         
-        void UpdateBooking(Domain.Entities.Booking booking);
-        void DeleteBooking(Domain.Entities.Booking booking);
+        //void UpdateBooking(Booking booking);
+        //void DeleteBooking(Booking booking);
     }
 }

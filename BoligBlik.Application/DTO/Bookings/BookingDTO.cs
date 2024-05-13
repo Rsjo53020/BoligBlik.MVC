@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Item;
 
-namespace BoligBlik.Application.DTO.Booking
+namespace BoligBlik.Application.DTO.Bookings
 {
     public class BookingDTO
     {
@@ -19,13 +19,13 @@ namespace BoligBlik.Application.DTO.Booking
         public DateTime EndTime { get; set; }
         public bool Approved { get; set; }
 
-        //[Required]
-        //public Guid ItemId { get; set; } 
+        [Required]
+        public Guid ItemId { get; set; }
 
-        //public IEnumerable<ItemDTO> Item { get; set; }
+        public IEnumerable<ItemDTO> Item { get; set; }
 
-        //[Required]
-        //public Guid AdressId { get; set; }
+        [Required]
+        public Guid AddressId { get; set; }
     }
 
     

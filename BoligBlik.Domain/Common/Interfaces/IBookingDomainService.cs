@@ -11,7 +11,7 @@ namespace BoligBlik.Domain.Common.Interfaces
     {
        public bool IsBookingOverlapping(Booking booking);
 
-       IEnumerable<Booking> OtherBookings(Booking booking);
+       //IEnumerable<Booking> OtherBookings(Booking booking);
 
        public DateTime NowTime();
     }

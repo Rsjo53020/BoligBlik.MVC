@@ -4,21 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BoligBlik.Application.DTO.Booking;
+using BoligBlik.Application.DTO.Bookings;
 using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Domain.Entities;
-using BoligBlik.Application.Interfaces.Booking;
+using BoligBlik.Application.Interfaces.Bookings;
+using System.Threading;
+using BoligBlik.Domain.Exceptions;
 
-namespace BoligBlik.Application.Features.Booking.Queries
+namespace BoligBlik.Application.Features.Bookings.Queries
 {
     public class BookingQueriesServices : IBookingQuerieService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IBookingRepo _bookingRepo;
+        private readonly IBookingQuerieRepo _bookingRepo;
         private readonly IMapper _mapper;
 
-        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingRepo bookingRepo)
+        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingQuerieRepo bookingRepo)
         {
             _unitOfWork = unitOfWork;
             _bookingRepo = bookingRepo;
@@ -31,7 +33,13 @@ namespace BoligBlik.Application.Features.Booking.Queries
         //}
         public async Task<BookingDTO> ReadBooking(BookingDTO bookingDto)
         {
-            throw new NotImplementedException();
+            var booking = await _bookingRepo.ReadBooking(bookingDto.Id);
+            if (booking is null)
+            {
+                throw new BookingNotFoundException(bookingDto.Id);
+            }
+            var resultat = _mapper.Map<BookingDTO>(booking);
+            return resultat;
         }
 
         public async Task<IEnumerable<BookingDTO>> ReadAllBooking()
@@ -40,9 +48,9 @@ namespace BoligBlik.Application.Features.Booking.Queries
             List<BookingDTO> bookingList = new List<BookingDTO>();
             var bookings = await _bookingRepo.ReadAllAsync();
 
-            foreach (var Item in bookings)
+            foreach (var booking in bookings)
             {
-                bookingList.Add(_mapper.Map<BookingDTO>(Item));
+                bookingList.Add(_mapper.Map<BookingDTO>(booking));
             }
 
             return bookingList;
