@@ -86,7 +86,7 @@ namespace Boligblik.ArchitectureTest.Domain
             foreach (Class entityType in entityTypes)
             {
                 IEnumerable<MethodMember> construtors = entityType.GetConstructors();
-                if (!construtors.Any(c => c.Visibility == Visibility.Private && !c.Parameters.Any()))
+                if (!construtors.Any(c => c.Visibility == Visibility.Internal && !c.Parameters.Any()))
                 {
                     failingTypes.Add(entityType);
                 }
