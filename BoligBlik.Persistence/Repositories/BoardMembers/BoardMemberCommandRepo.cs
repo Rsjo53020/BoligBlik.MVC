@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.BoardMembers.Commands;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Persistence.Repositories.Commands
+namespace BoligBlik.Persistence.Repositories.BoardMembers
 {
     public class BoardMemberCommandRepo : IBoardMemberCommandRepo
     {
@@ -26,8 +26,6 @@ namespace BoligBlik.Persistence.Repositories.Commands
             try
             {
                 _db.AddAsync(boardMember);
-                _db.SaveChangesAsync();
-
             }
             catch (SqlException ex)
             {

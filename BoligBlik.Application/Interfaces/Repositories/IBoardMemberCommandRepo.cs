@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Application.Interfaces.BoardMembers.Commands
+namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBoardMemberCommandRepo
     {

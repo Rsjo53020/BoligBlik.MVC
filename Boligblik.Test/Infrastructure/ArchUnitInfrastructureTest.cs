@@ -26,6 +26,20 @@ namespace Boligblik.ArchitectureTest.Infrastructure
                 .Check(Architecture);
         }
 
+        [Fact]
+        public void InfrastructureLayerShouldNotHaveDependancyOnPersistance()
+        {
+            //Arrange
+            ArchRuleDefinition
+                .Types()
+                .That().
+                Are(InfrastructureLayer)
+                //Act
+                .Should()
+                .NotDependOnAny(PersistanceLayer)
+                //Assert
+                .Check(Architecture);
+        }
 
     }
 }

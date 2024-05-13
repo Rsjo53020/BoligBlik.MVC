@@ -25,20 +25,20 @@ namespace BoligBlik.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet("new")]
+        [HttpGet("{title}")]
         public BoardMemberDTO GetBoardMember([FromQuery]string title)
         {
             return _querieService.ReadBoardMember(title);
         }
 
-        [HttpGet("All")]
+        [HttpGet()]
         public IEnumerable<BoardMemberDTO> GetAllBoardMembers()
         {
             return _querieService.ReadAllBoardMembers();
         }
 
         [HttpPut("updateMember")]
-        public ActionResult UpdateBoardMember([FromBody] UpdateBoardmemberDTO request)
+        public ActionResult UpdateBoardMember([FromBody] UpdateBoardMemberDTO request)
         {
             _commandService.UpdateBoardMember(request);
             return Ok();

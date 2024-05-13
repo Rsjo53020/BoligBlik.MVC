@@ -1,15 +1,8 @@
 ﻿using BoligBlik.Application.Features.Booking.Queries;
-using BoligBlik.Application.Interfaces;
 using BoligBlik.Application.Interfaces.Booking;
 using BoligBlik.Application.Interfaces.Message;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Infrastructure.Services.Message;
-using BoligBlik.Application.Features.BoardMembers.Commands;
-using BoligBlik.Application.Features.BoardMembers.Mappers;
-using BoligBlik.Application.Features.BoardMembers.Queries;
-using BoligBlik.Application.Interfaces.BoardMembers.Commands;
-using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
-using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using BoligBlik.Application.Features.User.Commands;
 using BoligBlik.Application.Features.User.Mapper;
 using BoligBlik.Application.Features.User.Queries;
@@ -34,15 +27,6 @@ namespace BoligBlik.Infrastructure.Extensions
 
             //Booking - Services
             services.AddScoped<IBookingQuerieService, BookingQueriesServices>();
-
-
-            //BoardMember - Services
-            services.AddScoped<IBoardMemberCommandService, BoardMemberCommandService>();
-            services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
-
-            //BoardMember - Mappers
-            services.AddScoped<IBoardMemberDTOMapper, BoardMemberDTOmapper>();
-            services.AddScoped<IBoardMemberMapper, BoardMemberMapper>();
 
 
             // User - Services

@@ -1,7 +1,8 @@
-﻿using BoligBlik.Application.DTO.BoardMember;
+﻿using AutoMapper;
+using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
-using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
 using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
@@ -12,16 +13,16 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         //UnitOfWork
         private readonly IUnitOfWork _uow;
         //Mappers
-        private readonly IBoardMemberDTOMapper _mapper;
+        private readonly IMapper _mapper;
         //Repositories
         private readonly IBoardMemberCommandRepo _boardMemberRepo;
         //Logger
         private readonly ILogger<BoardMemberCommandService> _logger;
-        public BoardMemberCommandService(IUnitOfWork uow, IBoardMemberMapper boardMemberMapper, 
-            IBoardMemberDTOMapper boardmemberDTOMapper, IBoardMemberCommandRepo boardMemberCommandRepo)
+        public BoardMemberCommandService(IUnitOfWork uow, IMapper mapper, 
+             IBoardMemberCommandRepo boardMemberCommandRepo)
         {
             _uow = uow;   
-            _mapper = boardmemberDTOMapper;
+            _mapper = mapper;
             _boardMemberRepo = boardMemberCommandRepo;
         }
 
@@ -35,11 +36,12 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 //map to model
-                var boardMember = _mapper.MapCreateBoardMemberToModel(request);
+                var boardMember = _mapper.Map<BoardMember>(request);
 
                 _boardMemberRepo.CreateBoardMember(boardMember);
 
                 _uow.CommitChangesAsync();
+                
             }
             catch (Exception ex)
             {
@@ -51,13 +53,13 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         /// Update Boardmember
         /// </summary>
         /// <param name="request"></param>
-        public void UpdateBoardMember(UpdateBoardmemberDTO request)
+        public void UpdateBoardMember(UpdateBoardMemberDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 //map to model
-                var boardMember = _mapper.MapUpdateBoardMemberToModel(request);
+                var boardMember = _mapper.Map<BoardMember>(request);
 
                 _boardMemberRepo.DeleteBoardMember(boardMember);
 
@@ -79,7 +81,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 //map to model
-                var boardMember = _mapper.MapDeleteBoardMemberToModel(request);
+                var boardMember = _mapper.Map<BoardMember>(request);
 
                 _boardMemberRepo.DeleteBoardMember(boardMember);
 
@@ -101,7 +103,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 //map to model
-                var boardMember = _mapper.MapAddUserToBoardMemberToModel(request);
+                var boardMember = _mapper.Map<BoardMember>(request);
 
                 _boardMemberRepo.AddUserToBoardMember(boardMember);
 
@@ -123,7 +125,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 //map to model
-                var boardMember = _mapper.MapUpdateBoardMemberparametersToModel(request);
+                var boardMember = _mapper.Map<BoardMember>(request);
 
                 _boardMemberRepo.UpdateBoardMemberParameters(boardMember);
 

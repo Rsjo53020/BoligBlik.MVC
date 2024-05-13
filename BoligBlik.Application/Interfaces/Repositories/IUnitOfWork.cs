@@ -14,7 +14,5 @@ namespace BoligBlik.Application.Interfaces.Repositories
         void BeginTransaction(IsolationLevel isolationLevel);
         Task CommitChangesAsync();
         void Rollback();
-
-        Task SaveChangesAsync();
     }
 }

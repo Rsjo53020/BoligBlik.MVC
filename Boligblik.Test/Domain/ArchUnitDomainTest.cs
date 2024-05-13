@@ -68,7 +68,9 @@ namespace Boligblik.ArchitectureTest.Domain
                 //Assert
                 .Check(Architecture);
         }
-
+        /// <summary>
+        /// test EF
+        /// </summary>
         [Fact]
         public void EntitiesShouldHavePrivateConstructorWithoutParameters()
         {

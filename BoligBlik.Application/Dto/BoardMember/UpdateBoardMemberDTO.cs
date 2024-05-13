@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.DTO.BoardMember
 {
-    public class UpdateBoardmemberDTO
+    public class UpdateBoardMemberDTO
     {
         public Guid ID { get; set; }
         public UserDTO User { get; set; }

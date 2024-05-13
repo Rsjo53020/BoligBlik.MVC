@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoligBlik.Persistence.Repositories.Queries
+namespace BoligBlik.Persistence.Repositories.BoardMembers
 {
     public class BoardMemberQuerieRepo : IBoardMemberQuerieRepo
     {
@@ -24,7 +24,7 @@ namespace BoligBlik.Persistence.Repositories.Queries
         public IEnumerable<BoardMember> ReadAllBoardMembers()
         {
             return _db.BoardMembers.AsNoTracking();
-                
+
         }
         /// <summary>
         /// returns one boardmember from their title

@@ -1,6 +1,7 @@
-﻿using BoligBlik.Application.DTO.BoardMember;
-using BoligBlik.Application.Interfaces.BoardMembers.Mappers;
+﻿using AutoMapper;
+using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+using BoligBlik.Application.Interfaces.Repositories;
 
 namespace BoligBlik.Application.Features.BoardMembers.Queries
 {
@@ -9,11 +10,11 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         //Repositories
         private readonly IBoardMemberQuerieRepo _boardMemberRepo;
         //Mapper
-        private readonly IBoardMemberMapper _mapper;
-        public BoardMemberQuerieService(IBoardMemberMapper boardMemberDTOMapper,
+        private readonly IMapper _mapper;
+        public BoardMemberQuerieService(IMapper mapper,
             IBoardMemberQuerieRepo boardMemberQuerieRepo)
         {
-            _mapper = boardMemberDTOMapper;
+            _mapper = mapper;
             _boardMemberRepo = boardMemberQuerieRepo;
         }
         /// <summary>
@@ -25,7 +26,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         {
             var member = _boardMemberRepo.ReadBoardMember(title);
             //map to DTO
-            var memberDTO = _mapper.MapModelToBoardMemberDTO(member);
+            var memberDTO = _mapper.Map<BoardMemberDTO>(member);
             return memberDTO;
         }
         /// <summary>
@@ -39,7 +40,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             foreach (var member in members)
             {
                 //map to DTO
-                memberDTOs.Add(_mapper.MapModelToBoardMemberDTO(member));
+                memberDTOs.Add(_mapper.Map<BoardMemberDTO>(member));
             }
             return memberDTOs;
         }

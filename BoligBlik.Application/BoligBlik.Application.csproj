@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Exceptions\" />
-    <Folder Include="Common\Mappings\" />
     <Folder Include="Features\Booking\Commands\CreateBooking\" />
     <Folder Include="Features\Booking\Commands\DeleteBooking\" />
     <Folder Include="Features\Booking\Commands\UpdateBooking\" />

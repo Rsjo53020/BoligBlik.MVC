@@ -10,7 +10,7 @@ namespace BoligBlik.Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BookingDbContext _dbContext;
-        private IDbContextTransaction? _beginTransaction;
+        private IDbContextTransaction? _transaction;
 
 
         public UnitOfWork(BookingDbContext dbContext)
@@ -20,27 +20,27 @@ namespace BoligBlik.Persistence.Repositories
 
         public void Rollback()
         {
-            _beginTransaction.Rollback();
+            _transaction.Rollback();
         }
 
-        public async Task SaveChangesAsync()
+        private async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
         }
 
         public void BeginTransaction(IsolationLevel isolationLevel)
         {
-            _beginTransaction = _dbContext.Database.BeginTransaction();
+            _transaction = _dbContext.Database.BeginTransaction();
         }
 
         public async Task CommitChangesAsync()
         {
-            if (_beginTransaction is null)
+            if (_transaction is null)
             {
                 return;
             }
-
-            await _beginTransaction.CommitAsync();
+            await SaveChangesAsync();
+            await _transaction.CommitAsync();
         }
 
         public void Dispose()

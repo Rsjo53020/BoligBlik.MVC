@@ -5,7 +5,7 @@ using BoligBlik.Application.Interfaces.Message;
 
 namespace BoligBlik.Infrastructure.Services.Message
 {
-    internal class MessageService : IMessageService
+    public class MessageService : IMessageService
     {
         /// <summary>
         /// This method sends a message using smtp client
