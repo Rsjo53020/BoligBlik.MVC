@@ -16,11 +16,11 @@ namespace BoligBlik.Persistence.Repositories
 {
     public class BookingRepo : IBookingRepo
     {
-        private readonly BookingDbContext _dbContext;
+        private readonly BoligBlikContext _dbContext;
         //private readonly DbSet<Booking> _dbSet;
         private readonly ILogger<Booking> _logger;
 
-        public BookingRepo(BookingDbContext dbContext)
+        public BookingRepo(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
             //_dbSet = _dbContext.Set<Booking>();

@@ -1,50 +1,49 @@
 ﻿using System.Data;
+using AutoMapper;
 using BoligBlik.Application.DTO.User;
 using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Commands;
-using BoligBlik.Application.Interfaces.Users.Mappers;
+using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace BoligBlik.Application.Features.User.Commands
+namespace BoligBlik.Application.Features.Users.Commands
 {
     public class UserCommandService : IUserCommandService
     {
         // Dependencies
         private readonly IUnitOfWork _uow;
-        private readonly IUserDTOMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly IUserCommandRepo _userRepo;
         private readonly ILogger<BoardMemberCommandService> _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public UserCommandService(IUnitOfWork uow, IUserDTOMapper userDTOMapper, IUserCommandRepo userCommandRepo)
+        public UserCommandService(IUnitOfWork uow, IMapper mapper, IUserCommandRepo userCommandRepo)
         {
             _uow = uow;
-            _mapper = userDTOMapper;
+            _mapper = mapper;
             _userRepo = userCommandRepo;
         }
 
         /// <summary>
         /// this method creates a user using Unit of Work pattern
         /// </summary>
-        public async Task<bool> CreateUserAsync(CreateUserDTO request)
+        public async Task CreateUserAsync(CreateUserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-                    var user = _mapper.MapCreateUserToModel(request);
+                    var user = _mapper.Map<User>(request);
                     await _userRepo.CreateUserAsync(user);
                     await _uow.CommitChangesAsync();
-                    return true; 
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
                 _logger.LogError("Error creating user with request: {@request}, Exception: {ex}", request, ex);
-                return false; 
             }
         }
 
@@ -56,7 +55,7 @@ namespace BoligBlik.Application.Features.User.Commands
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
-                var user = _mapper.MapDeleteUserToModel(request);
+                var user = _mapper.Map<User>(request);
                 await _userRepo.DeleteUserAsync(user); 
                 await _uow.CommitChangesAsync();
             }
@@ -75,7 +74,7 @@ namespace BoligBlik.Application.Features.User.Commands
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
-                var user = _mapper.MapUpdateUserToModel(request);
+                var user = _mapper.Map<User>(request);
                 await _userRepo.UpdateUserAsync(user);
                 await _uow.CommitChangesAsync();
             }

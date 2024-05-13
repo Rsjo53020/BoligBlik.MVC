@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Persistence.Repositories.Commands
+namespace BoligBlik.Persistence.Repositories.Users
 {
     public class UserCommandRepo : IUserCommandRepo
     {

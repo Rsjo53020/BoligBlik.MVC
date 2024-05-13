@@ -9,11 +9,11 @@ namespace BoligBlik.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly BookingDbContext _dbContext;
+        private readonly BoligBlikContext _dbContext;
         private IDbContextTransaction? _transaction;
 
 
-        public UnitOfWork(BookingDbContext dbContext)
+        public UnitOfWork(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
         }

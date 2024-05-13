@@ -10,14 +10,10 @@ namespace BoligBlik.Domain.Entities
         public User Member { get; set; }
         [Required]
         public string Description { get; set; }
-
         public DateOnly StartDate { get; set; }
         public Byte[] Image { get; set; }
-        public BoardMember() : base(Guid.NewGuid())
+        public BoardMember() : base()
         {
-            
         }
-
-
     }
 }

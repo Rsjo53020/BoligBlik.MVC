@@ -1,20 +1,19 @@
-﻿using BoligBlik.Application.DTO.User;
-using BoligBlik.Application.Interfaces.Users.Mappers;
+﻿using AutoMapper;
+using BoligBlik.Application.DTO.User;
 using BoligBlik.Application.Interfaces.Users.Queries;
 
-namespace BoligBlik.Application.Features.User.Queries
+namespace BoligBlik.Application.Features.Users.Queries
 {
-    //navnet på klasse forkert
-    public class UserQuerieService : IUserQuerieService
+    public class UserQueriesService : IUserQuerieService
     {
         //Dependencies
         private readonly IUserQuerieRepo _userRepo;
-        private readonly IUserMapper _mapper;
+        private readonly IMapper _mapper;
 
         //Constructor
-        public UserQuerieService(IUserMapper userDTOMapper, IUserQuerieRepo userQuerieRepo)
+        public UserQueriesService(IMapper mapper, IUserQuerieRepo userQuerieRepo)
         {
-            _mapper = userDTOMapper;
+            _mapper = mapper;
             _userRepo = userQuerieRepo;
         }
 
@@ -24,7 +23,7 @@ namespace BoligBlik.Application.Features.User.Queries
         public UserDTO ReadUser(string email)
         {
             var user = _userRepo.ReadUser(email);
-            var userDTO = _mapper.MapModelToUserDTO(user);
+            var userDTO = _mapper.Map<UserDTO>(user);
             return userDTO;
         }
 
@@ -37,7 +36,7 @@ namespace BoligBlik.Application.Features.User.Queries
             List<UserDTO> userDTOs = new List<UserDTO>();
             foreach (var user in users)
             {
-                userDTOs.Add(_mapper.MapModelToUserDTO(user));
+                userDTOs.Add(_mapper.Map<UserDTO>(user));
             }
             return userDTOs;
         }

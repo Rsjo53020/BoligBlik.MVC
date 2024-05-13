@@ -10,11 +10,6 @@ namespace BoligBlik.Domain.Common.Shared
 {
     public abstract class Entity
     {
-        protected Entity(Guid newGuid)
-        {
-            Id = newGuid;
-        }
-
         [Key]
         public Guid Id { get; set; }
         [Timestamp]

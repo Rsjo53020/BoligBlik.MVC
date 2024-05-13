@@ -7,43 +7,32 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class Booking
+    public class Booking : Entity
     {
         private readonly IBookingDomainService _bookingDomainService;
-
-        [Key]
-        public Guid Id { get; }
         public BookingDates BookingDates { get; set; }
         public bool Approved { get; private set; }
+        public Address Address { get; set; }
+        public User User { get; set; }
+        public Payment Payment { get; set; }
+        public Item Item { get; set; }
+        internal Booking() : base() { }
 
-        [Timestamp]
-        public byte[] RowVersion { get; private set; }
-
-
-        //public Address Address { get; set; }
-        //public User user { get; set; }
-        //public Payment payment { get; set; }
-        ////public Item item { get; set; }
-
-
-        internal Booking() { }
-
-        public Booking(Guid id, BookingDates bookingDates, /*Item item, Payment payment, Address address,*/ bool approved, IBookingDomainService bookingDomainService, byte[] RowVersion) /*: base(id)*/
+        public Booking(Guid id, BookingDates bookingDates, Item item, Payment payment, Address address,User user ,bool approved, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
         {
             this.Id = id;
             this.BookingDates = bookingDates;
             this.Approved = approved;
 
-            //this.Item = item;
-            //this.Payment = payment;
-            //this.Address = address;
-            //this.User = user
+            this.Item = item;
+            this.Payment = payment;
+            this.Address = address;
+            this.User = user;
             _bookingDomainService = bookingDomainService;
             this.RowVersion = RowVersion;
 
             ValidateBooking();
         }
-
 
         //public static Booking Create(BookingDates bookingDates, bool approved, IBookingDomainService bookingDomainService)
         //{
@@ -68,10 +57,7 @@ namespace BoligBlik.Domain.Entities
             {
                 throw new BookingIsOverlappingException("Booking overlaps with existing booking");
             }
-
-
         }
-
 
         public void ValidateTimeInput(string parameter, DateTime dateTime)
         {
@@ -79,15 +65,10 @@ namespace BoligBlik.Domain.Entities
             {
                 throw new TimeNotSetException($"{parameter} is not set");
             }
-
-
             if (dateTime < _bookingDomainService.NowTime())
             {
                 throw new TimeInPastException($"{parameter} is not set in the future");
             }
-
-
         }
-
     }
 }

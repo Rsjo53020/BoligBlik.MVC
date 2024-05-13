@@ -4,6 +4,7 @@ using BoligBlik.Application.DTO.Booking;
 using BoligBlik.Application.Interfaces.Booking;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Domain.Entities;
 using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Application.Features.Booking.Commands
@@ -25,21 +26,20 @@ namespace BoligBlik.Application.Features.Booking.Commands
 
         public void CreateBooking(CreateBookingDTO createBookingDTO)
         {
-            try
-            {
-                _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-                var bookingDates = new BookingDates(createBookingDTO.CreationDate, createBookingDTO.StartTime, createBookingDTO.EndTime);
-                var booking = new Domain.Entities.Booking(Guid.NewGuid(), bookingDates, createBookingDTO.Approved, _bookingDomainService, createBookingDTO.RowVersion);
-                _bookingRepo.Create(booking);
+            //try
+            //{
+            //    _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
+            //    var bookingDates = new BookingDates(createBookingDTO.CreationDate, createBookingDTO.StartTime, createBookingDTO.EndTime);
+            //    var booking = new Domain.Entities.Booking(Guid.NewGuid(), bookingDates, item, createBookingDTO.Approved, _bookingDomainService, createBookingDTO.RowVersion);
+            //    _bookingRepo.Create(booking);
 
-                _unitOfWork.CommitChangesAsync();
-            }
-            catch (Exception e)
-            {
-                _unitOfWork.Rollback();
-                throw;
-            }
-
+            //    _unitOfWork.CommitChangesAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    _unitOfWork.Rollback();
+            //    throw;
+            //}
         }
 
         public void UpdateBooking(UpdateBookingDTO updateBookingDTO)

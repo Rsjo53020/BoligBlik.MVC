@@ -13,9 +13,9 @@ namespace BoligBlik.Persistence.Services
 {
     public class BookingDomainService : IBookingDomainService
     {
-        private readonly BookingDbContext _dbContext;
+        private readonly BoligBlikContext _dbContext;
 
-        public BookingDomainService(BookingDbContext dbContext)
+        public BookingDomainService(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -7,8 +7,8 @@ namespace BoligBlik.Application.Interfaces.Users.Commands
     /// </summary>
     public interface IUserCommandService
     {
-        Task<bool> CreateUserAsync(CreateUserDTO command);
-        Task UpdateUserAsync(UpdateUserDTO command);
-        Task DeleteUserAsync(DeleteUserDTO command);
+        Task CreateUserAsync(CreateUserDTO request);
+        Task UpdateUserAsync(UpdateUserDTO request);
+        Task DeleteUserAsync(DeleteUserDTO request);
     }
 }

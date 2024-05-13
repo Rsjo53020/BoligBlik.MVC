@@ -18,7 +18,7 @@ namespace BoligBlik.Domain.Entities
 
         public string FilePath { get; set; }
 
-        public Document() : base(Guid.NewGuid())
+        public Document() : base()
         {
         }
     }

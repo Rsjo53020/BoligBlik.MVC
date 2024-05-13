@@ -1,7 +1,7 @@
 ﻿using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Persistence.Repositories.Queries
+namespace BoligBlik.Persistence.Repositories.Users
 {
     public class UserQuerieRepo : IUserQuerieRepo
     {

@@ -17,7 +17,7 @@ namespace BoligBlik.Domain.Entities
         [Required]
         public string Description { get; set; }
 
-        public Meeting() : base(Guid.NewGuid())
+        public Meeting() : base()
         {
         }
     }

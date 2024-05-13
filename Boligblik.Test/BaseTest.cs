@@ -1,9 +1,9 @@
-﻿using BoligBlik.Application.Features.User.Commands;
+﻿using BoligBlik.Application.Features.Users.Commands;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Infrastructure.Extensions;
 using BoligBlik.Infrastructure.Services.Message;
-using BoligBlik.Persistence.Repositories.Commands;
+using BoligBlik.Persistence.Repositories.Users;
 using BoligBlik.Persistence.Services;
 using BoligBlik.WebAPI;
 using BoligBlik.WebAPI.Controllers;

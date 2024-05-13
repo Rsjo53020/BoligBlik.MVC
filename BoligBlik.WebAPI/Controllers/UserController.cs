@@ -17,15 +17,15 @@ namespace BoligBlik.WebAPI.Controllers
             _querieService = userQuerieService;
         }
 
-        [HttpPost("Create User")]
+        [HttpPost]
         public ActionResult PostUser([FromBody] CreateUserDTO request)
         {
             _commandService.CreateUserAsync(request);
             return Created();
         }
 
-        [HttpGet("Get User")]
-        public UserDTO GetUser([FromQuery] string email)
+        [HttpGet("{email}")]
+        public UserDTO GetUser(string email)
         {
             return _querieService.ReadUser(email);
         }
@@ -36,14 +36,14 @@ namespace BoligBlik.WebAPI.Controllers
             return _querieService.ReadAllUsers();
         }
 
-        [HttpPut("Update User")]
+        [HttpPut]
         public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
         {
             _commandService.UpdateUserAsync(request);
             return Ok();
         }
 
-        [HttpDelete("Delete User")]
+        [HttpDelete]
         public ActionResult DeleteUser([FromBody] DeleteUserDTO request)
         {
             _commandService.DeleteUserAsync(request);

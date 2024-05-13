@@ -4,13 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Domain.Entities
 {
-    public class Item
+    public class Item : Entity
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         public Decimal Price { get; set; }
@@ -18,7 +17,10 @@ namespace BoligBlik.Domain.Entities
         public string Rules { get; set; }
         public string Repairs { get; set; }
         public Byte[] Image { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+
+        public Item() : base()
+        {
+            
+        }
     }
 }

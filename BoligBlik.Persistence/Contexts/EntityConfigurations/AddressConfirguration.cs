@@ -14,8 +14,7 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.ToTable("Address", "adress");
-            builder.HasKey(x => x.DAWAId);
+            builder.ComplexProperty(p => p.PostalCode);
         }
     }
 }

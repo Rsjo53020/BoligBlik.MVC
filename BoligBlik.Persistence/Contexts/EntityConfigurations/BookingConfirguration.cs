@@ -10,14 +10,12 @@ using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Persistence.Contexts.EntityConfigurations
 {
-    public class BookingConfirguration : IEntityTypeConfiguration<Booking>
+    public class BookingConfirguration : IEntityTypeConfiguration<Booking>  
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
-            builder.ToTable("Booking", "booking");
-            builder.HasKey(i => i.Id);
-            builder.HasOne(a => a.BookingDates);
-
+            builder.ComplexProperty(b => b.BookingDates);
+            builder.ComplexProperty(a => a.Address);
         }
     }
 }

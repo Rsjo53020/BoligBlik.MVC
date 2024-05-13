@@ -5,14 +5,6 @@ namespace BoligBlik.Domain.Entities
 {
     public class Message : Entity
     {
-        public Message(Guid id, User sender, User Recipient, string subject, string body) : base(id)
-        {
-            this.Sender = sender;
-            this.Recipient = Recipient;
-            this.Subject = subject;
-            this.Body = body;
-        }
-
         [Required]
         public User Sender { get; set; }
         [Required]
@@ -21,5 +13,18 @@ namespace BoligBlik.Domain.Entities
         public string Subject { get; set; }
         [Required]
         public string Body { get; set; }
+
+        public Message() : base()
+        {
+            
+        }
+
+        public Message(Guid id, User sender, User Recipient, string subject, string body) : base()
+        {
+            this.Sender = sender;
+            this.Recipient = Recipient;
+            this.Subject = subject;
+            this.Body = body;
+        }
     }
 }

@@ -10,5 +10,4 @@ namespace BoligBlik.Domain.Value
 {
     public record Address(Guid DAWAId, string Street, string HouseNumber, string Floor, string DoorNumber,
         PostalCode PostalCode);
-
 }
