@@ -7,12 +7,12 @@ namespace BoligBlik.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookItemsController : ControllerBase
+    public class BookingItemsController : ControllerBase
     {
         private readonly IBookingItemCommandService _bookItemCommandService;
         private readonly IBookingItemQuerieService _bookItemQuerieService;
 
-        public BookItemsController(IBookingItemCommandService bookingItemCommandService,
+        public BookingItemsController(IBookingItemCommandService bookingItemCommandService,
             IBookingItemQuerieService bookingItemQuerieService)
         {
             _bookItemCommandService = bookingItemCommandService;
