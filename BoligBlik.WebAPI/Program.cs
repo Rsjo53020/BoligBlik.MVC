@@ -1,6 +1,8 @@
 using BoligBlik.Persistence.Extensions;
 using BoligBlik.Infrastructure.Extensions;
 using BoligBlik.Application.Extensions;
+using BoligBlik.Application.Interfaces.Infrastructure;
+using BoligBlik.Infrastructure.Services.Addresses;
 
 
 namespace BoligBlik.WebAPI
@@ -22,6 +24,8 @@ namespace BoligBlik.WebAPI
             // Learn more about configuing Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient();
+            builder.Services.AddHttpClient<IAddressValidationInf, AddressValidationInf>();
 
 
 

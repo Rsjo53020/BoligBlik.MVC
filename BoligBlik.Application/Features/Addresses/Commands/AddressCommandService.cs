@@ -28,11 +28,15 @@ namespace BoligBlik.Application.Features.Addresses.Commands
         public void Create(AddressDTO request)
         {
             var address = _mapper.Map<Address>(request);
+            var resultat = _addressValidationInf.ValidateAddressAsync(address);
 
-            if (!_addressValidationInf.ValidateAddress(address)) 
+            if (resultat != Task.CompletedTask) 
                 throw new ValidationException("Validation failed on address");
+            if (resultat == Task.CompletedTask)
+            {
+               _addressRepo.Create(address);
+            }
 
-            _addressRepo.Create(address);
         }
     }
 }
