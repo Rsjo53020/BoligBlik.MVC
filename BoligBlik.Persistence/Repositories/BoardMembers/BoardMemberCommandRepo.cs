@@ -29,6 +29,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 _db.AddAsync(boardMember);
+                _db.SaveChanges();
             }
             catch (SqlException ex)
             {
@@ -44,6 +45,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 _db.Update(boardMember);
+                _db.SaveChanges();
             }
             catch (SqlException ex)
             {
@@ -60,6 +62,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 _db.Remove(boardMember);
+                _db.SaveChanges();
             }
             catch (SqlException ex)
             {
@@ -76,6 +79,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 _db.Update(boardMember);
+                _db.SaveChanges();
             }
             catch (SqlException ex)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoligBlik.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBoardMemberCommandRepo
     {
-        void AddUserToBoardMember(Domain.Entities.BoardMember boardMember);
-        void CreateBoardMember(Domain.Entities.BoardMember boardMember);
-        void DeleteBoardMember(Domain.Entities.BoardMember boardMember);
-        void UpdateBoardMemberParameters(Domain.Entities.BoardMember boardMember);
+        void AddUserToBoardMember(BoardMember boardMember);
+        void CreateBoardMember(BoardMember boardMember);
+        void DeleteBoardMember(BoardMember boardMember);
+        void UpdateBoardMemberParameters(BoardMember boardMember);
     }
 }

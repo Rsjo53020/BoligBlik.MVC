@@ -22,9 +22,9 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public BoardMemberDTO ReadBoardMember(string title)
+        public async Task<BoardMemberDTO> ReadBoardMemberAsync(string title)
         {
-            var member = _boardMemberRepo.ReadBoardMember(title);
+            var member = await _boardMemberRepo.ReadBoardMemberAsync(title);
             //map to DTO
             var memberDTO = _mapper.Map<BoardMemberDTO>(member);
             return memberDTO;
@@ -33,9 +33,9 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         /// reads all boardmembers
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BoardMemberDTO> ReadAllBoardMembers()
+        public async Task<IEnumerable<BoardMemberDTO>> ReadAllBoardMembersAsync()
         {
-            var members = _boardMemberRepo.ReadAllBoardMembers();
+            var members = await _boardMemberRepo.ReadAllBoardMembersAsync();
             List<BoardMemberDTO> memberDTOs = new List<BoardMemberDTO>();
             foreach (var member in members)
             {

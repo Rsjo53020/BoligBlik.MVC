@@ -25,16 +25,16 @@ namespace BoligBlik.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet("{title}")]
-        public BoardMemberDTO GetBoardMember(string title)
+        [HttpGet]
+        public async Task<BoardMemberDTO> GetBoardMember([FromQuery]string title)
         {
-            return _querieService.ReadBoardMember(title);
+            return await _querieService.ReadBoardMemberAsync(title);
         }
 
-        [HttpGet()]
-        public IEnumerable<BoardMemberDTO> GetAllBoardMembers()
+        [HttpGet("all")]
+        public async Task<IEnumerable<BoardMemberDTO>> GetAllBoardMembers()
         {
-            return _querieService.ReadAllBoardMembers();
+            return await _querieService.ReadAllBoardMembersAsync();
         }
 
         [HttpPut()]
