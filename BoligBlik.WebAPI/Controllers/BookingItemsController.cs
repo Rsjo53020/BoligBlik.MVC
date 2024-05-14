@@ -27,9 +27,9 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<BookingItemDTO> GetBookingItem([FromQuery] string title)
+        public async Task<BookingItemDTO> GetBookingItem([FromQuery] string name)
         {
-            return await _bookItemQuerieService.ReadBookingItemAsync(title);
+            return await _bookItemQuerieService.ReadBookingItemAsync(name);
         }
 
         [HttpPut]
