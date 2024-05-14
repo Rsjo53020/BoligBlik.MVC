@@ -1,5 +1,5 @@
-﻿using BoligBlik.Application.Features.Booking.Queries;
-using BoligBlik.Application.Interfaces.Booking;
+﻿using BoligBlik.Application.Features.Bookings.Queries;
+using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Message;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Infrastructure.Services.Message;

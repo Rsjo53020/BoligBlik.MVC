@@ -2,13 +2,13 @@
 using BoligBlik.Application.Common.Mappings;
 using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Features.BoardMembers.Queries;
-using BoligBlik.Application.Features.Booking.Commands;
-using BoligBlik.Application.Features.Booking.Queries;
+using BoligBlik.Application.Features.Bookings.Commands;
+using BoligBlik.Application.Features.Bookings.Queries;
 using BoligBlik.Application.Features.Users.Commands;
 using BoligBlik.Application.Features.Users.Queries;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
-using BoligBlik.Application.Interfaces.Booking;
+using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,14 +22,25 @@ namespace BoligBlik.Application.Extensions
             //Add features
             AddBoardMember(services);
             AddUsersService(services);
+            AddBooking(services);
         }
 
         private static void AddBooking(this IServiceCollection services)
         {
             services.AddScoped<IBookingCommandService, BookingCommandService>();
             services.AddScoped<IBookingQuerieService, BookingQueriesServices>();
-        }
 
+            ConfigureBookingMappers(services);
+        }
+        private static void ConfigureBookingMappers(this IServiceCollection services)
+        {
+            var mapConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new BookingMappingProfiles());
+            });
+            IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
         private static void AddBoardMember(this IServiceCollection services)
         {
             //Services
@@ -37,7 +48,6 @@ namespace BoligBlik.Application.Extensions
             services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
             ConfigureBoardMemberMappers(services);
         }
-
         private static void ConfigureBoardMemberMappers(this IServiceCollection services)
         {
             var mapConfig = new MapperConfiguration(mc =>
@@ -48,7 +58,6 @@ namespace BoligBlik.Application.Extensions
             IMapper mapper = mapConfig.CreateMapper();
             services.AddSingleton(mapper);
         }
-
         private static void AddUsersService(this IServiceCollection services)
         {
             //Services
