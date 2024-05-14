@@ -30,9 +30,9 @@ namespace BoligBlik.Infrastructure.Extensions
         {
             // IHttpClientFactory
             
-            services.AddHttpClient<ILevSundtService, LevSundtService>(client =>
-                 client.BaseAddress = new Uri(builder.Configuration["LevSundtBaseUrl"])
-             );
+            //services.AddHttpClient<ILevSundtService, LevSundtService>(client =>
+            //     client.BaseAddress = new Uri(builder.Configuration["LevSundtBaseUrl"])
+             //);
         }
     }
 }

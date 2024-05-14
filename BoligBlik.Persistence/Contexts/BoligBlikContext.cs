@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Domain.Value;
 using System.Reflection;
+using BoligBlik.Persistence.Contexts.Seeder;
 
 namespace BoligBlik.Persistence.Contexts
 {
     public class BoligBlikContext : DbContext
     {
-        public BoligBlikContext(DbContextOptions<BoligBlikContext> options) : base(options) { }
+        //private readonly BoligblikSeeder _seeder;
+        public BoligBlikContext(DbContextOptions<BoligBlikContext> options, BoligblikSeeder seeder) : base(options) { }
 
         public DbSet<BoardMember> BoardMembers { get; set; }
         public DbSet<Booking> Bookings { get; set; }

@@ -7,13 +7,19 @@ namespace BoligBlik.Domain.Entities
     {
         [Required]
         public string Title { get; set; }
-        public User Member { get; set; }
+        public User User { get; set; }
         [Required]
         public string Description { get; set; }
         public DateOnly StartDate { get; set; }
         public Byte[] Image { get; set; }
-        public BoardMember() : base()
+        internal BoardMember() : base()
         {
+        }
+        public BoardMember(string title, string description, User user)
+        {
+            Title = title;
+            Description = description;
+            User = user;
         }
     }
 }

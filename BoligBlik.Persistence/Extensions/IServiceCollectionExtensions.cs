@@ -10,6 +10,7 @@ using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Persistence.Repositories.BoardMembers;
 using BoligBlik.Persistence.Repositories.Bookings;
 using BoligBlik.Persistence.Repositories.Users;
+using BoligBlik.Persistence.Repositories.Addresses;
 
 //using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
@@ -46,6 +47,10 @@ namespace BoligBlik.Persistence.Extensions
             //BoardMembers
             services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
             services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
+
+            //Addresses
+            services.AddScoped<IAddressCommandRepo, AddressCommandRepo>();
+            services.AddScoped<IAddressQuerieRepo, AddressQuerieRepo>();
 
 
             //fremgår to steder dette IoC tilhører database !!!

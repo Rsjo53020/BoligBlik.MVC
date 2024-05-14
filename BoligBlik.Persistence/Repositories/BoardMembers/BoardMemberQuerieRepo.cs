@@ -54,7 +54,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             catch (Exception ex)
             {
                 _logger.LogError("Error in Read in Booking: " + ex.Message);
-                return new BoardMember();
+                return null; /*new BoardMember();*/
             }
         }
     }
