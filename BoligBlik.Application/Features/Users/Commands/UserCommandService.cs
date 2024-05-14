@@ -30,15 +30,15 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method creates a user using Unit of Work pattern
         /// </summary>
-        public async Task CreateUserAsync(CreateUserDTO request)
+        public void CreateUser(CreateUserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-                    var user = _mapper.Map<User>(request);
-                    await _userRepo.CreateUserAsync(user);
-                    await _uow.CommitChangesAsync();
+                var user = _mapper.Map<User>(request);
+                _userRepo.CreateUser(user);
+                _uow.CommitChangesAsync();
             }
             catch (Exception ex)
             {
@@ -50,14 +50,14 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method Deletes a user using Unit of Work pattern
         /// </summary>
-        public async Task DeleteUserAsync(DeleteUserDTO request)
+        public void DeleteUser(DeleteUserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.Map<User>(request);
-                await _userRepo.DeleteUserAsync(user); 
-                await _uow.CommitChangesAsync();
+                _userRepo.DeleteUser(user);
+                _uow.CommitChangesAsync();
             }
             catch (Exception ex)
             {
@@ -69,14 +69,14 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method updates a user using Unit of Work pattern
         /// </summary>
-        public async Task UpdateUserAsync(UpdateUserDTO request)
+        public void UpdateUser(UpdateUserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.Map<User>(request);
-                await _userRepo.UpdateUserAsync(user);
-                await _uow.CommitChangesAsync();
+                _userRepo.UpdateUser(user);
+                _uow.CommitChangesAsync();
             }
             catch (Exception ex)
             {

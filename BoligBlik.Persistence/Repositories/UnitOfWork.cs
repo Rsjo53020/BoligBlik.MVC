@@ -23,7 +23,7 @@ namespace BoligBlik.Persistence.Repositories
             _transaction.Rollback();
         }
 
-        private async Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
         }

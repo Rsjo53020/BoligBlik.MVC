@@ -20,9 +20,9 @@ namespace BoligBlik.Application.Features.Users.Queries
         /// <summary>
         /// This method reads a user by Email
         /// </summary>
-        public UserDTO ReadUser(string email)
+        public async Task<UserDTO> ReadUserAsync(string email)
         {
-            var user = _userRepo.ReadUser(email);
+            var user = await _userRepo.ReadUserAsync(email);
             var userDTO = _mapper.Map<UserDTO>(user);
             return userDTO;
         }
@@ -30,9 +30,9 @@ namespace BoligBlik.Application.Features.Users.Queries
         /// <summary>
         /// This method reads all users
         /// </summary>
-        public IEnumerable<UserDTO> ReadAllUsers()
+        public async Task<IEnumerable<UserDTO>> ReadAllUsersAsync()
         {
-            var users = _userRepo.ReadAllUsers();
+            var users = await _userRepo.ReadAllUsersAsync();
             List<UserDTO> userDTOs = new List<UserDTO>();
             foreach (var user in users)
             {

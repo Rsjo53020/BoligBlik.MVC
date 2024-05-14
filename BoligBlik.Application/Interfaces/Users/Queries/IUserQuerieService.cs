@@ -7,7 +7,7 @@ namespace BoligBlik.Application.Interfaces.Users.Queries
     /// </summary>
     public interface IUserQuerieService
     {
-        public UserDTO ReadUser(string email);
-        public IEnumerable<UserDTO> ReadAllUsers();
+        Task<UserDTO> ReadUserAsync(string email);
+        Task<IEnumerable<UserDTO>> ReadAllUsersAsync();
     }
 }

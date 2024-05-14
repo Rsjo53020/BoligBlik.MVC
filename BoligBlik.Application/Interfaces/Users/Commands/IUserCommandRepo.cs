@@ -8,8 +8,8 @@ namespace BoligBlik.Application.Interfaces.Users.Commands
     /// </summary>
     public interface IUserCommandRepo
     {
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(User user);
+        void CreateUser(User user);
+        void UpdateUser(User user);
+        void DeleteUser(User user);
     }
 }

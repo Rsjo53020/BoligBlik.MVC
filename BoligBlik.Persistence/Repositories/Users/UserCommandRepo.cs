@@ -5,24 +5,59 @@ using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;
+using BoligBlik.Persistence.Contexts;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Persistence.Repositories.Users
 {
     public class UserCommandRepo : IUserCommandRepo
     {
-        public Task CreateUserAsync(User user)
+        private readonly BoligBlikContext _dbContext;
+        private readonly ILogger<User> _logger;
+
+        public UserCommandRepo(BoligBlikContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        public void CreateUser(User user)
+        {
+            try
+            {
+                _dbContext.AddAsync(user);
+                _dbContext.SaveChangesAsync();
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError("Error in create in user: " + ex.Message);
+            }
+
         }
 
-        public Task UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Update(user);
+                _dbContext.SaveChangesAsync();
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError("Error in update in user: " + ex.Message);
+            }
         }
 
-        public Task DeleteUserAsync(User user)
+        public void DeleteUser(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.Remove(user);
+                _dbContext.SaveChangesAsync();
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError("Error in delete in user: " + ex.Message);
+            }
         }
     }
 }
