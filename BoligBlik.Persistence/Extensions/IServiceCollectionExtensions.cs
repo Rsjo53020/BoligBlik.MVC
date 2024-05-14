@@ -11,6 +11,7 @@ using BoligBlik.Persistence.Repositories.BoardMembers;
 using BoligBlik.Persistence.Repositories.Bookings;
 using BoligBlik.Persistence.Repositories.Users;
 using BoligBlik.Persistence.Repositories.Addresses;
+using BoligBlik.Persistence.Contexts.Seeder;
 
 //using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
@@ -52,22 +53,18 @@ namespace BoligBlik.Persistence.Extensions
             services.AddScoped<IAddressCommandRepo, AddressCommandRepo>();
             services.AddScoped<IAddressQuerieRepo, AddressQuerieRepo>();
 
-
-            //fremgår to steder dette IoC tilhører database !!!
-            //services.AddScoped<IUserQuerieService, UserQuerieService>();
         }
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            //services.AddDbContext<BookingDbContext>(options =>
-            //    options.UseSqlServer(connectionString,
-            //        builder => builder.MigrationsAssembly(typeof(BookingDbContext).Assembly.FullName)));
 
             services.AddDbContext<BoligBlikContext>(options =>
                 options.UseSqlServer(connectionString,
                     builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
+
+            services.AddScoped<BoligblikSeeder>();
         }
 
 
