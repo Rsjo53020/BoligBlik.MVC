@@ -37,6 +37,7 @@ namespace BoligBlik.Application.Features.Users.Commands
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
                 var user = _mapper.Map<User>(request);
+                user.Id = Guid.NewGuid();
                 _userRepo.CreateUser(user);
                 _uow.CommitChangesAsync();
             }

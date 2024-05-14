@@ -14,12 +14,11 @@ namespace BoligBlik.Domain.Entities
         internal BoardMember() : base()
         {
         }
-        public BoardMember(Guid id, string title, string description, User user)
+        public BoardMember(Guid id, string title, string description)
         {
             Id = id;
             Title = title;
             Description = description;
-            User = user;
         }
     }
 }

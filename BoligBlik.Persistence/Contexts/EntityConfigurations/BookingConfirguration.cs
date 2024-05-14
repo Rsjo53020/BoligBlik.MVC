@@ -16,6 +16,7 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
         {
             builder.ComplexProperty(b => b.BookingDates);
             builder.ComplexProperty(a => a.Address);
+
         }
     }
 }
