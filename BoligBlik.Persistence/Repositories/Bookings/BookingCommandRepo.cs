@@ -21,7 +21,6 @@ namespace BoligBlik.Persistence.Repositories
         public BookingCommandRepo(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
-            //_dbSet = _dbContext.Set<Booking>();
         }
         public void Create(Booking booking)
         {
@@ -32,7 +31,7 @@ namespace BoligBlik.Persistence.Repositories
             }
             catch (SqlException ex)
             {
-                _logger.LogError("Error in CreateAsync in Booking: " + ex.Message);
+                _logger.LogError("Error in create in Booking: " + ex.Message);
             }
 
         }
@@ -47,7 +46,7 @@ namespace BoligBlik.Persistence.Repositories
             }
             catch (SqlException ex)
             {
-                _logger.LogError("Error in CreateAsync in Booking: " + ex.Message);
+                _logger.LogError("Error in update in Booking: " + ex.Message);
             }
         }
 
@@ -60,7 +59,7 @@ namespace BoligBlik.Persistence.Repositories
             }
             catch (SqlException ex)
             {
-                _logger.LogError("Error in CreateAsync in Booking: " + ex.Message);
+                _logger.LogError("Error in delete in Booking: " + ex.Message);
             }
         }
     }

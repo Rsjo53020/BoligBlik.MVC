@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserCommandService _commandService;
@@ -20,33 +22,33 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public ActionResult PostUser([FromBody] CreateUserDTO request)
         {
-            _commandService.CreateUserAsync(request);
+            _commandService.CreateUser(request);
             return Created();
         }
 
         [HttpGet("{email}")]
-        public UserDTO GetUser(string email)
+        public async Task<UserDTO> GetUser(string email)
         {
-            return _querieService.ReadUser(email);
+            return await _querieService.ReadUserAsync(email);
         }
 
-        [HttpGet("Get Users")]
-        public IEnumerable<UserDTO> GetAllUsers()
+        [HttpGet]
+        public Task<IEnumerable<UserDTO>> GetAllUsers()
         {
-            return _querieService.ReadAllUsers();
+            return _querieService.ReadAllUsersAsync();
         }
 
         [HttpPut]
         public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
         {
-            _commandService.UpdateUserAsync(request);
+            _commandService.UpdateUser(request);
             return Ok();
         }
 
         [HttpDelete]
         public ActionResult DeleteUser([FromBody] DeleteUserDTO request)
         {
-            _commandService.DeleteUserAsync(request);
+            _commandService.DeleteUser(request);
             return Ok();
         }
     }

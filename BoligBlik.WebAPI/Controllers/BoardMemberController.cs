@@ -25,8 +25,9 @@ namespace BoligBlik.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet("{title}")]
-        public BoardMemberDTO GetBoardMember([FromQuery]string title)
+        [Route("{title}")]
+        [HttpGet()]
+        public BoardMemberDTO GetBoardMember(string title)
         {
             return _querieService.ReadBoardMember(title);
         }
