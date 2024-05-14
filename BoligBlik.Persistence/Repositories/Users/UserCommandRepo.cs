@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;

@@ -4,6 +4,8 @@ using BoligBlik.Application.Features.Addresses.Commands;
 using BoligBlik.Application.Features.Addresses.Queries;
 using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Features.BoardMembers.Queries;
+using BoligBlik.Application.Features.BookingItems.Commands;
+using BoligBlik.Application.Features.BookingItems.Queries;
 using BoligBlik.Application.Features.Bookings.Commands;
 using BoligBlik.Application.Features.Bookings.Queries;
 using BoligBlik.Application.Features.Users.Commands;
@@ -12,6 +14,8 @@ using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Addresses.Queries;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+using BoligBlik.Application.Interfaces.BookingItems.Commands;
+using BoligBlik.Application.Interfaces.BookingItems.Queries;
 using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
@@ -28,6 +32,24 @@ namespace BoligBlik.Application.Extensions
             AddUsersService(services);
             AddBooking(services);
             AddAddresses(services);
+            AddBookingItems(services);
+        }
+
+        private static void AddBookingItems(this IServiceCollection services)
+        {
+            services.AddScoped<IBookingItemCommandService, BookingItemCommandService>();
+            services.AddScoped<IBookingItemQuerieService, BookingItemQuerieService>();
+            ConfigureBookingItemMappers(services);
+        }
+
+        private static void ConfigureBookingItemMappers(this IServiceCollection services)
+        {
+            var mapConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new BookingItemMappingProfile());
+            });
+            IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         private static void AddAddresses(this IServiceCollection services)

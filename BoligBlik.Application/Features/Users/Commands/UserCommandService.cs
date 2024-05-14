@@ -15,7 +15,7 @@ namespace BoligBlik.Application.Features.Users.Commands
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IUserCommandRepo _userRepo;
-        private readonly ILogger<BoardMemberCommandService> _logger;
+        private readonly ILogger<IUserCommandService> _logger;
 
         /// <summary>
         /// Constructor

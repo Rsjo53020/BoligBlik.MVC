@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Item;
+﻿using System.ComponentModel.DataAnnotations;
+using BoligBlik.Application.DTO.BookingItems;
 
 namespace BoligBlik.Application.DTO.Bookings
 {
@@ -22,7 +17,7 @@ namespace BoligBlik.Application.DTO.Bookings
         [Required]
         public Guid ItemId { get; set; }
 
-        public IEnumerable<ItemDTO> Item { get; set; }
+        public IEnumerable<BookingItemDTO> Item { get; set; }
 
         [Required]
         public Guid AddressId { get; set; }

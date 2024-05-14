@@ -1,6 +1,6 @@
 ﻿using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Interfaces.Users.Queries
+namespace BoligBlik.Application.Interfaces.Repositories
 {
     /// <summary>
     /// Ínterface for the UserQuerieRepo
