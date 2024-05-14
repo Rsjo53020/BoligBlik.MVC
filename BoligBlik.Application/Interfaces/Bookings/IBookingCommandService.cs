@@ -1,6 +1,4 @@
 ﻿using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.DTO.Item;
-using BoligBlik.Application.DTO.User;
 
 namespace BoligBlik.Application.Interfaces.Bookings
 {

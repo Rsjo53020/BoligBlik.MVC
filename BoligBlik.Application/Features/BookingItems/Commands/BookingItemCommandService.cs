@@ -11,11 +11,11 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
         // Dependencies
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        private readonly IBookingCommandRepo _bookingItemRepo;
+        private readonly IBookingItemCommandRepo _bookingItemRepo;
         private readonly ILogger<IBookingItemCommandService> _logger;
 
         //Constructor
-        public BookingItemCommandService(IUnitOfWork uow, IMapper mapper, IBookingCommandRepo bookingItemRepo)
+        public BookingItemCommandService(IUnitOfWork uow, IMapper mapper, IBookingItemCommandRepo bookingItemRepo)
         {
             _uow = uow;
             _mapper = mapper;

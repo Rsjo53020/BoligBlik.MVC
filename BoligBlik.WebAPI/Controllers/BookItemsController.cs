@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class BookItemsController : ControllerBase
     {
         private readonly IBookingItemCommandService _bookItemCommandService;

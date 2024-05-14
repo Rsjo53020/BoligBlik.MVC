@@ -3,6 +3,7 @@ using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
+using BoligBlik.Persistence.Contexts.Seeder;
 using BoligBlik.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
