@@ -7,6 +7,8 @@ using BoligBlik.Application.Features.Users.Commands;
 using BoligBlik.Application.Features.Users.Queries;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
+using BoligBlik.Application.Interfaces.Infrastructure;
+using BoligBlik.Infrastructure.Services.Addresses;
 
 namespace BoligBlik.Infrastructure.Extensions
 {
@@ -21,6 +23,16 @@ namespace BoligBlik.Infrastructure.Extensions
         private static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IAddressValidationInf, AddressValidationInf>();
+        }
+
+        private static void AddHttpClientFactory(this IServiceCollection services)
+        {
+            // IHttpClientFactory
+            
+            services.AddHttpClient<ILevSundtService, LevSundtService>(client =>
+                 client.BaseAddress = new Uri(builder.Configuration["LevSundtBaseUrl"])
+             );
         }
     }
-} 
+}

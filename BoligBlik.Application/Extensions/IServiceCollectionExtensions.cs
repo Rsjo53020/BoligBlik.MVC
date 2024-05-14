@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.Common.Mappings;
+using BoligBlik.Application.Features.Addresses.Commands;
+using BoligBlik.Application.Features.Addresses.Queries;
 using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Features.BoardMembers.Queries;
 using BoligBlik.Application.Features.Bookings.Commands;
 using BoligBlik.Application.Features.Bookings.Queries;
 using BoligBlik.Application.Features.Users.Commands;
 using BoligBlik.Application.Features.Users.Queries;
+using BoligBlik.Application.Interfaces.Addresses.Commands;
+using BoligBlik.Application.Interfaces.Addresses.Queries;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using BoligBlik.Application.Interfaces.Bookings;
@@ -23,6 +27,23 @@ namespace BoligBlik.Application.Extensions
             AddBoardMember(services);
             AddUsersService(services);
             AddBooking(services);
+            AddAddresses(services);
+        }
+
+        private static void AddAddresses(this IServiceCollection services)
+        {
+            services.AddScoped<IAddressCommandService, AddressCommandService>();
+            services.AddScoped<IAddressQuerieService, AddressQuerieService>();
+            ConfigureAddressMappers(services);
+        }
+        private static void ConfigureAddressMappers(this IServiceCollection services)
+        {
+            var mapConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AddressMappingProfile());
+            });
+            IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         private static void AddBooking(this IServiceCollection services)
