@@ -15,10 +15,10 @@ namespace BoligBlik.Domain.Entities
         public Address Address { get; set; }
         public User User { get; set; }
         public Payment Payment { get; set; }
-        public Item Item { get; set; }
+        public BookingItem Item { get; set; }
         internal Booking() : base() { }
 
-        public Booking(Guid id, BookingDates bookingDates, Item item, Payment payment, Address address,User user ,bool approved, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
+        public Booking(Guid id, BookingDates bookingDates, BookingItem item, Payment payment, Address address,User user ,bool approved, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
         {
             this.Id = id;
             this.BookingDates = bookingDates;

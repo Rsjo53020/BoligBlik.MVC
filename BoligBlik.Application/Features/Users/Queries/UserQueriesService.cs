@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.User;
+using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Queries;
 
 namespace BoligBlik.Application.Features.Users.Queries

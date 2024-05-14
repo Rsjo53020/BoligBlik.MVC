@@ -3,7 +3,6 @@ using AutoMapper;
 using BoligBlik.Application.DTO.Bookings;
 using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
