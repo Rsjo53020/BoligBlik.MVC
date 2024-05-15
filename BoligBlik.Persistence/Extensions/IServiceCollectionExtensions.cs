@@ -58,12 +58,15 @@ namespace BoligBlik.Persistence.Extensions
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
+
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 
             services.AddDbContext<BoligBlikContext>(options =>
-                options.UseSqlServer(connectionString,
-                    builder => builder.MigrationsAssembly("Boligblik.Persistence.Migrations")));
+            {
+                options.UseSqlServer(connectionString);
+            });
+
 
         }
 
