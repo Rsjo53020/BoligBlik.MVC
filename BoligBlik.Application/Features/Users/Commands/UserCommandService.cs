@@ -30,20 +30,21 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method creates a user using Unit of Work pattern
         /// </summary>
-        public void CreateUser(User request)
+        public void CreateUser(CreateUserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-               
-                _userRepo.CreateUser(request);
+                var user = _mapper.Map<User>(request);
+                _userRepo.CreateUser(user);
                 _uow.CommitChangesAsync();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error creating user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError($"Error creating user with request: {@request}, Exception: {ex}");
+
             }
         }
 

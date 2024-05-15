@@ -31,8 +31,8 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 if (request != null)
                 {
-                    var requestData = _mapper.Map<User>(request);
-                    _commandService.CreateUser(requestData);
+                    
+                    _commandService.CreateUser(request);
                     return Created();
 
                 }

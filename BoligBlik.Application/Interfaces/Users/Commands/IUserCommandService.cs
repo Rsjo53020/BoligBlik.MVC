@@ -8,7 +8,7 @@ namespace BoligBlik.Application.Interfaces.Users.Commands
     /// </summary>
     public interface IUserCommandService
     {
-        void CreateUser(User request);
+        void CreateUser(CreateUserDTO request);
         void UpdateUser(UpdateUserDTO request);
         void DeleteUser(DeleteUserDTO request);
     }
