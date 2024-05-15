@@ -10,8 +10,9 @@ namespace BoligBlik.Persistence.Contexts.Seeder
         {
             modelBuilder.Entity<BoardMember>().HasData(
                 new BoardMember(
-                    title: "Title1",
-                    description: "Description1",
+                    Guid.NewGuid(),
+                    "Title1",
+                    "Description1",
                     user: new User(
                         Guid.NewGuid(),
                         "ronnisjorgensen@gmail.com",

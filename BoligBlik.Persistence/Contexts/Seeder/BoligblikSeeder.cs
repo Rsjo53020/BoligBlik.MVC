@@ -14,7 +14,7 @@ namespace BoligBlik.Persistence.Contexts.Seeder
         public void Seed(ModelBuilder modelBuilder)
         {
             SeedUser(modelBuilder);
-            SeedBoardMember(modelBuilder);
+            //SeedBoardMember(modelBuilder);
 
         }
         private void SeedUser(ModelBuilder modelBuilder)
@@ -75,25 +75,25 @@ namespace BoligBlik.Persistence.Contexts.Seeder
                 );
         }
 
-        private void SeedBoardMember(ModelBuilder modelBuilder)
-        {
-            var guid1 = new Guid("55555555-5555-5555-5555-555555555555");
-            var guid2 = new Guid("66666666-6666-6666-6666-666666666666");
-            var guid3 = new Guid("77777777-7777-7777-7777-777777777777");
-            var guid4 = new Guid("88888888-8888-8888-8888-888888888888");
+        //private void SeedBoardMember(ModelBuilder modelBuilder)
+        //{
+        //    var guid1 = new Guid("55555555-5555-5555-5555-555555555555");
+        //    var guid2 = new Guid("66666666-6666-6666-6666-666666666666");
+        //    var guid3 = new Guid("77777777-7777-7777-7777-777777777777");
+        //    var guid4 = new Guid("88888888-8888-8888-8888-888888888888");
 
-            var boardMember1 = new BoardMember(guid1, "Title1", "Description1");
-            var boardMember2 = new BoardMember(guid2, "Title2", "Description2");
-            var boardMember3 = new BoardMember(guid3, "Title3", "Description3");
-            var boardMember4 = new BoardMember(guid4, "Title4", "Description4");
+        //    var boardMember1 = new BoardMember(guid1, "Title1", "Description1");
+        //    var boardMember2 = new BoardMember(guid2, "Title2", "Description2");
+        //    var boardMember3 = new BoardMember(guid3, "Title3", "Description3");
+        //    var boardMember4 = new BoardMember(guid4, "Title4", "Description4");
 
-            modelBuilder.Entity<BoardMember>().HasData(
-                boardMember1,
-                boardMember2,
-                boardMember3,
-                boardMember4
-               );
+        //    modelBuilder.Entity<BoardMember>().HasData(
+        //        boardMember1,
+        //        boardMember2,
+        //        boardMember3,
+        //        boardMember4
+        //       );
 
-    //    }
+        //}
     }
 }
