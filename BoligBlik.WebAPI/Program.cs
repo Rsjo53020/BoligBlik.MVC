@@ -15,7 +15,7 @@ namespace BoligBlik.WebAPI
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddInfrastructureLayer();
             builder.Services.AddApplicationLayer();
-
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
             

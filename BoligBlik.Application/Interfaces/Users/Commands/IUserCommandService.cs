@@ -1,4 +1,5 @@
 ﻿using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.Users.Commands
 {
@@ -7,7 +8,7 @@ namespace BoligBlik.Application.Interfaces.Users.Commands
     /// </summary>
     public interface IUserCommandService
     {
-        void CreateUser(CreateUserDTO request);
+        void CreateUser(User request);
         void UpdateUser(UpdateUserDTO request);
         void DeleteUser(DeleteUserDTO request);
     }
