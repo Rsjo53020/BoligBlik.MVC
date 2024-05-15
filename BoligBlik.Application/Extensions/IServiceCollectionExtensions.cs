@@ -33,89 +33,61 @@ namespace BoligBlik.Application.Extensions
             AddBooking(services);
             AddAddresses(services);
             AddBookingItems(services);
+
+            ConfigureMappers(services);
+        }
+
+
+        /// <summary>
+        /// configure mappers for automappers
+        /// </summary>
+        /// <param name="services"></param>
+        private static void ConfigureMappers(this IServiceCollection services)
+        {
+            var mapProfiles = new List<Profile>()
+            { 
+                new BookingMappingProfiles(),
+                new UserMappingProfiles(),
+                new BookingMappingProfiles(),
+                new AddressMappingProfile(),
+                new BookingItemMappingProfile()
+            };
+            var mapConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfiles(mapProfiles);
+            });
+            IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         private static void AddBookingItems(this IServiceCollection services)
         {
             services.AddScoped<IBookingItemCommandService, BookingItemCommandService>();
             services.AddScoped<IBookingItemQuerieService, BookingItemQuerieService>();
-            ConfigureBookingItemMappers(services);
-        }
-
-        private static void ConfigureBookingItemMappers(this IServiceCollection services)
-        {
-            var mapConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new BookingItemMappingProfile());
-            });
-            IMapper mapper = mapConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
 
         private static void AddAddresses(this IServiceCollection services)
         {
             services.AddScoped<IAddressCommandService, AddressCommandService>();
             services.AddScoped<IAddressQuerieService, AddressQuerieService>();
-            ConfigureAddressMappers(services);
-        }
-        private static void ConfigureAddressMappers(this IServiceCollection services)
-        {
-            var mapConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new AddressMappingProfile());
-            });
-            IMapper mapper = mapConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
 
         private static void AddBooking(this IServiceCollection services)
         {
             services.AddScoped<IBookingCommandService, BookingCommandService>();
             services.AddScoped<IBookingQuerieService, BookingQueriesServices>();
-
-            ConfigureBookingMappers(services);
-        }
-        private static void ConfigureBookingMappers(this IServiceCollection services)
-        {
-            var mapConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new BookingMappingProfiles());
-            });
-            IMapper mapper = mapConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
         private static void AddBoardMember(this IServiceCollection services)
         {
             //Services
             services.AddScoped<IBoardMemberCommandService, BoardMemberCommandService>();
             services.AddScoped<IBoardMemberQuerieService, BoardMemberQuerieService>();
-            ConfigureBoardMemberMappers(services);
-        }
-        private static void ConfigureBoardMemberMappers(this IServiceCollection services)
-        {
-            var mapConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new BoardMemberMappingProfile());
-            });
-
-            IMapper mapper = mapConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
         private static void AddUsersService(this IServiceCollection services)
         {
             //Services
             services.AddScoped<IUserCommandService, UserCommandService>();
             services.AddScoped<IUserQuerieService, UserQueriesService>();
-            ConfigureUserMappers(services);
-        }
-        private static void ConfigureUserMappers(this IServiceCollection services)
-        {
-            var mapConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new UserMappingProfiles());
-            });
-            IMapper mapper = mapConfig.CreateMapper();
-            services.AddSingleton(mapper);
         }
     }
 }

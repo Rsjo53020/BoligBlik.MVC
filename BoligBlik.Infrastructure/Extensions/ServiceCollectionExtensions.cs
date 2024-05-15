@@ -28,8 +28,9 @@ namespace BoligBlik.Infrastructure.Extensions
 
         private static void AddHttpClientFactory(this IServiceCollection services)
         {
-            // IHttpClientFactory
-            
+            //IHttpClientFactory
+
+
             //services.AddHttpClient<ILevSundtService, LevSundtService>(client =>
             //     client.BaseAddress = new Uri(builder.Configuration["LevSundtBaseUrl"])
              //);

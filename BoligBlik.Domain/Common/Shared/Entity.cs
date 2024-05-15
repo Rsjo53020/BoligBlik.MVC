@@ -11,7 +11,7 @@ namespace BoligBlik.Domain.Common.Shared
     public abstract class Entity
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         [Timestamp]
         public byte[] RowVersion { get; set; }
 

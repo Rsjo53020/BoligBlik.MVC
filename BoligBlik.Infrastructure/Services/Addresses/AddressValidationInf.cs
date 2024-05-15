@@ -22,7 +22,7 @@ namespace BoligBlik.Infrastructure.Services.Addresses
         }
         public async Task<bool> ValidateAddressAsync(Address address)
         {
-            var client = new HttpClient();
+            var client = _httpClientFactory.CreateClient();
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"https://api.dataforsyningen.dk/datavask/adgangsadresser?betegnelse={address.Street} {address.HouseNumber}, {address.PostalcodeNumber} {address.City}");
 
             // Send anmodningen
