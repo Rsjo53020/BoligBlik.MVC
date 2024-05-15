@@ -4,16 +4,16 @@ using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Persistence.Contexts.Seeder
 {
-    public static class ModelBuilderExtensions
+    public  class ModelBuilderExtensions
     {
-        public static void Seed(this ModelBuilder modelBuilder)
+        public void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BoardMember>().HasData(
                 new BoardMember(
                     Guid.NewGuid(),
                     "Title1",
                     "Description1",
-                    user: new User(
+                    new User(
                         Guid.NewGuid(),
                         "ronnisjorgensen@gmail.com",
                         "firstname1",

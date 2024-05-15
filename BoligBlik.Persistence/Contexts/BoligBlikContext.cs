@@ -9,9 +9,9 @@ namespace BoligBlik.Persistence.Contexts
     public class BoligBlikContext : DbContext
     {
         private readonly BoligblikSeeder _seeder;
-        public BoligBlikContext(DbContextOptions<BoligBlikContext> options, BoligblikSeeder seeder) : base(options)
+        public BoligBlikContext(DbContextOptions<BoligBlikContext> options/*, BoligblikSeeder seeder*/) : base(options)
         {
-            _seeder = seeder;
+            //_seeder = seeder;
             
         }
 
@@ -29,11 +29,12 @@ namespace BoligBlik.Persistence.Contexts
             //this will apply configs from separate classes which implemented IEntityTypeConfiguration<T>
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             _seeder.Seed(modelBuilder);
+
             Seed(modelBuilder);
         }
 
-        // Add-Migration InitialMigration -Context BookingContext -Project BoligBlik.Persistence.Migrations
-        // Update-Database -Context BookingContext -Project BoligBlik.Persistence.Migrations
+        // Add-Migration InitialMigration -Context BoligBlikContext -Project BoligBlik.Persistence.Migrations
+        // Update-Database -Context BoligBlikContext -Project BoligBlik.Persistence.Migrations
 
 
 
