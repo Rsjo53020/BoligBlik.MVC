@@ -18,25 +18,40 @@ namespace BoligBlik.Application.Features.Addresses.Commands
         private readonly IAddressCommandRepo _addressRepo;
         private readonly IAddressValidationInf _addressValidationInf;
         private readonly IMapper _mapper;
-        public AddressCommandService(IAddressCommandRepo addressRepo, IMapper mapper,
-            IAddressValidationInf addressValidationInf)
+        public AddressCommandService(IAddressCommandRepo addressRepo, IMapper mapper, IAddressValidationInf addressValidationInf)
         {
             _addressRepo = addressRepo;
             _addressValidationInf = addressValidationInf;
             _mapper = mapper;
         }
+        
+
         public void Create(AddressDTO request)
         {
             var address = _mapper.Map<Address>(request);
             var resultat = _addressValidationInf.ValidateAddressAsync(address);
 
-            if (resultat != Task.CompletedTask) 
+            if (resultat != Task.CompletedTask)
                 throw new ValidationException("Validation failed on address");
             if (resultat == Task.CompletedTask)
             {
-               _addressRepo.Create(address);
+                _addressRepo.Create(address);
             }
 
         }
+
+        //public void Create(AddressDTO request)
+        //{
+        //    var address = _mapper.Map<Address>(request);
+        //    var resultat = _addressValidationInf.ValidateAddressesAsync(address);
+
+        //    if (resultat != Task.CompletedTask) 
+        //        throw new ValidationException("Validation failed on address");
+        //    if (resultat == Task.CompletedTask)
+        //    {
+        //       _addressRepo.Create(address);
+        //    }
+
+        //}
     }
 }

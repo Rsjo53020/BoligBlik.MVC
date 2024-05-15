@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Adress;
 using Newtonsoft.Json;
 
+
 namespace BoligBlik.Infrastructure.Services.Addresses
 {
     public class AddressValidationInf : IAddressValidationInf
@@ -18,17 +19,16 @@ namespace BoligBlik.Infrastructure.Services.Addresses
 
         public AddressValidationInf(IHttpClientFactory httpClientFactory)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
+
         public async Task<bool> ValidateAddressAsync(Address address)
         {
-            var client = new HttpClient();
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"https://api.dataforsyningen.dk/datavask/adgangsadresser?betegnelse={address.Street} {address.HouseNumber}, {address.PostalcodeNumber} {address.City}");
+            var client = _httpClientFactory.CreateClient();
+            var httpClient = new HttpClient();
+            var BaseAddress = new HttpRequestMessage(HttpMethod.Get, $"https://api.dataforsyningen.dk/adresser?vejnavn={address.Street}&husnr={address.HouseNumber}&etage={address.Floor}&dør={address.DoorNumber}&status=1&struktur=mini");
+            var response = await httpClient.SendAsync(BaseAddress);
 
-            // Send anmodningen
-            var response = await client.SendAsync(httpRequest);
-
-            // Håndter svar
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -45,26 +45,5 @@ namespace BoligBlik.Infrastructure.Services.Addresses
             }
         }
 
-        public Task<IEnumerable<Address>> ValidateAddresssAsync(Address address)
-        {
-            //string baseUrl = $"https://api.dataforsyningen.dk/datavask/adgangsadresser?betegnelse={address.Street} {address.HouseNumber}, {address.PostalcodeNumber} {address.City}";
-            //var addressList = new List<Address>();
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    var response = client.GetAsync(baseUrl).Result;
-            //    var json = response.Content.ReadAsStringAsync().Result;
-            //    var dataforsyningenResponse = JsonSerializer.Deserialize<AddressDTO>(json);
-            //    foreach (var element in dataforsyningenResponse)
-            //    {
-            //        element.Add(new AddressDTO
-            //        {
-
-            //        });
-            //    }
-            //}
-
-            //return addressList; 
-            throw new NotImplementedException();
-        }
     }
 }
