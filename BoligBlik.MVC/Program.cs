@@ -1,4 +1,5 @@
 using BoligBlik.MVC.Data;
+using BoligBlik.MVC.ProxyServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -28,6 +29,14 @@ namespace BoligBlik.MVC
                     options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            builder.Services.AddHttpClient<BoardMemberClient>(client =>
+            {
+                var apiBaseAddress = builder.Configuration["BaseAddress"];
+                client.BaseAddress = new Uri(apiBaseAddress);
+            });
+
 
             //// move to a ServiceExtension.cs
             //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>

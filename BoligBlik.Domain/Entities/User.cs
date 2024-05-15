@@ -25,7 +25,7 @@ namespace BoligBlik.Domain.Entities
             
         }
         public User (Guid id, string email, string firstname, string lastname,
-            string phonenumber, Address address)
+            string phonenumber, Address address, string formerRole, string role)
         {
             Id = id;
             EmailAddress = email;
@@ -33,6 +33,8 @@ namespace BoligBlik.Domain.Entities
             LastName = lastname;
             PhoneNumber = phonenumber;
             Address = address;
+            FormerRole = formerRole;
+            Role = role;
         }
     }
 }

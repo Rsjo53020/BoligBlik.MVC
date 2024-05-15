@@ -16,11 +16,15 @@ namespace BoligBlik.Infrastructure.Services.Addresses
     public class AddressValidationInf : IAddressValidationInf
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public AddressValidationInf(IHttpClientFactory httpClientFactory)
+        public AddressValidationInf()
         {
-            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+            
         }
+
+        //public AddressValidationInf(IHttpClientFactory httpClientFactory)
+        //{
+        //    _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        //}
 
         public async Task<bool> ValidateAddressAsync(Address address)
         {
