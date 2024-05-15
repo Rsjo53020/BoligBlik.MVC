@@ -1,9 +1,7 @@
 ﻿using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
-using BoligBlik.Persistence.Contexts.Seeder;
 using BoligBlik.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -65,9 +63,8 @@ namespace BoligBlik.Persistence.Extensions
 
             services.AddDbContext<BoligBlikContext>(options =>
                 options.UseSqlServer(connectionString,
-                    builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
+                    builder => builder.MigrationsAssembly("Boligblik.Persistence.Migrations")));
 
-            services.AddScoped<BoligblikSeeder>();
         }
 
 

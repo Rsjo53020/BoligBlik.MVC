@@ -24,14 +24,17 @@ namespace BoligBlik.Domain.Entities
         {
             
         }
-        public User (string email, string firstname, string lastname,
-            string phonenumber, Address address)
+        public User (Guid id, string email, string firstname, string lastname,
+            string phonenumber, Address address, string formerRole, string role)
         {
+            Id = id;
             EmailAddress = email;
             FirstName = firstname;
             LastName = lastname;
             PhoneNumber = phonenumber;
             Address = address;
+            FormerRole = formerRole;
+            Role = role;
         }
     }
 }
