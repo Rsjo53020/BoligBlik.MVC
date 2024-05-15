@@ -13,8 +13,12 @@ namespace BoligBlik.Persistence.Contexts.Seeder
     {
         public void Seed(ModelBuilder modelBuilder)
         {
-            //SeedUser(modelBuilder);
-            //SeedBoardMember(modelBuilder);
+            var address = new Address(Guid.NewGuid(), "", "", "", "", "", "");
+            modelBuilder.Entity<User>().HasData(
+                new User("","","","",address)
+              );
+        //SeedUser(modelBuilder);
+        //SeedBoardMember(modelBuilder);
 
         }
         //private void SeedUser(ModelBuilder modelBuilder)
@@ -65,7 +69,7 @@ namespace BoligBlik.Persistence.Contexts.Seeder
         //    var user2 = new User(guid2, "email2@email.com", "firstname2", "lastname2", "22222222", address2);
         //    var user3 = new User(guid3, "email3@email.com", "firstname3", "lastname3", "33333333", address3);
         //    var user4 = new User(guid4, "email4@email.com", "firstname4", "lastname4", "44444444", address4);
-                
+
 
         //    modelBuilder.Entity<User>().HasData(
         //         user1,
