@@ -11,15 +11,14 @@ namespace BoligBlik.Domain.Entities
         [Required]
         public string Description { get; set; }
         public DateOnly StartDate { get; set; }
-        public Byte[] Image { get; set; }
         internal BoardMember() : base()
         {
         }
-        public BoardMember(string title, string description, User user)
+        public BoardMember(Guid id, string title, string description)
         {
+            Id = id;
             Title = title;
             Description = description;
-            User = user;
         }
     }
 }

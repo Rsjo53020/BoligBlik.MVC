@@ -20,7 +20,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <summary>
         /// Send a message
         /// </summary>
-        [HttpPost("Create")]
+        [HttpPost]
         public IActionResult SendMessage(CreateMessageDTO request)
         {
             CreateMessageDTO createMessageDTO = new CreateMessageDTO

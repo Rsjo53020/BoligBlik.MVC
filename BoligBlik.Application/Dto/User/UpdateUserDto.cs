@@ -18,5 +18,7 @@ namespace BoligBlik.Application.DTO.User
         public string Role { get; set; }
 
         public AddressDTO Address { get; set; }
+
+        public byte[] RowVersion { get; set; } 
     }
 }

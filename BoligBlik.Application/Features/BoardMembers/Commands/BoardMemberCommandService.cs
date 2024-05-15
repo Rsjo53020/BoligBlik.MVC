@@ -38,6 +38,8 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
                 //map to model
                 var boardMember = _mapper.Map<BoardMember>(request);
 
+                boardMember.Id = Guid.NewGuid();
+
                 _boardMemberRepo.CreateBoardMember(boardMember);
 
                 _uow.CommitChangesAsync();
