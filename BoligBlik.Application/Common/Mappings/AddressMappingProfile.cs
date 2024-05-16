@@ -19,7 +19,6 @@ namespace BoligBlik.Application.Common.Mappings
             //CreateAddressDTO
             CreateMap<AddressDTO, Address>();
             CreateMap<Address, AddressDTO>();
-            CreateMap<UserDTO, AddressDTO>();
 
 
         }

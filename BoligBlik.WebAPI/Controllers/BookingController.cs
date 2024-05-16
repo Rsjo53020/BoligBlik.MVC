@@ -19,7 +19,12 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IBookingCommandService _bookingCommand;
         private readonly IBookingQuerieService _bookingQuerie;
 
-
+        public BookingController(IBookingQuerieService bookingQuerie, IBookingCommandService bookingCommand, IMapper mapper)
+        {
+            _bookingQuerie = bookingQuerie;
+            _bookingCommand = bookingCommand;
+            _mapper = mapper;
+        }
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
