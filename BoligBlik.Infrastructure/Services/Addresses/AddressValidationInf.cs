@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Adress;
+using BoligBlik.Entities;
 using Newtonsoft.Json;
 
 

@@ -10,12 +10,12 @@ namespace BoligBlik.Domain.Entities
 {
     public class Meeting : Entity
     {
-        [Required]
         public DateOnly Start { get; set; }
-        [Required]
         public DateOnly End { get; set; }
-        [Required]
         public string Description { get; set; }
+
+        public List<Document> Document { get; set; }
+        public List<User> Users { get; set; }
 
         public Meeting() : base()
         {

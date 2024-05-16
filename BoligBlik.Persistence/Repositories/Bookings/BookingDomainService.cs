@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Entities;
-using BoligBlik.Domain.Value;
 using BoligBlik.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 namespace BoligBlik.Persistence.Repositories.Bookings
 {

@@ -1,26 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoligBlik.Application.DTO.Address;
+using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.DTO.BookingItems;
+using BoligBlik.Application.DTO.Payments;
+using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Domain.Entities;
+using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Application.DTO.Bookings
 {
-    public class BookingDTO
+    public class BookingDTO : IEntity
     {
-        [Required]
+        public BookingDatesDTO BookingDates{ get; set; }
+        public AddressDTO Address { get; set; }
+        public UserDTO User { get; set; }
+        public PaymentDTO Payment { get; set; }
+        public BookingItemDTO Item { get; set; }
         public Guid Id { get; set; }
-        public DateOnly creationDate { get; set; }
-        [Required]
-        public  DateTime StartTime { get; set; }
-        [Required]
-        public DateTime EndTime { get; set; }
-        public bool Approved { get; set; }
-
-        [Required]
-        public Guid ItemId { get; set; }
-
-        public IEnumerable<BookingItemDTO> Item { get; set; }
-
-        [Required]
-        public Guid AddressId { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 
     

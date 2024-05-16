@@ -1,10 +1,5 @@
 ﻿using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Persistence.Repositories.Addresses
 {

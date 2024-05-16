@@ -10,13 +10,9 @@ namespace BoligBlik.Domain.Entities
 {
     public class Document : Entity
     {
-        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        [Required]
-        public String Category { get; set; }
-
-        public string FilePath { get; set; }
+        public string Category { get; set; }
 
         public Document() : base()
         {

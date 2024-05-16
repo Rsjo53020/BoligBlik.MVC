@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         //Repositories
         private readonly IBoardMemberQuerieRepo _boardMemberRepo;
         //Mapper
-        private readonly IMapper _mapper;
+        private IMapper _mapper;
         public BoardMemberQuerieService(IMapper mapper,
             IBoardMemberQuerieRepo boardMemberQuerieRepo)
         {
@@ -40,7 +40,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             foreach (var member in members)
             {
                 //map to DTO
-                memberDTOs.Add(_mapper.Map<BoardMemberDTO>(member));
+                memberDTOs.Add(_mapper.Map<BoardMemberDTO>(members));
             }
             return memberDTOs;
         }

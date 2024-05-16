@@ -21,7 +21,6 @@ namespace BoligBlik.Application.Features.Addresses.Queries
         }
         public async Task<IEnumerable<AddressDTO>> ReadAllAsync()
         {
-
           var addresses= await _addressRepo.ReadAllAsync();
           List<AddressDTO> addressDtos = new List<AddressDTO>();
           foreach (var address in addresses)

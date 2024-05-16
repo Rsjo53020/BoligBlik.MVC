@@ -17,13 +17,11 @@ namespace BoligBlik.Application.Features.Bookings.Commands
         private readonly IMapper _mapper;
         private readonly ILogger<BookingCommandService> _logger;
 
-
         private readonly IUserQuerieRepo _userQuerieRepo;
-        //private readonly IAddressQuerieRepo _addressQuerieRepo;
-        //private readonly IItemQuerieRepo _itemQuerieRepo;
+        private readonly IAddressQuerieRepo _addressQuerieRepo;
+        private readonly IBookingItemQuerieRepo _itemQuerieRepo;
         //private readonly IPaymentQuerieRepo _paymentQuerieRepo;
 
-        //private readonly IAddressDominService _addressDominService;
 
         public BookingCommandService(IUnitOfWork unitOfWork, IBookingDomainService bookingDomainService, IBookingCommandRepo bookingCommandRepo, IMapper mapper)
         {

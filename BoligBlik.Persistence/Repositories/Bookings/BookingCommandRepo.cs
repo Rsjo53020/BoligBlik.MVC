@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Persistence.Repositories

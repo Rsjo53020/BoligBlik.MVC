@@ -1,5 +1,4 @@
 ﻿using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;

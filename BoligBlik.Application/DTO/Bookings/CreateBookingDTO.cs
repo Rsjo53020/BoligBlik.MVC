@@ -1,24 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoligBlik.Application.DTO.Adress;
+using BoligBlik.Application.DTO.BookingItems;
+using BoligBlik.Application.DTO.Payments;
+using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.DTO.Bookings
 {
 
-    public class CreateBookingDTO
+    public class CreateBookingDTO : IBaseEntity, IEntity
     {
-        [Required]
-        public Guid AddressId { get; set; }
-        public Guid UserId { get; set; }
-        public Guid ItemId { get; set; }
-
-        [Required] 
-        public DateOnly CreationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
-        [Required]
-        public DateTime StartTime { get; set; }
-        [Required]
-        public DateTime EndTime { get; set; }
-
-        public bool Approved { get; set; }
-
-        public byte[] RowVersion { get; set; } = [];
+        public BookingDatesDTO BookingDates { get; set; }
+        public AddressDTO Address { get; set; }
+        public UserDTO User { get; set; }
+        public PaymentDTO Payment { get; set; }
+        public BookingItemDTO Item { get; set; }
+        public Guid? CreateBy { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public Guid? UpdatedBy { get; set; }
+        public DateTime? DeletedAt { get; }
+        public Guid? DeletedBy { get; set; }
+        public Guid Id { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }

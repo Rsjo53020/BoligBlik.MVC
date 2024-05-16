@@ -1,8 +1,6 @@
 ﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Data;
-using System.Transactions;
 using IsolationLevel = System.Data.IsolationLevel;
 
 namespace BoligBlik.Persistence.Repositories
