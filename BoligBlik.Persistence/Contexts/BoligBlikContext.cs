@@ -1,6 +1,7 @@
 ﻿using BoligBlik.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using BoligBlik.Entities;
+using BoligBlik.Persistence.Contexts.EntityConfigurations;
 
 namespace BoligBlik.Persistence.Contexts
 {
@@ -9,7 +10,7 @@ namespace BoligBlik.Persistence.Contexts
         public BoligBlikContext(DbContextOptions<BoligBlikContext> options) : base(options)
         {
         }
-
+        public DbSet<Address> Adresses { get; set; }
         public DbSet<BoardMember> BoardMembers { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Document> Documents { get; set; }
@@ -22,7 +23,11 @@ namespace BoligBlik.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //this will apply configs from separate classes which implemented IEntityTypeConfiguration<T>
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.ApplyConfiguration(new AddressConfiguration());
+            modelBuilder.ApplyConfiguration(new BookingConfirguration());
+
 
         }
 

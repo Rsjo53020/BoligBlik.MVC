@@ -21,21 +21,26 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         }
         public async Task<IEnumerable<AddressDTO>> ReadAllAsync()
         {
-            throw new NotImplementedException();
-            //try
-            //{
+            try
+            {
+                var addresses = await _dbContext.Adresses.AsNoTracking().OrderBy(x => x.DoorNumber).ToListAsync();
 
-            //    var address = await _dbContext.Users.AsNoTracking().Where(u => u.Address != null).ToListAsync();
-            //    var mapAdressList = _mapper.Map<User>(address).Address;
+                List<AddressDTO> mapAdressList = new List<AddressDTO>();
+                
+                foreach (var adress in addresses)
+                {
+                   var result = _mapper.Map<AddressDTO>(adress);
+                   mapAdressList.Add(result);
+                }
+                
+                return mapAdressList;
 
-            //    return mapAdressList;
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError("Error in ReadAll addresses: " + ex.Message);
-            //    return Enumerable.Empty<AddressDTO>();
-            //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in ReadAll addresses: " + ex.Message);
+                return Enumerable.Empty<AddressDTO>();
+            }
         }
     }
 }

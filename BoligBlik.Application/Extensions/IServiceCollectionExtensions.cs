@@ -38,6 +38,8 @@ namespace BoligBlik.Application.Extensions
         }
 
 
+
+
         /// <summary>
         /// configure mappers for automappers
         /// </summary>
@@ -46,18 +48,26 @@ namespace BoligBlik.Application.Extensions
         {
             var mapProfiles = new List<Profile>()
             { 
-                new BookingMappingProfiles(),
-                new UserMappingProfiles(),
-                new BookingMappingProfiles(),
                 new AddressMappingProfile(),
-                new BookingItemMappingProfile()
+                new BoardMemberMappingProfile(),
+                new BookingItemMappingProfile(),
+                new BookingItemMappingProfile(),
+                new PaymentMappingProfile(),
+                new UserMappingProfiles()
             };
+
             var mapConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfiles(mapProfiles);
             });
             IMapper mapper = mapConfig.CreateMapper();
             services.AddSingleton(mapper);
+        }
+
+        private static void Domain(this IServiceCollection services)
+        {
+            services.AddScoped<IBookingItemCommandService, BookingItemCommandService>();
+            services.AddScoped<IBookingItemQuerieService, BookingItemQuerieService>();
         }
 
         private static void AddBookingItems(this IServiceCollection services)

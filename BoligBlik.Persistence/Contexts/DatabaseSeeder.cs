@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bogus;
-using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Domain.Entities;
 using BoligBlik.Domain.Value;
+using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BoligBlik.Persistence.Contexts
 {
@@ -31,6 +22,7 @@ namespace BoligBlik.Persistence.Contexts
             SeedMeeting();
             SeedDocument();
             SeedBookingItem();
+            SeedAddress();
             //SeedProperty();
             //SeedBooking();
         }
@@ -45,10 +37,8 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Ronni",
                     LastName = "Jorgensen",
                     EmailAddress = "Ronni@Mail.dk",
-                    FormerRole = "Formand",
                     Role = "Admin",
                     PhoneNumber = "+1234567890",
-                    Address = new Address("Mølholmvej", "", "5.tv", "12C", "Vejle", "7100")
                 },
                 new User
                 {
@@ -56,10 +46,8 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Christoffer",
                     LastName = "Skafte",
                     EmailAddress = "Skafte@Mail.dk",
-                    FormerRole = "Medlem",
                     Role = "Kasser",
                     PhoneNumber = "+9876543210",
-                    Address = new Address("Bedstenvej", "10", "1.th", "15", "Bedsten", "7182")
                 },
                 new User
                 {
@@ -67,10 +55,8 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Alexander",
                     LastName = "Larsen",
                     EmailAddress = "Alex@Mail.dk",
-                    FormerRole = "Admin",
                     Role = "Næstformand",
                     PhoneNumber = "+9876543210",
-                    Address = new Address("Vestergadevej", "22", "2", "10", "Vejle", "7100")
                 },
             };
             foreach (var user in users)
@@ -79,6 +65,37 @@ namespace BoligBlik.Persistence.Contexts
                 {
                     _context.Users.Add(user);
                 }
+            }
+            _context.SaveChanges();
+        }
+
+        internal void SeedAddress()
+        {
+            var Address = new Address[]
+            {
+                new Address
+                {
+                    Street = "Vejlevej",
+                    HouseNumber = "10",
+                    Floor = "1",
+                    DoorNumber = "th",
+                    PostalCode = new PostalCode("Vejle", "7100"),
+                    Users = _context.Users.Where(user => user.EmailAddress == "Alex@Mail.dk").ToList()
+                },
+                new Address
+                {
+                    Street = "lundesvej",
+                    HouseNumber = "10",
+                    Floor = "1",
+                    DoorNumber = "th",
+                    PostalCode = new PostalCode("Vejle", "7100"),
+                    Users = _context.Users.Where(user => user.EmailAddress != "Alex@Mail.dk").ToList()
+                }
+            };
+
+            foreach (Address adress in Address)
+            {
+                _context.Adresses.Add(adress);
             }
             _context.SaveChanges();
         }
@@ -127,7 +144,6 @@ namespace BoligBlik.Persistence.Contexts
             {
                 new Payment
                 {
-                    StripeId = Guid.NewGuid(),
                     Amount = 100,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Status = "Betalt",
@@ -135,7 +151,6 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new Payment
                 {
-                    StripeId = Guid.NewGuid(),
                     Amount = 200,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Status = "Afventer betaling",
@@ -190,7 +205,6 @@ namespace BoligBlik.Persistence.Contexts
                     Title = "Møde Referat",
                     Description = "Referat af møde",
                     Category = "Referat",
-                    FilePath = "C://SecretFolder/Referater"
                 },
                 new Document
                 {
@@ -198,7 +212,6 @@ namespace BoligBlik.Persistence.Contexts
                     Title = "Nye vedtægter",
                     Description = "Vigtige vedtægter",
                     Category = "Vedtægter",
-                    FilePath = "C://SecretFolder/vedtægter"
                 }
             };
 
@@ -222,7 +235,6 @@ namespace BoligBlik.Persistence.Contexts
                     Description = "Booking af vaskemaskine",
                     Rules = "Kan bookes alle dage",
                     Repairs = "Ingen reperationer",
-                    ImageFilePath = "C/"
 
                 },
                 new BookingItem
@@ -233,7 +245,6 @@ namespace BoligBlik.Persistence.Contexts
                     Description = "The budget for the year",
                     Rules = "test",
                     Repairs = "te",
-                    ImageFilePath = "C://SecretFolder/Reperationer"
                 }
             };
 
@@ -260,30 +271,30 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
-        internal void SeedProperty()
-        {
-            var properties = new Property[]
-            {
-                new Property
-                {
-                    Id = Guid.NewGuid(),
-                    BoardManager = _context.Users.FirstOrDefault(user => user.Role == "Admin"),
-                    Addresses = new List<Address>()
-                    {
-                    }
-                }
-            };
+        //internal void SeedProperty()
+        //{
+        //    var properties = new Property[]
+        //    {
+        //        new Property
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            BoardMember = _context.BoardMembers.FirstOrDefault(t => t.Title == "Formand"),
+        //            Addresses = new List<Address>()
+        //            {
+        //            }
+        //        }
+        //    };
 
-            foreach (var user in _context.Users)
-            {
-                if (!_context.Properties.Any(property => property.BoardManager.Id == user.Id))
-                {
-                    properties[0].Addresses.Add(user.Address);
-                }
-            }
+        //    foreach (var user in _context.BoardMembers)
+        //    {
+        //        if (!_context.Properties.Any(property => property.BoardMember.Id == BoardMember.tit))
+        //        {
+        //            properties[0].Addresses.Add(user.Address);
+        //        }
+        //    }
 
-            _context.Properties.AddRange(properties);
-            _context.SaveChanges();
-        }
+        //    _context.Properties.AddRange(properties);
+        //    _context.SaveChanges();
+        //}
     }
 }

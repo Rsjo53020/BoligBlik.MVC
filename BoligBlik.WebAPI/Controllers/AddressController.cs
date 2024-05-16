@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BoligBlik.Application.DTO.Address;
 using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Addresses.Queries;
@@ -26,7 +27,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
         // POST api/<Address>
         [HttpPost]
-        public void Post([FromBody] AddressDTO request)
+        public void Post([FromBody] CreateAddressDTO request)
         {
            _addressCommandService.Create(request);
         }

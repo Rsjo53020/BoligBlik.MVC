@@ -6,16 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Domain.Common.Shared;
 using BoligBlik.Domain.Value;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Domain.Entities
 {
     public class Property : Entity
     {
-        [Required]
-        public User BoardManager { get; set; }
+        public BoardMember BoardMember { get; set; }
         public List<Address> Addresses { get; set; }
 
-        // constructor for creating a new Property
         public Property() : base()
         {
             

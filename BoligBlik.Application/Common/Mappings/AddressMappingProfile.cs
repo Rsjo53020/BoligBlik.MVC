@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Application.DTO.User;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Application.Common.Mappings
 {

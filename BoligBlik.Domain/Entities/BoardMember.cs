@@ -8,9 +8,7 @@ namespace BoligBlik.Domain.Entities
         [Required]
         public string Title { get; set; }
         public User User { get; set; }
-        [Required]
         public string Description { get; set; }
-        public DateOnly StartDate { get; set; }
        public BoardMember() : base()
         {
         }

@@ -10,7 +10,6 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
         {
             builder.ToTable("User", "user");
             builder.HasKey(x => x.Id);
-            builder.ComplexProperty(a => a.Address);
         }
     }
 }

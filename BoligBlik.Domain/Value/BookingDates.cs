@@ -4,7 +4,7 @@ using System;
 
 namespace BoligBlik.Domain.Value;
 
-public record BookingDates(DateOnly creationDate, DateTime startTime, DateTime endTime) : ValueWithValidation
+public record BookingDates(DateTime startTime, DateTime endTime) : ValueWithValidation
 {
     protected override void Validate()
     {

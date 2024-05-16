@@ -10,6 +10,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Application.DTO.Address;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Application.Features.Addresses.Commands
 {
@@ -26,7 +28,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
         }
         
 
-        public void Create(AddressDTO request)
+        public void Create(CreateAddressDTO request)
         {
             var address = _mapper.Map<Address>(request);
             var resultat = _addressValidationInf.ValidateAddressAsync(address);
@@ -39,19 +41,5 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             }
 
         }
-
-        //public void Create(AddressDTO request)
-        //{
-        //    var address = _mapper.Map<Address>(request);
-        //    var resultat = _addressValidationInf.ValidateAddressesAsync(address);
-
-        //    if (resultat != Task.CompletedTask) 
-        //        throw new ValidationException("Validation failed on address");
-        //    if (resultat == Task.CompletedTask)
-        //    {
-        //       _addressRepo.Create(address);
-        //    }
-
-        //}
     }
 }

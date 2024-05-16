@@ -8,9 +8,13 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
+            builder.ToTable("Booking", "booking");
+            builder.HasKey(x => x.Id);
             builder.ComplexProperty(b => b.BookingDates);
-            builder.ComplexProperty(a => a.Address);
-
+            ////builder.ComplexProperty(a => a.Address);
+            ////builder.ComplexProperty(u => u.User);
+            ////builder.ComplexProperty(i => i.Item);
+            ////builder.ComplexProperty(p => p.Payment);
         }
     }
 }
