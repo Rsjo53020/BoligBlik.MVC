@@ -8,6 +8,7 @@ namespace BoligBlik.MVC.Extensions
         public static void AddFrontEnd(this WebApplicationBuilder builder)
         {
             builder.AddHttpClients();
+            builder.Services.AddServices();
         }
 
         private static void AddServices(this IServiceCollection services)
