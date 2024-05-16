@@ -1,4 +1,5 @@
 ﻿using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.Users.Commands
 {

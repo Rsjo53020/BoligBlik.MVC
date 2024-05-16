@@ -11,9 +11,9 @@ namespace BoligBlik.Domain.Entities
     public class Meeting : Entity
     {
         [Required]
-        public DateTime Start { get; set; }
+        public DateOnly Start { get; set; }
         [Required]
-        public DateTime End { get; set; }
+        public DateOnly End { get; set; }
         [Required]
         public string Description { get; set; }
 

@@ -37,14 +37,14 @@ namespace BoligBlik.Application.Features.Users.Commands
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
                 var user = _mapper.Map<User>(request);
-                user.Id = Guid.NewGuid();
                 _userRepo.CreateUser(user);
                 _uow.CommitChangesAsync();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error creating user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError($"Error creating user with request: {@request}, Exception: {ex}");
+
             }
         }
 

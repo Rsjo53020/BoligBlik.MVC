@@ -6,11 +6,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BoligBlik.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "user");
+
+            migrationBuilder.CreateTable(
+                name: "BookingItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rules = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Repairs = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageFilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingItems", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Documents",
                 columns: table => new
@@ -29,31 +51,12 @@ namespace BoligBlik.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rules = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Repairs = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Items", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Meetings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start = table.Column<DateOnly>(type: "date", nullable: false),
+                    End = table.Column<DateOnly>(type: "date", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
@@ -64,34 +67,18 @@ namespace BoligBlik.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "User",
+                schema: "user",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StripeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FormerRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    FormerRole = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_DAWAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Address_DoorNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -102,7 +89,7 @@ namespace BoligBlik.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,10 +98,9 @@ namespace BoligBlik.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -122,54 +108,35 @@ namespace BoligBlik.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_BoardMembers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BoardMembers_Users_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Users",
+                        name: "FK_BoardMembers_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "user",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bookings",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Approved = table.Column<bool>(type: "bit", nullable: false),
+                    StripeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_DAWAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Address_DoorNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_PostalcodeNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BookingDates_creationDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    BookingDates_endTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BookingDates_startTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bookings_Items_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "Items",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Payments_PaymentId",
-                        column: x => x.PaymentId,
-                        principalTable: "Payments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Users_UserId",
+                        name: "FK_Payments_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalSchema: "user",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -188,17 +155,63 @@ namespace BoligBlik.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Properties", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Properties_Users_BoardManagerId",
+                        name: "FK_Properties_User_BoardManagerId",
                         column: x => x.BoardManagerId,
-                        principalTable: "Users",
+                        principalSchema: "user",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Approved = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_DoorNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_PostalcodeNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BookingDates_creationDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    BookingDates_endTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BookingDates_startTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    UpdateStamp = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_BookingItems_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "BookingItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "user",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_BoardMembers_MemberId",
+                name: "IX_BoardMembers_UserId",
                 table: "BoardMembers",
-                column: "MemberId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_ItemId",
@@ -213,6 +226,11 @@ namespace BoligBlik.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_UserId",
                 table: "Bookings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId",
+                table: "Payments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -240,13 +258,14 @@ namespace BoligBlik.Persistence.Migrations
                 name: "Properties");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "BookingItems");
 
             migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User",
+                schema: "user");
         }
     }
 }

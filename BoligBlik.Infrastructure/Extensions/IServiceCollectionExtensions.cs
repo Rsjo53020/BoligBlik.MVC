@@ -24,7 +24,7 @@ namespace BoligBlik.Infrastructure.Extensions
         private static void HttpClientFactory (this IServiceCollection services)
         {
 
-            services.AddTransient<IAddressValidationInf, AddressValidationInf>();
+            services.AddScoped<IAddressValidationInf, AddressValidationInf>();
         }
     }
 }

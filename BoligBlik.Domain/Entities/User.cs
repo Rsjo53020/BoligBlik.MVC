@@ -7,20 +7,25 @@ namespace BoligBlik.Domain.Entities
     public class User : Entity
     {
         [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
         [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
+        [MaxLength(200)]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
+        [MaxLength(50)]
         public string FormerRole { get; set; }
+        [MaxLength(50)]
         public string Role { get; set; }
         public Address Address { get; set; }
 
         // constructor for creating a new user
-        internal User() : base()
+        public User() : base()
         {
             
         }

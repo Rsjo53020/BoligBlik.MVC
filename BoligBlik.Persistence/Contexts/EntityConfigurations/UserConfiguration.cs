@@ -8,6 +8,8 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("User", "user");
+            builder.HasKey(x => x.Id);
             builder.ComplexProperty(a => a.Address);
         }
     }
