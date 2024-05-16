@@ -11,7 +11,7 @@ namespace BoligBlik.Domain.Entities
         [Required]
         public string Description { get; set; }
         public DateOnly StartDate { get; set; }
-       internal BoardMember() : base()
+       public BoardMember() : base()
         {
         }
         public BoardMember(Guid id, string title, string description, User user)

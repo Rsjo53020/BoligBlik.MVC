@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.Persistence.Migrations
 {
     [DbContext(typeof(BoligBlikContext))]
-    [Migration("20240515114521_SeedTest")]
-    partial class SeedTest
+    [Migration("20240516032522_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,9 +96,6 @@ namespace BoligBlik.Persistence.Migrations
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<Guid>("DAWAId")
-                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("DoorNumber")
                                 .IsRequired()
@@ -235,8 +232,8 @@ namespace BoligBlik.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("End")
+                        .HasColumnType("date");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -244,8 +241,8 @@ namespace BoligBlik.Persistence.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Start")
+                        .HasColumnType("date");
 
                     b.Property<DateOnly>("UpdateStamp")
                         .HasColumnType("date");
@@ -260,6 +257,9 @@ namespace BoligBlik.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
@@ -280,7 +280,12 @@ namespace BoligBlik.Persistence.Migrations
                     b.Property<DateOnly>("UpdateStamp")
                         .HasColumnType("date");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Payments");
                 });
@@ -326,19 +331,23 @@ namespace BoligBlik.Persistence.Migrations
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FormerRole")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -346,7 +355,8 @@ namespace BoligBlik.Persistence.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -364,9 +374,6 @@ namespace BoligBlik.Persistence.Migrations
                             b1.Property<string>("City")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<Guid>("DAWAId")
-                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("DoorNumber")
                                 .IsRequired()
@@ -391,7 +398,7 @@ namespace BoligBlik.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User", "user");
                 });
 
             modelBuilder.Entity("BoligBlik.Domain.Entities.BoardMember", b =>
@@ -428,6 +435,17 @@ namespace BoligBlik.Persistence.Migrations
                     b.Navigation("Item");
 
                     b.Navigation("Payment");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BoligBlik.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("BoligBlik.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

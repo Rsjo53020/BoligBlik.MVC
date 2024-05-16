@@ -31,6 +31,7 @@ namespace BoligBlik.MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+
             builder.Services.AddHttpClient<BoardMemberClient>(client =>
             {
                 var apiBaseAddress = builder.Configuration["BaseAddress"];

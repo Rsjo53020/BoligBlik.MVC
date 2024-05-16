@@ -25,7 +25,7 @@ namespace BoligBlik.Domain.Entities
         public Address Address { get; set; }
 
         // constructor for creating a new user
-        internal User() : base()
+        public User() : base()
         {
             
         }

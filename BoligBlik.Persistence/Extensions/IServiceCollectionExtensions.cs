@@ -2,6 +2,7 @@
 using BoligBlik.Domain.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
+using BoligBlik.Persistence.Contexts.Interfaces;
 using BoligBlik.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,20 +55,20 @@ namespace BoligBlik.Persistence.Extensions
             //BookingItem
             services.AddScoped<IBookingItemCommandRepo, BookingItemCommandRepo>();
             services.AddScoped<IBookingItemQuerieRepo, BookingItemQuerieRepo>();
+
+            //Database Seeder
+            services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
         }
+
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
 
             services.AddDbContext<BoligBlikContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
-
-
         }
 
 
