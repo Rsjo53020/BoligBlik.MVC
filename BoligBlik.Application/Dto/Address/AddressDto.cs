@@ -18,6 +18,6 @@ namespace BoligBlik.Application.DTO.Adress
         public string City { get; set; }
         public string Country { get; set; }
         public string PostalCode { get; set; }
-        public IEnumerable<UserDTO> Users { get; set; }
+        //public IEnumerable<UserDTO> Users { get; set; }
     }
 }

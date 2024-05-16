@@ -1,4 +1,5 @@
 using BoligBlik.MVC.Data;
+using BoligBlik.MVC.Extensions;
 using BoligBlik.MVC.ProxyServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,12 +31,8 @@ namespace BoligBlik.MVC
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.AddFrontEnd();
 
-            builder.Services.AddHttpClient<BoardMemberClient>(client =>
-            {
-                var apiBaseAddress = builder.Configuration["BaseAddress"];
-                client.BaseAddress = new Uri(apiBaseAddress);
-            });
 
 
             //// move to a ServiceExtension.cs
