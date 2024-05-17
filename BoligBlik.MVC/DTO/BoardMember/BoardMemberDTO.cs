@@ -1,4 +1,4 @@
-﻿using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.MVC.DTO.Interfaces;
 using BoligBlik.MVC.DTO.User;
 
 namespace BoligBlik.MVC.DTO.BoardMember

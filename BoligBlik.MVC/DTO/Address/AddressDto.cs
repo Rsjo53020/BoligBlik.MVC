@@ -1,15 +1,8 @@
-﻿using BoligBlik.Domain.Entities;
-using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.DTO.Properties;
-using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Application.DTO.PostalCodes;
-using BoligBlik.MVC.DTO.User;
+﻿using BoligBlik.MVC.DTO.User;
+using BoligBlik.MVC.DTO.Interfaces;
+using BoligBlik.MVC.DTO.PostalCodes;
+using BoligBlik.MVC.DTO.Bookings;
+using BoligBlik.MVC.DTO.Properties;
 
 namespace BoligBlik.MVC.DTO.Address
 {

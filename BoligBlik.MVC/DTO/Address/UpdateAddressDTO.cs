@@ -1,11 +1,5 @@
-﻿using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Application.DTO.PostalCodes;
+﻿using BoligBlik.MVC.DTO.Interfaces;
+using BoligBlik.MVC.DTO.PostalCodes;
 
 namespace BoligBlik.MVC.DTO.Address
 {
