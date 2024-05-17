@@ -22,10 +22,10 @@ namespace BoligBlik.MVC.Extensions
 
         private static void AddHttpClients(this WebApplicationBuilder builder)
         {
-            builder.Services.AddHttpClient<BoardMemberProxy>(client =>
+
+            builder.Services.AddHttpClient("BaseClient", httpClient =>
             {
-                var apiBaseAddress = builder.Configuration["BaseAddress"];
-                client.BaseAddress = new Uri(apiBaseAddress);
+                httpClient.BaseAddress = new Uri(builder.Configuration["BaseAddress"]);
             });
         }
 

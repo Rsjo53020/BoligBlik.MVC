@@ -5,11 +5,11 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
 {
     public class BoardMemberProxy : IBoardMemberProxy
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public BoardMemberProxy(HttpClient httpClient)
+        public BoardMemberProxy(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
         /// <summary>
         /// Read all boardmembers
@@ -19,7 +19,9 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.GetAsync("/api/BoardMembers");
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.GetAsync("/api/BoardMembers");
                 response.EnsureSuccessStatusCode();
                 var boardMembers = await response.Content.ReadFromJsonAsync<List<BoardMemberDTO>>();
                 return boardMembers;
@@ -39,7 +41,9 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.GetAsync($"/api/BoardMembers/{title}");
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.GetAsync($"/api/BoardMembers/{title}");
                 response.EnsureSuccessStatusCode();
                 var boardMember = await response.Content.ReadFromJsonAsync<BoardMemberDTO>();
                 return boardMember;
@@ -58,7 +62,9 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("/api/BoardMembers", boardMember);
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.PostAsJsonAsync("/api/BoardMembers", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -76,7 +82,9 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync("/api/BoardMembers", boardMember);
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.PutAsJsonAsync("/api/BoardMembers", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -94,7 +102,9 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"/api/BoardMembers{id}");
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.DeleteAsync($"/api/BoardMembers{id}");
                 response.EnsureSuccessStatusCode();
                 return true;
             }
