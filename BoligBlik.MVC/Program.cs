@@ -51,6 +51,7 @@ namespace BoligBlik.MVC
 
             builder.Services.AddControllersWithViews();
 
+
             // move to a ServiceExtension.cs
             builder.Services.AddAuthorization(options => options
                 .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));

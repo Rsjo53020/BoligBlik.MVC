@@ -3,11 +3,11 @@ using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 
 namespace BoligBlik.MVC.ProxyServices.BoardMembers
 {
-    public class BoardMemberServices : IBoardMemberServices
+    public class BoardMemberProxy : IBoardMemberProxy
     {
         private readonly HttpClient _httpClient;
 
-        public BoardMemberServices(HttpClient httpClient)
+        public BoardMemberProxy(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -15,7 +15,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// Read all boardmembers
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<BoardMemberDTO>> GetAllBoardMembers()
+        public async Task<IEnumerable<BoardMemberDTO>> GetAllBoardMembersAsync()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<BoardMemberDTO> GetBoardMember(string title)
+        public async Task<BoardMemberDTO> GetBoardMemberAsync(string title)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <returns></returns>
-        public async Task<bool> CreateBoardMember(CreateBoardMemberDTO boardMember)
+        public async Task<bool> CreateBoardMemberAsync(CreateBoardMemberDTO boardMember)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateBoardMember(UpdateBoardMemberDTO boardMember)
+        public async Task<bool> UpdateBoardMemberAsync(UpdateBoardMemberDTO boardMember)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteBoardMember(Guid id)
+        public async Task<bool> DeleteBoardMemberAsync(Guid id)
         {
             try
             {

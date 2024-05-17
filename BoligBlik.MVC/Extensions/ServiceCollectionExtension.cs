@@ -1,4 +1,6 @@
-﻿using BoligBlik.MVC.ProxyServices.BoardMembers;
+﻿using AutoMapper;
+using BoligBlik.MVC.Mappings;
+using BoligBlik.MVC.ProxyServices.BoardMembers;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 
 namespace BoligBlik.MVC.Extensions
@@ -9,21 +11,41 @@ namespace BoligBlik.MVC.Extensions
         {
             builder.AddHttpClients();
             builder.Services.AddServices();
+            builder.Services.ConfigureMappers();
         }
 
         private static void AddServices(this IServiceCollection services)
         {
-            services.AddTransient<IBoardMemberServices, BoardMemberServices>();
+            services.AddTransient<IBoardMemberProxy, BoardMemberProxy>();
         }
 
 
         private static void AddHttpClients(this WebApplicationBuilder builder)
         {
-            builder.Services.AddHttpClient<BoardMemberServices>(client =>
+            builder.Services.AddHttpClient<BoardMemberProxy>(client =>
             {
                 var apiBaseAddress = builder.Configuration["BaseAddress"];
                 client.BaseAddress = new Uri(apiBaseAddress);
             });
+        }
+
+        private static void ConfigureMappers(this IServiceCollection services)
+        {
+            var mapProfiles = new List<Profile>()
+            {
+                new BoardMemberMappingProfile(),
+                new UserMappingProfile(),
+                new AddressMappingProfile()
+
+            };
+
+            var mapConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfiles(mapProfiles);
+            });
+            IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(Program));
         }
     }
 }

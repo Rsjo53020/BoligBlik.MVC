@@ -1,88 +1,125 @@
-﻿using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using BoligBlik.MVC.DTO.BoardMember;
+using BoligBlik.MVC.Models.BoardMembers;
+using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
 {
     public class BoardMemberController : Controller
     {
-        private readonly IBoardMemberServices _boardMemberServices;
-        public BoardMemberController(IBoardMemberServices boardMemberServices)
+        private readonly IBoardMemberProxy _boardMemberProxy;
+        private readonly IMapper _mapper;
+        private readonly ILogger<BoardMemberController> _logger;
+        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper)
         {
-            _boardMemberServices = boardMemberServices;   
+            _boardMemberProxy = boardMemberProxy;
+            _mapper = mapper;
         }
-        // GET: BoardMemberController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: BoardMemberController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: BoardMemberController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: BoardMemberController/Create
+        /// <summary>
+        /// Creates a BoardMember async 
+        /// </summary>
+        /// <param name="createBoardMemberViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CreateBoardMemberViewModel createBoardMemberViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var createBoardMemberDTO = _mapper.Map<CreateBoardMemberDTO>(createBoardMemberViewModel);
+                var result = await _boardMemberProxy.CreateBoardMemberAsync(createBoardMemberDTO);
+                return View(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError("An error occured while creating a boardMember", ex);
+                return View(false);
             }
         }
 
-        // GET: BoardMemberController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BoardMemberController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: BoardMemberController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BoardMemberController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        /// <summary>
+        /// Reads all BoardMembers async
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> ReadAll()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _boardMemberProxy.GetAllBoardMembersAsync();
+                var boardMembers = new List<BoardMemberViewModel>();
+                foreach (var boardMemberDTO in result)
+                {
+                    boardMembers.Add(_mapper.Map<BoardMemberViewModel>(boardMemberDTO));
+                }
+                return View(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError("An error occured while reading all boardMembers", ex);
+                return View(new List<BoardMemberViewModel>());
+            }
+        }
+
+        /// <summary>
+        /// Reads a boardMember from title
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Read(string title)
+        {
+            try
+            {
+                var result = await _boardMemberProxy.GetBoardMemberAsync(title);
+
+                var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+
+                return View(boardMember);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while reading a boardMember", ex);
+                return View(new BoardMemberViewModel());
+            }
+        }
+
+        /// <summary>
+        /// Update a BoardMember async
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateBoardMemberViewModel updateBoardMemberViewModel)
+        {
+            try
+            {
+                var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
+                var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while updating a boardMember", ex);
+                return View(false);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a BoardMember async
+        /// </summary>
+        /// <param name="deleteBoardMemberViewModel"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                var result = await _boardMemberProxy.DeleteBoardMemberAsync(id);
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while deletign a boardMember", ex);
+                return View(false);
             }
         }
     }
