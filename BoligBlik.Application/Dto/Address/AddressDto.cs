@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Bookings;
 using BoligBlik.Application.DTO.Properties;
 using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Application.DTO.PostalCodes;
 
 namespace BoligBlik.Application.DTO.Adress
 {
@@ -18,13 +19,13 @@ namespace BoligBlik.Application.DTO.Adress
         public string HouseNumber { get; set; }
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
-        public PostalCode PostalCode { get; set; }
+        public PostalCodeDTO PostalCode { get; set; }
 
-        public IEnumerable<UserDTO> Users { get; set; }
+        public List<UserDTO> Users { get; set; }
 
-        public IEnumerable<BookingDTO> Bookings { get; set; }
+        public List<BookingDTO> Bookings { get; set; }
 
-        public IEnumerable<PropertyDTO> Properties { get; set; }
+        public List<PropertyDTO> Properties { get; set; }
         
         public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }

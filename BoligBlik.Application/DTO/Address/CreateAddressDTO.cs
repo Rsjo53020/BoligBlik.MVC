@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Application.DTO.PostalCodes;
 
 namespace BoligBlik.Application.DTO.Address
 {
@@ -14,7 +15,7 @@ namespace BoligBlik.Application.DTO.Address
         public string HouseNumber { get; set; }
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
-        public PostalCode PostalCode { get; set; }
+        public PostalCodeDTO PostalCode { get; set; }
         public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }
         public Guid? CreateBy { get; set; }

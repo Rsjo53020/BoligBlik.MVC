@@ -1,5 +1,6 @@
 ﻿using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Domain.Common.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace BoligBlik.Application.DTO.User
 {
@@ -12,7 +13,9 @@ namespace BoligBlik.Application.DTO.User
         public string LastName { get; set; }
 
         public string PhoneNumber { get; set; }
-
+        [Required]
+        [MaxLength(200)]
+        [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
         public string Role { get; set; }

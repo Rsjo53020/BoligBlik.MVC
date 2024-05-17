@@ -1,29 +1,36 @@
-﻿using BoligBlik.MVC.DTO.Adress;
+﻿using BoligBlik.Application.DTO.Adress;
 using System.ComponentModel.DataAnnotations;
+using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.MVC.DTO.User
 {
     // DTO for creating a user
-    public class CreateUserDTO
+    public class CreateUserDTO : IBaseEntity, IEntity
     {
-        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
 
-        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
 
-        [Required]
         public string PhoneNumber { get; set; }
 
         [Required]
+        [MaxLength(200)]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [MaxLength(50)]
         public string Role { get; set; }
 
-        public AddressDTO Address { get; set; }
-        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-    }
 
+        public Guid? CreateBy { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public Guid? UpdatedBy { get; set; }
+        public DateTime? DeletedAt { get; }
+        public Guid? DeletedBy { get; set; }
+        public Guid Id { get; set; }
+        public byte[] RowVersion { get; set; }
+    }
 }

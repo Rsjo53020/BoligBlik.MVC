@@ -1,11 +1,11 @@
-﻿using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.MVC.DTO.BoardMember;
 
-namespace BoligBlik.MVC.DTO.User
+namespace BoligBlik.MVC.DTO.Properties
 {
-    // DTO for deleting a user
-    public class DeleteUserDTO : IBaseEntity, IEntity
+    public class PropertyDTO : IBaseEntity, IEntity
     {
-        public string Reason { get; set; }
+        public BoardMemberDTO BoardMember { get; set; }
+        public IEnumerable<Entities.Address> Addresses { get; set; }
 
         public Guid? CreateBy { get; set; }
         public DateTime? CreatedAt { get; set; }
@@ -16,5 +16,4 @@ namespace BoligBlik.MVC.DTO.User
         public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }
     }
-
 }

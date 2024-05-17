@@ -8,7 +8,7 @@ namespace BoligBlik.MVC.DTO.BoardMember
         public UserDTO User { get; set; }
         public DateOnly StartDate { get; set; }
 
-        public Byte[] RowVersion { get; set; }
+        public byte[] RowVersion { get; set; }
 
     }
 }
