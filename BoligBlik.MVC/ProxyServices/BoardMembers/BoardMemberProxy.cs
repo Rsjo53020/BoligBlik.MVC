@@ -19,7 +19,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.GetAsync("api/BoardMembers");
+                var response = await _httpClient.GetAsync("/api/BoardMembers");
                 response.EnsureSuccessStatusCode();
                 var boardMembers = await response.Content.ReadFromJsonAsync<List<BoardMemberDTO>>();
                 return boardMembers;
@@ -39,7 +39,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/BoardMembers/{title}");
+                var response = await _httpClient.GetAsync($"/api/BoardMembers/{title}");
                 response.EnsureSuccessStatusCode();
                 var boardMember = await response.Content.ReadFromJsonAsync<BoardMemberDTO>();
                 return boardMember;
@@ -58,7 +58,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/BoardMembers", boardMember);
+                var response = await _httpClient.PostAsJsonAsync("/api/BoardMembers", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -76,7 +76,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync("api/BoardMembers", boardMember);
+                var response = await _httpClient.PutAsJsonAsync("/api/BoardMembers", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -94,7 +94,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"api/BoardMembers{id}");
+                var response = await _httpClient.DeleteAsync($"/api/BoardMembers{id}");
                 response.EnsureSuccessStatusCode();
                 return true;
             }

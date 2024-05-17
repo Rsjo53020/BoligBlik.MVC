@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BoligBlik.MVC.DTO.Adress;
+using BoligBlik.MVC.DTO.Address;
 using BoligBlik.MVC.Models.Addresses;
 
 namespace BoligBlik.MVC.Mappings
