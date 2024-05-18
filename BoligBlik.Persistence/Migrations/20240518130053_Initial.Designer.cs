@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.Persistence.Migrations
 {
     [DbContext(typeof(BoligBlikContext))]
-    [Migration("20240516125102_Initial")]
+    [Migration("20240518130053_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -107,9 +107,6 @@ namespace BoligBlik.Persistence.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.ComplexProperty<Dictionary<string, object>>("BookingDates", "BoligBlik.Domain.Entities.Booking.BookingDates#BookingDates", b1 =>
                         {
                             b1.IsRequired();
@@ -128,8 +125,6 @@ namespace BoligBlik.Persistence.Migrations
                     b.HasIndex("ItemId");
 
                     b.HasIndex("PaymentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Booking", "booking");
                 });
@@ -523,19 +518,11 @@ namespace BoligBlik.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BoligBlik.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
 
                     b.Navigation("Item");
 
                     b.Navigation("Payment");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BoligBlik.Domain.Entities.Document", b =>
