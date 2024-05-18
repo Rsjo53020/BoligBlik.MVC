@@ -1,13 +1,4 @@
 ﻿using BoligBlik.Application.Interfaces.Infrastructure;
-using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Entities;
 using Newtonsoft.Json;
 

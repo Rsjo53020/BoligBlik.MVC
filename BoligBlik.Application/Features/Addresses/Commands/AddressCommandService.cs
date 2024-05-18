@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
-using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Infrastructure;
 using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
 

@@ -11,7 +11,7 @@ using BoligBlik.Application.DTO.Properties;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Application.DTO.PostalCodes;
 
-namespace BoligBlik.Application.DTO.Adress
+namespace BoligBlik.Application.DTO.Address
 {
     public class AddressDTO : IEntity
     {

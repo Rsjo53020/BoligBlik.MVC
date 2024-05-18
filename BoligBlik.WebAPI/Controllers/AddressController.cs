@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.Address;
-using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Addresses.Queries;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

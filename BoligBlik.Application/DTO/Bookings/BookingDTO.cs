@@ -1,12 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoligBlik.Application.DTO.Address;
-using BoligBlik.Application.DTO.Adress;
+﻿using BoligBlik.Application.DTO.Address;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.DTO.Payments;
 using BoligBlik.Application.DTO.User;
 using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Domain.Entities;
-using BoligBlik.Domain.Value;
 
 namespace BoligBlik.Application.DTO.Bookings
 {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Entities;

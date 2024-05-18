@@ -1,5 +1,4 @@
-﻿using BoligBlik.Application.DTO.Adress;
-using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.Domain.Common.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace BoligBlik.Application.DTO.User
