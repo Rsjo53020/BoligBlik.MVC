@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoligBlik.Application.DTO.Adress;
+﻿using BoligBlik.Application.DTO.Address;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.DTO.Payments;
 using BoligBlik.Application.DTO.User;

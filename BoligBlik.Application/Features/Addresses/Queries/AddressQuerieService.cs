@@ -1,12 +1,9 @@
-﻿using BoligBlik.Application.DTO.Adress;
-using BoligBlik.Application.Interfaces.Addresses.Queries;
+﻿using BoligBlik.Application.Interfaces.Addresses.Queries;
 using BoligBlik.Application.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
+using BoligBlik.Application.Common.Exceptions;
+using BoligBlik.Application.DTO.Address;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Application.Features.Addresses.Queries
 {
@@ -19,15 +16,34 @@ namespace BoligBlik.Application.Features.Addresses.Queries
             _addressRepo = addressRepo;
             _mapper = mapper;
         }
+
+
         public async Task<IEnumerable<AddressDTO>> ReadAllAsync()
         {
-          var addresses= await _addressRepo.ReadAllAsync();
-          List<AddressDTO> addressDtos = new List<AddressDTO>();
-          foreach (var address in addresses)
-          {
-              addressDtos.Add(_mapper.Map<AddressDTO>(address));
-          }
-          return addressDtos;
+            var addresses = await _addressRepo.ReadAllAsync();
+            List<AddressDTO> addressList = new List<AddressDTO>();
+            foreach (var address in addresses)
+            {
+                addressList.Add(_mapper.Map<AddressDTO>(address));
+            }
+
+            return addressList;
+
+
+        }
+
+        public async Task<AddressDTO> ReadAddress(Address address)
+        {
+            var response = await _addressRepo.ReadAddress(address);
+            var addressMap = _mapper.Map<AddressDTO>(response);
+
+            if (address is null)
+            {
+                throw new AddressNotFoundException(response.Id);
+            }
+
+            return addressMap;
+
         }
     }
 }

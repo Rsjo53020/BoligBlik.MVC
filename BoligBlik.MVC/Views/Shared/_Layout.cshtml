@@ -57,7 +57,6 @@
             <div class="container">
 
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
-                   @*  <a href="Home/Index" class="navbar-brand"> *@
                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <h1 class="text-white fw-bold d-block">U<span class="text-secondary">NI</span>K</h1>
                     </a>
@@ -75,29 +74,41 @@
                                     <a asp-controller="BoardMember" asp-action = "ReadAll" class="dropdown-item">Mød bestyrelsen</a>
                                     <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
 
+                                        </div>
+                                    </div>
+                                }
+                                <!-- Board End -->
+                                <!-- Booking Start -->
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
+                                    <div class="dropdown-menu rounded">
+                                        <a href="/Booking/NewBooking" class="dropdown-item">Ny Booking</a>
+                                        <a href="/Booking/YoursBookings" class="dropdown-item">Dine Bookinger</a>
+                                    </div>
                                 </div>
-                            </div>
-                            }
-                            <!-- Board End -->
-                            <!-- Booking Start -->
-                            <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
-                                <div class="dropdown-menu rounded">
-                                    <a href="/Booking/NewBooking" class="dropdown-item">Ny Booking</a>
-                                    <a href="/Booking/YoursBookings" class="dropdown-item">Dine Bookinger</a>
+                                <!-- Booking End -->
+                                <!-- Documents Start -->
+                                <div class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
+                                    <div class="dropdown-menu rounded">
+                                        <a href="/Documents/Bylaws" class="dropdown-item">Vedtægter</a>
+                                        <a href="/Documents/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Booking End -->
-                            <!-- Documents Start -->
-                            <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
-                                <div class="dropdown-menu rounded">
-                                    <a href="/Documents/Bylaws" class="dropdown-item">Vedtægter</a>
-                                    <a href="/Documents/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
-                                </div>
-                            </div>
-                            <!-- Documents End -->
+                                <!-- Documents End -->
+                                <!-- Address Start -->
+                                {
+                                    <div class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Address</a>
+                                        <div class="dropdown-menu rounded">
+                                            <a asp-controller="Address" asp-action="GetAllAddress" class="dropdown-item">Adresser</a>
+                                            <a href="/Address/Create" class="dropdown-item">Opret</a>
 
+                                        </div>
+                                    </div>
+                                }
+                                <!-- Address End -->
+                            }
                         </div>
                     </div>
                     <div class="d-none d-xl-flex flex-shirink-0">

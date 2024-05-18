@@ -1,0 +1,65 @@
+﻿@page
+@model BoligBlik.MVC.Controllers.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AddressViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AddressViewModel.Id" />
+            <div class="form-group">
+                <label asp-for="AddressViewModel.Street" class="control-label"></label>
+                <input asp-for="AddressViewModel.Street" class="form-control" />
+                <span asp-validation-for="AddressViewModel.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.HouseNumber" class="control-label"></label>
+                <input asp-for="AddressViewModel.HouseNumber" class="form-control" />
+                <span asp-validation-for="AddressViewModel.HouseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.Floor" class="control-label"></label>
+                <input asp-for="AddressViewModel.Floor" class="form-control" />
+                <span asp-validation-for="AddressViewModel.Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.DoorNumber" class="control-label"></label>
+                <input asp-for="AddressViewModel.DoorNumber" class="form-control" />
+                <span asp-validation-for="AddressViewModel.DoorNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.City" class="control-label"></label>
+                <input asp-for="AddressViewModel.City" class="form-control" />
+                <span asp-validation-for="AddressViewModel.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.PostalCode" class="control-label"></label>
+                <input asp-for="AddressViewModel.PostalCode" class="form-control" />
+                <span asp-validation-for="AddressViewModel.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressViewModel.RowVersion" class="control-label"></label>
+                <input asp-for="AddressViewModel.RowVersion" class="form-control" />
+                <span asp-validation-for="AddressViewModel.RowVersion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

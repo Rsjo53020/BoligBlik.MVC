@@ -229,7 +229,6 @@ namespace BoligBlik.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookingDates_endTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -263,12 +262,6 @@ namespace BoligBlik.Persistence.Migrations
                         principalTable: "Payments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Booking_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -299,12 +292,6 @@ namespace BoligBlik.Persistence.Migrations
                 schema: "booking",
                 table: "Booking",
                 column: "PaymentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Booking_UserId",
-                schema: "booking",
-                table: "Booking",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_MeetingId",

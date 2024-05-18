@@ -1,6 +1,4 @@
-﻿using BoligBlik.Application.DTO.Adress;
-using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Domain.Value;
+﻿using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.DTO.User
 {

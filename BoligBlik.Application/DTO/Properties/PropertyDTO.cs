@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Adress;
+﻿using BoligBlik.Application.DTO.Address;
 using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Domain.Common.Interfaces;
 

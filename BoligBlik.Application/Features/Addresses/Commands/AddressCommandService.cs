@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
-using BoligBlik.Application.DTO.Adress;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Infrastructure;
 using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Value;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
 
@@ -26,20 +19,23 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             _addressValidationInf = addressValidationInf;
             _mapper = mapper;
         }
-        
 
-        public void Create(CreateAddressDTO request)
+
+        public void CreateAddress(CreateAddressDTO request)
         {
             var address = _mapper.Map<Address>(request);
             var resultat = _addressValidationInf.ValidateAddressAsync(address);
 
-            if (resultat != Task.CompletedTask)
+            if (resultat.IsFaulted)
                 throw new ValidationException("Validation failed on address");
-            if (resultat == Task.CompletedTask)
-            {
-                _addressRepo.Create(address);
-            }
 
+            if (resultat.IsCompletedSuccessfully)
+                _addressRepo.CreateAddress(address);
+        }
+
+        public void UpdateAddress(UpdateAddressDTO request)
+        {
+            throw new NotImplementedException();
         }
     }
 }
