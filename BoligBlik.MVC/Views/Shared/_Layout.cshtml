@@ -65,15 +65,14 @@
                     </button>
                     <div class="collapse navbar-collapse bg-transparent" id="navbarCollapse">
                         <div class="navbar-nav ms-auto mx-xl-auto p-0">
-                            @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+
+                            <!-- Board Start -->
                             {
-                                <!-- Board Start -->
-                                {
-                                    <div class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
-                                        <div class="dropdown-menu rounded">
-                                            <a asp-controller="BoardMember" asp-action="ReadAll" class="dropdown-item">Bestyrelsen</a>
-                                            <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
+                                <div class="dropdown-menu rounded">
+                                    <a asp-controller="BoardMember" asp-action = "ReadAll" class="dropdown-item">Mød bestyrelsen</a>
+                                    <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
 
                                         </div>
                                     </div>

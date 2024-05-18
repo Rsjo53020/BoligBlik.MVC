@@ -21,7 +21,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.GetAsync("/api/BoardMembers");
+                var response = await httpClient.GetAsync("api/BoardMember");
                 response.EnsureSuccessStatusCode();
                 var boardMembers = await response.Content.ReadFromJsonAsync<List<BoardMemberDTO>>();
                 return boardMembers;
@@ -43,7 +43,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.GetAsync($"/api/BoardMembers/{title}");
+                var response = await httpClient.GetAsync($"/api/BoardMember/{title}");
                 response.EnsureSuccessStatusCode();
                 var boardMember = await response.Content.ReadFromJsonAsync<BoardMemberDTO>();
                 return boardMember;
@@ -64,7 +64,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.PostAsJsonAsync("/api/BoardMembers", boardMember);
+                var response = await httpClient.PostAsJsonAsync("/api/BoardMember", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -84,7 +84,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.PutAsJsonAsync("/api/BoardMembers", boardMember);
+                var response = await httpClient.PutAsJsonAsync("/api/BoardMember", boardMember);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
@@ -104,7 +104,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.DeleteAsync($"/api/BoardMembers{id}");
+                var response = await httpClient.DeleteAsync($"/api/BoardMember/{id}");
                 response.EnsureSuccessStatusCode();
                 return true;
             }

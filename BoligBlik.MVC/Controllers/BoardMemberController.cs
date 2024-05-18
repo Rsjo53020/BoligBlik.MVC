@@ -52,7 +52,7 @@ namespace BoligBlik.MVC.Controllers
                 {
                     boardMembers.Add(_mapper.Map<BoardMemberViewModel>(boardMemberDTO));
                 }
-                return View(result);
+                return View(boardMembers);
             }
             catch (Exception ex)
             {
@@ -88,13 +88,13 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateBoardMemberViewModel updateBoardMemberViewModel)
+        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
             try
             {
-                var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
-                var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
-                return View(result);
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
+                //var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
+                return View(/*result*/);
             }
             catch (Exception ex)
             {
