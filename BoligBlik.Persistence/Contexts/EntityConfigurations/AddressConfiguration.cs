@@ -6,14 +6,15 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
 {
     public class AddressConfiguration : IEntityTypeConfiguration<Address>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public void Configure(EntityTypeBuilder<Address> entity)
         {
-            builder.ToTable("Address", "address");
-            builder.HasKey(x => x.Id);
-            //builder.ComplexProperty(a => a.Users);
-            //builder.ComplexProperty(a => a.Properties);
-            //builder.ComplexProperty(a => a.Bookings);
-            builder.ComplexProperty(a => a.PostalCode);
+            entity.ToTable("Address", "address");
+            entity.HasKey(x => x.Id);
+            entity.HasMany(u => u.Users);
+            entity.HasMany(b => b.Bookings);
+            entity.ComplexProperty(a => a.PostalCode);
+            entity.Property(p => p.RowVersion)
+                .IsRowVersion();
         }
     }
 }

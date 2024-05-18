@@ -20,30 +20,32 @@ namespace BoligBlik.Application.Features.Addresses.Queries
 
         public async Task<IEnumerable<AddressDTO>> ReadAllAsync()
         {
-            var addresses = await _addressRepo.ReadAllAsync();
-            List<AddressDTO> addressList = new List<AddressDTO>();
-            foreach (var address in addresses)
+            try
             {
-                addressList.Add(_mapper.Map<AddressDTO>(address));
+                var addresses = await _addressRepo.ReadAllAsync();
+                List<AddressDTO> addressList = new List<AddressDTO>();
+
+                foreach (var address in addresses)
+                {
+                    var dto = _mapper.Map<AddressDTO>(address);
+                    addressList.Add(dto);
+                }
+
+                return addressList;
             }
-
-            return addressList;
-
-
+            catch (Exception ex)
+            {
+                throw new AddressesNotFoundException($"Addresses was not found: {ex.Message}");
+            }
         }
 
-        public async Task<AddressDTO> ReadAddress(Address address)
+        public async Task<AddressDTO> ReadAddress(Guid id)
         {
-            var response = await _addressRepo.ReadAddress(address);
+            var response = await _addressRepo.ReadAddress(id);
             var addressMap = _mapper.Map<AddressDTO>(response);
-
-            if (address is null)
-            {
-                throw new AddressNotFoundException(response.Id);
-            }
-
             return addressMap;
-
+            //throw new AddressNotFoundException(response.Id);
+            
         }
     }
 }

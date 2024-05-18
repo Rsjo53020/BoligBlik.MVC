@@ -1,17 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BoligBlik.Domain.Entities;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Persistence.Contexts.EntityConfigurations
 {
     public class PropertyConfiguration : IEntityTypeConfiguration<Property>
     {
-        public void Configure(EntityTypeBuilder<Property> builder)
+        public void Configure(EntityTypeBuilder<Property> entity)
         {
-            builder.ToTable("Property", "property");
-            builder.HasKey(x => x.Id);
-            builder.ComplexProperty(a => a.Addresses);
-            builder.ComplexProperty(a => a.BoardMember);
+            entity.ToTable("Property", "property");
+            entity.HasKey(x => x.Id);
+            entity.Property(p => p.RowVersion)
+                .IsRowVersion();
         }
     }
 }

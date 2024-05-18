@@ -23,19 +23,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                var addresses = await _dbContext.Adresses.AsNoTracking().ToListAsync();
-
-                //List<AddressDTO> mapAdressList = new List<AddressDTO>();
+                return await _dbContext.Adresses.AsNoTracking().ToListAsync();
                 
-                //foreach (var adress in addresses)
-                //{
-                //   var result = _mapper.Map<AddressDTO>(adress);
-                //   mapAdressList.Add(result);
-                //}
-
-                return addresses;
-                /*return mapAdressList*/;
-
             }
             catch (Exception ex)
             {
@@ -46,17 +35,17 @@ namespace BoligBlik.Persistence.Repositories.Addresses
 
         
 
-        public async Task<Address> ReadAddress(Address address)
+        public async Task<Address> ReadAddress(Guid id)
         {
             try
             {
-                return await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == address.Id);
+                return await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
 
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error in ReadBooking in BookingRepository " + ex.Message);
-                throw new ApplicationException("Error in ReadBooking in BookingRepository ", ex);
+                _logger.LogError("Error in ReadAddress in AddressRepository " + ex.Message);
+                throw new ApplicationException("Error in ReadAddress in AddressRepository", ex);
             }
         }
     }
