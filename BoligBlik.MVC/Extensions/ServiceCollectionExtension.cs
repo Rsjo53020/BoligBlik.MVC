@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.Mappings;
+using BoligBlik.MVC.ProxyServices.Addresses;
+using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.BoardMembers;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 
@@ -17,6 +19,7 @@ namespace BoligBlik.MVC.Extensions
         private static void AddServices(this IServiceCollection services)
         {
             services.AddTransient<IBoardMemberProxy, BoardMemberProxy>();
+            services.AddTransient<IAddressProxy, AddressProxy>();
         }
 
 

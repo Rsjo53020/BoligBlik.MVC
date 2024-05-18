@@ -10,6 +10,7 @@ namespace BoligBlik.Application.Interfaces.Addresses.Commands
 {
     public interface IAddressCommandService
     {
-        void Create(CreateAddressDTO request);
+        void CreateAddress(CreateAddressDTO request);
+        void UpdateAddress(UpdateAddressDTO request);
     }
 }

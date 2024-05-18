@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BoligBlik.MVC.Models.Addresses;
 
 namespace BoligBlik.MVC.Data
 {
@@ -11,6 +12,7 @@ namespace BoligBlik.MVC.Data
         {
 
         }
+        public DbSet<BoligBlik.MVC.Models.Addresses.AddressViewModel> AddressViewModel { get; set; } = default!;
     }
 
 
