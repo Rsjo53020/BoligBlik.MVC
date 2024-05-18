@@ -16,6 +16,12 @@ namespace BoligBlik.MVC.Controllers
             _boardMemberProxy = boardMemberProxy;
             _mapper = mapper;
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         /// <summary>
         /// Creates a BoardMember async 
         /// </summary>
@@ -28,12 +34,12 @@ namespace BoligBlik.MVC.Controllers
             {
                 var createBoardMemberDTO = _mapper.Map<CreateBoardMemberDTO>(createBoardMemberViewModel);
                 var result = await _boardMemberProxy.CreateBoardMemberAsync(createBoardMemberDTO);
-                return View(result);
+                return RedirectToAction("ReadAll", "BoardMember");
             }
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while creating a boardMember", ex);
-                return View(false);
+                return RedirectToAction("ReadAll", "BoardMember");
             }
         }
 
