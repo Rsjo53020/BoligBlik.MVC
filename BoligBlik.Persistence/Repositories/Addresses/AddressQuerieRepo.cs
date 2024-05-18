@@ -11,20 +11,19 @@ namespace BoligBlik.Persistence.Repositories.Addresses
     public class AddressQuerieRepo : IAddressQuerieRepo
     {
         private readonly BoligBlikContext _dbContext;
-        private readonly ILogger<User> _logger;
-        private readonly IMapper _mapper;
+        private readonly ILogger<Address> _logger;
 
-        public AddressQuerieRepo(BoligBlikContext dbContext, IMapper mapper)
+        public AddressQuerieRepo(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
         public async Task<IEnumerable<Address>> ReadAllAsync()
         {
             try
             {
-                return await _dbContext.Adresses.AsNoTracking().ToListAsync();
-                
+                 var addresses =  await _dbContext.Adresses.AsNoTracking().ToListAsync();
+                 return addresses;
+
             }
             catch (Exception ex)
             {
