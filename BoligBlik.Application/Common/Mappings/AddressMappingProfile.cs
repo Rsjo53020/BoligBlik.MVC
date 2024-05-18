@@ -8,11 +8,14 @@ namespace BoligBlik.Application.Common.Mappings
     {
         public AddressMappingProfile()
         {
-            //CreateAddressDTO
+            //Create Map Address <- -> DTO
             CreateMap<AddressDTO, Address>();
-            CreateMap<Address, AddressDTO>().ReverseMap();
-
-
+            CreateMap<Address, AddressDTO>()
+                .ReverseMap()
+                .ForMember(dest => dest.Bookings, opt => opt
+                    .MapFrom(src => src.Bookings))
+                .ForMember(dest => dest.Users, opt => opt
+                    .MapFrom(src => src.Users));
         }
     }
 }

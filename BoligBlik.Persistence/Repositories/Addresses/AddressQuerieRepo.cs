@@ -11,30 +11,18 @@ namespace BoligBlik.Persistence.Repositories.Addresses
     public class AddressQuerieRepo : IAddressQuerieRepo
     {
         private readonly BoligBlikContext _dbContext;
-        private readonly ILogger<User> _logger;
-        private readonly IMapper _mapper;
+        private readonly ILogger<Address> _logger;
 
-        public AddressQuerieRepo(BoligBlikContext dbContext, IMapper mapper)
+        public AddressQuerieRepo(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
         public async Task<IEnumerable<Address>> ReadAllAsync()
         {
             try
             {
-                var addresses = await _dbContext.Adresses.AsNoTracking().ToListAsync();
-
-                //List<AddressDTO> mapAdressList = new List<AddressDTO>();
-                
-                //foreach (var adress in addresses)
-                //{
-                //   var result = _mapper.Map<AddressDTO>(adress);
-                //   mapAdressList.Add(result);
-                //}
-
-                return addresses;
-                /*return mapAdressList*/;
+                 var addresses =  await _dbContext.Adresses.AsNoTracking().ToListAsync();
+                 return addresses;
 
             }
             catch (Exception ex)
@@ -46,17 +34,17 @@ namespace BoligBlik.Persistence.Repositories.Addresses
 
         
 
-        public async Task<Address> ReadAddress(Address address)
+        public async Task<Address> ReadAddress(Guid id)
         {
             try
             {
-                return await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == address.Id);
+                return await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
 
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error in ReadBooking in BookingRepository " + ex.Message);
-                throw new ApplicationException("Error in ReadBooking in BookingRepository ", ex);
+                _logger.LogError("Error in ReadAddress in AddressRepository " + ex.Message);
+                throw new ApplicationException("Error in ReadAddress in AddressRepository", ex);
             }
         }
     }

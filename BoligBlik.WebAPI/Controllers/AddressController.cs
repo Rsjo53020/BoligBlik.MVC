@@ -26,55 +26,57 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
-             try
+            try
             {
+                if (request is null)
+                    return BadRequest();
+
                 _addressCommandService.CreateAddress(request);
-                return Ok(request);
+                return Created();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e.Message);
+                _logger.LogError($"Error creating address with request: {request}, Exception: {ex}");
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AddressDTO>> GetAddress([FromQuery] AddressDTO request)
+        public async Task<ActionResult<AddressDTO>> GetAddress(Guid id)
         {
             try
             {
-                //var resultat = await _addressQuerieService.ReadAddress(request);
-               return Ok();
-
-                
+                _addressQuerieService.ReadAddress(id);
+                return Created();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e.Message);
+                _logger.LogError($"Error in read a address with id: {id}, Exception: {ex.Message}");
+                return BadRequest(ex.Message);
             }
 
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AddressDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllAddresses()
         {
             try
             {
-                var resultat = await _addressQuerieService.ReadAllAsync();
-                return Ok(resultat);
-
+                 await _addressQuerieService.ReadAllAsync();
+            
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e.Message);
+                _logger.LogError($"Error in reading all address , Exception: {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] UpdateAddressDTO updateAddressDto)
+        public async Task<IActionResult> UpdateAddress(Guid id, [FromBody] UpdateAddressDTO updateAddressDto)
         {
             if (id != updateAddressDto.Id)
-            {
                 return BadRequest();
-            }
+
 
             _addressCommandService.UpdateAddress(updateAddressDto);
 

@@ -5,6 +5,6 @@ namespace BoligBlik.Application.Interfaces.Repositories
     public interface IAddressQuerieRepo
     {
         Task<IEnumerable<Address>> ReadAllAsync();
-        Task<Address> ReadAddress(Address address);
+        Task<Address> ReadAddress(Guid id);
     }
 }

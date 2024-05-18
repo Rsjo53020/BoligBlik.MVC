@@ -1,10 +1,8 @@
 ﻿using BoligBlik.Domain.Value;
-using System.ComponentModel.DataAnnotations;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Common.Shared;
 using BoligBlik.Domain.Exceptions;
 using BoligBlik.Entities;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BoligBlik.Domain.Entities
 {
