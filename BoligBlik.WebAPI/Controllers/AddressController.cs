@@ -61,7 +61,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                 await _addressQuerieService.ReadAllAsync();
+                 return Ok(await _addressQuerieService.ReadAllAsync());
             
             }
             catch (Exception ex)

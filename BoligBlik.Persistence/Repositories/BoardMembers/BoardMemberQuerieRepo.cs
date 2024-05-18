@@ -38,12 +38,12 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<BoardMember> ReadBoardMemberAsync(string title)
+        public async Task<BoardMember> ReadBoardMemberAsync(Guid id)
         {
             try
             {
                 return await _db.BoardMembers.AsNoTracking()
-                .Where(x => x.Title == title).FirstOrDefaultAsync();
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
 
             }
             catch (Exception ex)

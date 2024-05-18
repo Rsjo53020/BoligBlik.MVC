@@ -67,16 +67,34 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        /// <summary>
-        /// Reads a boardMember from title
-        /// </summary>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Reads a boardMember from title
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<IActionResult> Read(string title)
+        //{
+        //    try
+        //    {
+        //        var result = await _boardMemberProxy.GetBoardMemberAsync(title);
+
+        //        var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+
+        //        return View(boardMember);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("An error occured while reading a boardMember", ex);
+        //        return View(new BoardMemberViewModel());
+        //    }
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> Read(string title)
+        public async Task<IActionResult> Update(Guid id)
         {
             try
             {
-                var result = await _boardMemberProxy.GetBoardMemberAsync(title);
+                var result = await _boardMemberProxy.GetBoardMemberAsync(id);
 
                 var boardMember = _mapper.Map<BoardMemberViewModel>(result);
 
@@ -85,7 +103,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while reading a boardMember", ex);
-                return View(new BoardMemberViewModel());
+                return View();
             }
         }
 
@@ -94,18 +112,18 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
+        public async Task<IActionResult> Update(UpdateBoardMemberDTO updateBoardMemberViewModel)
         {
             try
             {
-                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
-                //var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
-                return View(/*result*/);
+                var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
+                var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
+                return RedirectToAction("ReadAll", "BoardMember");
             }
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while updating a boardMember", ex);
-                return View(false);
+                return RedirectToAction("ReadAll", "BoardMember");
             }
         }
 

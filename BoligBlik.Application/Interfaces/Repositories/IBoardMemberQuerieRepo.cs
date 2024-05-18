@@ -9,7 +9,7 @@ namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBoardMemberQuerieRepo
     {
-        Task<BoardMember> ReadBoardMemberAsync(string title);
+        Task<BoardMember> ReadBoardMemberAsync(Guid id);
         Task<IEnumerable<BoardMember>> ReadAllBoardMembersAsync();
 
     }
