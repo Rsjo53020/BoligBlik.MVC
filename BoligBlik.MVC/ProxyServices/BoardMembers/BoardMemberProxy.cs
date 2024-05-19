@@ -37,13 +37,13 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<BoardMemberDTO> GetBoardMemberAsync(string title)
+        public async Task<BoardMemberDTO> GetBoardMemberAsync(Guid id)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.GetAsync($"/api/BoardMember/{title}");
+                var response = await httpClient.GetAsync($"/api/BoardMember/{id}");
                 response.EnsureSuccessStatusCode();
                 var boardMember = await response.Content.ReadFromJsonAsync<BoardMemberDTO>();
                 return boardMember;

@@ -22,9 +22,9 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public async Task<BoardMemberDTO> ReadBoardMemberAsync(string title)
+        public async Task<BoardMemberDTO> ReadBoardMemberAsync(Guid id)
         {
-            var member = await _boardMemberRepo.ReadBoardMemberAsync(title);
+            var member = await _boardMemberRepo.ReadBoardMemberAsync(id);
             //map to DTO
             var memberDTO = _mapper.Map<BoardMemberDTO>(member);
             return memberDTO;
