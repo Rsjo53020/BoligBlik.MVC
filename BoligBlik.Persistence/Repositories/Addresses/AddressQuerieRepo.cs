@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +19,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                 var addresses =  await _dbContext.Adresses.AsNoTracking().ToListAsync();
-                 return addresses;
+                var addresses = await _dbContext.Adresses.AsNoTracking().ToListAsync();
+                return addresses;
 
             }
             catch (Exception ex)
@@ -32,14 +30,20 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             }
         }
 
-        
+
 
         public async Task<Address> ReadAddress(Guid id)
         {
             try
             {
-                return await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+               var response = await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                if (response == null)
+                {
+                    new Exception("der findes ingen address med et id");
+                }
 
+
+                return response;
             }
             catch (Exception ex)
             {
