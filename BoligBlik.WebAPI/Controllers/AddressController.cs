@@ -57,7 +57,7 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
         [HttpGet]
-        public Task<IEnumerable<AddressDTO>> GetAllAddresses()
+        public async Task<ActionResult<AddressDTO>> GetAllAddresses()
         {
             try
             {
