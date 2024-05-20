@@ -49,6 +49,7 @@ namespace BoligBlik.Application.Extensions
             var mapProfiles = new List<Profile>()
             { 
                 new AddressMappingProfile(),
+                new AddressMappingProfile(),
                 new BoardMemberMappingProfile(),
                 new BookingItemMappingProfile(),
                 new BookingItemMappingProfile(),

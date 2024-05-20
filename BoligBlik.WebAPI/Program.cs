@@ -17,12 +17,13 @@ namespace BoligBlik.WebAPI
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddInfrastructureLayer();
             builder.Services.AddApplicationLayer();
-            builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddAutoMapper(typeof(StartupBase));
             builder.Services.AddControllers();
 
             // Learn more about configuing Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
 
 
             var app = builder.Build();

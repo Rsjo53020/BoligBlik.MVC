@@ -23,7 +23,7 @@ namespace BoligBlik.WebAPI.Controllers
             _mapper = mapper;
         }
         // POST api/<Address>
-        [HttpPost]
+        [HttpPost("{request}")]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
             try
@@ -46,8 +46,8 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                _addressQuerieService.ReadAddress(id);
-                return Created();
+                return await _addressQuerieService.ReadAddress(id);
+                Created();
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllAddresses()
+        public Task<IEnumerable<AddressDTO>> GetAllAddresses()
         {
             try
             {
