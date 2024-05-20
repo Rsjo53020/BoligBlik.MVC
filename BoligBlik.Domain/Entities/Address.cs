@@ -11,12 +11,24 @@ namespace BoligBlik.Entities
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
         public PostalCode PostalCode { get; set; }
-        public List<User> Users { get; set; }
-        public List<Booking>? Bookings { get; set; }
+        public IReadOnlyList<User> Users => _user.AsReadOnly();
+        private List<User> _user = new();
+        public IReadOnlyList<Booking>? Bookings => _bookings.AsReadOnly();
+        private List<Booking> _bookings = new();
 
-        public Address() : base()
+        internal Address()
         {
             
+        }
+
+        public Address(string street, string houseNumber, string floor, string doorNumber, string city, string postalCodeNumber)
+        {
+            Street = street;
+            HouseNumber = houseNumber;
+            Floor = floor;
+            DoorNumber = doorNumber;
+            PostalCode = new PostalCode(city, postalCodeNumber);
+
         }
     }
 }

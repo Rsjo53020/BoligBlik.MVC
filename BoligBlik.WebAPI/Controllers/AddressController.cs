@@ -23,7 +23,7 @@ namespace BoligBlik.WebAPI.Controllers
             _mapper = mapper;
         }
         // POST api/<Address>
-        [HttpPost("{request}")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
             try
@@ -59,6 +59,7 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<AddressDTO>> GetAllAddresses()
         {
+
             try
             {
                  return Ok(await _addressQuerieService.ReadAllAsync());
@@ -71,16 +72,25 @@ namespace BoligBlik.WebAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAddress(Guid id, [FromBody] UpdateAddressDTO updateAddressDto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressDTO request)
         {
-            if (id != updateAddressDto.Id)
-                return BadRequest();
+
+            //if (id != updateAddressDto.Id)
+            //    return BadRequest();
 
 
-            _addressCommandService.UpdateAddress(updateAddressDto);
+            _addressCommandService.UpdateAddress(request);
 
-            return Ok(updateAddressDto);
+            return Ok(request);
+        }
+    
+
+        [HttpDelete]
+        public ActionResult DeleteUser([FromBody] DeleteAddressDTO request)
+        {
+            _addressCommandService.DeleteAddress(request);
+            return Ok();
         }
 
 

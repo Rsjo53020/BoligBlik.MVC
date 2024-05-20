@@ -24,6 +24,13 @@ namespace BoligBlik.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddHttpClient("AddressValidationClient", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration
+                                                 .GetSection("ClientAddresses")
+                                                 .GetValue<string>("DAWAApi")
+                                             ?? throw new MissingFieldException("Missing the api client url"));
+            });
 
 
             var app = builder.Build();

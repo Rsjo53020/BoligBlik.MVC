@@ -16,7 +16,7 @@ namespace BoligBlik.MVC.Models.Addresses
 
         public string City { get; set; }
         //public string Country { get; set; }
-        public string PostalCode { get; set; }
+        public string PostalCodeNumber { get; set; }
         public List<UserViewModel> Users { get; set; }
 
         public byte[] RowVersion { get; set; }
