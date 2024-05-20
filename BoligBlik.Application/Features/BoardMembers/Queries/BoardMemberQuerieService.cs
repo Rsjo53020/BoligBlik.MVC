@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.BoardMember;
+using BoligBlik.Application.DTO.User;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
 using BoligBlik.Application.Interfaces.Repositories;
 
@@ -40,7 +41,10 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             foreach (var member in members)
             {
                 //map to DTO
-                memberDTOs.Add(_mapper.Map<BoardMemberDTO>(members));
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(member);
+                boardMemberDTO.Member = _mapper.Map<UserDTO>(member.User);
+
+                memberDTOs.Add(boardMemberDTO);
             }
             return memberDTOs;
         }

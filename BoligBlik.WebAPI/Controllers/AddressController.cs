@@ -62,13 +62,13 @@ namespace BoligBlik.WebAPI.Controllers
 
             try
             {
-                 return Ok(await _addressQuerieService.ReadAllAsync());
+                 return await _addressQuerieService.ReadAllAsync();
             
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error in reading all address , Exception: {ex.Message}");
-                return BadRequest(ex.Message);
+                return new List<AddressDTO>();
             }
         }
 

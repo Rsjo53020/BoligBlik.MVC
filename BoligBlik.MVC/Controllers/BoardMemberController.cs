@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
+using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
+using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,7 +58,9 @@ namespace BoligBlik.MVC.Controllers
                 var boardMembers = new List<BoardMemberViewModel>();
                 foreach (var boardMemberDTO in result)
                 {
-                    boardMembers.Add(_mapper.Map<BoardMemberViewModel>(boardMemberDTO));
+                    var boardMember = _mapper.Map<BoardMemberViewModel>(boardMemberDTO);
+                    boardMember.Member = _mapper.Map<UserViewModel>(boardMemberDTO.Member);
+                    boardMembers.Add(boardMember);
                 }
                 return View(boardMembers);
             }
@@ -67,28 +71,11 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        ///// <summary>
-        ///// Reads a boardMember from title
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<IActionResult> Read(string title)
-        //{
-        //    try
-        //    {
-        //        var result = await _boardMemberProxy.GetBoardMemberAsync(title);
-
-        //        var boardMember = _mapper.Map<BoardMemberViewModel>(result);
-
-        //        return View(boardMember);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError("An error occured while reading a boardMember", ex);
-        //        return View(new BoardMemberViewModel());
-        //    }
-        //}
-
+        /// <summary>
+        /// gets the update page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -96,9 +83,15 @@ namespace BoligBlik.MVC.Controllers
             {
                 var result = await _boardMemberProxy.GetBoardMemberAsync(id);
 
-                var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+                if (result != null && result.Id == id)
+                {
+                    var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+                    boardMember.Member = _mapper.Map<UserViewModel>(result.Member);
 
-                return View(boardMember);
+                    return View(boardMember);
+                }
+                return View();
+                
             }
             catch (Exception ex)
             {
@@ -117,6 +110,7 @@ namespace BoligBlik.MVC.Controllers
             try
             {
                 var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
+                updateBoardMemberDTO.User = _mapper.Map<UserDTO>(updateBoardMemberViewModel.User);
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -142,7 +136,7 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occured while deletign a boardMember", ex);
+                _logger.LogError("An error occured while deleting a boardMember", ex);
                 return View(false);
             }
         }
