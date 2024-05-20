@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
+using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
@@ -70,7 +71,11 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-
+        /// <summary>
+        /// gets the update page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -81,6 +86,7 @@ namespace BoligBlik.MVC.Controllers
                 if (result != null && result.Id == id)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+                    boardMember.Member = _mapper.Map<UserViewModel>(result.Member);
 
                     return View(boardMember);
                 }
@@ -104,6 +110,7 @@ namespace BoligBlik.MVC.Controllers
             try
             {
                 var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
+                updateBoardMemberDTO.User = _mapper.Map<UserDTO>(updateBoardMemberViewModel.User);
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -129,7 +136,7 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occured while deletign a boardMember", ex);
+                _logger.LogError("An error occured while deleting a boardMember", ex);
                 return View(false);
             }
         }

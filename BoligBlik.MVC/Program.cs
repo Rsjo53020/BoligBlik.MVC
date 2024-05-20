@@ -16,7 +16,7 @@ namespace BoligBlik.MVC
 
             // Add services to the container -- move to a ServiceExtension.cs
             var connectionString = builder.Configuration
-                .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                .GetConnectionString("SkafteFrontEndLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             // move to a ServiceExtension.cs
             builder.Services.AddDbContext<ApplicationDbContext>(
