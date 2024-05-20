@@ -9,7 +9,8 @@ namespace BoligBlik.MVC.DTO.Address
         public string HouseNumber { get; set; }
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
-        public PostalCodeDTO PostalCode { get; set; }
+        public string PostalCodeNumber { get; set; }
+        public string City { get; set; }
         public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }
         public Guid? CreateBy { get; set; }
