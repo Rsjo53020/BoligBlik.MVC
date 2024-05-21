@@ -4,6 +4,8 @@ using BoligBlik.MVC.ProxyServices.Addresses;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.BoardMembers;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
+using BoligBlik.MVC.ProxyServices.Users;
+using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 
 namespace BoligBlik.MVC.Extensions
 {
@@ -20,6 +22,7 @@ namespace BoligBlik.MVC.Extensions
         {
             services.AddTransient<IBoardMemberProxy, BoardMemberProxy>();
             services.AddTransient<IAddressProxy, AddressProxy>();
+            services.AddTransient<IUserProxy, UserProxy>();
         }
 
 

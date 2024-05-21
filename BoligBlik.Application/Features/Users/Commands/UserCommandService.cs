@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using AutoMapper;
 using BoligBlik.Application.DTO.User;
-using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;

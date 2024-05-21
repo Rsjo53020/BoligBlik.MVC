@@ -1,12 +1,10 @@
-﻿using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.MVC.Models.Addresses;
 using System.ComponentModel.DataAnnotations;
 
-namespace BoligBlik.Application.DTO.User
+namespace BoligBlik.MVC.Models.Users
 {
-    // DTO for updating a user
-    public class UpdateUserDTO : IEntity
+    public class UpdateUserViewModel
     {
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -18,7 +16,6 @@ namespace BoligBlik.Application.DTO.User
         public string EmailAddress { get; set; }
 
         public string Role { get; set; }
-
 
         public DateTime? UpdatedAt { get; set; }
         public Guid? UpdatedBy { get; set; }

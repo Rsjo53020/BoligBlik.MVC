@@ -5,7 +5,7 @@ using BoligBlik.MVC.Models.Addresses;
 
 namespace BoligBlik.MVC.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

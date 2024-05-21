@@ -4,6 +4,7 @@ using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoligBlik.WebAPI.Controllers
 {
@@ -31,7 +32,7 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 if (request != null)
                 {
-                    
+
                     _commandService.CreateUser(request);
                     return Created();
 
@@ -54,7 +55,8 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet("{email}")]
         public async Task<UserDTO> GetUser(string email)
         {
-            return await _querieService.ReadUserAsync(email);
+            var restult = await _querieService.ReadUserAsync(email);
+            return restult;
         }
 
         [HttpGet]
@@ -66,9 +68,32 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
         {
-            _commandService.UpdateUser(request);
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest("Request cannot be null.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _commandService.UpdateUser(request);
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError($"Concurrency conflict while updating user with request: {request}, Exception: {ex}");
+                return StatusCode(409, "Concurrency conflict occurred. Please try again.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error updating user with request: {request}, Exception: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
 
         [HttpDelete]
         public ActionResult DeleteUser([FromBody] DeleteUserDTO request)

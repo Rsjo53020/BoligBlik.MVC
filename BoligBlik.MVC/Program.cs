@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-
 namespace BoligBlik.MVC
 {
     public class Program
@@ -14,55 +13,49 @@ namespace BoligBlik.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container -- move to a ServiceExtension.cs
+            // Add services to the container
             var connectionString = builder.Configuration
-                .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                .GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            // move to a ServiceExtension.cs
+            // Adding DbContext service
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(connectionString));
 
-            // move to a ServiceExtension.cs
+            // Adding developer page exception filter
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //flyt til en ServiceExtension.cs (identities) 
-            builder.Services.AddDefaultIdentity<IdentityUser>(
-                    options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            // Adding identity services
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+                    options =>
+                    {
+                        options.Password.RequiredUniqueChars = 0;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequiredLength = 8;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireLowercase = false;
+                    })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
+            // Add ServiceCollection
             builder.AddFrontEnd();
 
+            // Adding Razor Pages service
+            builder.Services.AddRazorPages();
 
-
-            //// move to a ServiceExtension.cs
-            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            //    {
-            //        options.Password.RequiredUniqueChars = 0;
-            //        options.Password.RequireUppercase = false;
-            //        options.Password.RequiredLength = 8;
-            //        options.Password.RequireNonAlphanumeric = false;
-            //        options.Password.RequireDigit = false;
-            //        options.Password.RequireLowercase = false;
-            //    })
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-
+            // Adding MVC services with controllers and views
             builder.Services.AddControllersWithViews();
 
-
-            // move to a ServiceExtension.cs
-            builder.Services.AddAuthorization(options => options
-                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));
-            builder.Services.AddAuthorization(options => options
-                .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Member")));
-
-            // Add more claims as necessary
+            // Adding authorization policies
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin"));
+                options.AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Member"));
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Configure the HTTP request pipeline
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -70,7 +63,6 @@ namespace BoligBlik.MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -86,20 +78,17 @@ namespace BoligBlik.MVC
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            //    var roles = new[] { "Admin", "Manager", "Member" };
-
-            //    foreach (var role in roles)
-            //    {
-            //        if (!await roleManager.RoleExistsAsync(role))
-            //            await roleManager.CreateAsync(new IdentityRole(role));
-
-            //    }
-
-            //}
+            // Uncomment and use this block if you need to seed roles
+            // using (var scope = app.Services.CreateScope())
+            // {
+            //     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            //     var roles = new[] { "Admin", "Manager", "Member" };
+            //     foreach (var role in roles)
+            //     {
+            //         if (!await roleManager.RoleExistsAsync(role))
+            //             await roleManager.CreateAsync(new IdentityRole(role));
+            //     }
+            // }
 
             app.Run();
         }

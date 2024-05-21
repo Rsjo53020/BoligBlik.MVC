@@ -7,6 +7,7 @@ namespace BoligBlik.Domain.Entities
 {
     public class User : Entity
     {
+
         [MaxLength(50)]
         public string FirstName { get; set; }
         [MaxLength(50)]

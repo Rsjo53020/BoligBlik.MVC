@@ -56,20 +56,20 @@ namespace BoligBlik.WebAPI.Controllers
             }
 
         }
-        [HttpGet]
-        public Task<IEnumerable<AddressDTO>> GetAllAddresses()
-        {
-            try
-            {
-                 return Ok(await _addressQuerieService.ReadAllAsync());
+        //[HttpGet]
+        //public Task<IEnumerable<AddressDTO>> GetAllAddresses()
+        //{
+        //    try
+        //    {
+        //         return Ok(await _addressQuerieService.ReadAllAsync());
             
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in reading all address , Exception: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error in reading all address , Exception: {ex.Message}");
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAddress(Guid id, [FromBody] UpdateAddressDTO updateAddressDto)
