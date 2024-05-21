@@ -111,7 +111,18 @@
                             </div>
                             }
                             <!-- Address End -->
+                            <!-- Administration Start -->
+                            {
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Brugerprofiler</a>
+                                <div class="dropdown-menu rounded">
+                                    <a asp-controller="User" asp-action="GetAll" class="dropdown-item">Alle Profiler</a>
+                                    <a asp-controller="User" asp-action="Delete" class="dropdown-item">Deaktiver Profil</a>
+                                    <a asp-controller="User" asp-action="AssignIdentityRole" class="dropdown-item">Administer systemadgang</a>
+                                </div>
+                            </div>
                             }
+                            <!-- Administration End -->
                         </div>
                     </div>
                     <div class="d-none d-xl-flex flex-shirink-0">

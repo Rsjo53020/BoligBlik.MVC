@@ -10,15 +10,25 @@ namespace BoligBlik.Persistence.Repositories
         private readonly BoligBlikContext _dbContext;
         private IDbContextTransaction? _transaction;
 
-
         public UnitOfWork(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
         }
-
+        public void BeginTransaction(IsolationLevel isolationLevel)
+        {
+            _transaction = _dbContext.Database.BeginTransaction();
+        }
+        public async Task CommitChangesAsync()
+        {
+            if (_transaction is null)
+            {
+                return;
+            }
+            await _transaction.CommitAsync();
+        }
         public void Rollback()
         {
-            _transaction.Rollback();
+            _transaction?.Rollback();
         }
 
         public async Task SaveChangesAsync()
@@ -26,20 +36,9 @@ namespace BoligBlik.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public void BeginTransaction(IsolationLevel isolationLevel)
-        {
-            _transaction = _dbContext.Database.BeginTransaction();
-        }
 
-        public async Task CommitChangesAsync()
-        {
-            if (_transaction is null)
-            {
-                return;
-            }
-            await SaveChangesAsync();
-            await _transaction.CommitAsync();
-        }
+
+        
 
         public void Dispose()
         {
