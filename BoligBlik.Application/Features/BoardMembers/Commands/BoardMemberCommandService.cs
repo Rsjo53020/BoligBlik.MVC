@@ -40,7 +40,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
 
                 _boardMemberRepo.CreateBoardMember(boardMember);
 
-                _uow.CommitChangesAsync();
+                _uow.Commit();
                 
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
 
                 _boardMemberRepo.UpdateBoardMember(boardMember);
 
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
 
                 _boardMemberRepo.DeleteBoardMember(id);
 
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {

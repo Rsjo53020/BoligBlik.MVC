@@ -31,7 +31,7 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
 
                 var bookingItem = _mapper.Map<Domain.Entities.BookingItem>(request);
                 _bookingItemRepo.CreateBookingItem(bookingItem);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
 
                 var bookingItem = _mapper.Map<Domain.Entities.BookingItem>(request);
                 _bookingItemRepo.UpdateBookingItem(bookingItem);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
 
                 var bookingItem = _mapper.Map<Domain.Entities.BookingItem>(request);
                 _bookingItemRepo.DeleteBookingItem(bookingItem);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {

@@ -67,7 +67,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
 
                 _bookingCommandRepo.UpdateBooking(bookings);
 
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
 
                 _bookingCommandRepo.DeleteBooking(bookings);
 
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using IsolationLevel = System.Data.IsolationLevel;
 
@@ -8,42 +9,32 @@ namespace BoligBlik.Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BoligBlikContext _dbContext;
-        private IDbContextTransaction? _transaction;
+        private readonly DbContext _db;
+        private IDbContextTransaction _transaction;
 
-        public UnitOfWork(BoligBlikContext dbContext)
+        public UnitOfWork(BoligBlikContext dbContext, DbContext db)
         {
             _dbContext = dbContext;
+            _db = db;
         }
-        public void BeginTransaction(IsolationLevel isolationLevel)
+   public void BeginTransaction(IsolationLevel isolationLevel)
         {
-            _transaction = _dbContext.Database.BeginTransaction();
-        }
-        public async Task CommitChangesAsync()
-        {
-            if (_transaction is null)
-            {
-                return;
-            }
-            await _transaction.CommitAsync();
-        }
-        public void Rollback()
-        {
-            _transaction?.Rollback();
+            _transaction = _db.Database.CurrentTransaction ?? _db.Database.BeginTransaction(isolationLevel);
         }
 
-        public async Task SaveChangesAsync()
+        public void Commit()
         {
-            await _dbContext.SaveChangesAsync();
+            _transaction.Commit();
+            _transaction.Dispose();
         }
 
+  
 
-
-        
-
-        public void Dispose()
+     
+      public void Rollback()
         {
-            _dbContext.Dispose();
-            _transaction?.Dispose();
+           _transaction.Rollback();
+           _transaction.Dispose();
         }
 
     }

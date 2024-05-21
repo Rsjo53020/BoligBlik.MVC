@@ -37,7 +37,7 @@ namespace BoligBlik.Application.Features.Users.Commands
 
                 var user = _mapper.Map<User>(request);
                 _userRepo.CreateUser(user);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace BoligBlik.Application.Features.Users.Commands
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.Map<User>(request);
                 _userRepo.DeleteUser(user);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace BoligBlik.Application.Features.Users.Commands
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.Map<User>(request);
                 _userRepo.UpdateUser(user);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {

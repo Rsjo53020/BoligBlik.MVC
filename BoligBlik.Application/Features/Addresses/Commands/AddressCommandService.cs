@@ -40,7 +40,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
                 if (resultat != null)
                 {
                     _addressRepo.CreateAddress(address);
-                    _unitOfWork.CommitChangesAsync();
+                    _unitOfWork.Commit();
                 }
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
                     _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var address = _mapper.Map<Address>(request);
                 _addressRepo.UpdateAddress(address); 
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var address = _mapper.Map<Address>(request);
                 _addressRepo.DeleteAddress(address);
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
