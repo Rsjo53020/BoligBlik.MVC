@@ -16,7 +16,7 @@ namespace BoligBlik.Persistence.Contexts
 
         public void SeedDB()
         {
-            //SeedUsers();
+            SeedUsers();
             //SeedBoardMembers();
             //SeedPayment();
             //SeedMeeting();
@@ -27,47 +27,47 @@ namespace BoligBlik.Persistence.Contexts
             //SeedBooking();
         }
 
-        //internal void SeedUsers()
-        //{
-        //    var users = new User[]
-        //    {
-        //        new User
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FirstName = "Ronni",
-        //            LastName = "Jorgensen",
-        //            EmailAddress = "Ronni@Mail.dk",
-        //            Role = "Admin",
-        //            PhoneNumber = "+1234567890",
-        //        },
-        //        new User
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FirstName = "Christoffer",
-        //            LastName = "Skafte",
-        //            EmailAddress = "Skafte@Mail.dk",
-        //            Role = "Kasser",
-        //            PhoneNumber = "+9876543210",
-        //        },
-        //        new User
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FirstName = "Alexander",
-        //            LastName = "Larsen",
-        //            EmailAddress = "Alex@Mail.dk",
-        //            Role = "Næstformand",
-        //            PhoneNumber = "+9876543210",
-        //        },
-        //    };
-        //    foreach (var user in users)
-        //    {
-        //        if (!_context.Users.Any(existingUser => existingUser.EmailAddress == user.EmailAddress))
-        //        {
-        //            _context.Users.Add(user);
-        //        }
-        //    }
-        //    _context.SaveChanges();
-        //}
+        internal void SeedUsers()
+        {
+            var users = new User[]
+            {
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Ronni",
+                    LastName = "Jorgensen",
+                    EmailAddress = "Ronni@Mail.dk",
+                    Role = "Admin",
+                    PhoneNumber = "+1234567890",
+                },
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Christoffer",
+                    LastName = "Skafte",
+                    EmailAddress = "Skafte@Mail.dk",
+                    Role = "Kasser",
+                    PhoneNumber = "+9876543210",
+                },
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Alexander",
+                    LastName = "Larsen",
+                    EmailAddress = "Alex@Mail.dk",
+                    Role = "Næstformand",
+                    PhoneNumber = "+9876543210",
+                },
+            };
+            foreach (var user in users)
+            {
+                if (!_context.Users.Any(existingUser => existingUser.EmailAddress == user.EmailAddress))
+                {
+                    _context.Users.Add(user);
+                }
+            }
+            _context.SaveChanges();
+        }
 
         //internal void SeedAddress()
         //{
@@ -100,176 +100,176 @@ namespace BoligBlik.Persistence.Contexts
         //    _context.SaveChanges();
         //}
 
-        //internal void SeedBoardMembers()
-        //{
-        //    var boardMembers = new BoardMember[]
-        //    {
-        //        new BoardMember
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Title = "Formand",
-        //            Description = "Formandspost",
-        //            User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
-        //        },
-        //        new BoardMember
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Title = "Næstformand",
-        //            Description = "Næstformandspost",
-        //            User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
-        //        },
-        //        new BoardMember
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Title = "Kasser",
-        //            Description = "Kasserpost",
-        //            User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
-        //        }
-        //    };
+        internal void SeedBoardMembers()
+        {
+            var boardMembers = new BoardMember[]
+            {
+                new BoardMember
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Formand",
+                    Description = "Formandspost",
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                },
+                new BoardMember
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Næstformand",
+                    Description = "Næstformandspost",
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                },
+                new BoardMember
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Kasser",
+                    Description = "Kasserpost",
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                }
+            };
 
-        //    foreach (var boardMember in boardMembers)
-        //    {
-        //        if (!_context.BoardMembers.Any(existingBoardMember => existingBoardMember.Title == boardMember.Title))
-        //        {
-        //            _context.BoardMembers.Add(boardMember);
-        //        }
-        //    }
+            foreach (var boardMember in boardMembers)
+            {
+                if (!_context.BoardMembers.Any(existingBoardMember => existingBoardMember.Title == boardMember.Title))
+                {
+                    _context.BoardMembers.Add(boardMember);
+                }
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
-        //internal void SeedPayment()
-        //{
-        //    var payments = new Payment[]
-        //    {
-        //        new Payment
-        //        {
-        //            Amount = 100,
-        //            Date = DateOnly.FromDateTime(DateTime.Now),
-        //            Status = "Betalt",
-        //            User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
-        //        },
-        //        new Payment
-        //        {
-        //            Amount = 200,
-        //            Date = DateOnly.FromDateTime(DateTime.Now),
-        //            Status = "Afventer betaling",
-        //            User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
-        //        }
-        //    };
+        internal void SeedPayment()
+        {
+            var payments = new Payment[]
+            {
+                new Payment
+                {
+                    Amount = 100,
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    Status = "Betalt",
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                },
+                new Payment
+                {
+                    Amount = 200,
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    Status = "Afventer betaling",
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                }
+            };
 
-        //    foreach (var payment in payments)
-        //    {
-        //        _context.Payments.Add(payment);
-        //    }
+            foreach (var payment in payments)
+            {
+                _context.Payments.Add(payment);
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
-        //internal void SeedMeeting()
-        //{
-        //    var meetings = new Meeting[]
-        //    {
-        //        new Meeting
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Start = DateOnly.FromDateTime(DateTime.Now),
-        //            End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
-        //            Description = "Møde ang. Ronni",
+        internal void SeedMeeting()
+        {
+            var meetings = new Meeting[]
+            {
+                new Meeting
+                {
+                    Id = Guid.NewGuid(),
+                    Start = DateOnly.FromDateTime(DateTime.Now),
+                    End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
+                    Description = "Møde ang. Ronni",
 
-        //        },
-        //        new Meeting
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Start = DateOnly.FromDateTime(DateTime.Now),
-        //            End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
-        //            Description = "Vigigt Møde",
-        //        }
-        //    };
+                },
+                new Meeting
+                {
+                    Id = Guid.NewGuid(),
+                    Start = DateOnly.FromDateTime(DateTime.Now),
+                    End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
+                    Description = "Vigigt Møde",
+                }
+            };
 
-        //    foreach (var meeting in meetings)
-        //    {
-        //        _context.Meetings.Add(meeting);
-        //    }
+            foreach (var meeting in meetings)
+            {
+                _context.Meetings.Add(meeting);
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
-        //internal void SeedDocument()
-        //{
-        //    var documents = new Document[]
-        //    {
-        //        new Document
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Title = "Møde Referat",
-        //            Description = "Referat af møde",
-        //            Category = "Referat",
-        //        },
-        //        new Document
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Title = "Nye vedtægter",
-        //            Description = "Vigtige vedtægter",
-        //            Category = "Vedtægter",
-        //        }
-        //    };
+        internal void SeedDocument()
+        {
+            var documents = new Document[]
+            {
+                new Document
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Møde Referat",
+                    Description = "Referat af møde",
+                    Category = "Referat",
+                },
+                new Document
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Nye vedtægter",
+                    Description = "Vigtige vedtægter",
+                    Category = "Vedtægter",
+                }
+            };
 
-        //    foreach (var document in documents)
-        //    {
-        //        _context.Documents.Add(document);
-        //    }
+            foreach (var document in documents)
+            {
+                _context.Documents.Add(document);
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
-        //internal void SeedBookingItem()
-        //{
-        //    var bookingItems = new BookingItem[]
-        //    {
-        //        new BookingItem
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Name = "Vaskemaskine",
-        //            Price = 20,
-        //            Description = "Booking af vaskemaskine",
-        //            Rules = "Kan bookes alle dage",
-        //            Repairs = "Ingen reperationer",
+        internal void SeedBookingItem()
+        {
+            var bookingItems = new BookingItem[]
+            {
+                new BookingItem
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Vaskemaskine",
+                    Price = 20,
+                    Description = "Booking af vaskemaskine",
+                    Rules = "Kan bookes alle dage",
+                    Repairs = "Ingen reperationer",
 
-        //        },
-        //        new BookingItem
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Name = "test",
-        //            Price = 100,
-        //            Description = "The budget for the year",
-        //            Rules = "test",
-        //            Repairs = "te",
-        //        }
-        //    };
+                },
+                new BookingItem
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "test",
+                    Price = 100,
+                    Description = "The budget for the year",
+                    Rules = "test",
+                    Repairs = "te",
+                }
+            };
 
-        //    foreach (var bookingItem in bookingItems)
-        //    {
-        //        _context.BookingItems.Add(bookingItem);
-        //    }
+            foreach (var bookingItem in bookingItems)
+            {
+                _context.BookingItems.Add(bookingItem);
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
-        //internal void SeedBooking()
-        //{
-        //    var bookings = new Booking[]
-        //    {
+        internal void SeedBooking()
+        {
+            var bookings = new Booking[]
+            {
 
-        //    };
+            };
 
-        //    foreach (var booking in bookings)
-        //    {
-        //        _context.Bookings.Add(booking);
-        //    }
+            foreach (var booking in bookings)
+            {
+                _context.Bookings.Add(booking);
+            }
 
-        //    _context.SaveChanges();
-        //}
+            _context.SaveChanges();
+        }
 
         //internal void SeedProperty()
         //{

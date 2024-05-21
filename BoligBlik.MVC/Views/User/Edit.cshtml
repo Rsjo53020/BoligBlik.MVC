@@ -1,0 +1,55 @@
+﻿@model BoligBlik.MVC.Models.Users.UpdateUserViewModel
+@using Microsoft.AspNetCore.Identity
+
+
+@{
+    ViewData["Title"] = "Opdater Brugerprofil";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+@{
+    var fakeGuid = Guid.NewGuid();
+}
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="RowVersion" />
+    <input type="hidden" asp-for="UpdatedAt" value="@DateTime.Now" />
+    <input type="hidden" asp-for="UpdatedBy" value="@fakeGuid" />
+
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label">Fornavn</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label">Efternavn</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label">Telefonnummer</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmailAddress" class="control-label">E-Mail</label>
+        <input asp-for="EmailAddress" class="form-control" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Role" class="control-label">Bestyrelses rolle</label>
+        <input asp-for="Role" class="form-control" />
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gem Ændringer</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

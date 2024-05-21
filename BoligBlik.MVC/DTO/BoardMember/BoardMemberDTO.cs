@@ -6,7 +6,7 @@ namespace BoligBlik.MVC.DTO.BoardMember
     public class BoardMemberDTO : IEntity
     {
         public string Title { get; set; }
-        public UserDTO Member { get; set; }
+        public UserDTO User { get; set; }
         public string Description { get; set; }
 
         public DateOnly StartDate { get; set; }

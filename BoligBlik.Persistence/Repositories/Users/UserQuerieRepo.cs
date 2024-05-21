@@ -29,6 +29,19 @@ namespace BoligBlik.Persistence.Repositories.Users
             }
         }
 
+        public async Task<User> ReadUserAsync(Guid Id)
+        {
+            try
+            {
+                return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in readUser in UserRepository " + ex.Message);
+                throw new ApplicationException("Error in readUser in UserRepository ", ex);
+            }
+        }
+
         public async Task<IEnumerable<User>> ReadAllUsersAsync()
         {
             try

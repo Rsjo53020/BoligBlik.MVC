@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace BoligBlik.MVC.Data.Migrations
+namespace BoligBlik.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialFrontEnd : Migration
+    public partial class boardMemberChangestest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
