@@ -44,6 +44,7 @@ namespace BoligBlik.Persistence.Repositories
         public void Dispose()
         {
             _dbContext.Dispose();
+            _transaction?.Dispose();
         }
 
     }

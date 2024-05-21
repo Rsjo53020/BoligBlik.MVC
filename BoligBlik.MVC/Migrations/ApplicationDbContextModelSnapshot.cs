@@ -22,6 +22,7 @@ namespace BoligBlik.MVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<< HEAD:BoligBlik.MVC/Migrations/ApplicationDbContextModelSnapshot.cs
             modelBuilder.Entity("BoligBlik.MVC.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -104,6 +105,8 @@ namespace BoligBlik.MVC.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+=======
+>>>>>>> ed25abca6415f63b35e7e9232efc52c05b26a4ea:BoligBlik.MVC/Data/Migrations/ApplicationDbContextModelSnapshot.cs
             modelBuilder.Entity("BoligBlik.MVC.Models.Addresses.AddressViewModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -126,7 +129,11 @@ namespace BoligBlik.MVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD:BoligBlik.MVC/Migrations/ApplicationDbContextModelSnapshot.cs
                     b.Property<string>("PostalCode")
+=======
+                    b.Property<string>("PostalCodeNumber")
+>>>>>>> ed25abca6415f63b35e7e9232efc52c05b26a4ea:BoligBlik.MVC/Data/Migrations/ApplicationDbContextModelSnapshot.cs
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

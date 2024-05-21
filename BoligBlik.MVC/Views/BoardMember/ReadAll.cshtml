@@ -48,8 +48,8 @@
                             <img src="/img/Skafte.jpg" class="img-fluid w-25 rounded-circle" alt="Billede af Administration">
                         </div>
                         <div class="team-name text-center py-3">
-                            <h4 class="" @Html.DisplayFor(modelItem => item.Member.FirstName + " " + item.Member.LastName)/h4>
-                            <p class="m-0"> @Html.DisplayFor(modelItem => item.Title) </p>
+                            <h4 class="" @item.Member.FirstName @item.Member.LastName/h4>
+                            <p class="m-0"> @item.Title </p>
                         <a asp-controller="BoardMember" asp-action="Update" asp-route-id="@item">Ret</a>
                         </div>
                         <div class="team-icon d-flex justify-content-center pb-4">
