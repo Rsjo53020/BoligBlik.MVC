@@ -35,13 +35,13 @@ namespace BoligBlik.WebAPI
 
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                //Seed the Database
-                var serviceProvider = builder.Services.BuildServiceProvider();
-                var seeder = serviceProvider.GetService<IDatabaseSeeder>();
-                seeder.SeedDB();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    //Seed the Database
+            //    var serviceProvider = builder.Services.BuildServiceProvider();
+            //    var seeder = serviceProvider.GetService<IDatabaseSeeder>();
+            //    seeder.SeedDB();
+            //}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -28,6 +28,13 @@ namespace BoligBlik.Application.Features.Users.Queries
             return userDTO;
         }
 
+        public async Task<UserDTO> ReadUserAsync(Guid Id)
+        {
+            var user = await _userRepo.ReadUserAsync(Id);
+            var userDTO = _mapper.Map<UserDTO>(user);
+            return userDTO;
+        }
+
         /// <summary>
         /// This method reads all users
         /// </summary>

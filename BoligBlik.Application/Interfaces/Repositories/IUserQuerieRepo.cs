@@ -8,6 +8,7 @@ namespace BoligBlik.Application.Interfaces.Repositories
     public interface IUserQuerieRepo
     {
         Task<User> ReadUserAsync(string email);
+        Task<User> ReadUserAsync(Guid Id);
         Task<IEnumerable<User>> ReadAllUsersAsync();
     }
 }
