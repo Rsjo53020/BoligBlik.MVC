@@ -59,7 +59,7 @@ namespace BoligBlik.MVC.Controllers
                 foreach (var boardMemberDTO in result)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(boardMemberDTO);
-                    boardMember.Member = _mapper.Map<UserViewModel>(boardMemberDTO.Member);
+                    boardMember.Member = _mapper.Map<UserViewModel>(boardMemberDTO.User);
                     boardMembers.Add(boardMember);
                 }
                 return View(boardMembers);
@@ -86,7 +86,7 @@ namespace BoligBlik.MVC.Controllers
                 if (result != null && result.Id == id)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(result);
-                    boardMember.Member = _mapper.Map<UserViewModel>(result.Member);
+                    boardMember.Member = _mapper.Map<UserViewModel>(result.User);
 
                     return View(boardMember);
                 }
@@ -127,18 +127,28 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="deleteBoardMemberViewModel"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(BoardMemberViewModel boardMemberViewModel)
         {
             try
             {
-                var result = await _boardMemberProxy.DeleteBoardMemberAsync(id);
-                return View(result);
+                var boardMember = await _boardMemberProxy.GetBoardMemberAsync(boardMemberViewModel.Id);
+
+                if (boardMember != null && boardMember.Id == boardMemberViewModel.Id)
+                {
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id);
+
+
+                    return RedirectToAction("ReadAll", "BoardMember");
+                }
+                return RedirectToAction("ReadAll", "BoardMember");
+
             }
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while deleting a boardMember", ex);
-                return View(false);
+                return RedirectToAction("ReadAll", "BoardMember");
             }
+            
         }
     }
 }

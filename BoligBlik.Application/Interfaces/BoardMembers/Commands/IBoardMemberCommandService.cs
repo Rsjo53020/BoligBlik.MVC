@@ -11,8 +11,6 @@ namespace BoligBlik.Application.Interfaces.BoardMembers.Commands
     {
         public void CreateBoardMember(CreateBoardMemberDTO request);
         public void UpdateBoardMember(UpdateBoardMemberDTO request);
-        public void UpdateBoardMemberPatameters(UpdateBoardMemberParametersDTO request);
-        public void DeleteBoardMember(DeleteBoardMemberDTO request);
-        public void AddUserToBoardMember(AddUserToBoardMemberDTO request);
+        public void DeleteBoardMember(Guid id);
     }
 }

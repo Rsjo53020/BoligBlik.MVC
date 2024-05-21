@@ -10,13 +10,15 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
     {
         //Repositories
         private readonly IBoardMemberQuerieRepo _boardMemberRepo;
+        private readonly IUserQuerieRepo _userQuerieRepo;
         //Mapper
         private IMapper _mapper;
-        public BoardMemberQuerieService(IMapper mapper,
-            IBoardMemberQuerieRepo boardMemberQuerieRepo)
+        public BoardMemberQuerieService(IMapper mapper, IBoardMemberQuerieRepo boardMemberQuerieRepo,
+            IUserQuerieRepo userQuerieRepo)
         {
             _mapper = mapper;
             _boardMemberRepo = boardMemberQuerieRepo;
+            _userQuerieRepo = userQuerieRepo;
         }
         /// <summary>
         /// Reads a single boardmember of title
@@ -26,8 +28,10 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         public async Task<BoardMemberDTO> ReadBoardMemberAsync(Guid id)
         {
             var member = await _boardMemberRepo.ReadBoardMemberAsync(id);
+            //var user = await _userQuerieRepo.ReadUserAsync(member.UserID);
             //map to DTO
             var memberDTO = _mapper.Map<BoardMemberDTO>(member);
+
             return memberDTO;
         }
         /// <summary>
@@ -40,9 +44,10 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             List<BoardMemberDTO> memberDTOs = new List<BoardMemberDTO>();
             foreach (var member in members)
             {
+                //member.User = await _userQuerieRepo.ReadUserAsync(member.UserID);
                 //map to DTO
                 var boardMemberDTO = _mapper.Map<BoardMemberDTO>(member);
-                boardMemberDTO.Member = _mapper.Map<UserDTO>(member.User);
+                boardMemberDTO.User = _mapper.Map<UserDTO>(member.User);
 
                 memberDTOs.Add(boardMemberDTO);
             }

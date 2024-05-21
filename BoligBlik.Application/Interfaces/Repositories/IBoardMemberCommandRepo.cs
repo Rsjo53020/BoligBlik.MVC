@@ -9,9 +9,8 @@ namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBoardMemberCommandRepo
     {
-        void AddUserToBoardMember(BoardMember boardMember);
         void CreateBoardMember(BoardMember boardMember);
-        void DeleteBoardMember(BoardMember boardMember);
-        void UpdateBoardMemberParameters(BoardMember boardMember);
+        void DeleteBoardMember(Guid id);
+        void UpdateBoardMember(BoardMember boardMember);
     }
 }

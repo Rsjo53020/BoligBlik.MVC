@@ -45,25 +45,11 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public ActionResult DeleteBoardMember([FromBody]DeleteBoardMemberDTO request)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteBoardMember(Guid id)
         {
-            _commandService.DeleteBoardMember(request);
+            _commandService.DeleteBoardMember(id);
             return Ok();
-        }
-
-        [HttpPut("AddUserToMember")]
-        public ActionResult AddUserToMember([FromBody] AddUserToBoardMemberDTO request)
-        {
-            _commandService.AddUserToBoardMember(request);
-            return Ok();
-        }
-
-        [HttpPut("Parameters")]
-        public ActionResult UpdateBoardmemberParameters([FromBody] UpdateBoardMemberParametersDTO request) 
-        {
-            _commandService.UpdateBoardMemberPatameters(request);
-            return Ok(); 
         }
     }
 }

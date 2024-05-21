@@ -34,7 +34,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// updates a boardmember in database
         /// </summary>
         /// <param name="boardMember"></param>
-        public void UpdateBoardMemberParameters(BoardMember boardMember)
+        public void UpdateBoardMember(BoardMember boardMember)
         {
             try
             {
@@ -51,33 +51,16 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void DeleteBoardMember(BoardMember boardMember)
+        public void DeleteBoardMember(Guid id)
         {
             try
             {
-                _db.Remove(boardMember);
+                _db.Remove(_db.BoardMembers.Where(b => b.Id == id));
                 _db.SaveChanges();
             }
             catch (SqlException ex)
             {
                 _logger.LogError("Error in Delete in Boardmember: " + ex.Message);
-            }
-        }
-        /// <summary>
-        /// adds a user to a boardmember in database
-        /// </summary>
-        /// <param name="boardMember"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public void AddUserToBoardMember(BoardMember boardMember)
-        {
-            try
-            {
-                _db.Update(boardMember);
-                _db.SaveChanges();
-            }
-            catch (SqlException ex)
-            {
-                _logger.LogError("Error in AddUser in Boardmember: " + ex.Message);
             }
         }
     }
