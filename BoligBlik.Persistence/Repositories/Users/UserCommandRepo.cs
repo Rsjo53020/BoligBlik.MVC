@@ -20,7 +20,7 @@ namespace BoligBlik.Persistence.Repositories.Users
             try
             {
                 _dbContext.AddAsync(user);
-                _dbContext.SaveChangesAsync();
+                //_dbContext.SaveChangesAsync();
             }
             catch (SqlException ex)
             {

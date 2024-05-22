@@ -37,7 +37,6 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Ronni",
                     LastName = "Jorgensen",
                     EmailAddress = "Ronni@Mail.dk",
-                    Role = "Admin",
                     PhoneNumber = "+1234567890",
                 },
                 new User
@@ -46,7 +45,6 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Christoffer",
                     LastName = "Skafte",
                     EmailAddress = "Skafte@Mail.dk",
-                    Role = "Kasser",
                     PhoneNumber = "+9876543210",
                 },
                 new User
@@ -55,7 +53,6 @@ namespace BoligBlik.Persistence.Contexts
                     FirstName = "Alexander",
                     LastName = "Larsen",
                     EmailAddress = "Alex@Mail.dk",
-                    Role = "Næstformand",
                     PhoneNumber = "+9876543210",
                 },
             };

@@ -1,5 +1,6 @@
 ﻿using BoligBlik.Domain.Common.Shared;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace BoligBlik.Domain.Entities
 {
@@ -7,8 +8,7 @@ namespace BoligBlik.Domain.Entities
     {
         [Required]
         public string Title { get; set; }
-        public Guid UserID { get; set; }
-        public User? User { get; set; }
+        public User User { get; set; }
         public string Description { get; set; }
        public BoardMember() : base()
         {

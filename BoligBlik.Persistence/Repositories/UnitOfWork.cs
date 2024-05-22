@@ -24,6 +24,7 @@ namespace BoligBlik.Persistence.Repositories
 
         public void Commit()
         {
+            _db.SaveChanges();
             _transaction.Commit();
             _transaction.Dispose();
         }

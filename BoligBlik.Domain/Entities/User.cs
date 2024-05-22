@@ -18,8 +18,6 @@ namespace BoligBlik.Domain.Entities
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
 
-        [MaxLength(50)]
-        public string Role { get; set; }
 
         // constructor for creating a new user
         public User() : base()
