@@ -33,7 +33,7 @@ namespace BoligBlik.Persistence.Extensions
             {
                 var BoligBlikDb = p.GetService<BoligBlikContext>();
                 var dbContext = p.GetService<DbContext>();
-                return new UnitOfWork(BoligBlikDb, dbContext);
+                return new UnitOfWork(BoligBlikDb, BoligBlikDb);
             });
 
             //Booking Repo
@@ -65,7 +65,7 @@ namespace BoligBlik.Persistence.Extensions
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             //var connectionString = configuration.GetConnectionString("SkafteLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            var connectionString = configuration.GetConnectionString("RSBackEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = configuration.GetConnectionString("SkafteLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             services.AddDbContext<BoligBlikContext>(options =>
             {

@@ -19,6 +19,8 @@ namespace BoligBlik.MVC.Mappings
 
             CreateMap<UpdateUserViewModel, UpdateUserDTO>();
             CreateMap<UpdateUserDTO, UpdateUserViewModel>();
+
+            CreateMap<CreateUserViewModel, CreateUserDTO>();
         }
     }
 }

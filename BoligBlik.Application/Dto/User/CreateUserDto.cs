@@ -4,7 +4,7 @@ using BoligBlik.Domain.Common.Interfaces;
 namespace BoligBlik.Application.DTO.User
 {
     // DTO for creating a user
-    public class CreateUserDTO : IBaseEntity, IEntity
+    public class CreateUserDTO
     {
         [MaxLength(50)]
         public string FirstName { get; set; }
@@ -18,18 +18,5 @@ namespace BoligBlik.Application.DTO.User
         [MaxLength(200)]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-
-        [MaxLength(50)]
-        public string Role { get; set; }
-
-
-        public Guid? CreateBy { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public Guid? UpdatedBy { get; set; }
-        public DateTime? DeletedAt { get; }
-        public Guid? DeletedBy { get; set; }
-        public Guid Id { get; set; }
-        public byte[] RowVersion { get; set; }
     }
 }

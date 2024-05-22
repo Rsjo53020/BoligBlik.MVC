@@ -9,10 +9,28 @@ namespace BoligBlik.MVC.ProxyServices.Users
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserProxy> _logger;
 
         public UserProxy(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
+        }
+
+        public async Task<bool> CreateUserAsync(CreateUserDTO user)
+        {
+            try
+            {
+                var httpClient = _clientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.PostAsJsonAsync("/api/User", user);
+                response.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("an error occured while creating a user", ex.Message);
+                return false;
+            }
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()

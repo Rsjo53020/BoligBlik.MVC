@@ -9,15 +9,15 @@ namespace BoligBlik.Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BoligBlikContext _dbContext;
-        private readonly DbContext _db;
+        private readonly BoligBlikContext _db;
         private IDbContextTransaction _transaction;
 
-        public UnitOfWork(BoligBlikContext dbContext, DbContext db)
+        public UnitOfWork(BoligBlikContext dbContext, BoligBlikContext db)
         {
             _dbContext = dbContext;
             _db = db;
         }
-   public void BeginTransaction(IsolationLevel isolationLevel)
+        public void BeginTransaction(IsolationLevel isolationLevel)
         {
             _transaction = _db.Database.CurrentTransaction ?? _db.Database.BeginTransaction(isolationLevel);
         }
@@ -28,13 +28,13 @@ namespace BoligBlik.Persistence.Repositories
             _transaction.Dispose();
         }
 
-  
 
-     
-      public void Rollback()
+
+
+        public void Rollback()
         {
-           _transaction.Rollback();
-           _transaction.Dispose();
+            _transaction.Rollback();
+            _transaction.Dispose();
         }
 
     }

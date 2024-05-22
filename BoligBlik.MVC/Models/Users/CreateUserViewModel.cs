@@ -1,22 +1,20 @@
-﻿using BoligBlik.MVC.Models.Addresses;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BoligBlik.MVC.Models.Users
 {
-    public class UserViewModel
+    public class CreateUserViewModel
     {
-        public Guid Id { get; set; }
-
+        [MaxLength(50)]
         public string FirstName { get; set; }
 
+        [MaxLength(50)]
         public string LastName { get; set; }
 
         public string PhoneNumber { get; set; }
 
+        [Required]
+        [MaxLength(200)]
+        [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
-
-        public string Role { get; set; }
-
-        public string FormerRole { get; set; }
-
     }
 }
