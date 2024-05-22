@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using BoligBlik.MVC.Features.Documents;
+using BoligBlik.MVC.Features.Documents.Interfaces;
 using BoligBlik.MVC.Mappings;
 using BoligBlik.MVC.ProxyServices.Addresses;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
@@ -23,6 +25,7 @@ namespace BoligBlik.MVC.Extensions
             services.AddTransient<IBoardMemberProxy, BoardMemberProxy>();
             services.AddTransient<IAddressProxy, AddressProxy>();
             services.AddTransient<IUserProxy, UserProxy>();
+            services.AddTransient<IDocumentService, DocumentService>();
         }
 
 
@@ -41,8 +44,7 @@ namespace BoligBlik.MVC.Extensions
             {
                 new BoardMemberMappingProfile(),
                 new UserMappingProfile(),
-                new AddressMappingProfile()
-
+                new AddressMappingProfile(),
             };
 
             var mapConfig = new MapperConfiguration(mc =>

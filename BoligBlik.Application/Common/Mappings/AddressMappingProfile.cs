@@ -13,7 +13,7 @@ namespace BoligBlik.Application.Common.Mappings
                 .ForPath(dest => dest.PostalCode.City, act => act
                     .MapFrom(scr => scr.City))
                 .ForPath(dest => dest.PostalCode.PostalcodeNumber, act => act
-                    .MapFrom(scr => scr.PostalCodeNumber)).ReverseMap(); ;
+                    .MapFrom(scr => scr.PostalCodeNumber)).ReverseMap();
 
            
             CreateMap<CreateAddressDTO, Address>()

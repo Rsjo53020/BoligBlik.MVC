@@ -1,83 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BoligBlik.MVC.Features.Documents.Interfaces;
+using BoligBlik.MVC.Models.Documents;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
 {
     public class DocumentsController : Controller
     {
-        // GET: DocumentsController
-        public IActionResult Index()
+        private readonly IDocumentService _documentService;
+        private readonly ILogger<DocumentsController> _logger;
+
+        public DocumentsController(IDocumentService documentService)
         {
-            return View();
+            _documentService = documentService;
         }
 
-        // GET: DocumentsController/Details/5
-        public IActionResult Bylaws()
+        public async Task<IActionResult> Upload(DocumentViewModel model, IFormFile fileUpload)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _documentService.UploadDocumentAsync(model, fileUpload);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Document could not be uploaded.");
+                }
+            }
+            return View(model);
         }
 
-        // GET: DocumentsController/BoardMinutes
-        public IActionResult BoardMinutes()
+    public IActionResult GetAll([FromServices] IDocumentService documentService)
         {
-            return View();
-        }
+            List<DocumentViewModel> documents = new List<DocumentViewModel>();
 
-        // POST: DocumentsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
             try
             {
-                return RedirectToAction(nameof(Index));
+                documents = documentService.GetAllDocuments();
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", "Documents could not be loaded.");
             }
-        }
 
-        // GET: DocumentsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DocumentsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DocumentsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: DocumentsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(documents);
         }
     }
 }
+
