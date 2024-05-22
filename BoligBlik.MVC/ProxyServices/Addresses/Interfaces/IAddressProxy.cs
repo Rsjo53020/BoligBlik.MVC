@@ -6,9 +6,10 @@ namespace BoligBlik.MVC.ProxyServices.Addresses.Interfaces
     public interface IAddressProxy
     {
         Task<IEnumerable<AddressDTO>> GetAllAddressAsync();
+        Task<AddressDTO> GetAddressAsync(Guid id);
         Task<bool> CreateAddressAsync(CreateAddressDTO createAddressDTO);
         Task<bool> UpdateAddressAsync(UpdateAddressDTO updateAddressDTO);
-        Task<bool> DeleteAddressAsync(Guid id);
+        //Task<bool> DeleteAddressAsync(DeleteAddressDTO deleteAddressDto);
 
     }
 }

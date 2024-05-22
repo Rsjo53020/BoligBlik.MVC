@@ -1,44 +1,43 @@
-﻿@page
-@model BoligBlik.MVC.Controllers.IndexModel
+﻿@model IEnumerable<BoligBlik.MVC.Models.Addresses.AddressViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "GetAllAddress";
 }
 
-<h1>Index</h1>
+<h1>GetAllAddress</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].Street)
+                @Html.DisplayNameFor(model => model.Street)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].HouseNumber)
+                @Html.DisplayNameFor(model => model.HouseNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].Floor)
+                @Html.DisplayNameFor(model => model.Floor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].DoorNumber)
+                @Html.DisplayNameFor(model => model.DoorNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].City)
+                @Html.DisplayNameFor(model => model.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].PostalCodeNumber)
+                @Html.DisplayNameFor(model => model.PostalCodeNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressViewModel[0].RowVersion)
+                @Html.DisplayNameFor(model => model.RowVersion)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.AddressViewModel) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Street)
@@ -62,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.RowVersion)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

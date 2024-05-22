@@ -1,6 +1,4 @@
-﻿@page
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model BoligBlik.MVC.Views.Address.DeleteModel
+﻿@model BoligBlik.MVC.Models.Addresses.AddressViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -13,53 +11,53 @@
     <h4>AddressViewModel</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.Street)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Street)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.Street)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Street)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.HouseNumber)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseNumber)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.HouseNumber)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HouseNumber)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.Floor)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Floor)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.Floor)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Floor)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.DoorNumber)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DoorNumber)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.DoorNumber)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DoorNumber)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.City)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.City)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.PostalCodeNumber)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostalCodeNumber)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.PostalCodeNumber)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostalCodeNumber)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressViewModel.RowVersion)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RowVersion)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AddressViewModel.RowVersion)
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RowVersion)
         </dd>
     </dl>
     
-    <form method="post">
-        <input type="hidden" asp-for="AddressViewModel.Id" />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a asp-action="Index">Back to List</a>
     </form>
 </div>

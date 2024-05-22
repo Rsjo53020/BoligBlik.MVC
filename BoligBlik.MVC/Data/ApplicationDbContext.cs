@@ -12,7 +12,7 @@ namespace BoligBlik.MVC.Data
         {
 
         }
-        public DbSet<BoligBlik.MVC.Models.Addresses.AddressViewModel> AddressViewModel { get; set; } = default!;
+        public DbSet<AddressViewModel> AddressViewModel { get; set; } = default!;
     }
 
 

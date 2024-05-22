@@ -1,6 +1,4 @@
-﻿@page
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model BoligBlik.MVC.Views.Address.CreateModel
+﻿@model BoligBlik.MVC.Models.Addresses.AddressViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,43 +10,43 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.Street" class="control-label"></label>
-                <input asp-for="AddressViewModel.Street" class="form-control" />
-                <span asp-validation-for="AddressViewModel.Street" class="text-danger"></span>
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.HouseNumber" class="control-label"></label>
-                <input asp-for="AddressViewModel.HouseNumber" class="form-control" />
-                <span asp-validation-for="AddressViewModel.HouseNumber" class="text-danger"></span>
+                <label asp-for="HouseNumber" class="control-label"></label>
+                <input asp-for="HouseNumber" class="form-control" />
+                <span asp-validation-for="HouseNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.Floor" class="control-label"></label>
-                <input asp-for="AddressViewModel.Floor" class="form-control" />
-                <span asp-validation-for="AddressViewModel.Floor" class="text-danger"></span>
+                <label asp-for="Floor" class="control-label"></label>
+                <input asp-for="Floor" class="form-control" />
+                <span asp-validation-for="Floor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.DoorNumber" class="control-label"></label>
-                <input asp-for="AddressViewModel.DoorNumber" class="form-control" />
-                <span asp-validation-for="AddressViewModel.DoorNumber" class="text-danger"></span>
+                <label asp-for="DoorNumber" class="control-label"></label>
+                <input asp-for="DoorNumber" class="form-control" />
+                <span asp-validation-for="DoorNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.City" class="control-label"></label>
-                <input asp-for="AddressViewModel.City" class="form-control" />
-                <span asp-validation-for="AddressViewModel.City" class="text-danger"></span>
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressViewModel.PostalCodeNumber" class="control-label"></label>
-                <input asp-for="AddressViewModel.PostalCodeNumber" class="form-control" />
-                <span asp-validation-for="AddressViewModel.PostalCodeNumber" class="text-danger"></span>
+                <label asp-for="PostalCodeNumber" class="control-label"></label>
+                <input asp-for="PostalCodeNumber" class="form-control" />
+                <span asp-validation-for="PostalCodeNumber" class="text-danger"></span>
             </div>
-           @*  <div class="form-group">
-                <label asp-for="AddressViewModel.RowVersion" class="control-label"></label>
-                <input asp-for="AddressViewModel.RowVersion" class="form-control" />
-                <span asp-validation-for="AddressViewModel.RowVersion" class="text-danger"></span>
-            </div> *@
+            <div class="form-group">
+                <label asp-for="RowVersion" class="control-label"></label>
+                <input asp-for="RowVersion" class="form-control" />
+                <span asp-validation-for="RowVersion" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -57,7 +55,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

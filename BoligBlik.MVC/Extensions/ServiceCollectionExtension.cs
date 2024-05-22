@@ -32,6 +32,7 @@ namespace BoligBlik.MVC.Extensions
             builder.Services.AddHttpClient("BaseClient", httpClient =>
             {
                 httpClient.BaseAddress = new Uri(builder.Configuration["BaseAddress"]);
+                //httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             });
         }
 
