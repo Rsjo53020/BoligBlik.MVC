@@ -59,7 +59,7 @@ namespace BoligBlik.MVC.Controllers
                 foreach (var boardMemberDTO in result)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(boardMemberDTO);
-                    boardMember.Member = _mapper.Map<UserViewModel>(boardMemberDTO.User);
+                    boardMember.User = _mapper.Map<UserViewModel>(boardMemberDTO.User);
                     boardMembers.Add(boardMember);
                 }
                 return View(boardMembers);
@@ -86,7 +86,7 @@ namespace BoligBlik.MVC.Controllers
                 if (result != null && result.Id == id)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(result);
-                    boardMember.Member = _mapper.Map<UserViewModel>(result.User);
+                    boardMember.User = _mapper.Map<UserViewModel>(result.User);
 
                     return View(boardMember);
                 }
@@ -104,14 +104,14 @@ namespace BoligBlik.MVC.Controllers
         /// Update a BoardMember async
         /// </summary>
         /// <returns></returns>
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBoardMemberDTO updateBoardMemberViewModel)
+        [HttpPost]
+        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
             try
             {
-                var updateBoardMemberDTO = _mapper.Map<UpdateBoardMemberDTO>(updateBoardMemberViewModel);
-                updateBoardMemberDTO.User = _mapper.Map<UserDTO>(updateBoardMemberViewModel.User);
-                var result = await _boardMemberProxy.UpdateBoardMemberAsync(updateBoardMemberDTO);
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
+                boardMemberDTO.User = _mapper.Map<UserDTO>(boardMemberViewModel.User);
+                var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
                 return RedirectToAction("ReadAll", "BoardMember");
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="deleteBoardMemberViewModel"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> Delete(BoardMemberViewModel boardMemberViewModel)
         {
             try
