@@ -5,7 +5,7 @@ namespace BoligBlik.MVC.Models.BoardMembers
     public class BoardMemberViewModel
     {
         public string Title { get; set; }
-        public UserViewModel Member { get; set; }
+        public UserViewModel User { get; set; }
         public string Description { get; set; }
 
         public DateOnly StartDate { get; set; }

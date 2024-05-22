@@ -22,8 +22,8 @@ namespace BoligBlik.Application.Common.Mappings
             CreateMap<BoardMember, CreateBoardMemberDTO>();
 
             //BoardMemberDTO
-            CreateMap<BoardMemberDTO, BoardMember>().ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
-            CreateMap<BoardMember, BoardMemberDTO>().ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
+            CreateMap<BoardMemberDTO, BoardMember>();
+            CreateMap<BoardMember, BoardMemberDTO>();
 
             //UpdateBoardMemberDTO
             CreateMap<DeleteBoardMemberDTO, BoardMember>();

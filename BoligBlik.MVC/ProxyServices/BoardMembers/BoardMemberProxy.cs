@@ -78,7 +78,7 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <returns></returns>
-        public async Task<bool> UpdateBoardMemberAsync(UpdateBoardMemberDTO boardMember)
+        public async Task<bool> UpdateBoardMemberAsync(BoardMemberDTO boardMember)
         {
             try
             {
