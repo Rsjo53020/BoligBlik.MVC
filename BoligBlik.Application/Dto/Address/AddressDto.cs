@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Application.Common.Entity;
 using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.DTO.Properties;
 using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Application.DTO.PostalCodes;
+using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Application.DTO.Address
 {
-    public class AddressDTO : IEntity
+    public class AddressDTO : EntityDTO
     {
         public string Street { get; set; }
         public string HouseNumber { get; set; }
@@ -24,13 +24,8 @@ namespace BoligBlik.Application.DTO.Address
 
         public string PostalCodeNumber { get; set; }
 
-        //public List<UserDTO> Users { get; set; }
+        public IEnumerable<UserDTO> Users { get; set; }
 
-        //public List<BookingDTO> Bookings { get; set; }
-
-        //public List<PropertyDTO> Properties { get; set; }
-        
-        public Guid Id { get; set; }
-        public byte[] RowVersion { get; set; }
+        public IEnumerable<BookingDTO> Bookings { get; set; }
     }
 }

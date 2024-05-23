@@ -1,4 +1,4 @@
-﻿@model BoligBlik.MVC.Models.Users.UpdateUserViewModel
+﻿@model BoligBlik.MVC.Models.Users.UserViewModel
 @using Microsoft.AspNetCore.Identity
 
 
@@ -16,8 +16,6 @@
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="RowVersion" />
-    <input type="hidden" asp-for="UpdatedAt" value="@DateTime.Now" />
-    <input type="hidden" asp-for="UpdatedBy" value="@fakeGuid" />
 
     <div class="form-group">
         <label asp-for="FirstName" class="control-label">Fornavn</label>
@@ -39,12 +37,6 @@
         <input asp-for="EmailAddress" class="form-control" />
         <span asp-validation-for="EmailAddress" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Role" class="control-label">Bestyrelses rolle</label>
-        <input asp-for="Role" class="form-control" />
-        <span asp-validation-for="Role" class="text-danger"></span>
-    </div>
-
     <button type="submit" class="btn btn-primary">Gem Ændringer</button>
 </form>
 

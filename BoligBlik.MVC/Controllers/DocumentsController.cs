@@ -15,13 +15,13 @@ namespace BoligBlik.MVC.Controllers
             _documentService = documentService;
         }
 
-        public async Task<IActionResult> Upload(DocumentViewModel model, IFormFile fileUpload)
+        public async Task<IActionResult> Upload( DocumentViewModel documentViewModel, IFormFile fileUpload)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _documentService.UploadDocumentAsync(model, fileUpload);
+                    await _documentService.UploadDocumentAsync(documentViewModel, fileUpload);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -30,7 +30,7 @@ namespace BoligBlik.MVC.Controllers
                     _logger.LogError(ex, "Document could not be uploaded.");
                 }
             }
-            return View(model);
+            return View(documentViewModel);
         }
 
     public IActionResult GetAll([FromServices] IDocumentService documentService)

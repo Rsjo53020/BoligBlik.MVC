@@ -1,9 +1,6 @@
-﻿using BoligBlik.MVC.DTO.BookingItems;
-using BoligBlik.MVC.Models.Common;
-
-namespace BoligBlik.MVC.Models.BookingItems
+﻿namespace BoligBlik.MVC.Models.BookingItems
 {
-    public class BookingItemViewModel : EntityViewModel
+    public class CreateBookingItemViewModel
     {
         public string Name { get; set; }
         public decimal? Price { get; set; }

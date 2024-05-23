@@ -6,6 +6,6 @@ namespace BoligBlik.Application.Interfaces.Addresses.Commands
     {
         void CreateAddress(CreateAddressDTO request);
         void UpdateAddress(UpdateAddressDTO request);
-        void DeleteAddress(DeleteAddressDTO request);
+        void DeleteAddress(AddressDTO request);
     }
 }

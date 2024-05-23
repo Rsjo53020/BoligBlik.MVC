@@ -52,7 +52,6 @@ namespace BoligBlik.Application.Extensions
                 new BoardMemberMappingProfile(),
                 new BookingItemMappingProfile(),
                 new BookingItemMappingProfile(),
-                new PaymentMappingProfile(),
                 new UserMappingProfiles()
             };
 

@@ -69,7 +69,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             }
         }
 
-        public void DeleteAddress(DeleteAddressDTO request)
+        public void DeleteAddress(AddressDTO request)
         {
             try
             {

@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Interfaces.BoardMembers.Commands
     public interface IBoardMemberCommandService
     {
         public void CreateBoardMember(CreateBoardMemberDTO request);
-        public void UpdateBoardMember(UpdateBoardMemberDTO request);
-        public void DeleteBoardMember(Guid id);
+        public void UpdateBoardMember(BoardMemberDTO request);
+        public void DeleteBoardMember(BoardMemberDTO request);
     }
 }

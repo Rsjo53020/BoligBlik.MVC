@@ -50,7 +50,7 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method Deletes a user using Unit of Work pattern
         /// </summary>
-        public void DeleteUser(DeleteUserDTO request)
+        public void DeleteUser(UserDTO request)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method updates a user using Unit of Work pattern
         /// </summary>
-        public void UpdateUser(UpdateUserDTO request)
+        public void UpdateUser(UserDTO request)
         {
             try
             {

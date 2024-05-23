@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
 using BoligBlik.MVC.Models.BoardMembers;
+using BoligBlik.MVC.Models.Users;
 
 namespace BoligBlik.MVC.Mappings
 {
@@ -8,17 +9,9 @@ namespace BoligBlik.MVC.Mappings
     {
         public BoardMemberMappingProfile()
         {
-            CreateMap<CreateBoardMemberDTO, CreateBoardMemberViewModel>();
-            CreateMap<CreateBoardMemberViewModel, CreateBoardMemberDTO>();
+            CreateMap<CreateBoardMemberDTO, CreateBoardMemberViewModel>().ReverseMap();
 
-            CreateMap<BoardMemberDTO, BoardMemberViewModel>();
-            CreateMap<BoardMemberViewModel, BoardMemberDTO>();
-
-            CreateMap<UpdateBoardMemberDTO, UpdateBoardMemberViewModel>();
-            CreateMap<UpdateBoardMemberViewModel, UpdateBoardMemberDTO>();
-
-            CreateMap<DeleteBoardMemberDTO, DeleteBoardMemberViewModel>();
-            CreateMap<DeleteBoardMemberViewModel, DeleteBoardMemberDTO>();
+            CreateMap<BoardMemberDTO, BoardMemberViewModel>().ReverseMap();
         }
     }
 }

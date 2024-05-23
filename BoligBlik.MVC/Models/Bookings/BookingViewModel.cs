@@ -1,16 +1,17 @@
-﻿using BoligBlik.MVC.Models.BookingItems;
+﻿using BoligBlik.MVC.DTO.Address;
+using BoligBlik.MVC.DTO.BookingItems;
+using BoligBlik.MVC.DTO.Common;
+using BoligBlik.MVC.Models.Addresses;
+using BoligBlik.MVC.Models.BookingItems;
+using BoligBlik.MVC.Models.Common;
 
 namespace BoligBlik.MVC.Models.Bookings
 {
-    public class BookingViewModel
+    public class BookingViewModel : EntityViewModel
     {
-        public Guid Id { get; set; }
-        public DateOnly CreationDate { get; set; }
+        public AddressViewModel Address { get; set; }
+        public BookingItemViewModel Item { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public bool Approved { get; set; }
-        public Guid ItemId { get; set; }
-        public IEnumerable<BookingItemViewModel> Item { get; set; }
-        public Guid AddressId { get; set; }
     }
 }

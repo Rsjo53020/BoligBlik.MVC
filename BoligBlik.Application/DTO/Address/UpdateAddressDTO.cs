@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Application.Common.Entity;
 using BoligBlik.Domain.Common.Interfaces;
-using BoligBlik.Application.DTO.PostalCodes;
+using BoligBlik.Application.DTO.User;
 
 namespace BoligBlik.Application.DTO.Address
 {
-    public class UpdateAddressDTO :IEntity, IBaseEntity
+    public class UpdateAddressDTO : EntityDTO
     {
         public string Street { get; set; }
         public string HouseNumber { get; set; }
@@ -17,13 +18,7 @@ namespace BoligBlik.Application.DTO.Address
         public string DoorNumber { get; set; }
         public string PostalCodeNumber { get; set; }
         public string City { get; set; }
-        public Guid Id { get; set; }
-        public byte[] RowVersion { get; set; }
-        public Guid? CreateBy { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public Guid? UpdatedBy { get; set; }
-        public DateTime? DeletedAt { get; }
-        public Guid? DeletedBy { get; set; }
+
+        public IEnumerable<UserDTO> Users { get; set; }
     }
 }

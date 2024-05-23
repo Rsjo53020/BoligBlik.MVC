@@ -13,7 +13,6 @@ namespace BoligBlik.Persistence.Repositories.Bookings
             _dbContext = dbContext;
         }
 
-
         public bool IsBookingOverlapping(Booking booking)
         {
             return _dbContext.Bookings.Any(other =>
@@ -25,7 +24,6 @@ namespace BoligBlik.Persistence.Repositories.Bookings
                 //i.e. its start date is before or equal to the start date of the other booking and its end date is after or equal to the end date of the other booking
                 booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.endTime);
         }
-
 
         public DateTime NowTime()
         {

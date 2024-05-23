@@ -18,29 +18,10 @@ namespace BoligBlik.Application.Common.Mappings
         public BoardMemberMappingProfile()
         {
             //CreateBoardMemberDTO
-            CreateMap<CreateBoardMemberDTO, BoardMember>();
-            CreateMap<BoardMember, CreateBoardMemberDTO>();
+            CreateMap<CreateBoardMemberDTO, BoardMember>().ReverseMap();
 
             //BoardMemberDTO
-            CreateMap<BoardMemberDTO, BoardMember>();
-            CreateMap<BoardMember, BoardMemberDTO>();
-
-            //UpdateBoardMemberDTO
-            CreateMap<DeleteBoardMemberDTO, BoardMember>();
-            CreateMap<BoardMember, DeleteBoardMemberDTO>();
-
-            //DeleteBoardMemberDTO
-            CreateMap<DeleteBoardMemberDTO, BoardMember>();
-            CreateMap<BoardMember, DeleteBoardMemberDTO>();
-
-            //AddUserToBoardMemberDTO
-            CreateMap<AddUserToBoardMemberDTO, BoardMember>();
-            CreateMap<BoardMember, AddUserToBoardMemberDTO>();
-
-            //UpdateBoardMemberParameters
-            CreateMap<UpdateBoardMemberParametersDTO, BoardMember>();
-            CreateMap<BoardMember, UpdateBoardMemberParametersDTO>();
+            CreateMap<BoardMemberDTO, BoardMember>().ReverseMap();
         }
-
     }
 }

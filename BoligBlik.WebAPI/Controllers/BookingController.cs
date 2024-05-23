@@ -73,7 +73,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] UpdateBookingDTO updateBookingDto)
+        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] BookingDTO updateBookingDto)
         {
             if (id != updateBookingDto.Id)
             {
@@ -86,7 +86,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteBooking([FromBody] DeleteBookingDTO deleteBookingDto)
+        public async Task<IActionResult> DeleteBooking([FromBody] BookingDTO deleteBookingDto)
         {
             try
             {

@@ -55,7 +55,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         /// Update Boardmember
         /// </summary>
         /// <param name="request"></param>
-        public void UpdateBoardMember(UpdateBoardMemberDTO request)
+        public void UpdateBoardMember(BoardMemberDTO request)
         {
             try
             {
@@ -79,13 +79,13 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         /// delete BoardMember
         /// </summary>
         /// <param name="request"></param>
-        public void DeleteBoardMember(Guid id)
+        public void DeleteBoardMember(BoardMemberDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-                _boardMemberRepo.DeleteBoardMember(id);
+                _boardMemberRepo.DeleteBoardMember(request.Id);
 
                 _uow.Commit();
             }

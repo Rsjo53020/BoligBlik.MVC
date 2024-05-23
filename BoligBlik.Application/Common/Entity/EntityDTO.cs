@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoligBlik.Domain.Common.Interfaces;
 
-namespace BoligBlik.MVC.DTO.Interfaces
+namespace BoligBlik.Application.Common.Entity
 {
-    public interface IEntity
+    public abstract class EntityDTO : IEntity
     {
         [Key]
         public Guid Id { get; set; }

@@ -89,7 +89,7 @@ namespace BoligBlik.MVC.Controllers
 
         // GET: AddressController/Delete
         [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteAddressViewModel deleteAddressViewModel)
+        public async Task<ActionResult> Delete(AddressViewModel deleteAddressViewModel)
         {
             //var response = _mapper.Map<DeleteAddressDTO>(deleteAddressViewModel);
             //var address = await _addressProxy.DeleteAddressAsync(response);

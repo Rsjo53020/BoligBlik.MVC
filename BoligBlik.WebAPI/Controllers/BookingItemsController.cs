@@ -39,14 +39,14 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateBookingItem([FromBody] UpdateBookingItemDTO request)
+        public ActionResult UpdateBookingItem([FromBody] BookingItemDTO request)
         {
             _bookItemCommandService.UpdateBookingItem(request);
             return Ok();
         }
 
         [HttpDelete]
-        public ActionResult DeleteBookingItem([FromBody] DeleteBookingItemDTO request)
+        public ActionResult DeleteBookingItem([FromBody] BookingItemDTO request)
         {
             _bookItemCommandService.DeleteBookingItem(request);
             return Ok();
