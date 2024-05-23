@@ -185,36 +185,34 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
-        //internal void SeedAddress()
-        //{
-        //    var Address = new Address[]
-        //    {
-        //        new Address
-        //        {
-        //            Street = "Vejlevej",
-        //            HouseNumber = "10",
-        //            Floor = "1",
-        //            DoorNumber = "th",
-        //            PostalCode = new PostalCode("Vejle", "7100"),
-        //            Users = _context.Users.Where(user => user.EmailAddress == "Alex@Mail.dk").ToList()
-        //        },
-        //        new Address
-        //        {
-        //            Street = "lundesvej",
-        //            HouseNumber = "10",
-        //            Floor = "1",
-        //            DoorNumber = "th",
-        //            PostalCode = new PostalCode("Vejle", "7100"),
-        //            Users = _context.Users.Where(user => user.EmailAddress != "Alex@Mail.dk").ToList()
-        //        }
-        //    };
+        internal void SeedAddress()
+        {
+            var Address = new Address[]
+            {
+                new Address
+                {
+                    Street = "Vejlevej",
+                    HouseNumber = "10",
+                    Floor = "1",
+                    DoorNumber = "th",
+                    PostalCode = new PostalCode("Vejle", "7100")
+                },
+                new Address
+                {
+                    Street = "lundesvej",
+                    HouseNumber = "10",
+                    Floor = "1",
+                    DoorNumber = "th",
+                    PostalCode = new PostalCode("Vejle", "7100")
+                }
+            };
 
-        //    foreach (Address adress in Address)
-        //    {
-        //        _context.Adresses.Add(adress);
-        //    }
-        //    _context.SaveChanges();
-        //}
+            foreach (Address adress in Address)
+            {
+                _context.Adresses.Add(adress);
+            }
+            _context.SaveChanges();
+        }
 
         internal void SeedBoardMembers()
         {
@@ -225,21 +223,21 @@ namespace BoligBlik.Persistence.Contexts
                     Id = Guid.NewGuid(),
                     Title = "Formand",
                     Description = "Formandspost",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Alex@Mail.dk")
                 },
                 new BoardMember
                 {
                     Id = Guid.NewGuid(),
                     Title = "Næstformand",
                     Description = "Næstformandspost",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Skafte@Mail.dk")
                 },
                 new BoardMember
                 {
                     Id = Guid.NewGuid(),
                     Title = "Kasser",
                     Description = "Kasserpost",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Ronni@Mail.dk")
                 }
             };
 
@@ -263,14 +261,14 @@ namespace BoligBlik.Persistence.Contexts
                     Amount = 100,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Status = "Betalt",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Ronni@Mail.dk")
                 },
                 new Payment
                 {
                     Amount = 200,
                     Date = DateOnly.FromDateTime(DateTime.Now),
                     Status = "Afventer betaling",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == user.EmailAddress)
+                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Skafte@Mail.dk")
                 }
             };
 

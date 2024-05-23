@@ -16,7 +16,7 @@ namespace BoligBlik.Entities
         public IReadOnlyList<Booking>? Bookings => _bookings.AsReadOnly();
         private List<Booking> _bookings = new();
 
-        internal Address()
+        public Address()
         {
             
         }
