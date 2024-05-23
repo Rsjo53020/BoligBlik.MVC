@@ -22,7 +22,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         {
             try
             {
-                return await _db.BoardMembers.AsNoTracking().ToListAsync();
+                return await _db.BoardMembers.AsNoTracking().Include(b=>b.User).ToListAsync();
 
 
             }
@@ -43,7 +43,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 return await _db.BoardMembers.AsNoTracking()
-                .Where(x => x.Id == id).FirstOrDefaultAsync();
+                .Where(x => x.Id == id).Include(b => b.User).FirstOrDefaultAsync();
 
             }
             catch (Exception ex)

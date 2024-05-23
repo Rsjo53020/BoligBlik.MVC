@@ -10,6 +10,8 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
 {
     public class BoardMemberCommandService : IBoardMemberCommandService
     {
+        
+        
         //UnitOfWork
         private readonly IUnitOfWork _uow;
         //Mappers

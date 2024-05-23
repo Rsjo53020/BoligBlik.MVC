@@ -17,7 +17,7 @@ namespace BoligBlik.Persistence.Contexts
         public void SeedDB()
         {
             SeedUsers();
-            //SeedBoardMembers();
+            SeedBoardMembers();
             //SeedPayment();
             //SeedMeeting();
             //SeedDocument();

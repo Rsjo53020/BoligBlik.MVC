@@ -28,7 +28,6 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
         public async Task<BoardMemberDTO> ReadBoardMemberAsync(Guid id)
         {
             var member = await _boardMemberRepo.ReadBoardMemberAsync(id);
-            //member.User = await _userQuerieRepo.ReadUserAsync(member.UserID);
             //map to DTO
             var memberDTO = _mapper.Map<BoardMemberDTO>(member);
             memberDTO.User = _mapper.Map<UserDTO>(member.User);
@@ -45,7 +44,6 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             List<BoardMemberDTO> memberDTOs = new List<BoardMemberDTO>();
             foreach (var member in members)
             {
-                //member.User = await _userQuerieRepo.ReadUserAsync(member.UserID);
                 //map to DTO
                 var boardMemberDTO = _mapper.Map<BoardMemberDTO>(member);
                 boardMemberDTO.User = _mapper.Map<UserDTO>(member.User);

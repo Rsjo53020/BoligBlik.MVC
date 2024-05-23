@@ -27,7 +27,14 @@
                     <img src="/img/Skafte.jpg" class="img-fluid w-25 rounded-circle" alt="Billede af Administration">
                 </div>
                 <div class="team-name text-center py-3">
-                    <h4>@item.User.FirstName @item.User.LastName</h4>
+                    @if(item.User is not null)
+                    {
+                        <h4>@item.User.FirstName @item.User.LastName</h4>
+                    }
+                    else
+                    {
+                        <h4>Ikke besat</h4>
+                    }
                     <p class="m-0"> @item.Title </p>
                     <p>@item.Description</p>
                     @*                     @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
