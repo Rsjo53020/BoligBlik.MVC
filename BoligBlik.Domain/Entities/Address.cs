@@ -11,14 +11,13 @@ namespace BoligBlik.Entities
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
         public PostalCode PostalCode { get; set; }
-        public IReadOnlyList<User> Users => _user.AsReadOnly();
-        private List<User> _user = new();
-        public IReadOnlyList<Booking>? Bookings => _bookings.AsReadOnly();
-        private List<Booking> _bookings = new();
+        public List<User> Users { get; set; }
+
+        private List<Booking> Bookings { get; set; }
 
         public Address()
         {
-            
+
         }
 
         public Address(string street, string houseNumber, string floor, string doorNumber, string city, string postalCodeNumber)
@@ -28,7 +27,6 @@ namespace BoligBlik.Entities
             Floor = floor;
             DoorNumber = doorNumber;
             PostalCode = new PostalCode(city, postalCodeNumber);
-
         }
     }
 }

@@ -24,8 +24,6 @@ namespace BoligBlik.Application.DTO.Address
 
         public string PostalCodeNumber { get; set; }
 
-        //public PostalCodeDTO PostalCode { get; set; }
-
         //public List<UserDTO> Users { get; set; }
 
         //public List<BookingDTO> Bookings { get; set; }

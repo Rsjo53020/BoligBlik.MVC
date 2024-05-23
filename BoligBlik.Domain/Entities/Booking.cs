@@ -12,19 +12,15 @@ namespace BoligBlik.Domain.Entities
 
         public BookingDates BookingDates { get; set; }
         public Address Address { get; set; }
-        public Payment Payment { get; set; }
         public BookingItem Item { get; set; }
-
-
 
         internal Booking() : base() { }
 
-        public Booking(BookingDates bookingDates, BookingItem item, Payment payment, Address address, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
+        public Booking(BookingDates bookingDates, BookingItem item, Address address, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
         {
             this.BookingDates = bookingDates;
 
             this.Item = item;
-            this.Payment = payment;
             this.Address = address;
             _bookingDomainService = bookingDomainService;
             this.RowVersion = RowVersion;
