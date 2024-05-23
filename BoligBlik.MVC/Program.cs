@@ -1,9 +1,7 @@
 using BoligBlik.MVC.Data;
 using BoligBlik.MVC.Extensions;
-using BoligBlik.MVC.ProxyServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 
 namespace BoligBlik.MVC
@@ -16,7 +14,7 @@ namespace BoligBlik.MVC
 
             // Add services to the container -- move to a ServiceExtension.cs
             var connectionString = builder.Configuration
-                .GetConnectionString("ApiSqlServer") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                .GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             // move to a ServiceExtension.cs
             builder.Services.AddDbContext<ApplicationDbContext>(

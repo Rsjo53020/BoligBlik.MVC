@@ -97,9 +97,7 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-
         }
-
     }
 }
 

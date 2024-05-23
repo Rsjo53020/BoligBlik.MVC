@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using BoligBlik.Application.DTO;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.Interfaces.BookingItems.Queries;
-using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Repositories;
 
 namespace BoligBlik.Application.Features.BookingItems.Queries
@@ -31,6 +26,12 @@ namespace BoligBlik.Application.Features.BookingItems.Queries
         {
             var bookingItems = await _bookingItemsRepo.ReadAllBookingItemsAsync();
             return _mapper.Map<IEnumerable<BookingItemDTO>>(bookingItems);
+        }
+
+        public async Task<BookingItemDTO> ReadBookingItemAsync(Guid itemId)
+        {
+            var bookingItem = await _bookingItemsRepo.ReadBookingItemsAsync(itemId);
+            return _mapper.Map<BookingItemDTO>(bookingItem);
         }
     }
 }

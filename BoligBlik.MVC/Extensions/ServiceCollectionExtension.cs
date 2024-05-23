@@ -6,6 +6,10 @@ using BoligBlik.MVC.ProxyServices.Addresses;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.BoardMembers;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
+using BoligBlik.MVC.ProxyServices.BookingItems;
+using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
+using BoligBlik.MVC.ProxyServices.Bookings;
+using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 
@@ -26,6 +30,8 @@ namespace BoligBlik.MVC.Extensions
             services.AddTransient<IAddressProxy, AddressProxy>();
             services.AddTransient<IUserProxy, UserProxy>();
             services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<IBookingItemsProxy, BookingItemsProxy>();
+            services.AddTransient<IBookingProxy, BookingProxy>();
         }
 
 
@@ -46,6 +52,8 @@ namespace BoligBlik.MVC.Extensions
                 new BoardMemberMappingProfile(),
                 new UserMappingProfile(),
                 new AddressMappingProfile(),
+                new BookingMappingProfile(),
+                new BookingItemMappingProfile()
             };
 
             var mapConfig = new MapperConfiguration(mc =>
