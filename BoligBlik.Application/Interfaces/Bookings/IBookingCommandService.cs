@@ -5,7 +5,7 @@ namespace BoligBlik.Application.Interfaces.Bookings
     public interface IBookingCommandService
     {
         void CreateBooking(CreateBookingDTO createBookingDTO/*, UserDTO userDTO, ItemDTO itemDTO*/);
-        void UpdateBooking(UpdateBookingDTO updateBookingDTO);
-        void DeleteBooking(DeleteBookingDTO deleteBookingDTO);
+        void UpdateBooking(BookingDTO updateBookingDTO);
+        void DeleteBooking(BookingDTO deleteBookingDTO);
     }
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using BoligBlik.MVC.Models.Users
+@model IEnumerable<BoligBlik.MVC.Models.Users.UserViewModel>
+@{
     string title = "Alle Profiler";
 }
 
@@ -23,9 +25,8 @@
             <td>@user.LastName</td>
             <td>@user.PhoneNumber</td>
             <td>@user.EmailAddress</td>
-            <td>@user.Role</td>
             <td>
-                <a asp-action="Edit" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-primary btn-sm">Opdater Bruger</a>
+                <a asp-action="Edit" asp-controller="User" asp-route-email="@user.Id" class="btn btn-primary btn-sm">Opdater Bruger</a>
                 <a asp-action="AddressDetails" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-secondary btn-sm">Se Adresse</a>
             </td>
         </tr>

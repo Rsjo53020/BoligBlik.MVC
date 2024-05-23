@@ -9,20 +9,14 @@ namespace BoligBlik.Application.Common.Mappings
         public BookingMappingProfiles()
         {
             //CreateUserDTO
-            CreateMap<CreateBookingDTO, Booking>();
-            CreateMap<Booking, CreateBookingDTO>();
-
-            //DeleteBookingDTO
-            CreateMap<DeleteBookingDTO, Booking>();
-            CreateMap<Booking, DeleteBookingDTO>();
-
-            //UpdateBookingDTO
-            CreateMap<UpdateBookingDTO, Booking>();
-            CreateMap<Booking, UpdateBookingDTO>();
+            CreateMap<CreateBookingDTO, Booking>().ReverseMap();
 
             //BookingDTO
-            CreateMap<BookingDTO, Booking>();
-            CreateMap<Booking, BookingDTO>();
+            CreateMap<BookingDTO, Booking>()
+                .ForPath(dest => dest.BookingDates.startTime, act => act
+                    .MapFrom(scr => scr.StartTime))
+                .ForPath(dest => dest.BookingDates.endTime, act => act
+                    .MapFrom(scr => scr.EndTime)).ReverseMap();
         }
     }
 }

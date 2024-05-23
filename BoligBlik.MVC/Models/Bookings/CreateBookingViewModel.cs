@@ -13,11 +13,5 @@ namespace BoligBlik.MVC.Models.Bookings
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
-
-        public byte[] RowVersion { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime CreatedAt { get; set; }
     }
 }

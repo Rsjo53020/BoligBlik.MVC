@@ -1,11 +1,10 @@
 ﻿using BoligBlik.MVC.Models.Addresses;
+using BoligBlik.MVC.Models.Common;
 
 namespace BoligBlik.MVC.Models.Users
 {
-    public class UserViewModel
+    public class UserViewModel : EntityViewModel
     {
-        public Guid Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -13,10 +12,5 @@ namespace BoligBlik.MVC.Models.Users
         public string PhoneNumber { get; set; }
 
         public string EmailAddress { get; set; }
-
-        public string Role { get; set; }
-
-        public string FormerRole { get; set; }
-
     }
 }

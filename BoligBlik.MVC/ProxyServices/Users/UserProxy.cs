@@ -68,7 +68,7 @@ namespace BoligBlik.MVC.ProxyServices.Users
         }
 
 
-        public async Task<bool> UpdateUserAsync(UpdateUserDTO user)
+        public async Task<bool> UpdateUserAsync(UserDTO user)
         {
             try
             {

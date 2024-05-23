@@ -30,18 +30,18 @@ namespace BoligBlik.MVC.Controllers
         public async Task<IActionResult> Edit(string email)
         {
             var user = await _userProxy.GetUserAsync(email);
-            var updateUserViewModel = _mapper.Map<UpdateUserViewModel>(user);
+            var updateUserViewModel = _mapper.Map<UserViewModel>(user);
             return View(updateUserViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UpdateUserViewModel updateUserViewModel)
+        public async Task<IActionResult> Edit(UserViewModel updateUserViewModel)
         {
             var user = await _userProxy.GetUserAsync(updateUserViewModel.EmailAddress);
 
             if (user != null)
             {
-                var updateUserDTO = _mapper.Map<UpdateUserDTO>(updateUserViewModel);
+                var updateUserDTO = _mapper.Map<UserDTO>(updateUserViewModel);
                 await _userProxy.UpdateUserAsync(updateUserDTO);
             }
 

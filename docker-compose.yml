@@ -6,23 +6,28 @@ services:
     build:
       context: .
       dockerfile: BoligBlik.MVC/Dockerfile
+    ports:
+        - "5000:80"
+    networks:
+        - boligblik   
     environment:
-      # Use service name for webapi (internal DNS resolution)
-      BaseAddress: "boligblik.webapi:8080"
-      ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
-    depends_on:
-      - boligblik.webapi
-      - sqlserver
+        BaseAddress: "http://boligblik.webapi:5001"
+        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
+    depends_on: 
+        - boligblik.webapi
+       
 
   boligblik.webapi:
     image: ${DOCKER_REGISTRY-}boligblikwebapi
     build:
       context: .
       dockerfile: BoligBlik.WebAPI/Dockerfile
-    environment:
-      ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     ports:
-      - 8080:8080
+        - "5001:80"
+    networks:
+        - boligblik   
+    environment:
+        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     depends_on:
       - sqlserver
 
@@ -47,3 +52,6 @@ services:
       interval: 10s
       retries: 5
      
+networks:
+  boligblik:
+    driver: bridge

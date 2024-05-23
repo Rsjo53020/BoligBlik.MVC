@@ -8,12 +8,8 @@ namespace BoligBlik.MVC.Mappings
     {
         public BookingMappingProfile()
         {
-            CreateMap<BookingDTO, CreateBookingDTO>().ReverseMap();
-            CreateMap<BookingDTO, UpdateBookingViewModel>().ReverseMap();
-            CreateMap<BookingDTO, DeleteBookingViewModel>().ReverseMap();
-
+            CreateMap<BookingDTO, BookingViewModel>().ReverseMap();
             CreateMap<CreateBookingDTO, CreateBookingViewModel>().ReverseMap();
-            
         }
     }
 }

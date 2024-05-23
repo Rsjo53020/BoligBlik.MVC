@@ -57,7 +57,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             //}
         }
 
-        public void UpdateBooking(UpdateBookingDTO request)
+        public void UpdateBooking(BookingDTO request)
         {
 
             try
@@ -76,7 +76,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             }
         }
 
-        public void DeleteBooking(DeleteBookingDTO request)
+        public void DeleteBooking(BookingDTO request)
         {
             try
             {

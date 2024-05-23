@@ -20,7 +20,6 @@
                             <div class="services-content-icon p-4">
                                 <h4 class="mb-3">@item.Name</h4>
                                 <p class="mb-2">Pris: @item.Price</p>
-                                <p class="mb-2">Antal: @item.Quantity</p>
                                 <p class="mb-2">Beskrivelse: @item.Description</p>
                                 <form asp-controller="Booking" asp-action="StartBooking" method="get">
                                     <input type="hidden" name="itemId" value="@item.Id" />

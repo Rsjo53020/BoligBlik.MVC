@@ -11,6 +11,5 @@ namespace BoligBlik.Application.Interfaces.Repositories
     {
         Task<BoardMember> ReadBoardMemberAsync(Guid id);
         Task<IEnumerable<BoardMember>> ReadAllBoardMembersAsync();
-
     }
 }

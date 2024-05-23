@@ -8,19 +8,8 @@ namespace BoligBlik.MVC.Mappings
     {
         public UserMappingProfile()
         {
-            CreateMap<UserDTO, UserViewModel>();
-            CreateMap<UserViewModel, UserDTO>();
-
-            CreateMap<UpdateUserDTO, UserDTO>();
-            CreateMap<UserDTO, UpdateUserDTO>();
-
-            CreateMap<UpdateUserViewModel, UserDTO>();
-            CreateMap<UserDTO, UpdateUserViewModel>();
-
-            CreateMap<UpdateUserViewModel, UpdateUserDTO>();
-            CreateMap<UpdateUserDTO, UpdateUserViewModel>();
-
-            CreateMap<CreateUserViewModel, CreateUserDTO>();
+            CreateMap<UserViewModel, UserDTO>().ReverseMap();
+            CreateMap<CreateUserDTO, CreateUserViewModel>().ReverseMap();
         }
     }
 }

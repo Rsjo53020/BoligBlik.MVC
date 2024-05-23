@@ -18,14 +18,12 @@ namespace BoligBlik.Persistence.Contexts
         {
             SeedUsers();
             SeedBoardMembers();
-            //SeedPayment();
-            //SeedMeeting();
-            //SeedDocument();
-            //SeedBookingItem();
-            //SeedAddress();
+            SeedMeeting();
+            SeedBookingItem();
+            SeedAddress();
+            SeedBooking();
+            SeedBookingItems();
             //SeedProperty();
-            //SeedBooking();
-            //SeedBookingItems();
         }
 
 
@@ -252,33 +250,6 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
-        internal void SeedPayment()
-        {
-            var payments = new Payment[]
-            {
-                new Payment
-                {
-                    Amount = 100,
-                    Date = DateOnly.FromDateTime(DateTime.Now),
-                    Status = "Betalt",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Ronni@Mail.dk")
-                },
-                new Payment
-                {
-                    Amount = 200,
-                    Date = DateOnly.FromDateTime(DateTime.Now),
-                    Status = "Afventer betaling",
-                    User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Skafte@Mail.dk")
-                }
-            };
-
-            foreach (var payment in payments)
-            {
-                _context.Payments.Add(payment);
-            }
-
-            _context.SaveChanges();
-        }
 
         internal void SeedMeeting()
         {
@@ -287,16 +258,16 @@ namespace BoligBlik.Persistence.Contexts
                 new Meeting
                 {
                     Id = Guid.NewGuid(),
-                    Start = DateOnly.FromDateTime(DateTime.Now),
-                    End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
+                    Start = DateTime.Now,
+                    End = DateTime.Now + TimeSpan.FromHours(5),
                     Description = "Møde ang. Ronni",
 
                 },
                 new Meeting
                 {
                     Id = Guid.NewGuid(),
-                    Start = DateOnly.FromDateTime(DateTime.Now),
-                    End = DateOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(5)),
+                    Start = DateTime.Now,
+                    End = DateTime.Now + TimeSpan.FromHours(5),
                     Description = "Vigigt Møde",
                 }
             };
@@ -304,34 +275,6 @@ namespace BoligBlik.Persistence.Contexts
             foreach (var meeting in meetings)
             {
                 _context.Meetings.Add(meeting);
-            }
-
-            _context.SaveChanges();
-        }
-
-        internal void SeedDocument()
-        {
-            var documents = new Document[]
-            {
-                new Document
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Møde Referat",
-                    Description = "Referat af møde",
-                    Category = "Referat",
-                },
-                new Document
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Nye vedtægter",
-                    Description = "Vigtige vedtægter",
-                    Category = "Vedtægter",
-                }
-            };
-
-            foreach (var document in documents)
-            {
-                _context.Documents.Add(document);
             }
 
             _context.SaveChanges();

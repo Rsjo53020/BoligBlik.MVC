@@ -13,12 +13,5 @@ namespace BoligBlik.Domain.Entities
        public BoardMember() : base()
         {
         }
-        public BoardMember(Guid id, string title, string description, User user)
-        {
-            Id = id;
-            Title = title;
-            Description = description;
-            User = user;
-        }
     }
 }

@@ -1,12 +1,10 @@
-﻿using BoligBlik.MVC.DTO.User;
-using BoligBlik.MVC.DTO.Interfaces;
-using BoligBlik.MVC.DTO.PostalCodes;
-using BoligBlik.MVC.DTO.Bookings;
-using BoligBlik.MVC.DTO.Properties;
+﻿using BoligBlik.MVC.DTO.Bookings;
+using BoligBlik.MVC.DTO.Common;
+using BoligBlik.MVC.DTO.User;
 
 namespace BoligBlik.MVC.DTO.Address
 {
-    public class AddressDTO : IEntity
+    public class AddressDTO : EntityDTO
     {
         public string Street { get; set; }
         public string HouseNumber { get; set; }
@@ -17,15 +15,8 @@ namespace BoligBlik.MVC.DTO.Address
 
         public string PostalCodeNumber { get; set; }
 
-        //public PostalCodeDTO PostalCode { get; set; }
+        public IEnumerable<UserDTO> Users { get; set; }
 
-        //public List<UserDTO> Users { get; set; }
-
-        //public List<BookingDTO> Bookings { get; set; }
-
-        //public List<PropertyDTO> Properties { get; set; }
-
-        public Guid Id { get; set; }
-        public byte[] RowVersion { get; set; }
+        public IEnumerable<BookingDTO> Bookings { get; set; }
     }
 }

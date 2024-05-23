@@ -74,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
+        public ActionResult UpdateUser([FromBody] UserDTO request)
         {
             if (request == null)
             {
@@ -104,7 +104,7 @@ namespace BoligBlik.WebAPI.Controllers
 
 
         [HttpDelete]
-        public ActionResult DeleteUser([FromBody] DeleteUserDTO request)
+        public ActionResult DeleteUser([FromBody] UserDTO request)
         {
             _commandService.DeleteUser(request);
             return Ok();

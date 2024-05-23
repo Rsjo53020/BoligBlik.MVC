@@ -1,4 +1,5 @@
-﻿using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.Repositories
 {
@@ -7,8 +8,8 @@ namespace BoligBlik.Application.Interfaces.Repositories
     /// </summary>
     public interface IUserQuerieRepo
     {
+        Task<User> ReadUserAsync(Guid id);
         Task<User> ReadUserAsync(string email);
-        Task<User> ReadUserAsync(Guid Id);
         Task<IEnumerable<User>> ReadAllUsersAsync();
     }
 }
