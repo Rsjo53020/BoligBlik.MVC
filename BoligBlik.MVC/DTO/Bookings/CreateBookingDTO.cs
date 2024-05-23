@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoligBlik.MVC.DTO.BookingItems;
 
 namespace BoligBlik.MVC.DTO.Bookings
 {
@@ -9,6 +10,8 @@ namespace BoligBlik.MVC.DTO.Bookings
         public Guid AddressId { get; set; }
         public Guid UserId { get; set; }
         public Guid ItemId { get; set; }
+
+        public IEnumerable<BookingItemDTO> Item { get; set; }
 
         [Required] 
         public DateOnly CreationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);

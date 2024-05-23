@@ -30,6 +30,20 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             }
         }
 
+        public async Task<BookingItem> ReadBookingItemsAsync(Guid itemId)
+        {
+            try
+            {
+                return await _db.BookingItems.FirstOrDefaultAsync(x => x.Id == itemId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in ReadBookingItem: {ex}");
+                return null;
+            }
+        }
+
+
         public async Task<IEnumerable<BookingItem>> ReadAllBookingItemsAsync()
         {
             try

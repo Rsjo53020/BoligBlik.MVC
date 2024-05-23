@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  boligblik.mvc:
+    image: ${DOCKER_REGISTRY-}boligblikmvc
+    build:
+      context: .
+      dockerfile: BoligBlik.MVC/Dockerfile
+    environment:
+        BaseAddress: "http://boligblik.webapi:8080"
+    ports: 
+        - "8080:80"
+    depends_on: 
+        - boligblik.webapi
+        - sqlserver
+       
+
+  boligblik.webapi:
+    image: ${DOCKER_REGISTRY-}boligblikwebapi
+    build:
+      context: .
+      dockerfile: BoligBlik.WebAPI/Dockerfile
+    depends_on:
+        - sqlserver
+
+
+#https://hub.docker.com/_/microsoft-mssql-server
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=BoligBlikDb!
+      - MSSQL_PID=Evaluation
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sqlserver-init/init-db.sql:/init-db.sql
+      - ./sqlserver-init/entrypoint.sh:/entrypoint.sh
+    command: ["/bin/bash", "/entrypoint.sh"]
+    
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P BoligBlikDb! -Q 'select 1'"]
+      interval: 10s
+      retries: 5
+     

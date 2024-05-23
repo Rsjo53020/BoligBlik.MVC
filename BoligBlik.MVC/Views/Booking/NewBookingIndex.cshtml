@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BoligBlik.MVC.Models.BookingItems.BookingItemViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Services Start -->
+<div class="container-fluid services py-5 mb-5">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+            <h1 class="text-primary">BoligBlik Booking Portal</h1>
+            <h5 class="text-black">Opret Din Første Booking</h5>
+        </div>
+        <div class="row g-5 services-inner">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".3s">
+                    <div class="services-item bg-light">
+                        <div class="services-item bg-secondary text-white shadow-sm rounded">
+                            <div class="services-content-icon p-4">
+                                <h4 class="mb-3">@item.Name</h4>
+                                <p class="mb-2">Pris: @item.Price</p>
+                                <p class="mb-2">Antal: @item.Quantity</p>
+                                <p class="mb-2">Beskrivelse: @item.Description</p>
+                                <form asp-controller="Booking" asp-action="StartBooking" method="get">
+                                    <input type="hidden" name="itemId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-primary text-white px-5 py-3 rounded-pill">Book</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Services End -->

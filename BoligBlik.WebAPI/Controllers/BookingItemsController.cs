@@ -32,6 +32,12 @@ namespace BoligBlik.WebAPI.Controllers
             return await _bookItemQuerieService.ReadBookingItemAsync(name);
         }
 
+        [HttpGet("{itemId}")]
+        public async Task<BookingItemDTO> GetBookingItem(Guid itemId)
+        {
+            return await _bookItemQuerieService.ReadBookingItemAsync(itemId);
+        }
+
         [HttpPut]
         public ActionResult UpdateBookingItem([FromBody] UpdateBookingItemDTO request)
         {
@@ -46,5 +52,10 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("All")]
+        public async Task<IEnumerable<BookingItemDTO>> GetAllBookingItems()
+        {
+            return await _bookItemQuerieService.ReadAllBookingItemsAsync();
+        }
     }
 }
