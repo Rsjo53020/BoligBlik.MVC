@@ -8,8 +8,7 @@ services:
       dockerfile: BoligBlik.MVC/Dockerfile
     environment:
         BaseAddress: "http://boligblik.webapi:8080"
-    ports: 
-        - "8080:80"
+        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     depends_on: 
         - boligblik.webapi
         - sqlserver
@@ -20,6 +19,10 @@ services:
     build:
       context: .
       dockerfile: BoligBlik.WebAPI/Dockerfile
+    environment:
+        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
+    ports:
+        - 8080:8080
     depends_on:
         - sqlserver
 
