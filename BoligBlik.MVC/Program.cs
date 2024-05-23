@@ -64,6 +64,15 @@ namespace BoligBlik.MVC
 
             var app = builder.Build();
 
+
+            using (var scope = app.Services.CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
+            }
+
+            //var baseAddress = Environment.GetEnvironmentVariable("BaseAddress");
+
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
