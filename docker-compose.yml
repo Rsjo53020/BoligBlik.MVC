@@ -7,12 +7,12 @@ services:
       context: .
       dockerfile: BoligBlik.MVC/Dockerfile
     environment:
-        BaseAddress: "http://boligblik.webapi:8080"
-        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
-    depends_on: 
-        - boligblik.webapi
-        - sqlserver
-       
+      # Use service name for webapi (internal DNS resolution)
+      BaseAddress: "boligblik.webapi:8080"
+      ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
+    depends_on:
+      - boligblik.webapi
+      - sqlserver
 
   boligblik.webapi:
     image: ${DOCKER_REGISTRY-}boligblikwebapi
@@ -20,11 +20,11 @@ services:
       context: .
       dockerfile: BoligBlik.WebAPI/Dockerfile
     environment:
-        ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
+      ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     ports:
-        - 8080:8080
+      - 8080:8080
     depends_on:
-        - sqlserver
+      - sqlserver
 
 
 #https://hub.docker.com/_/microsoft-mssql-server
@@ -42,7 +42,6 @@ services:
       - ./sqlserver-init/init-db.sql:/init-db.sql
       - ./sqlserver-init/entrypoint.sh:/entrypoint.sh
     command: ["/bin/bash", "/entrypoint.sh"]
-    
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P BoligBlikDb! -Q 'select 1'"]
       interval: 10s

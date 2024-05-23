@@ -15,6 +15,7 @@ namespace BoligBlik.MVC
             // Add services to the container -- move to a ServiceExtension.cs
             var connectionString = builder.Configuration
                 .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                //.GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             // move to a ServiceExtension.cs
             builder.Services.AddDbContext<ApplicationDbContext>(
@@ -59,11 +60,6 @@ namespace BoligBlik.MVC
             // Add more claims as necessary
 
             var app = builder.Build();
-
-            using (var scope = app.Services.CreateScope())
-            {
-                scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
-            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
