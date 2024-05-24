@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.Persistence.Migrations
 {
     [DbContext(typeof(BoligBlikContext))]
-    [Migration("20240524070020_cleanup")]
-    partial class cleanup
+    [Migration("20240524140735_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,7 +109,7 @@ namespace BoligBlik.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("Repairs")
                         .IsRequired()
