@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.4'
 
 services:
   boligblik.mvc:
@@ -6,14 +6,12 @@ services:
     build:
       context: .
       dockerfile: BoligBlik.MVC/Dockerfile
-    # volumes:
-    #     - ./boligblik.mvc:/var/www/cshtml
     ports:
-        - 5001:80
+        - "5000:80"
     networks:
         - boligblik   
     environment:
-        #BaseAddress: "http://boligblik.webapi:5001"
+        BaseAddress: "http://boligblik.webapi:5001"
         ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     depends_on: 
         - boligblik.webapi
@@ -25,7 +23,7 @@ services:
       context: .
       dockerfile: BoligBlik.WebAPI/Dockerfile
     ports:
-        - 5002:80
+        - "5001:80"
     networks:
         - boligblik   
     environment:
@@ -43,18 +41,18 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=BoligBlikDb!
       - MSSQL_PID=Evaluation
-    networks:
-        - boligblik  
     ports:
       - "1433:1433"
-    # volumes:
-    #   - ./sqlserver-init/init-db.sql:/init-db.sql
-    #   - ./sqlserver-init/entrypoint.sh:/entrypoint.sh
-    # command: ["/bin/bash", "/entrypoint.sh"]
-    # healthcheck:
-    #   test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P BoligBlikDb! -Q 'select 1'"]
-    #   interval: 10s
-    #   retries: 5
+    networks:
+        - boligblik  
+    volumes:
+      - ./sqlserver-init/init-db.sql:/init-db.sql
+      - ./sqlserver-init/entrypoint.sh:/entrypoint.sh
+    command: ["/bin/bash", "/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P BoligBlikDb! -Q 'select 1'"]
+      interval: 10s
+      retries: 5
      
 networks:
   boligblik:

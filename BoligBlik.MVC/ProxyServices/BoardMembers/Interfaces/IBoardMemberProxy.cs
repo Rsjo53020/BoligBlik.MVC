@@ -8,6 +8,6 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces
         Task<BoardMemberDTO> GetBoardMemberAsync(Guid id);
         Task<bool> CreateBoardMemberAsync(CreateBoardMemberDTO boardMember);
         Task<bool> UpdateBoardMemberAsync(BoardMemberDTO boardMember);
-        Task<bool> DeleteBoardMemberAsync(BoardMemberDTO boardMember);
+        Task<bool> DeleteBoardMemberAsync(Guid id);
     }
 }

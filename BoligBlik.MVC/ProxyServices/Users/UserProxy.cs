@@ -2,6 +2,7 @@
 using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace BoligBlik.MVC.ProxyServices.Users
 {
@@ -67,6 +68,22 @@ namespace BoligBlik.MVC.ProxyServices.Users
             }
         }
 
+        public async Task<UserDTO> GetUserAsync(Guid id)
+        {
+            try
+            {
+                var httpClient = _clientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.GetAsync($"api/User/{id}");
+                response.EnsureSuccessStatusCode();
+                var user = await response.Content.ReadFromJsonAsync<UserDTO>();
+                return user;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception("Error occurred while fetching user data", ex);
+            }
+        }
 
         public async Task<bool> UpdateUserAsync(UserDTO user)
         {

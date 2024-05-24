@@ -38,6 +38,7 @@ namespace BoligBlik.WebAPI
             using (var scope = app.Services.CreateScope())
             {
                 scope.ServiceProvider.GetRequiredService<BoligBlikContext>().Database.EnsureCreated();
+                
             }
 
             if (app.Environment.IsDevelopment())

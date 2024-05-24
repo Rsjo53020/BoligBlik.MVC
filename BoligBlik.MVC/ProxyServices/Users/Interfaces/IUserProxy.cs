@@ -9,5 +9,6 @@ namespace BoligBlik.MVC.ProxyServices.Users.Interfaces
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task<bool> UpdateUserAsync(UserDTO user);
         Task<UserDTO> GetUserAsync(string email);
+        Task<UserDTO> GetUserAsync(Guid id);
     }
 }
