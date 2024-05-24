@@ -104,51 +104,52 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        //private BoardMemberViewModel _boardMemberViewModel;
+        private BoardMemberViewModel _boardMemberViewModel;
 
-        //[HttpGet]
-        //public async Task<IActionResult> SetUser(BoardMemberViewModel boardMemberViewModel)
-        //{
-        //    try
-        //    {
-        //        _boardMemberViewModel = boardMemberViewModel;
+        [HttpGet]
+        public async Task<IActionResult> SetUser(BoardMemberViewModel boardMemberViewModel)
+        {
+            try
+            {
+                _boardMemberViewModel = boardMemberViewModel;
 
-        //        var userDTOs = await _userProxy.GetAllUsersAsync();
-        //        List<UserViewModel> users = new();
-        //        foreach (var userDTO in userDTOs)
-        //        {
-        //            var userViewModel = _mapper.Map<UserViewModel>(userDTO);
-        //            users.Add(userViewModel);
-        //        }
-        //        return View(users);
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("ReadAll", "BoardMember");
-        //    }
-        //}
+                var userDTOs = await _userProxy.GetAllUsersAsync();
+                List<UserViewModel> users = new();
+                foreach (var userDTO in userDTOs)
+                {
+                    var userViewModel = _mapper.Map<UserViewModel>(userDTO);
+                    users.Add(userViewModel);
+                }
+                return View(users);
+            }
+            catch
+            {
+                return RedirectToAction("ReadAll", "BoardMember");
+            }
+        }
 
-        ///// <summary>
-        ///// update boardMember with user async
-        ///// </summary>
-        ///// <param name="userViewModel"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<IActionResult> UpdateWithUser(UserViewModel userViewModel)
-        //{
-        //    try
-        //    {
-        //        var boardMemberDTO = _mapper.Map<BoardMemberDTO>(_boardMemberViewModel);
-        //        boardMemberDTO.User = _mapper.Map<UserDTO>(userViewModel);
-        //        var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
-        //        return RedirectToAction("ReadAll", "BoardMember");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError("An error occured while updating a boardMember", ex);
-        //        return RedirectToAction("ReadAll", "BoardMember");
-        //    }
-        //}
+        /// <summary>
+        /// update boardMember with user async
+        /// </summary>
+        /// <param name="userViewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> UpdateWithUser(Guid id)
+        {
+            try
+            {
+                var userDTO = await _userProxy.GetUserAsync(id);
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(_boardMemberViewModel);
+                boardMemberDTO.User = userDTO;
+                var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
+                return RedirectToAction("ReadAll", "BoardMember");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while updating a boardMember", ex);
+                return RedirectToAction("ReadAll", "BoardMember");
+            }
+        }
 
         /// <summary>
         /// Update a BoardMember async
@@ -159,7 +160,6 @@ namespace BoligBlik.MVC.Controllers
         {
             try
             {
-
                 var boardMemberDTO = _mapper.Map<BoardMemberDTO>(BoardMemberViewModel);
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
                 return RedirectToAction("ReadAll", "BoardMember");

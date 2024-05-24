@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BoligBlik.MVC.Models.Users.UserViewModel>
+
+@{
+    ViewData["Title"] = "SetUser";
+}
+
+<h1>Vælg Bruger</h1>
+<form method="post">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                        <a asp-action="UpdateWithUser" asp-route-id="@item.Id">Vælg</a>
+                        <a asp-controller="BoardMember" asp-action="UpdateWithUser" asp-route-id="@item.Id" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Vælg Bruger</button></a>
+                        <a asp-action="UpdateWithUser" asp-controller="BoardMember" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Opdater Bruger</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</form>
