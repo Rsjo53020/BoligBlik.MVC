@@ -207,7 +207,10 @@ namespace BoligBlik.Persistence.Contexts
 
             foreach (Address adress in Address)
             {
-                _context.Adresses.Add(adress);
+                if (!_context.Adresses.Any(existing => existing.DoorNumber == adress.DoorNumber && existing.Floor == adress.Floor))
+                {
+                    _context.Adresses.Add(adress);
+                }
             }
             _context.SaveChanges();
         }
