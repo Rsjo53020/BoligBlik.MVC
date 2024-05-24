@@ -37,6 +37,8 @@
                     }
                     <p class="m-0"> @item.Title </p>
                     <p>@item.Description</p>
+                    <input type="hidden" asp-for="@item.Id" />
+                    <input type="hidden" asp-for="@item.RowVersion" />
                     @*                     @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
                 {
                 <a asp-controller="BoardMember" asp-action="Update" asp-route-id="@item">Ret</a>

@@ -2,6 +2,7 @@
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
@@ -39,7 +40,8 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 //handle concurrency
-                _db.Entry(boardMember).Property(b => b.RowVersion).OriginalValue = boardMember.RowVersion;
+                var test = _db.BoardMembers.AsNoTracking().FirstOrDefault(x => x.Id == boardMember.Id);
+                _db.Update(boardMember).Property(b => b.RowVersion).OriginalValue = boardMember.RowVersion;
             }
             catch (SqlException ex)
             {
