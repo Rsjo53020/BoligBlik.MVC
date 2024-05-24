@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
-using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -133,12 +131,12 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="userViewModel"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> UpdateWithUser(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> UpdateWithUser(string email)
         {
             try
             {
-                var userDTO = await _userProxy.GetUserAsync(id);
+                var userDTO = await _userProxy.GetUserAsync(email);
                 var boardMemberDTO = _mapper.Map<BoardMemberDTO>(_boardMemberViewModel);
                 boardMemberDTO.User = userDTO;
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);

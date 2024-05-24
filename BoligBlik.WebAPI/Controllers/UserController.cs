@@ -59,12 +59,12 @@ namespace BoligBlik.WebAPI.Controllers
             return restult;
         }
 
-        [HttpGet("{id}")]
-        public async Task<UserDTO> GetUser(Guid id)
-        {
-            var restult = await _querieService.ReadUserAsync(id);
-            return restult;
-        }
+        //[HttpGet("{id}")]
+        //public async Task<UserDTO> GetUser(Guid id)
+        //{
+        //    var restult = await _querieService.ReadUserAsync(id);
+        //    return restult;
+        //}
 
 
         [HttpGet]
