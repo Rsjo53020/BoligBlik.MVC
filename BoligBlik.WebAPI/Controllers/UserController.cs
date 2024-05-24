@@ -59,7 +59,7 @@ namespace BoligBlik.WebAPI.Controllers
             return restult;
         }
 
-        [HttpGet("ByID")]
+        [HttpGet("{id}")]
         public async Task<UserDTO> GetUser(Guid id)
         {
             var restult = await _querieService.ReadUserAsync(id);

@@ -4,7 +4,9 @@ using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
+using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -13,10 +15,12 @@ namespace BoligBlik.MVC.Controllers
         private readonly IBoardMemberProxy _boardMemberProxy;
         private readonly IMapper _mapper;
         private readonly ILogger<BoardMemberController> _logger;
-        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper)
+        private readonly IUserProxy _userProxy;
+        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy)
         {
             _boardMemberProxy = boardMemberProxy;
             _mapper = mapper;
+            _userProxy = userProxy;
         }
 
         [HttpGet]
@@ -100,17 +104,63 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
+        //private BoardMemberViewModel _boardMemberViewModel;
+
+        //[HttpGet]
+        //public async Task<IActionResult> SetUser(BoardMemberViewModel boardMemberViewModel)
+        //{
+        //    try
+        //    {
+        //        _boardMemberViewModel = boardMemberViewModel;
+
+        //        var userDTOs = await _userProxy.GetAllUsersAsync();
+        //        List<UserViewModel> users = new();
+        //        foreach (var userDTO in userDTOs)
+        //        {
+        //            var userViewModel = _mapper.Map<UserViewModel>(userDTO);
+        //            users.Add(userViewModel);
+        //        }
+        //        return View(users);
+        //    }
+        //    catch
+        //    {
+        //        return RedirectToAction("ReadAll", "BoardMember");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// update boardMember with user async
+        ///// </summary>
+        ///// <param name="userViewModel"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<IActionResult> UpdateWithUser(UserViewModel userViewModel)
+        //{
+        //    try
+        //    {
+        //        var boardMemberDTO = _mapper.Map<BoardMemberDTO>(_boardMemberViewModel);
+        //        boardMemberDTO.User = _mapper.Map<UserDTO>(userViewModel);
+        //        var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
+        //        return RedirectToAction("ReadAll", "BoardMember");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("An error occured while updating a boardMember", ex);
+        //        return RedirectToAction("ReadAll", "BoardMember");
+        //    }
+        //}
+
         /// <summary>
         /// Update a BoardMember async
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
+        public async Task<IActionResult> Update(BoardMemberViewModel BoardMemberViewModel)
         {
             try
             {
-                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
-                boardMemberDTO.User = _mapper.Map<UserDTO>(boardMemberViewModel.User);
+
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(BoardMemberViewModel);
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -127,19 +177,15 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="deleteBoardMemberViewModel"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Delete(BoardMemberViewModel boardMemberViewModel)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                var boardMember = await _boardMemberProxy.GetBoardMemberAsync(boardMemberViewModel.Id);
+                var boardMember = await _boardMemberProxy.GetBoardMemberAsync(id);
 
-                if (boardMember != null && boardMember.Id == boardMemberViewModel.Id)
+                if (boardMember != null && boardMember.Id == id)
                 {
-                    var boardMemberDto = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
-                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMemberDto);
-
-
-                    return RedirectToAction("ReadAll", "BoardMember");
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(id);
                 }
                 return RedirectToAction("ReadAll", "BoardMember");
 
