@@ -2,6 +2,7 @@
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
