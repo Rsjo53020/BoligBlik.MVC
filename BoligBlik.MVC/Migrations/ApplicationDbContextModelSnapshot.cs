@@ -61,7 +61,41 @@ namespace BoligBlik.MVC.Migrations
                     b.ToTable("AddressViewModel");
                 });
 
-            modelBuilder.Entity("BoligBlik.MVC.Models.Users.UserViewModel", b =>
+            modelBuilder.Entity("BoligBlik.MVC.Models.BookingItems.BookingItemViewModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Repairs")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Rules")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookingItemViewModel");
+                });
+
+            modelBuilder.Entity("BoligBlik.MVC.Models.Bookings.BookingViewModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,15 +104,42 @@ namespace BoligBlik.MVC.Migrations
                     b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("BookingViewModel");
+                });
+
+            modelBuilder.Entity("BoligBlik.MVC.Models.Users.UserViewModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AddressViewModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("EmailAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FormerRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -90,13 +151,13 @@ namespace BoligBlik.MVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<byte[]>("RowVersion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressViewModelId");
 
                     b.ToTable("UserViewModel");
                 });
@@ -303,15 +364,30 @@ namespace BoligBlik.MVC.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BoligBlik.MVC.Models.Users.UserViewModel", b =>
+            modelBuilder.Entity("BoligBlik.MVC.Models.Bookings.BookingViewModel", b =>
                 {
                     b.HasOne("BoligBlik.MVC.Models.Addresses.AddressViewModel", "Address")
-                        .WithMany("Users")
+                        .WithMany("Bookings")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BoligBlik.MVC.Models.BookingItems.BookingItemViewModel", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("BoligBlik.MVC.Models.Users.UserViewModel", b =>
+                {
+                    b.HasOne("BoligBlik.MVC.Models.Addresses.AddressViewModel", null)
+                        .WithMany("Users")
+                        .HasForeignKey("AddressViewModelId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -367,6 +443,8 @@ namespace BoligBlik.MVC.Migrations
 
             modelBuilder.Entity("BoligBlik.MVC.Models.Addresses.AddressViewModel", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

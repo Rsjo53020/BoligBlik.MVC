@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BoligBlik.MVC.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class NewMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +69,23 @@ namespace BoligBlik.MVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookingItemViewModel",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rules = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Repairs = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingItemViewModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserViewModel",
                 columns: table => new
                 {
@@ -77,19 +94,17 @@ namespace BoligBlik.MVC.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FormerRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AddressViewModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserViewModel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserViewModel_AddressViewModel_AddressId",
-                        column: x => x.AddressId,
+                        name: "FK_UserViewModel_AddressViewModel_AddressViewModelId",
+                        column: x => x.AddressViewModelId,
                         principalTable: "AddressViewModel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +213,34 @@ namespace BoligBlik.MVC.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookingViewModel",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingViewModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookingViewModel_AddressViewModel_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "AddressViewModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookingViewModel_BookingItemViewModel_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "BookingItemViewModel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -238,9 +281,19 @@ namespace BoligBlik.MVC.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserViewModel_AddressId",
-                table: "UserViewModel",
+                name: "IX_BookingViewModel_AddressId",
+                table: "BookingViewModel",
                 column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingViewModel_ItemId",
+                table: "BookingViewModel",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserViewModel_AddressViewModelId",
+                table: "UserViewModel",
+                column: "AddressViewModelId");
         }
 
         /// <inheritdoc />
@@ -262,6 +315,9 @@ namespace BoligBlik.MVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BookingViewModel");
+
+            migrationBuilder.DropTable(
                 name: "UserViewModel");
 
             migrationBuilder.DropTable(
@@ -269,6 +325,9 @@ namespace BoligBlik.MVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BookingItemViewModel");
 
             migrationBuilder.DropTable(
                 name: "AddressViewModel");
