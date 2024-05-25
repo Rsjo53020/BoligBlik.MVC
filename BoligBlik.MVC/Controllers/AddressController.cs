@@ -1,41 +1,51 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.Address;
-using BoligBlik.MVC.DTO.BoardMember;
-using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.Addresses;
-using BoligBlik.MVC.Models.BoardMembers;
-using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
-using BoligBlik.MVC.ProxyServices.BoardMembers;
-using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+
 
 namespace BoligBlik.MVC.Controllers
 {
     public class AddressController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
         private readonly ILogger<AddressController> _logger;
 
-        public AddressController(IHttpClientFactory httpClientFactory, IMapper mapper, IAddressProxy addressProxy)
+        [BindProperty]
+        public AddressViewModel AddressModel { get; set; } = new();
+        public AddressController(IMapper mapper, IAddressProxy addressProxy)
         {
-            _httpClientFactory = httpClientFactory;
+
             _mapper = mapper;
             _addressProxy = addressProxy;
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAddressViewModel createAddressViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber")] CreateAddressViewModel address)
         {
-            var createAddressDto = _mapper.Map<CreateAddressDTO>(createAddressViewModel);
-            var response = await _addressProxy.CreateAddressAsync(createAddressDto);
+            try
+            {
+                var dto = _mapper.Map<CreateAddressDTO>(address);
+                var response = await _addressProxy.CreateAddressAsync(dto);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("An error occured while create a address", ex.Message);
+                _logger.LogError($"An error occured while reading all addresses: {ex.Message}");
 
-            return View();
+                return RedirectToAction(nameof(GetAllAddress));
+            }
+            return View(address); ;
         }
 
         [HttpGet]
@@ -43,8 +53,8 @@ namespace BoligBlik.MVC.Controllers
         {
             try
             {
-                var resoponse = await _addressProxy.GetAllAddressAsync();
-                var addressesList = _mapper.Map<IEnumerable<AddressViewModel>>(resoponse);
+                var response = await _addressProxy.GetAllAddressAsync();
+                var addressesList = _mapper.Map<IEnumerable<AddressViewModel>>(response);
                 return View(addressesList);
             }
             catch (Exception ex)
@@ -53,85 +63,103 @@ namespace BoligBlik.MVC.Controllers
                 return View(new List<AddressViewModel>());
             }
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetAddress(AddressViewModel addressViewModel )
-        //{
-        //    try
-        //    {
-        //        var resoponse = await _addressProxy.GetAddressAsync(addressViewModel.Id);
-        //        var addresses = _mapper.Map<AddressViewModel>(resoponse);
-        //        return View(addresses);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError("An error occured while reading all addresses", ex.Message);
-        //        return View();
-        //    }
-        //}
-
-        // GET: AddressController
-        [HttpPut]
-        public async Task<IActionResult> Edit(UpdateAddressViewModel updateAddressViewModel)
+        public async Task<IActionResult> Details(Guid id)
         {
-            var response = _mapper.Map<UpdateAddressDTO>(updateAddressViewModel);
-            var address = await _addressProxy.UpdateAddressAsync(response);
+            if (id == null) return NotFound();
 
-            if (address != null)
+            var response = await _addressProxy.GetAddressAsync(id);
+            var address = _mapper.Map<AddressViewModel>(response);
+            if (address == null)
             {
-                var updateUserDTO = _mapper.Map<UpdateAddressDTO>(updateAddressViewModel);
-                await _addressProxy.UpdateAddressAsync(updateUserDTO);
+                return NotFound();
             }
 
-            return RedirectToAction(nameof(GetAllAddress));
+            return View(address);
         }
 
-
-        // GET: AddressController/Delete
-        [HttpDelete]
-        public async Task<ActionResult> Delete(AddressViewModel deleteAddressViewModel)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            //var response = _mapper.Map<DeleteAddressDTO>(deleteAddressViewModel);
-            //var address = await _addressProxy.DeleteAddressAsync(response);
+            if (id == null) return NotFound();
 
-            return RedirectToAction(nameof(GetAllAddress));
+
+            var address = await _addressProxy.GetAddressAsync(id);
+            var response = _mapper.Map<AddressViewModel>(address);
+            if (address == null) return NotFound();
+
+            return View(response);
         }
 
-
-
-
-
-
-
-        // POST: AddressController/Edit/5
-        [HttpPut]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(GetAllAddress));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        // POST: AddressController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber")] UpdateAddressViewModel address)
         {
-            try
+
+            if (id != address.Id) return NotFound();
+            //Ret ! når der er hele modellen med = book + user
+            if (!ModelState.IsValid)
             {
+                try
+                {
+                    var dto = _mapper.Map<UpdateAddressDTO>(address);
+                    var response = await _addressProxy.UpdateAddressAsync(dto);
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //if (!AddressExists(address.Id)) return NotFound();
+
+                    _logger.LogError("An error occured while updating a address");
+                }
                 return RedirectToAction(nameof(GetAllAddress));
             }
-            catch
-            {
-                return View();
-            }
+            return View(address);
+
         }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var address = await _addressProxy.GetAddressAsync(id);
+            var response = _mapper.Map<AddressViewModel>(address);
+            if (address == null)
+            {
+                return NotFound();
+            }
+
+            return View(response);
+        }
+
+        public async Task<ActionResult> Delete(AddressViewModel deleteAddressViewModel)
+        {
+            var response = _mapper.Map<AddressDTO>(deleteAddressViewModel);
+            var address = await _addressProxy.DeleteAddressAsync(response);
+
+            return RedirectToAction(nameof(GetAllAddress));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var address = await _addressProxy.GetAddressAsync(id);
+
+            return RedirectToAction(nameof(GetAllAddress));
+        }
+
+
+
+        /// <summary>
+        /// til database leg
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        //private bool AddressExists(Guid id)
+        //{
+        //   // return _VoresDbcontext.Addresses.Any(e => e.Id == id);
+        //}
     }
 }

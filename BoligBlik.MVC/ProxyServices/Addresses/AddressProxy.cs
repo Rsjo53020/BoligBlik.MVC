@@ -3,12 +3,14 @@ using BoligBlik.MVC.DTO.BoardMember;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace BoligBlik.MVC.ProxyServices.Addresses
 {
     public class AddressProxy : IAddressProxy
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<AddressProxy> _logger ;
 
         public AddressProxy(IHttpClientFactory httpClientFactory)
         {
@@ -16,21 +18,23 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
         }
 
 
-        public async Task<bool> CreateAddressAsync(CreateAddressDTO createAddressDTO)
+        public async Task<bool> CreateAddressAsync(CreateAddressDTO address)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.PutAsJsonAsync("/api/Address", createAddressDTO);
+                var response = await httpClient.PostAsJsonAsync("/api/Address", address);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while create a address data", ex);
+                _logger.LogError(ex.Message);
+                throw new Exception($"Error occurred while create a address data: {ex.Message}");
             }
         }
+
         public async Task<IEnumerable<AddressDTO>> GetAllAddressAsync()
         {
             try
@@ -79,12 +83,12 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var currentItem = await GetAddressAsync(updateAddressDTO.Id);
+                //var currentItem = await GetAddressAsync(updateAddressDTO.Id);
 
-                if (!currentItem.RowVersion.SequenceEqual(updateAddressDTO.RowVersion))
-                {
-                    throw new DbUpdateConcurrencyException("Concurrency conflict occurred.");
-                }
+                //if (!currentItem.RowVersion.SequenceEqual(updateAddressDTO.RowVersion))
+                //{
+                //    throw new DbUpdateConcurrencyException("Concurrency conflict occurred.");
+                //}
 
                 var response = await httpClient.PutAsJsonAsync("/api/Address", updateAddressDTO);
                 response.EnsureSuccessStatusCode();
@@ -100,31 +104,33 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
         }
 
-        //public async Task<bool> DeleteAddressAsync(DeleteAddressDTO deleteAddressDto)
-        //{
-        //    try
-        //    {
-        //        var httpClient = _httpClientFactory.CreateClient("BaseClient");
+        public async Task<bool> DeleteAddressAsync(AddressDTO addressDto)
+        {
+            try
+            {
+                //var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-        //        var currentItem = await DeleteAddressAsync(deleteAddressDto);
+                //var currentItem = await DeleteAddressAsync(addressDto);
 
-        //        if (!currentItem.RowVersion.SequenceEqual(deleteAddressDto.RowVersion))
-        //        {
-        //            throw new Exception("Concurrency conflict occurred.");
-        //        }
+                //if (!currentItem.RowVersion.SequenceEqual(addressDto.RowVersion))
+                //{
+                //    throw new Exception("Concurrency conflict occurred.");
+                //}
 
-        //        var response = await httpClient.DeleteFromJsonAsync("/api/Address", deleteAddressDto);
-        //        response.EnsureSuccessStatusCode();
-        //        return true;
-        //    }
-        //    catch (DbUpdateConcurrencyException ex)
-        //    {
-        //        throw new Exception("Error occurred while updating a address data", ex);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Error occurred while updating a address data", ex);
-        //    }
+                //var response = await httpClient.DeleteFromJsonAsync("/api/Address", addressDto);
+                //response.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new Exception("Error occurred while updating a address data", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while updating a address data", ex);
+            }
+
+        }
     }
 }
 

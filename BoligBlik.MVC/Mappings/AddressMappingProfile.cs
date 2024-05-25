@@ -9,6 +9,9 @@ namespace BoligBlik.MVC.Mappings
         public AddressMappingProfile()
         {
             CreateMap<AddressDTO, AddressViewModel>().ReverseMap();
+            CreateMap<UpdateAddressDTO, UpdateAddressViewModel>().ReverseMap();
+            CreateMap<CreateAddressDTO, CreateAddressViewModel>().ReverseMap();
+
         }
     }
 }
