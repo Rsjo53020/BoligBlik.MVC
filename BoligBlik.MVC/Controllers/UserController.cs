@@ -10,6 +10,7 @@ namespace BoligBlik.MVC.Controllers
     {
         private readonly IUserProxy _userProxy;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(IUserProxy userProxy, IMapper mapper)
         {
@@ -46,6 +47,21 @@ namespace BoligBlik.MVC.Controllers
             }
 
             return RedirectToAction("GetAll");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _userProxy.DeleteUserAsync(id);
+                return RedirectToAction("GetAll");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while deleting a user", ex.Message);
+                return RedirectToAction("GetAll");
+            }
         }
     }
 }

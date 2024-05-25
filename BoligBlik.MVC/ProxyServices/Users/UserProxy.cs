@@ -2,7 +2,6 @@
 using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace BoligBlik.MVC.ProxyServices.Users
 {
@@ -33,6 +32,8 @@ namespace BoligBlik.MVC.ProxyServices.Users
                 return false;
             }
         }
+
+
 
         public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
@@ -103,6 +104,21 @@ namespace BoligBlik.MVC.ProxyServices.Users
             catch (Exception ex)
             {
                 throw new Exception("Error occurred while updating user data", ex);
+            }
+        }
+
+        public async Task DeleteUserAsync(Guid id)
+        {
+            try
+            {
+                var httpClient = _clientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.DeleteAsync($"/api/User/{id}");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("an error occured while creating a user", ex.Message);
             }
         }
 

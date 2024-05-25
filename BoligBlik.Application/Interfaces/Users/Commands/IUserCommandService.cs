@@ -10,6 +10,6 @@ namespace BoligBlik.Application.Interfaces.Users.Commands
     {
         void CreateUser(CreateUserDTO request);
         void UpdateUser(UserDTO request);
-        void DeleteUser(UserDTO request);
+        void DeleteUser(Guid id);
     }
 }
