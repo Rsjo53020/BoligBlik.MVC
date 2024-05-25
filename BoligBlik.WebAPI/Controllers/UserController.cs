@@ -59,12 +59,12 @@ namespace BoligBlik.WebAPI.Controllers
             return restult;
         }
 
-        [HttpGet("{id}")]
-        public async Task<UserDTO> GetUser(Guid id)
-        {
-            var restult = await _querieService.ReadUserAsync(id);
-            return restult;
-        }
+        //[HttpGet("{id}")]
+        //public async Task<UserDTO> GetUser(Guid id)
+        //{
+        //    var restult = await _querieService.ReadUserAsync(id);
+        //    return restult;
+        //}
 
 
         [HttpGet]
@@ -76,28 +76,29 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateUser([FromBody] UserDTO request)
         {
-            if (request == null)
-            {
-                return BadRequest("Request cannot be null.");
-            }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             try
             {
+                if (request == null)
+                {
+                    return BadRequest("Request cannot be null.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 _commandService.UpdateUser(request);
                 return Ok();
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                _logger.LogError($"Concurrency conflict while updating user with request: {request}, Exception: {ex}");
+                _logger.LogError("Concurrency conflict while updating user with request", ex.Message);
                 return StatusCode(409, "Concurrency conflict occurred. Please try again.");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error updating user with request: {request}, Exception: {ex}");
+                _logger.LogError("Error updating user with request", ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
