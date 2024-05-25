@@ -104,11 +104,19 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
 
-        [HttpDelete]
-        public ActionResult DeleteUser([FromBody] UserDTO request)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(Guid id)
         {
-            _commandService.DeleteUser(request);
-            return Ok();
+            try
+            {
+                _commandService.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error deleting user with request", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

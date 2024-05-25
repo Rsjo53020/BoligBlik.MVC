@@ -40,11 +40,11 @@ namespace BoligBlik.Persistence.Repositories.Users
             }
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(Guid id)
         {
             try
             {
-                _dbContext.Remove(user);
+                _dbContext.Remove(_dbContext.Users.Where(b => b.Id == id).FirstOrDefault());
             }
             catch (SqlException ex)
             {

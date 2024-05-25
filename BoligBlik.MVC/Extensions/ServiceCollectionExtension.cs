@@ -34,14 +34,16 @@ namespace BoligBlik.MVC.Extensions
             services.AddTransient<IBookingProxy, BookingProxy>();
         }
 
-
+        /// <summary>
+        /// Creates a named client with URI form appsettings
+        /// </summary>
+        /// <param name="builder"></param>
         private static void AddHttpClients(this WebApplicationBuilder builder)
         {
 
             builder.Services.AddHttpClient("BaseClient", httpClient =>
             {
                 httpClient.BaseAddress = new Uri(builder.Configuration["BaseAddress"]);
-                //httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             });
         }
 

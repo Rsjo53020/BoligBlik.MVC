@@ -1,0 +1,46 @@
+﻿@model BoligBlik.MVC.Models.Users.UserViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Fjern bruger</h1>
+
+<h3>Er du sikker på at du vil fjerne denne bruger?</h3>
+<div>
+    <h4>UserViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="RowVersion" />
+
+    </dl>
+    <a asp-controller="User" asp-action="Delete" asp-route-id="@Model.Id" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Fjern bruger</button></a>
+
+        <a asp-action="Index">Tilbage til listen</a>
+
+</div>

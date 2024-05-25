@@ -47,24 +47,7 @@ namespace BoligBlik.Application.Features.Users.Commands
             }
         }
 
-        /// <summary>
-        /// this method Deletes a user using Unit of Work pattern
-        /// </summary>
-        public void DeleteUser(UserDTO request)
-        {
-            try
-            {
-                _uow.BeginTransaction(IsolationLevel.Serializable);
-                var user = _mapper.Map<User>(request);
-                _userRepo.DeleteUser(user);
-                _uow.Commit();
-            }
-            catch (Exception ex)
-            {
-                _uow.Rollback();
-                _logger.LogError("Error deleting user with request", ex.Message);
-            }
-        }
+       
 
         /// <summary>
         /// this method updates a user using Unit of Work pattern
@@ -82,6 +65,24 @@ namespace BoligBlik.Application.Features.Users.Commands
             {
                 _uow.Rollback();
                 _logger.LogError("Error updating user with request", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// this method Deletes a user using Unit of Work pattern
+        /// </summary>
+        public void DeleteUser(Guid id)
+        {
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                _userRepo.DeleteUser(id);
+                _uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("Error deleting user with request", ex.Message);
             }
         }
     }
