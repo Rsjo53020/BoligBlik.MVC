@@ -12,9 +12,7 @@ namespace BoligBlik.MVC.Data
         {
 
         }
-        public DbSet<AddressViewModel> AddressViewModel { get; set; } = default!;
     }
-
 
 
     // Add-Migration InitialMigration -Context ApplicationDbContext -Project Boligblik.DatabaseMigration

@@ -21,10 +21,10 @@
                                 <h4 class="mb-3">@item.Name</h4>
                                 <p class="mb-2">Pris: @item.Price</p>
                                 <p class="mb-2">Beskrivelse: @item.Description</p>
-                                <form asp-controller="Booking" asp-action="StartBooking" method="get">
-                                    <input type="hidden" name="itemId" value="@item.Id" />
-                                    <button type="submit" class="btn btn-primary text-white px-5 py-3 rounded-pill">Book</button>
-                                </form>
+                                    <form asp-controller="Booking" asp-action="StartBooking" method="get">
+                                        <input type="hidden" name="itemId" value="@item.Id" />
+                                        <button type="submit" class="btn btn-primary text-white px-5 py-3 rounded-pill">Book</button>
+                                    </form>
                             </div>
                         </div>
                     </div>

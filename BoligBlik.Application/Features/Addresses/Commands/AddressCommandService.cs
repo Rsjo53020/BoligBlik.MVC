@@ -57,9 +57,9 @@ namespace BoligBlik.Application.Features.Addresses.Commands
         {
             try
             {
-                    _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
+                _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var address = _mapper.Map<Address>(request);
-                _addressRepo.UpdateAddress(address); 
+                _addressRepo.UpdateAddress(address);
                 _unitOfWork.Commit();
             }
             catch (Exception ex)
