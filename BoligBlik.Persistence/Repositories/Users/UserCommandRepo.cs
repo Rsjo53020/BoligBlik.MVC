@@ -32,8 +32,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
-                _dbContext.Update(user);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Update(user).Property(b => b.RowVersion).OriginalValue = user.RowVersion;
             }
             catch (SqlException ex)
             {
@@ -46,7 +45,6 @@ namespace BoligBlik.Persistence.Repositories.Users
             try
             {
                 _dbContext.Remove(user);
-                _dbContext.SaveChangesAsync();
             }
             catch (SqlException ex)
             {

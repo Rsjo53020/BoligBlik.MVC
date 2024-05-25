@@ -40,7 +40,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             try
             {
                 //handle concurrency
-                _db.Entry(boardMember).Property(b => b.RowVersion).OriginalValue = boardMember.RowVersion;
+                _db.Update(boardMember).Property(b => b.RowVersion).OriginalValue = boardMember.RowVersion;
             }
             catch (SqlException ex)
             {

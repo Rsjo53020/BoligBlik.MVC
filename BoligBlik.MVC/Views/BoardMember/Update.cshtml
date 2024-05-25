@@ -1,11 +1,8 @@
 ﻿@model BoligBlik.MVC.Models.BoardMembers.BoardMemberViewModel
-
 @{
     ViewData["Title"] = "Update";
 }
-
 <h1>Ret</h1>
-
 <h4>Bestyrelsesmedlem</h4>
 @if (Model is null)
 {
@@ -25,8 +22,13 @@ else
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <p> </p>
-                <a asp-controller="BoardMember" asp-action="SetUser" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Vælg Bruger</button></a>
+            <div class="form-group">
+                <label asp-for="User.EmailAddress" class="control-label">Email</label>
+                <input asp-for="User.EmailAddress" class="form-control" />
+                <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
             <p> </p>
             <div class="form-group">
                 <input type="submit" value="Gem" class="btn btn-primary" />
@@ -37,7 +39,6 @@ else
 <div>
     <a asp-action="ReadAll">Tilbage til listen</a>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

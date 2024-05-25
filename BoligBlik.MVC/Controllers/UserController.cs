@@ -39,7 +39,7 @@ namespace BoligBlik.MVC.Controllers
         {
             var user = await _userProxy.GetUserAsync(updateUserViewModel.EmailAddress);
 
-            if (user != null)
+            if (user.Id == updateUserViewModel.Id)
             {
                 var updateUserDTO = _mapper.Map<UserDTO>(updateUserViewModel);
                 await _userProxy.UpdateUserAsync(updateUserDTO);

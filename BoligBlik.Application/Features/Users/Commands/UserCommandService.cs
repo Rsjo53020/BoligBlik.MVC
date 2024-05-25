@@ -62,7 +62,7 @@ namespace BoligBlik.Application.Features.Users.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error deleting user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error deleting user with request", ex.Message);
             }
         }
 
@@ -81,7 +81,7 @@ namespace BoligBlik.Application.Features.Users.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error updating user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error updating user with request", ex.Message);
             }
         }
     }

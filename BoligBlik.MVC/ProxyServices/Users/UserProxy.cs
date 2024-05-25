@@ -91,12 +91,6 @@ namespace BoligBlik.MVC.ProxyServices.Users
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
 
-                var currentUser = await GetUserAsync(user.EmailAddress);
-
-                if (!currentUser.RowVersion.SequenceEqual(user.RowVersion))
-                {
-                    throw new DbUpdateConcurrencyException("Concurrency conflict occurred.");
-                }
 
                 var response = await httpClient.PutAsJsonAsync("/api/User", user);
                 response.EnsureSuccessStatusCode();
