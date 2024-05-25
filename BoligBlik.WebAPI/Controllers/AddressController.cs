@@ -59,7 +59,6 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllAddresses()
         {
-
             try
             {
                 var addresses = await _addressQuerieService.ReadAllAsync();
@@ -75,16 +74,18 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressDTO request)
         {
-
-            //if (id != updateAddressDto.Id)
-            //    return BadRequest();
-
-
-            _addressCommandService.UpdateAddress(request);
-
-            return Ok(request);
+          
+            try
+            {
+                _addressCommandService.UpdateAddress(request);
+                return Ok(request);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-    
+
 
         [HttpDelete]
         public ActionResult DeleteUser([FromBody] AddressDTO request)
