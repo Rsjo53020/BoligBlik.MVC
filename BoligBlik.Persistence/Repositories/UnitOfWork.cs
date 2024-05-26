@@ -8,13 +8,11 @@ namespace BoligBlik.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly BoligBlikContext _dbContext;
         private readonly BoligBlikContext _db;
         private IDbContextTransaction _transaction;
 
-        public UnitOfWork(BoligBlikContext dbContext, BoligBlikContext db)
+        public UnitOfWork(BoligBlikContext db)
         {
-            _dbContext = dbContext;
             _db = db;
         }
         public void BeginTransaction(IsolationLevel isolationLevel)
@@ -36,6 +34,7 @@ namespace BoligBlik.Persistence.Repositories
         {
             _transaction.Rollback();
             _transaction.Dispose();
+            _db.Dispose();
         }
 
     }

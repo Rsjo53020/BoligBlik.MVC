@@ -4,6 +4,7 @@ using BoligBlik.Domain.Entities;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Persistence.Repositories.Addresses
@@ -21,18 +22,17 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         }
 
         public void CreateAddress(Address address)
-        { 
-            
+        {
 
-                try
-                {
-                    _dbContext.AddAsync(address);
-                    _dbContext.SaveChangesAsync();
-                }
-                catch (SqlException ex)
-                {
-                    _logger.LogError("Error in create in address: " + ex.Message);
-                }
+
+            try
+            {
+                _dbContext.AddAsync(address);
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError("Error in create in address: " + ex.Message);
+            }
 
         }
 
@@ -40,12 +40,17 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                _dbContext.Update(address);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Adresses.Include(a => a.Users)
+                    .Include(a => a.Bookings)
+                    .FirstOrDefaultAsync(m => m.Id == address.Id);
+
+                _dbContext.Update(address).Property(b => b.RowVersion).OriginalValue = address.RowVersion;
+                /*_dbContext.SaveChangesAsync();*/
+
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error in updateAddress", ex.Message);
+                _logger.LogError($"Error in updateAddress: {ex.Message}");
             }
         }
 

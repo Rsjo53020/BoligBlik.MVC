@@ -1,6 +1,7 @@
 ﻿using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.Common;
 using System.ComponentModel.DataAnnotations;
+using BoligBlik.MVC.DTO.Bookings;
 
 namespace BoligBlik.MVC.Models.Addresses
 {
@@ -18,6 +19,9 @@ namespace BoligBlik.MVC.Models.Addresses
 
         public string PostalCodeNumber { get; set; }
 
-        public IEnumerable<UserDTO> Users { get; set; }
+        public IReadOnlyCollection<IEnumerable<UserDTO>> Users { get ; set; }
+        //?? new List<AddressDTO>()
+        public IReadOnlyCollection<IEnumerable<BookingDTO>> Bookings { get; set; }
+
     }
 }

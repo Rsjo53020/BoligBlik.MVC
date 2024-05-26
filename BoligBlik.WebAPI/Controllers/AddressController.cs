@@ -26,10 +26,10 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
+            if (request is null) return BadRequest();
+
             try
             {
-                if (request is null)
-                    return BadRequest();
 
                 _addressCommandService.CreateAddress(request);
                 return Created();
@@ -74,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressDTO request)
         {
-          
+
             try
             {
                 _addressCommandService.UpdateAddress(request);

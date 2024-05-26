@@ -33,7 +33,7 @@ namespace BoligBlik.Persistence.Extensions
             {
                 var BoligBlikDb = p.GetService<BoligBlikContext>();
                 var dbContext = p.GetService<DbContext>();
-                return new UnitOfWork(BoligBlikDb, BoligBlikDb);
+                return new UnitOfWork(BoligBlikDb);
             });
 
             //Booking Repo

@@ -19,7 +19,10 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                var addresses = await _dbContext.Adresses.AsNoTracking().ToListAsync();
+                var addresses = await _dbContext.Adresses.AsNoTracking()
+                    .Include(a => a.Users)
+                    .Include(a => a.Bookings)
+                    .ToListAsync();
                 return addresses;
 
             }

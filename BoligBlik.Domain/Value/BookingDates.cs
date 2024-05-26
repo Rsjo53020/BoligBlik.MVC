@@ -8,6 +8,6 @@ public record BookingDates(DateTime startTime, DateTime endTime) : ValueWithVali
 {
     protected override void Validate()
     {
-        if (startTime < endTime) throw new InvalidEndTimeException("Start time must be before End time");
+        if (startTime > endTime) throw new InvalidEndTimeException("Start time must be before End time");
     }
 }
