@@ -25,11 +25,12 @@ namespace BoligBlik.WebAPI.Controllers
             _bookingCommand = bookingCommand;
             _mapper = mapper;
         }
-        [HttpPost]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(CreateBookingDTO createBookingDTO)
+
+        [HttpPost("Create")]
+        //[Consumes(MediaTypeNames.Application.Json)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PostBooking(CreateBookingDTO createBookingDTO)
         {
             try
             {
@@ -40,8 +41,8 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingDTO>> GetBooking([FromQuery] BookingDTO id)
         {

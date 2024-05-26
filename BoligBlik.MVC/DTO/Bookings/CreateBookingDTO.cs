@@ -6,7 +6,8 @@ namespace BoligBlik.MVC.DTO.Bookings
     public class CreateBookingDTO
     {
         public AddressDTO Address { get; set; }
-        public BookingItemDTO Item { get; set; }
+        public BookingItemDTO BookingItem { get; set; }
+
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }

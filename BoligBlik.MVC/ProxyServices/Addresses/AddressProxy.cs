@@ -10,7 +10,7 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
     public class AddressProxy : IAddressProxy
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILogger<AddressProxy> _logger ;
+        private readonly ILogger<AddressProxy> _logger;
 
         public AddressProxy(IHttpClientFactory httpClientFactory)
         {
@@ -77,6 +77,7 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
         }
 
+
         public async Task<bool> UpdateAddressAsync(UpdateAddressDTO updateAddressDTO)
         {
             try
@@ -131,6 +132,27 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
 
         }
+
+        public async Task<AddressDTO> GetUserAddress(Guid userId)
+        {
+            try
+            {
+                var httpClient = _httpClientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.GetAsync($"/api/Address/useraddress/{userId}");
+                response.EnsureSuccessStatusCode();
+
+                var addressDTO = await response.Content.ReadFromJsonAsync<AddressDTO>();
+
+                return addressDTO;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occurred while retrieving an address with id: {userId}, Exception: {ex.Message}");
+                throw new Exception($"Error occurred while retrieving an address data: {ex.Message}");
+            }
+        }
+
     }
 }
 

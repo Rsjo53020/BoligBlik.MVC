@@ -47,5 +47,12 @@ namespace BoligBlik.Application.Features.Addresses.Queries
             //throw new AddressNotFoundException(response.Id);
             
         }
+
+        public async Task<AddressDTO> GetUserAddress(Guid userId)
+        {
+            var response = await _addressRepo.GetUserAdress(userId);
+            var addressMap = _mapper.Map<AddressDTO>(response);
+            return addressMap;
+        }
     }
 }

@@ -51,8 +51,8 @@ namespace BoligBlik.Application.Extensions
                 new AddressMappingProfile(),
                 new BoardMemberMappingProfile(),
                 new BookingItemMappingProfile(),
-                new BookingItemMappingProfile(),
-                new UserMappingProfiles()
+                new UserMappingProfiles(),
+                new BookingMappingProfiles()
             };
 
             var mapConfig = new MapperConfiguration(mc =>
