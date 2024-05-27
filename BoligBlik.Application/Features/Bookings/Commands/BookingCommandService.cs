@@ -23,12 +23,12 @@ namespace BoligBlik.Application.Features.Bookings.Commands
         //private readonly IPaymentQuerieRepo _paymentQuerieRepo;
 
 
-        public BookingCommandService(IUnitOfWork unitOfWork, IBookingDomainService bookingDomainService, IBookingCommandRepo bookingCommandRepo, IMapper mapper)
+        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, IMapper mapper, IBookingDomainService bookingDomainService)
         {
             _unitOfWork = unitOfWork;
-            _bookingDomainService = bookingDomainService;
             _bookingCommandRepo = bookingCommandRepo;
             _mapper = mapper;
+            _bookingDomainService = bookingDomainService;
         }
 
         public void CreateBooking(CreateBookingDTO request)
@@ -38,10 +38,18 @@ namespace BoligBlik.Application.Features.Bookings.Commands
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
                 var booking = _mapper.Map<Booking>(request);
+                var comparer = _bookingDomainService.IsBookingOverlapping(booking);
+                if (comparer)
+                {
+                    var newBooking = new Booking(booking.BookingDates.startTime, booking.BookingDates.endTime,
+                        booking.Item,
+                        booking.Address);
 
-                _bookingCommandRepo.CreateBooking(booking);
 
-                _unitOfWork.Commit();
+                    _bookingCommandRepo.CreateBooking(newBooking);
+
+                    _unitOfWork.Commit();
+                }
             }
             catch (Exception ex)
             {

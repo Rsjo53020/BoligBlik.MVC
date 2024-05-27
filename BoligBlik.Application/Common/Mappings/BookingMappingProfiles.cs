@@ -9,12 +9,11 @@ namespace BoligBlik.Application.Common.Mappings
 {
     public class BookingMappingProfiles : Profile
     {
-        private readonly IBookingDomainService _bookingDomainService;
         public BookingMappingProfiles()
         {
             //CreateUserDTO
             CreateMap<CreateBookingDTO, Booking>().ConstructUsing((src, context) =>
-                    new Booking(src.StartTime, src.EndTime, context.Mapper.Map<BookingItem>(src.BookingItem), context.Mapper.Map<Address>(src.Address), _bookingDomainService))
+                    new Booking(src.StartTime, src.EndTime, context.Mapper.Map<BookingItem>(src.BookingItem), context.Mapper.Map<Address>(src.Address)))
 
                 .ForPath(dest => dest.Item, act => act
                     .MapFrom(src => src.BookingItem))

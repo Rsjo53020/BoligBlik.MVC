@@ -1,41 +1,39 @@
-﻿using BoligBlik.Domain.Value;
+﻿using System.ComponentModel.Design;
+using BoligBlik.Domain.Value;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Common.Shared;
 using BoligBlik.Domain.Exceptions;
 using BoligBlik.Entities;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace BoligBlik.Domain.Entities
 {
     public class Booking : Entity
     {
-        private IBookingDomainService _bookingDomainService;
-
         public BookingDates BookingDates { get; set; }
         public Address Address { get; set; }
         public BookingItem Item { get; set; }
 
 
-        internal Booking() : base() { }
+        internal Booking() : base()
+        {
+            
+        }
 
-        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Address address, IBookingDomainService bookingDomainService) : base()
+        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Address address) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
             this.Address = address;
-            _bookingDomainService = bookingDomainService;
 
-            ValidateBooking(_bookingDomainService);
+            ValidateBooking();
         }
 
-        private void ValidateBooking(IBookingDomainService domainService)
+        private void ValidateBooking()
         {
             ValidateTimeInput(nameof(BookingDates.startTime), BookingDates.startTime);
             ValidateTimeInput(nameof(BookingDates.endTime), BookingDates.endTime);
-
-            if (domainService.IsBookingOverlapping(this))
-            {
-                throw new BookingIsOverlappingException("Booking overlaps with existing booking");
-            }
         }
 
         public void ValidateTimeInput(string parameter, DateTime dateTime)
