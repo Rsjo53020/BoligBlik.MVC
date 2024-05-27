@@ -6,6 +6,5 @@ namespace BoligBlik.Application.Interfaces.Repositories
     {
         Task<IEnumerable<Address>> ReadAllAsync();
         Task<Address> ReadAddress(Guid id);
-        Task<Address> GetUserAdress(Guid userId);
     }
 }
