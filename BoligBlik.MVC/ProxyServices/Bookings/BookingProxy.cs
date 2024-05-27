@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using BoligBlik.MVC.DTO.Bookings;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
@@ -19,14 +20,13 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             try
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
-                var content = new StringContent(JsonSerializer.Serialize(createBookingDTO), Encoding.UTF8, "application/json");
 
-                var response = await httpClient.PostAsync("/api/Booking/Create", content);
+                var response = await httpClient.PostAsJsonAsync("/api/Booking/Create", createBookingDTO);
                 response.EnsureSuccessStatusCode();
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error occurred while creating booking", ex);
+                throw new Exception($"Error occurred while create a address data: {ex.Message}");
             }
         }
 

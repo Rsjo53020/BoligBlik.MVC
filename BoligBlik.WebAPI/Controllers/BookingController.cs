@@ -30,7 +30,7 @@ namespace BoligBlik.WebAPI.Controllers
         //[Consumes(MediaTypeNames.Application.Json)]
         //[ProducesResponseType(StatusCodes.Status201Created)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostBooking(CreateBookingDTO createBookingDTO)
+        public async Task<IActionResult> Create([FromBody] CreateBookingDTO createBookingDTO)
         {
             try
             {

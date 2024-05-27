@@ -141,7 +141,7 @@ namespace BoligBlik.MVC.Controllers
 
                 if (boardMember != null && boardMember.Id == id)
                 {
-                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(id);
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id);
                 }
                 return RedirectToAction("ReadAll", "BoardMember");
 
