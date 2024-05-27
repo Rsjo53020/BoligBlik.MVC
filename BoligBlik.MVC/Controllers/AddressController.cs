@@ -45,7 +45,8 @@ namespace BoligBlik.MVC.Controllers
 
                 return RedirectToAction(nameof(GetAllAddress));
             }
-            return View(address); ;
+
+            return new RedirectResult(nameof(GetAllAddress));// RedirectToAction(nameof(GetAllAddress)); 
         }
 
         [HttpGet]
@@ -91,7 +92,7 @@ namespace BoligBlik.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber")] UpdateAddressViewModel address)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber, RowVersion")] UpdateAddressViewModel address)
         {
 
             if (id != address.Id) return NotFound();

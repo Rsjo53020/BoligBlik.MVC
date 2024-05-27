@@ -13,11 +13,17 @@ namespace BoligBlik.Application.Features.Addresses.Commands
 {
     public class AddressCommandService : IAddressCommandService
     {
+        //Repositories
         private readonly IAddressCommandRepo _addressRepo;
+        //Validate address API.DAWA
         private readonly IAddressValidationInf _addressValidationInf;
+        //Mappers
         private readonly IMapper _mapper;
+        //UnitOfWork
         private readonly IUnitOfWork _unitOfWork;
+        //Logger
         private readonly ILogger<IAddressCommandService> _logger;
+
         public AddressCommandService(IAddressCommandRepo addressRepo, IMapper mapper, IAddressValidationInf addressValidationInf, IUnitOfWork unitOfWork, ILogger<IAddressCommandService> logger)
         {
             _addressRepo = addressRepo;
@@ -27,7 +33,11 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             _mapper = mapper;
         }
 
-
+        /// <summary>
+        /// Create an address
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="ValidationException"></exception>
         public void CreateAddress(CreateAddressDTO request)
         {
             try
@@ -36,21 +46,19 @@ namespace BoligBlik.Application.Features.Addresses.Commands
 
                 var address = _mapper.Map<Address>(request);
 
+
                 var resultat = _addressValidationInf.ValidateAddressAsync(address);
-                if (resultat != null)
-                {
+               
                     _addressRepo.CreateAddress(address);
                     _unitOfWork.Commit();
-                }
+                
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error create address with request: {@request}, Exception: {ex}", request, ex);
                 _unitOfWork.Rollback();
+                _logger.LogError("Error create address with request: {@request}, Exception: {ex}", request, ex);
                 throw new ValidationException("Validation failed on address");
-
             }
-
         }
 
         public void UpdateAddress(UpdateAddressDTO request)

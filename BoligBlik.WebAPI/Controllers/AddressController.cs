@@ -26,10 +26,10 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
+            if (request is null) return BadRequest();
+
             try
             {
-                if (request is null)
-                    return BadRequest();
 
                 _addressCommandService.CreateAddress(request);
                 return Created();
@@ -74,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressDTO request)
         {
-          
+
             try
             {
                 _addressCommandService.UpdateAddress(request);
@@ -94,24 +94,24 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("useraddress/{userId}")]
-        public async Task<ActionResult<AddressDTO>> GetUserAddress(Guid userId)
-        {
-            try
-            {
-                var addressDTO = await _addressQuerieService.GetUserAddress(userId);
-                if (addressDTO == null)
-                {
-                    return NotFound();
-                }
-                return Ok(addressDTO);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error in reading an address with id: {userId}, Exception: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpGet("useraddress/{userId}")]
+        //public async Task<ActionResult<AddressDTO>> GetUserAddress(Guid userId)
+        //{
+        //    try
+        //    {
+        //        var addressDTO = await _addressQuerieService.GetUserAddress(userId);
+        //        if (addressDTO == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(addressDTO);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error in reading an address with id: {userId}, Exception: {ex.Message}");
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
     }
 }

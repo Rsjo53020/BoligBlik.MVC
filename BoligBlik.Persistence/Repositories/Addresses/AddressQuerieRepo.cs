@@ -20,7 +20,10 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                var addresses = await _dbContext.Adresses.AsNoTracking().ToListAsync();
+                var addresses = await _dbContext.Adresses.AsNoTracking()
+                    .Include(a => a.Users)
+                    .Include(a => a.Bookings)
+                    .ToListAsync();
                 return addresses;
 
             }
@@ -52,23 +55,6 @@ namespace BoligBlik.Persistence.Repositories.Addresses
                 throw new ApplicationException("Error in ReadAddress in AddressRepository", ex);
             }
 
-        }
-        public async Task<Address> GetUserAdress(Guid userId)
-        {
-            try
-            {
-                var address = await _dbContext.Adresses
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(a => a.Users.Any(u => u.Id == userId));
-
-                return address;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error in GetAddress in AddressRepository: " + ex.Message);
-
-                throw;
-            }
         }
     }
 }

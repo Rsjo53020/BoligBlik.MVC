@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.DTO.Bookings;
 using BoligBlik.Domain.Entities;
 
@@ -16,7 +17,8 @@ namespace BoligBlik.Application.Common.Mappings
                 .ForPath(dest => dest.BookingDates.startTime, act => act
                     .MapFrom(scr => scr.StartTime))
                 .ForPath(dest => dest.BookingDates.endTime, act => act
-                    .MapFrom(scr => scr.EndTime)).ReverseMap();
+                    .MapFrom(scr => scr.EndTime))
+                .IncludeBase<BookingItemDTO ,BookingItem >().ReverseMap();
         }
     }
 }

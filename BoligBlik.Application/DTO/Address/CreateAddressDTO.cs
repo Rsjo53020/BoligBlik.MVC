@@ -17,6 +17,6 @@ namespace BoligBlik.Application.DTO.Address
         public string Floor { get; set; }
         public string DoorNumber { get; set; }
         public string City { get; set; }
-        public string PostalCode { get; set; }
+        public string PostalCodeNumber { get; set; }
     }
 }

@@ -7,6 +7,5 @@ namespace BoligBlik.Application.Interfaces.Addresses.Queries
     {
         Task<IEnumerable<AddressDTO>> ReadAllAsync();
         Task<AddressDTO> ReadAddress(Guid id);
-        Task<AddressDTO> GetUserAddress(Guid userId);
     }
 }

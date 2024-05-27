@@ -1,4 +1,5 @@
-﻿using BoligBlik.MVC.DTO.Common;
+﻿using BoligBlik.MVC.DTO.Bookings;
+using BoligBlik.MVC.DTO.Common;
 using BoligBlik.MVC.DTO.User;
 
 namespace BoligBlik.MVC.DTO.Address
@@ -13,5 +14,7 @@ namespace BoligBlik.MVC.DTO.Address
         public string City { get; set; }
 
         public IEnumerable<UserDTO> Users { get; set; }
+        public IEnumerable<BookingDTO> Bookings { get; set; }
+
     }
 }
