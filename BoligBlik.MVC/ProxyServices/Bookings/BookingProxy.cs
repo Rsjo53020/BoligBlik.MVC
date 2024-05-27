@@ -21,12 +21,12 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.PostAsJsonAsync("/api/Booking/Create", createBookingDTO);
+                var response = await httpClient.PostAsJsonAsync("/api/Booking", createBookingDTO);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error occurred while create a address data: {ex.Message}");
+                throw new Exception($"Error occurred while create a booking data: {ex.Message}");
             }
         }
 

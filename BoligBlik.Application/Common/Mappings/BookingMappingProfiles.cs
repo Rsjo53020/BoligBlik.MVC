@@ -18,7 +18,7 @@ namespace BoligBlik.Application.Common.Mappings
                     .MapFrom(scr => scr.StartTime))
                 .ForPath(dest => dest.BookingDates.endTime, act => act
                     .MapFrom(scr => scr.EndTime))
-                .IncludeBase<BookingItemDTO ,BookingItem >().ReverseMap();
+                .ReverseMap();
         }
     }
 }

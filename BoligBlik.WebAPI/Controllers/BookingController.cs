@@ -26,7 +26,7 @@ namespace BoligBlik.WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         //[Consumes(MediaTypeNames.Application.Json)]
         //[ProducesResponseType(StatusCodes.Status201Created)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
