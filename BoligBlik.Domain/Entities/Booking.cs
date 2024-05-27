@@ -8,32 +8,31 @@ namespace BoligBlik.Domain.Entities
 {
     public class Booking : Entity
     {
-        private readonly IBookingDomainService _bookingDomainService;
+        private IBookingDomainService _bookingDomainService;
 
         public BookingDates BookingDates { get; set; }
         public Address Address { get; set; }
         public BookingItem Item { get; set; }
 
+
         internal Booking() : base() { }
 
-        public Booking(BookingDates bookingDates, BookingItem item, Address address, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
+        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Address address, IBookingDomainService bookingDomainService) : base()
         {
-            this.BookingDates = bookingDates;
-
+            BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
             this.Address = address;
             _bookingDomainService = bookingDomainService;
-            this.RowVersion = RowVersion;
 
-            ValidateBooking();
+            ValidateBooking(_bookingDomainService);
         }
 
-        private void ValidateBooking()
+        private void ValidateBooking(IBookingDomainService domainService)
         {
             ValidateTimeInput(nameof(BookingDates.startTime), BookingDates.startTime);
             ValidateTimeInput(nameof(BookingDates.endTime), BookingDates.endTime);
 
-            if (_bookingDomainService.IsBookingOverlapping(this))
+            if (domainService.IsBookingOverlapping(this))
             {
                 throw new BookingIsOverlappingException("Booking overlaps with existing booking");
             }
@@ -45,7 +44,7 @@ namespace BoligBlik.Domain.Entities
             {
                 throw new TimeNotSetException($"{parameter} is not set");
             }
-            if (dateTime < _bookingDomainService.NowTime())
+            if (dateTime < DateTime.Now)
             {
                 throw new TimeInPastException($"{parameter} is not set in the future");
             }

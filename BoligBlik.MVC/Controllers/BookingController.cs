@@ -10,6 +10,7 @@ using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -21,7 +22,7 @@ namespace BoligBlik.MVC.Controllers
         private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
 
-        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IAddressProxy addressProxy ,IUserProxy userProxy,
+        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IAddressProxy addressProxy, IUserProxy userProxy,
             IMapper mapper)
         {
             _bookingItemsProxy = bookingItemsProxy;
@@ -57,9 +58,12 @@ namespace BoligBlik.MVC.Controllers
         {
             var user = await _UserProxy.GetUserAsync(User.Identity.Name);
 
-            var address = await _addressProxy.GetUserAddress(user.Id);
+            var allAddress = await _addressProxy.GetAllAddressAsync();
 
-            bookingViewModel.Address = _mapper.Map<AddressViewModel>(address);
+            var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+
+            var userAdressDTO = _mapper.Map<AddressViewModel>(userAddress);
+            bookingViewModel.Address = userAdressDTO;
 
             try
             {
