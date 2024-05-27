@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using System.Security.Cryptography.X509Certificates;
+using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,7 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-               var response = await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                var response = await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
                 if (response == null)
                 {
                     new Exception("der findes ingen address med et id");
@@ -52,6 +53,24 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             {
                 _logger.LogError("Error in ReadAddress in AddressRepository " + ex.Message);
                 throw new ApplicationException("Error in ReadAddress in AddressRepository", ex);
+            }
+
+        }
+        public async Task<Address> GetUserAdress(Guid userId)
+        {
+            try
+            {
+                var address = await _dbContext.Adresses
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(a => a.Users.Any(u => u.Id == userId));
+
+                return address;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in GetAddress in AddressRepository: " + ex.Message);
+
+                throw;
             }
         }
     }

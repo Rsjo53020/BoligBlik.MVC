@@ -94,6 +94,24 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("useraddress/{userId}")]
+        public async Task<ActionResult<AddressDTO>> GetUserAddress(Guid userId)
+        {
+            try
+            {
+                var addressDTO = await _addressQuerieService.GetUserAddress(userId);
+                if (addressDTO == null)
+                {
+                    return NotFound();
+                }
+                return Ok(addressDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in reading an address with id: {userId}, Exception: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }

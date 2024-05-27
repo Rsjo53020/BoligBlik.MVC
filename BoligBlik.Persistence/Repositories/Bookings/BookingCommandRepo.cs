@@ -15,7 +15,7 @@ namespace BoligBlik.Persistence.Repositories
         {
             _dbContext = dbContext;
         }
-        public void Create(Booking booking)
+        public void CreateBooking(Booking booking)
         {
             try
             {

@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using BoligBlik.MVC.DTO.BookingItems;
 using BoligBlik.MVC.DTO.Bookings;
+using BoligBlik.MVC.Models.Addresses;
 using BoligBlik.MVC.Models.BookingItems;
 using BoligBlik.MVC.Models.Bookings;
 using BoligBlik.MVC.Models.Users;
+using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
+using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
@@ -13,12 +17,17 @@ namespace BoligBlik.MVC.Controllers
     {
         private readonly IBookingItemsProxy _bookingItemsProxy;
         private readonly IBookingProxy _bookingProxy;
+        private readonly IUserProxy _UserProxy;
+        private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
 
-        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IMapper mapper)
+        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IAddressProxy addressProxy ,IUserProxy userProxy,
+            IMapper mapper)
         {
             _bookingItemsProxy = bookingItemsProxy;
             _bookingProxy = bookingProxy;
+            _UserProxy = userProxy;
+            _addressProxy = addressProxy;
             _mapper = mapper;
         }
 
@@ -29,21 +38,30 @@ namespace BoligBlik.MVC.Controllers
             return View(userViewModel);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> StartBooking(Guid itemId)
         {
-            var bookingItem = await _bookingItemsProxy.GetBookingItem(itemId);
-            var bookingViewModel = new CreateBookingViewModel
+            var bookingItemViewModel = await _bookingItemsProxy.GetBookingItem(itemId);
+
+            CreateBookingViewModel bookingViewModel = new CreateBookingViewModel
             {
-                ItemId = bookingItem.Id
+                BookingItem = _mapper.Map<BookingItemViewModel>(bookingItemViewModel)
             };
+
             return View(bookingViewModel);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateBooking(CreateBookingViewModel bookingViewModel)
         {
-            if (ModelState.IsValid)
+            var user = await _UserProxy.GetUserAsync(User.Identity.Name);
+
+            var address = await _addressProxy.GetUserAddress(user.Id);
+
+            bookingViewModel.Address = _mapper.Map<AddressViewModel>(address);
+
+            try
             {
                 var createBookingDTO = _mapper.Map<CreateBookingDTO>(bookingViewModel);
 
@@ -51,45 +69,11 @@ namespace BoligBlik.MVC.Controllers
 
                 return RedirectToAction("NewBookingIndex");
             }
-            else
+            catch (Exception ex)
             {
+                ModelState.AddModelError("", $"An error occurred while creating the booking: {ex.Message}");
                 return View(bookingViewModel);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpGet]
-        //public async Task<IActionResult> StartBooking(Guid itemId)
-        //{
-        //    var bookingItem = await _bookingItemsProxy.GetBookingItem(itemId);
-        //    var bookingViewModel = _mapper.Map<CreateBookingViewModel>(bookingItem);
-        //    return View(bookingViewModel);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> StartBooking(BookingViewModel bookingViewModel)
-        //{
-        //    var createBookingDTO = _mapper.Map<CreateBookingDTO>(bookingViewModel);
-
-        //    await _bookingProxy.CreateBooking(createBookingDTO);
-
-        //    return RedirectToAction("NewBookingIndex");
-        //}
-
-
-        //public IActionResult YoursBookings()
-        //{
-        //    return View();
-        //}
     }
 }

@@ -21,7 +21,7 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
                 var httpClient = _clientFactory.CreateClient("BaseClient");
                 var content = new StringContent(JsonSerializer.Serialize(createBookingDTO), Encoding.UTF8, "application/json");
 
-                var response = await httpClient.PostAsync("api/Bookings/Create", content);
+                var response = await httpClient.PostAsync("/api/Booking/Create", content);
                 response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
@@ -29,5 +29,6 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
                 throw new Exception("Error occurred while creating booking", ex);
             }
         }
+
     }
 }
