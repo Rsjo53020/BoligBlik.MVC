@@ -21,8 +21,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             try
             {
                 var addresses = await _dbContext.Adresses.AsNoTracking()
-                    //.Include(a => a.Users)
-                    //.Include(a => a.Bookings)
+                    .Include(a => a.Users)
+                    .Include(a => a.Bookings)
                     .ToListAsync();
                 return addresses;
 
@@ -40,7 +40,10 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                var response = await _dbContext.Adresses.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                var response = await _dbContext.Adresses.AsNoTracking()
+                    .Include(a => a.Users)
+                    .Include(a => a.Bookings)
+                    .FirstOrDefaultAsync(b => b.Id == id);
                 if (response == null)
                 {
                     new Exception("der findes ingen address med et id");
@@ -54,7 +57,6 @@ namespace BoligBlik.Persistence.Repositories.Addresses
                 _logger.LogError("Error in ReadAddress in AddressRepository " + ex.Message);
                 throw new ApplicationException("Error in ReadAddress in AddressRepository", ex);
             }
-
         }
     }
 }

@@ -28,7 +28,7 @@ namespace BoligBlik.Infrastructure.Services.Addresses
 
             var client = _httpClientFactory.CreateClient("AddressValidationClient");
             var requestUri1 = $"https://api.dataforsyningen.dk/datavask/adresser?betegnelse={dawaAddress}";
-            var requestUri = $"https://api.dataforsyningen.dk/adresser?vejnavn={address.Street}&husnr={address.HouseNumber}&etage={address.Floor}&dør={address.DoorNumber}&status=1&struktur=mini";
+            //var requestUri = $"https://api.dataforsyningen.dk/adresser?vejnavn={address.Street}&husnr={address.HouseNumber}&etage={address.Floor}&dør={address.DoorNumber}&status=1&struktur=mini";
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri1);
 
             var response = await client.SendAsync(request);

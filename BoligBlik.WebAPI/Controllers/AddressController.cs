@@ -47,7 +47,6 @@ namespace BoligBlik.WebAPI.Controllers
             try
             {
                 return await _addressQuerieService.ReadAddress(id);
-                Created();
             }
             catch (Exception ex)
             {
