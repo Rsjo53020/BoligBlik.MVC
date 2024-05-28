@@ -17,11 +17,6 @@ namespace BoligBlik.Application.Features.BookingItems.Queries
             _bookingItemsRepo = bookingItemsRepo;
             _mapper = mapper;
         }
-        public async Task<BookingItemDTO> ReadBookingItemAsync(string name)
-        {
-            var bookingItem = await _bookingItemsRepo.ReadBookingItemsAsync(name);
-            return _mapper.Map<BookingItemDTO>(bookingItem);
-        }
         public async Task<IEnumerable<BookingItemDTO>> ReadAllBookingItemsAsync()
         {
             var bookingItems = await _bookingItemsRepo.ReadAllBookingItemsAsync();

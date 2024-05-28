@@ -21,7 +21,6 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             try
             {
                 _dbContext.AddAsync(bookingItem);
-                _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -33,8 +32,7 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
         {
             try
             {
-                _dbContext.Update(bookingItem);
-                _dbContext.SaveChanges();
+                _dbContext.Update(bookingItem).Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion; ;
             }
             catch (Exception ex)
             {
@@ -42,12 +40,11 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             }
         }
 
-        public void DeleteBookingItem(BookingItem bookingItem)
+        public void DeleteBookingItem(Guid id)
         {
             try
             {
-                _dbContext.Remove(bookingItem);
-                _dbContext.SaveChanges();
+                _dbContext.Remove(_dbContext.BookingItems.Where(x => x.Id == id).FirstOrDefault());
             }
             catch (Exception ex)
             {
