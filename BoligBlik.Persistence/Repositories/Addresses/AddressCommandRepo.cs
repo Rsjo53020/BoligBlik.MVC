@@ -23,8 +23,6 @@ namespace BoligBlik.Persistence.Repositories.Addresses
 
         public void CreateAddress(Address address)
         {
-
-
             try
             {
                 _dbContext.AddAsync(address);

@@ -60,10 +60,11 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occured while reading all addresses", ex);
+                _logger.LogError("An error occurred while reading all addresses", ex);
                 return View(new List<AddressViewModel>());
             }
         }
+
         public async Task<IActionResult> Details(Guid id)
         {
             if (id == null) return NotFound();
@@ -80,14 +81,14 @@ namespace BoligBlik.MVC.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            if (id == null) return NotFound();
-
+            if (id == Guid.Empty) return NotFound();
 
             var address = await _addressProxy.GetAddressAsync(id);
-            var response = _mapper.Map<AddressViewModel>(address);
             if (address == null) return NotFound();
 
+            var response = _mapper.Map<AddressViewModel>(address);
             return View(response);
+
         }
 
         [HttpPost]
@@ -96,24 +97,32 @@ namespace BoligBlik.MVC.Controllers
         {
 
             if (id != address.Id) return NotFound();
+
             //Ret ! når der er hele modellen med = book + user
-            if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
+            // {
+            //     foreach (var error in ModelState)
+            //     {
+            //         _logger.LogError($"Property: {error.Key} Error: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
+            //     }
+            // }
+
+
+            try
             {
-                try
-                {
-                    var dto = _mapper.Map<UpdateAddressDTO>(address);
-                    var response = await _addressProxy.UpdateAddressAsync(dto);
-
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    //if (!AddressExists(address.Id)) return NotFound();
-
-                    _logger.LogError("An error occured while updating a address");
-                }
+                var dto = _mapper.Map<UpdateAddressDTO>(address);
+                var response = await _addressProxy.UpdateAddressAsync(dto);
                 return RedirectToAction(nameof(GetAllAddress));
+
             }
-            return View(address);
+            catch (DbUpdateConcurrencyException)
+            {
+                //if (!AddressExists(address.Id)) return NotFound();
+                _logger.LogError("An error occurred while updating an address");
+                ModelState.AddModelError(string.Empty, "Unable to save changes. The address was updated by another user.");
+            }
+            return RedirectToAction(nameof(GetAllAddress));
+
 
         }
 

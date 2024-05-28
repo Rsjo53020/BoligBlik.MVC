@@ -4,6 +4,7 @@ using AutoMapper;
 using BoligBlik.Application.Common.Exceptions;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
+using System.Net;
 
 namespace BoligBlik.Application.Features.Addresses.Queries
 {
@@ -22,16 +23,22 @@ namespace BoligBlik.Application.Features.Addresses.Queries
         {
             try
             {
+                //var bookingItems = await _bookingItemsRepo.ReadAllBookingItemsAsync();
+                //return _mapper.Map<IEnumerable<BookingItemDTO>>(bookingItems);
+
                 var addresses = await _addressRepo.ReadAllAsync();
-                List<AddressDTO> addressList = new List<AddressDTO>();
+                
+                var dtoList = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
 
-                foreach (var address in addresses)
-                {
-                    var dto = _mapper.Map<AddressDTO>(address);
-                    addressList.Add(dto);
-                }
+                //List<AddressDTO> addressList = new List<AddressDTO>();
 
-                return addressList;
+                //foreach (var address in addresses)
+                //{
+                //    var dto = _mapper.Map<AddressDTO>(address);
+                //    addressList.Add(dto);
+                //}
+
+                return dtoList;
             }
             catch (Exception ex)
             {

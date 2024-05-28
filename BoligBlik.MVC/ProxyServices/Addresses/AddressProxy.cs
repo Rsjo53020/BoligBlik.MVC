@@ -45,9 +45,7 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
                 var response = await httpClient.GetAsync("api/address");
                 response.EnsureSuccessStatusCode();
-
-
-                var address = await response.Content.ReadFromJsonAsync<List<AddressDTO>>();
+                var address = await response.Content.ReadFromJsonAsync<IEnumerable<AddressDTO>>();
                 return address ?? new List<AddressDTO>();
             }
             catch (HttpRequestException httpRequestException)

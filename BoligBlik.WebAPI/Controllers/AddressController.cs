@@ -47,7 +47,6 @@ namespace BoligBlik.WebAPI.Controllers
             try
             {
                 return await _addressQuerieService.ReadAddress(id);
-                Created();
             }
             catch (Exception ex)
             {
@@ -57,17 +56,17 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAllAddresses()
+        public async Task<IEnumerable<AddressDTO>> GetAllAddresses()
         {
             try
             {
-                var addresses = await _addressQuerieService.ReadAllAsync();
-                return Ok(addresses);
+                return await _addressQuerieService.ReadAllAsync();
+               
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error in reading all addresses at {DateTime.UtcNow}, Exception: {ex}");
-                return BadRequest(new { message = ex.Message });
+                return new List<AddressDTO>();
             }
         }
 
