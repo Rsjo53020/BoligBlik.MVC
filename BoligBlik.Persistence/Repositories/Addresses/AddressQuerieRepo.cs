@@ -20,7 +20,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                var addresses = await _dbContext.Adresses.AsNoTracking()
+                var addresses = await _dbContext.Adresses
+                    .AsNoTracking()
                     .Include(a => a.Users)
                     .Include(a => a.Bookings)
                     .ToListAsync();
@@ -41,8 +42,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             try
             {
                 var response = await _dbContext.Adresses.AsNoTracking()
-                    .Include(a => a.Users)
-                    .Include(a => a.Bookings)
+                    //.Include(a => a.Users)
+                    //.Include(a => a.Bookings)
                     .FirstOrDefaultAsync(b => b.Id == id);
                 if (response == null)
                 {
