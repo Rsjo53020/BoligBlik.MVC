@@ -1,32 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.DTO.Item;
+﻿using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json.Serialization;
+using BoligBlik.Application.Common.Entity;
+using BoligBlik.Application.DTO.Address;
+using BoligBlik.Application.DTO.BookingItems;
+using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.DTO.Bookings
 {
-    public class BookingDTO
+    public class BookingDTO : EntityDTO
     {
-        [Required]
-        public Guid Id { get; set; }
-        public DateOnly creationDate { get; set; }
-        [Required]
-        public  DateTime StartTime { get; set; }
-        [Required]
+        public BookingItemDTO Item { get; set; }
+        public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public bool Approved { get; set; }
-
-        [Required]
-        public Guid ItemId { get; set; }
-
-        public IEnumerable<ItemDTO> Item { get; set; }
-
-        [Required]
-        public Guid AddressId { get; set; }
     }
-
-    
 }

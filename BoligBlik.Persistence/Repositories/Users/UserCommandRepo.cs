@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoligBlik.Application.Interfaces.Users.Commands;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
@@ -25,7 +20,6 @@ namespace BoligBlik.Persistence.Repositories.Users
             try
             {
                 _dbContext.AddAsync(user);
-                _dbContext.SaveChangesAsync();
             }
             catch (SqlException ex)
             {
@@ -38,8 +32,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
-                _dbContext.Update(user);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Update(user).Property(b => b.RowVersion).OriginalValue = user.RowVersion;
             }
             catch (SqlException ex)
             {
@@ -47,12 +40,11 @@ namespace BoligBlik.Persistence.Repositories.Users
             }
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(Guid id)
         {
             try
             {
-                _dbContext.Remove(user);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Remove(_dbContext.Users.Where(b => b.Id == id).FirstOrDefault());
             }
             catch (SqlException ex)
             {

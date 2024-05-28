@@ -1,7 +1,7 @@
 using BoligBlik.MVC.Data;
+using BoligBlik.MVC.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 
 namespace BoligBlik.MVC
@@ -11,10 +11,14 @@ namespace BoligBlik.MVC
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("SkafteFrontEndLocal") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
             // Add services to the container -- move to a ServiceExtension.cs
-            var connectionString = builder.Configuration
-                .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+                //.GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                
+                //.GetConnectionString("SkafteFrontEndLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 
             // move to a ServiceExtension.cs
             builder.Services.AddDbContext<ApplicationDbContext>(
@@ -28,6 +32,10 @@ namespace BoligBlik.MVC
                     options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.AddFrontEnd();
+
+
 
             //// move to a ServiceExtension.cs
             //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -45,6 +53,7 @@ namespace BoligBlik.MVC
 
             builder.Services.AddControllersWithViews();
 
+
             // move to a ServiceExtension.cs
             builder.Services.AddAuthorization(options => options
                 .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));
@@ -54,6 +63,13 @@ namespace BoligBlik.MVC
             // Add more claims as necessary
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
+            }
+
+            var baseAddress = Environment.GetEnvironmentVariable("BaseAddress");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

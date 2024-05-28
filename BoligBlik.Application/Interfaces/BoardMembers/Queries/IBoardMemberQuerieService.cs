@@ -4,7 +4,7 @@ namespace BoligBlik.Application.Interfaces.BoardMembers.Queries
 {
     public interface IBoardMemberQuerieService
     {
-        public BoardMemberDTO ReadBoardMember(string title);
-        public IEnumerable<BoardMemberDTO> ReadAllBoardMembers();
+        public Task<BoardMemberDTO> ReadBoardMemberAsync(Guid id);
+        public Task<IEnumerable<BoardMemberDTO>> ReadAllBoardMembersAsync();
     }
 }

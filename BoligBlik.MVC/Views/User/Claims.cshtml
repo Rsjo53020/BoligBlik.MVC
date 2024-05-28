@@ -1,0 +1,44 @@
+﻿@model BoligBlik.MVC.Models.Users.UserViewModel
+
+@{
+    ViewData["Title"] = "Claims";
+}
+
+<h1>Rettigheder</h1>
+
+<h3>Vælg en rettighed til denne bruger</h3>
+<div>
+    <h4>UserViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+    </dl>
+    
+    <form method="post" asp-action="Claims">
+        <input type="submit" value="Vælg" class="btn btn-primary"/> |
+        <a asp-action="GetAll">Tilbage til listen</a>
+    </form>
+</div>

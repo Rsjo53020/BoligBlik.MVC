@@ -19,12 +19,18 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IBookingCommandService _bookingCommand;
         private readonly IBookingQuerieService _bookingQuerie;
 
+        public BookingController(IBookingQuerieService bookingQuerie, IBookingCommandService bookingCommand, IMapper mapper)
+        {
+            _bookingQuerie = bookingQuerie;
+            _bookingCommand = bookingCommand;
+            _mapper = mapper;
+        }
 
         [HttpPost]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(CreateBookingDTO createBookingDTO)
+        //[Consumes(MediaTypeNames.Application.Json)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody] CreateBookingDTO createBookingDTO)
         {
             try
             {
@@ -35,8 +41,8 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<BookingDTO>> GetBooking([FromQuery] BookingDTO id)
         {
@@ -52,13 +58,13 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
 
-        [HttpGet("All")]
-        public ActionResult<IEnumerable<BookingDTO>> GetAllBoardMembers()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetAllBookingsAsync()
         {
             try
             {
-                _bookingQuerie.ReadAllBooking();
-                return Ok();
+                var result = await _bookingQuerie.ReadAllBooking();
+                return Ok(result);
             }
             catch (Exception e)
             {
@@ -68,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] UpdateBookingDTO updateBookingDto)
+        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] BookingDTO updateBookingDto)
         {
             if (id != updateBookingDto.Id)
             {
@@ -81,7 +87,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteBooking([FromBody] DeleteBookingDTO deleteBookingDto)
+        public async Task<IActionResult> DeleteBooking([FromBody] BookingDTO deleteBookingDto)
         {
             try
             {
@@ -92,9 +98,7 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-
         }
-
     }
 }
 

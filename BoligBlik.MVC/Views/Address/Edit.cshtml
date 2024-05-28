@@ -1,0 +1,152 @@
+﻿@model BoligBlik.MVC.Models.Addresses.AddressViewModel
+
+@{
+    ViewData["Title"] = "Rediger Adresse";
+
+    // var properties = typeof(@model).GetProperties()
+    //      .Where(p => p.Name != "Id" && p.Name != "RowVersion" && p.Name != "Bookings" && p.Name != "Users");
+}
+
+<h1 class="my-4">Rediger Adresse</h1>
+
+<div class="container">
+    <h4 class="mb-3">Adresse Detaljer</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                @* @foreach (var property in properties)
+                {
+                    <div class="mb-3">
+                        <label asp-for="@Model.City" class="form-label"></label>
+                        <input asp-for="@Model.City" class="form-control" placeholder="Indtast @Model.City  />
+                        <span asp-validation-for="@Model.City" class="text-danger"></span>
+                    </div>
+                    <label asp-for="StartTime" class="form-label">Starttidspunkt:</label>
+                    <input asp-for="StartTime" placeholder="Starttidspunkt" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                } *@
+                <div class="form-group">
+                    <label asp-for="Street" class="control-label"></label>
+                    <input asp-for="Street" class="form-control" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HouseNumber" class="control-label"></label>
+                    <input asp-for="HouseNumber" class="form-control" />
+                    <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Floor" class="control-label"></label>
+                    <input asp-for="Floor" class="form-control" />
+                    <span asp-validation-for="Floor" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DoorNumber" class="control-label"></label>
+                    <input asp-for="DoorNumber" class="form-control" />
+                    <span asp-validation-for="DoorNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PostalCodeNumber" class="control-label"></label>
+                    <input asp-for="PostalCodeNumber" class="form-control" />
+                    <span asp-validation-for="PostalCodeNumber" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="RowVersion"/>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <input type="submit" value="Gem" class="btn btn-primary"/>
+                    <a asp-action="GetAllAddress" class="btn btn-secondary">Tilbage</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr />
+    <h4>Bookinger</h4>
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Navn</th>
+                <th>Start</th>
+                <th>Slut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model.Bookings)
+            {
+                <tr>
+                    <td>@booking.Item.Name</td>
+                    <td>@booking.StartTime.ToString("dd-MM-yyyy")</td>
+                    <td>@booking.EndTime.ToString("dd-MM-yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+    <h4>Brugere</h4>
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Fornavn</th>
+                <th>Efternavn</th>
+                <th>Email</th>
+                <th>Telefon nr.</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.EmailAddress</td>
+                    <td>@user.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+    <h4>Tilføj Ny Bruger</h4>
+@*     <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="AddUser">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label asp-for="NewUser.UserName" class="form-label"></label>
+                    <input asp-for="NewUser.UserName" class="form-control" placeholder="Indtast brugernavn" />
+                    <span asp-validation-for="NewUser.UserName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="NewUser.Email" class="form-label"></label>
+                    <input asp-for="NewUser.Email" class="form-control" placeholder="Indtast email" />
+                    <span asp-validation-for="NewUser.Email" class="text-danger"></span>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <input type="submit" value="Tilføj Bruger" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div> *@
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

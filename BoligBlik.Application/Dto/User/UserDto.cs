@@ -1,13 +1,10 @@
-﻿using BoligBlik.Application.DTO.Adress;
-using BoligBlik.Domain.Value;
+﻿using BoligBlik.Application.Common.Entity;
+using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.DTO.User
 {
-    // DTO for User
-    public class UserDTO
+    public class UserDTO : EntityDTO
     {
-        public Guid Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -15,11 +12,5 @@ namespace BoligBlik.Application.DTO.User
         public string PhoneNumber { get; set; }
 
         public string EmailAddress { get; set; }
-
-        public string Role { get; set; }
-
-        public string FormerRole { get; set; }
-
-        public AddressDTO Address { get; set; }
     }
 }

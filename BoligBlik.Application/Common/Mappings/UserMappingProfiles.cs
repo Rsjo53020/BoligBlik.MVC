@@ -12,21 +12,11 @@ namespace BoligBlik.Application.Common.Mappings
         /// </summary>
         public UserMappingProfiles()
         {
-            //CreateUserDTO
-            CreateMap<CreateUserDTO, User>();
-            CreateMap<User, CreateUserDTO>();
+            // CreateUserDTO
+            CreateMap<CreateUserDTO, User>().ReverseMap();
 
-            //DeleteUserDTO
-            CreateMap<DeleteUserDTO, User>();
-            CreateMap<User, DeleteUserDTO>();
-
-            //UpdateUserDTO
-            CreateMap<UpdateBoardMemberDTO, User>();
-            CreateMap<User, UpdateBoardMemberDTO>();
-
-            //UserDTO
-            CreateMap<UserDTO, User>();
-            CreateMap<User, UserDTO>();
+            // UserDTO
+            CreateMap<UserDTO, User>().ReverseMap();
         }
     }
 }

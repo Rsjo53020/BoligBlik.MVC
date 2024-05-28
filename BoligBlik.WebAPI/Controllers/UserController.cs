@@ -1,7 +1,10 @@
-﻿using BoligBlik.Application.DTO.User;
+﻿using AutoMapper;
+using BoligBlik.Application.DTO.User;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Application.Interfaces.Users.Queries;
+using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoligBlik.WebAPI.Controllers
 {
@@ -11,26 +14,58 @@ namespace BoligBlik.WebAPI.Controllers
     {
         private readonly IUserCommandService _commandService;
         private readonly IUserQuerieService _querieService;
+        private readonly ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
 
         public UserController(IUserCommandService userCommandService,
-            IUserQuerieService userQuerieService)
+            IUserQuerieService userQuerieService, IMapper mapper)
         {
             _commandService = userCommandService;
             _querieService = userQuerieService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public ActionResult PostUser([FromBody] CreateUserDTO request)
+        public IActionResult PostUser([FromBody] CreateUserDTO request)
         {
-            _commandService.CreateUser(request);
-            return Created();
+            try
+            {
+                if (request != null)
+                {
+
+                    _commandService.CreateUser(request);
+                    return Created();
+
+                }
+                else
+                {
+                    return BadRequest("Somethingwent wrong");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError($"Error creating user with request: {request}, Exception: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
+
+
         }
 
         [HttpGet("{email}")]
         public async Task<UserDTO> GetUser(string email)
         {
-            return await _querieService.ReadUserAsync(email);
+            var restult = await _querieService.ReadUserAsync(email);
+            return restult;
         }
+
+        //[HttpGet("{id}")]
+        //public async Task<UserDTO> GetUser(Guid id)
+        //{
+        //    var restult = await _querieService.ReadUserAsync(id);
+        //    return restult;
+        //}
+
 
         [HttpGet]
         public Task<IEnumerable<UserDTO>> GetAllUsers()
@@ -39,17 +74,49 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateUser([FromBody] UpdateUserDTO request)
+        public ActionResult UpdateUser([FromBody] UserDTO request)
         {
-            _commandService.UpdateUser(request);
-            return Ok();
+
+            try
+            {
+                if (request == null)
+                {
+                    return BadRequest("Request cannot be null.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                _commandService.UpdateUser(request);
+                return Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                _logger.LogError("Concurrency conflict while updating user with request", ex.Message);
+                return StatusCode(409, "Concurrency conflict occurred. Please try again.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error updating user with request", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        [HttpDelete]
-        public ActionResult DeleteUser([FromBody] DeleteUserDTO request)
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(Guid id)
         {
-            _commandService.DeleteUser(request);
-            return Ok();
+            try
+            {
+                _commandService.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error deleting user with request", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

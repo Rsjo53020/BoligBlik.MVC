@@ -1,0 +1,46 @@
+﻿@model BoligBlik.MVC.Models.BoardMembers.BoardMemberViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+<h1>Ret</h1>
+<h4>Bestyrelsesmedlem</h4>
+@if (Model is null)
+{
+    <h1>Der er ikke fundet et bestyrelsesmedlem</h1>
+}
+else
+{
+    <form method="post">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Titel</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Beskrivelse</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.EmailAddress" class="control-label">Email</label>
+                <input asp-for="User.EmailAddress" class="form-control" />
+                <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
+            <p> </p>
+            <div class="form-group">
+                <input type="submit" value="Gem" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+}
+<div>
+    <a asp-action="ReadAll">Tilbage til listen</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

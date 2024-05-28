@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoligBlik.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,7 @@ namespace BoligBlik.Application.Interfaces.Repositories
 {
     public interface IBoardMemberQuerieRepo
     {
-        Domain.Entities.BoardMember ReadBoardMember(string title);
-        IEnumerable<Domain.Entities.BoardMember> ReadAllBoardMembers();
-
+        Task<BoardMember> ReadBoardMemberAsync(Guid id);
+        Task<IEnumerable<BoardMember>> ReadAllBoardMembersAsync();
     }
 }

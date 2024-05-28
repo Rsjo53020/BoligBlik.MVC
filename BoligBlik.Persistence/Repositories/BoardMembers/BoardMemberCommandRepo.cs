@@ -3,12 +3,8 @@ using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BoligBlik.Persistence.Repositories.BoardMembers
 {
@@ -39,11 +35,12 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// updates a boardmember in database
         /// </summary>
         /// <param name="boardMember"></param>
-        public void UpdateBoardMemberParameters(BoardMember boardMember)
+        public void UpdateBoardMember(BoardMember boardMember)
         {
             try
             {
-                _db.Update(boardMember);
+                //handle concurrency
+                _db.Update(boardMember).Property(b => b.RowVersion).OriginalValue = boardMember.RowVersion;
             }
             catch (SqlException ex)
             {
@@ -55,31 +52,15 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void DeleteBoardMember(BoardMember boardMember)
+        public void DeleteBoardMember(Guid id)
         {
             try
             {
-                _db.Remove(boardMember);
+                _db.Remove(_db.BoardMembers.Where(b => b.Id == id).FirstOrDefault());
             }
             catch (SqlException ex)
             {
                 _logger.LogError("Error in Delete in Boardmember: " + ex.Message);
-            }
-        }
-        /// <summary>
-        /// adds a user to a boardmember in database
-        /// </summary>
-        /// <param name="boardMember"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public void AddUserToBoardMember(BoardMember boardMember)
-        {
-            try
-            {
-                _db.Update(boardMember);
-            }
-            catch (SqlException ex)
-            {
-                _logger.LogError("Error in AddUser in Boardmember: " + ex.Message);
             }
         }
     }

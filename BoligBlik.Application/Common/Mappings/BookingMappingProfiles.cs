@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.DTO.Bookings;
+using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Entities;
+using BoligBlik.Entities;
 
 namespace BoligBlik.Application.Common.Mappings
 {
@@ -9,20 +12,29 @@ namespace BoligBlik.Application.Common.Mappings
         public BookingMappingProfiles()
         {
             //CreateUserDTO
-            CreateMap<CreateBookingDTO, Booking>();
-            CreateMap<Booking, CreateBookingDTO>();
+            CreateMap<CreateBookingDTO, Booking>().ConstructUsing((src, context) =>
+                    new Booking(src.StartTime, src.EndTime, context.Mapper
+                        .Map<BookingItem>(src.Item)))
+                        
 
-            //DeleteBookingDTO
-            CreateMap<DeleteBookingDTO, Booking>();
-            CreateMap<Booking, DeleteBookingDTO>();
+                .ForPath(dest => dest.Item, act => act
+                    .MapFrom(src => src.Item))
 
-            //UpdateBookingDTO
-            CreateMap<UpdateBookingDTO, Booking>();
-            CreateMap<Booking, UpdateBookingDTO>();
+                .ForPath(dest => dest.BookingDates.startTime, act => act
+                    .MapFrom(scr => scr.StartTime))
+
+                .ForPath(dest => dest.BookingDates.endTime, act => act
+                    .MapFrom(scr => scr.EndTime))
+                .ReverseMap();
+
 
             //BookingDTO
-            CreateMap<BookingDTO, Booking>();
-            CreateMap<Booking, BookingDTO>();
+            CreateMap<BookingDTO, Booking>()
+                .ForPath(dest => dest.BookingDates.startTime, act => act
+                    .MapFrom(scr => scr.StartTime))
+                .ForPath(dest => dest.BookingDates.endTime, act => act
+                    .MapFrom(scr => scr.EndTime))
+                .ReverseMap();
         }
     }
 }

@@ -1,12 +1,6 @@
 ﻿using BoligBlik.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BoligBlik.Domain.Common.Shared;
 
 namespace BoligBlik.Persistence.Contexts.EntityConfigurations
 {
@@ -14,8 +8,13 @@ namespace BoligBlik.Persistence.Contexts.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
+            builder.ToTable("Booking", "booking");
+            builder.HasKey(x => x.Id);
             builder.ComplexProperty(b => b.BookingDates);
-            builder.ComplexProperty(a => a.Address);
+            ////builder.ComplexProperty(a => a.Address);
+            ////builder.ComplexProperty(u => u.User);
+            ////builder.ComplexProperty(i => i.Item);
+            ////builder.ComplexProperty(p => p.Payment);
         }
     }
 }

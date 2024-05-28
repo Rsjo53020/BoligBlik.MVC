@@ -33,10 +33,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BoligBlik.Domain\BoligBlik.Domain.csproj" />
   </ItemGroup>
 

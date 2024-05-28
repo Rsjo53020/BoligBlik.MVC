@@ -3,7 +3,6 @@ using AutoMapper;
 using BoligBlik.Application.DTO.Bookings;
 using BoligBlik.Application.Interfaces.Bookings;
 using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -18,49 +17,51 @@ namespace BoligBlik.Application.Features.Bookings.Commands
         private readonly IMapper _mapper;
         private readonly ILogger<BookingCommandService> _logger;
 
-
         private readonly IUserQuerieRepo _userQuerieRepo;
-        //private readonly IAddressQuerieRepo _addressQuerieRepo;
-        //private readonly IItemQuerieRepo _itemQuerieRepo;
+        private readonly IAddressQuerieRepo _addressQuerieRepo;
+        private readonly IBookingItemQuerieRepo _itemQuerieRepo;
         //private readonly IPaymentQuerieRepo _paymentQuerieRepo;
 
-        //private readonly IAddressDominService _addressDominService;
 
-        public BookingCommandService(IUnitOfWork unitOfWork, IBookingDomainService bookingDomainService, IBookingCommandRepo bookingCommandRepo, IMapper mapper)
+        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, IMapper mapper, IBookingDomainService bookingDomainService)
         {
             _unitOfWork = unitOfWork;
-            _bookingDomainService = bookingDomainService;
             _bookingCommandRepo = bookingCommandRepo;
             _mapper = mapper;
+            _bookingDomainService = bookingDomainService;
         }
 
-        public void CreateBooking(CreateBookingDTO createBookingDTO/*, UserDTO userDTO, ItemDTO itemDTO ,PaymentDTO paymentDTO*/)
+        public void CreateBooking(CreateBookingDTO request)
         {
-            //try
-            //{
-            //    _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-            //    var UserId = _userQuerieRepo.ReadUser(userDTO.EmailAddress);
-            //    var AddressId = _addressQuerieRepo.WriteAddress(userDTO.Id);
-            //    var ItemId = _itemQuerieRepo.ReadItem(itemDTO.Id);
-            //    var paymentId = _paymentQuerieRepo.WriteItem(itemDTO.Id);
-            //    var UserId = "ronnisjorgensen@gmail.com";
-            //    var AddressId = Guid.NewGuid();
-            //    var ItemId = Guid.NewGuid();
-            //    var paymentId = Guid.NewGuid();
-            //    var bookingDates = new BookingDates(createBookingDTO.CreationDate, createBookingDTO.StartTime, createBookingDTO.EndTime);
-            //    var booking = new Domain.Entities.Booking(Guid.NewGuid(), bookingDates, ItemId, paymentId, AddressId, UserId, createBookingDTO.Approved, _bookingDomainService, createBookingDTO.RowVersion);
-            //    _bookingRepo.Create(booking);
+            try
+            {
+                _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
-            //    _unitOfWork.CommitChangesAsync();
-            //}
-            //catch (Exception e)
-            //{
-            //    _unitOfWork.Rollback();
-            //    throw;
-            //}
+                var booking = _mapper.Map<Booking>(request);
+                var comparer = _bookingDomainService.IsBookingOverlapping(booking);
+                if (comparer)
+                {
+                    var newBooking = new Booking(booking.BookingDates.startTime, booking.BookingDates.endTime,
+                        booking.Item);
+
+
+                    _bookingCommandRepo.CreateBooking(newBooking);
+
+                    _unitOfWork.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+
+                _logger.LogError("Could not create booking", ex);
+
+                throw new Exception("Error occurred while creating booking", ex);
+            }
         }
 
-        public void UpdateBooking(UpdateBookingDTO request)
+
+        public void UpdateBooking(BookingDTO request)
         {
 
             try
@@ -70,7 +71,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
 
                 _bookingCommandRepo.UpdateBooking(bookings);
 
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
@@ -79,7 +80,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             }
         }
 
-        public void DeleteBooking(DeleteBookingDTO request)
+        public void DeleteBooking(BookingDTO request)
         {
             try
             {
@@ -88,7 +89,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
 
                 _bookingCommandRepo.DeleteBooking(bookings);
 
-                _unitOfWork.CommitChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {

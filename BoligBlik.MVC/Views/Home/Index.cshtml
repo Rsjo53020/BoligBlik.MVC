@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded || AuthorizationService.AuthorizeAsync(User, "MemberPolicy").Result.Succeeded)
-{
+@* @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded || AuthorizationService.AuthorizeAsync(User, "MemberPolicy").Result.Succeeded)
+{ *@
     <!-- Carousel Start -->
 
     <div class="container-fluid px-0">
@@ -165,7 +165,7 @@
     </div>
     <!-- Projects in the organisation  End -->
 
-}
+@* } *@
 
 <!-- JavaScript Libraries -->
 <script src="lib/wow/wow.min.js"></script>

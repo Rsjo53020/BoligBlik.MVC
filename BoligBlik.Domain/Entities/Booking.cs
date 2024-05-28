@@ -1,62 +1,37 @@
-﻿using BoligBlik.Domain.Value;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.Design;
+using BoligBlik.Domain.Value;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Common.Shared;
 using BoligBlik.Domain.Exceptions;
+using BoligBlik.Entities;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace BoligBlik.Domain.Entities
 {
     public class Booking : Entity
     {
-        private readonly IBookingDomainService _bookingDomainService;
         public BookingDates BookingDates { get; set; }
-        public bool Approved { get; private set; }
-        public Address Address { get; set; }
-        public User User { get; set; }
-        public Payment Payment { get; set; }
-        public Item Item { get; set; }
-        internal Booking() : base() { }
+        public BookingItem Item { get; set; }
 
-        public Booking(Guid id, BookingDates bookingDates, Item item, Payment payment, Address address,User user ,bool approved, IBookingDomainService bookingDomainService, byte[] RowVersion) : base()
+
+        internal Booking() : base()
         {
-            this.Id = id;
-            this.BookingDates = bookingDates;
-            this.Approved = approved;
+            
+        }
 
+        public Booking(DateTime startTime, DateTime endTime, BookingItem item) : base()
+        {
+            BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
-            this.Payment = payment;
-            this.Address = address;
-            this.User = user;
-            _bookingDomainService = bookingDomainService;
-            this.RowVersion = RowVersion;
 
             ValidateBooking();
         }
-
-        //public static Booking Create(BookingDates bookingDates, bool approved, IBookingDomainService bookingDomainService)
-        //{
-        //    if (bookingDates == null) throw new ArgumentNullException(nameof(bookingDates));
-
-
-        //    if (bookingDates == null) throw new ArgumentNullException(nameof(bookingDates));
-
-        //    var booking = new Booking(bookingDates, approved, bookingDomainService);
-        //    if (bookingDomainService.IsBookingOverlapping(booking))
-        //        throw new BookingIsOverlappingException("Booking overlaps with existing booking");
-
-        //    return booking;
-        //}
 
         private void ValidateBooking()
         {
             ValidateTimeInput(nameof(BookingDates.startTime), BookingDates.startTime);
             ValidateTimeInput(nameof(BookingDates.endTime), BookingDates.endTime);
-
-            if (_bookingDomainService.IsBookingOverlapping(this))
-            {
-                throw new BookingIsOverlappingException("Booking overlaps with existing booking");
-            }
         }
 
         public void ValidateTimeInput(string parameter, DateTime dateTime)
@@ -65,7 +40,7 @@ namespace BoligBlik.Domain.Entities
             {
                 throw new TimeNotSetException($"{parameter} is not set");
             }
-            if (dateTime < _bookingDomainService.NowTime())
+            if (dateTime < DateTime.Now)
             {
                 throw new TimeInPastException($"{parameter} is not set in the future");
             }

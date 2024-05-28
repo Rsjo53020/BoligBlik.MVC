@@ -7,6 +7,8 @@
     <title>@ViewData["Title"] - BoligBlik.MVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     @*     <link rel="stylesheet" href="~/BoligBlik.MVC.styles.css" asp-append-version="true" />
     *@
     <meta charset="utf-8">
@@ -57,8 +59,7 @@
             <div class="container">
 
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
-                   @*  <a href="Home/Index" class="navbar-brand"> *@
-                   <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <h1 class="text-white fw-bold d-block">U<span class="text-secondary">NI</span>K</h1>
                     </a>
                     <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -72,7 +73,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Admin/Management" class="dropdown-item">Bestyrelsen</a>
+                                    <a asp-controller="BoardMember" asp-action="ReadAll" class="dropdown-item">Mød bestyrelsen</a>
                                     <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
 
                                 </div>
@@ -83,8 +84,8 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Booking/NewBooking" class="dropdown-item">Ny Booking</a>
-                                    <a href="/Booking/YoursBookings" class="dropdown-item">Dine Bookinger</a>
+                                    <a asp-controller="Booking" asp-action="NewBookingIndex" class="dropdown-item">Ny Booking</a>
+                                    <a asp-controller="Booking" asp-action="GetUserBookings" class="dropdown-item">Mine Bookings</a>
                                 </div>
                             </div>
                             <!-- Booking End -->
@@ -92,12 +93,38 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
                                 <div class="dropdown-menu rounded">
-                                    <a href="/Documents/Bylaws" class="dropdown-item">Vedtægter</a>
-                                    <a href="/Documents/BoardMinutes" class="dropdown-item">Bestyrelses Refetater</a>
+                                    <a asp-controller="Documents" asp-action="Upload" class="dropdown-item">Upload Dokument</a>
+                                    <a asp-controller="Documents" asp-action="GetAll" class="dropdown-item">Se alle Dokumenter</a>
                                 </div>
                             </div>
                             <!-- Documents End -->
+                            <!-- Address Start -->
+                            {
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Address</a>
+                                <div class="dropdown-menu rounded">
+                                    <a asp-controller="Address" asp-action="GetAllAddress" class="dropdown-item">Adresser</a>
+                                   @*  <a href="/Address/Create" class="dropdown-item">Opret adr.</a>
+                                    <a href="/Address/Edit" class="dropdown-item">Ændre adr.</a>
+                                    <a href="/Address/Delete" class="dropdown-item">Slet.</a> *@
 
+
+                                </div>
+                            </div>
+                            }
+                            <!-- Address End -->
+                            <!-- Administration Start -->
+                            {
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Brugerprofiler</a>
+                                <div class="dropdown-menu rounded">
+                                    <a asp-controller="User" asp-action="GetAll" class="dropdown-item">Alle Profiler</a>
+@*                                     <a asp-controller="User" asp-action="Delete" class="dropdown-item">Deaktiver Profil</a>
+                                    <a asp-controller="User" asp-action="AssignIdentityRole" class="dropdown-item">Administer systemadgang</a> *@
+                                </div>
+                            </div>
+                            }
+                            <!-- Administration End -->
                         </div>
                     </div>
                     <div class="d-none d-xl-flex flex-shirink-0">
