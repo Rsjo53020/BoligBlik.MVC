@@ -20,10 +20,11 @@ namespace BoligBlik.Application.Features.Bookings.Queries
         private readonly IBookingQuerieRepo _bookingRepo;
         private readonly IMapper _mapper;
 
-        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingQuerieRepo bookingRepo)
+        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingQuerieRepo bookingRepo, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _bookingRepo = bookingRepo;
+            _mapper = mapper;
         }
 
         //public IEnumerable<Domain.Entities.Booking> Bookings(Domain.Entities.Booking booking)
@@ -44,16 +45,11 @@ namespace BoligBlik.Application.Features.Bookings.Queries
 
         public async Task<IEnumerable<BookingDTO>> ReadAllBooking()
         {
-            //må jeg det??
-            List<BookingDTO> bookingList = new List<BookingDTO>();
             var bookings = await _bookingRepo.ReadAllAsync();
 
-            foreach (var booking in bookings)
-            {
-                bookingList.Add(_mapper.Map<BookingDTO>(booking));
-            }
+            var bookingDTO = _mapper.Map<IEnumerable<BookingDTO>>(bookings);
 
-            return bookingList;
+            return bookingDTO;
         }
     }
 }

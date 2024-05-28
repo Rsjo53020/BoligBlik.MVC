@@ -58,13 +58,13 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
 
-        [HttpGet("All")]
-        public ActionResult<IEnumerable<BookingDTO>> GetAllBoardMembers()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetAllBookingsAsync()
         {
             try
             {
-                _bookingQuerie.ReadAllBooking();
-                return Ok();
+                var result = await _bookingQuerie.ReadAllBooking();
+                return Ok(result);
             }
             catch (Exception e)
             {

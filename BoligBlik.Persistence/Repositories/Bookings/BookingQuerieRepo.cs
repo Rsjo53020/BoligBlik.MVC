@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using Bogus;
+using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Persistence.Contexts;
@@ -19,8 +20,8 @@ namespace BoligBlik.Persistence.Repositories.Bookings
         {
             try
             {
-                return await _dbContext.Bookings.AsNoTracking().ToListAsync();
-
+                var result = await _dbContext.Bookings.Include(i => i.Item).AsNoTracking().ToListAsync();
+                return result;
             }
             catch (Exception ex)
             {
@@ -33,7 +34,7 @@ namespace BoligBlik.Persistence.Repositories.Bookings
         {
             try
             {
-                return await _dbContext.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
+                return await _dbContext.Bookings.Include(i => i.Item).AsNoTracking().FirstOrDefaultAsync(b => b.Id == id);
 
             }
             catch (Exception ex)

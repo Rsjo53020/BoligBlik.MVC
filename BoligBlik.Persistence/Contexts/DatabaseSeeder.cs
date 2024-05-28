@@ -20,137 +20,22 @@ namespace BoligBlik.Persistence.Contexts
             SeedBoardMembers();
             SeedMeeting();
             SeedBookingItem();
-            SeedAddress();
             SeedBooking();
-            SeedBookingItems();
-            //SeedProperty();
+            SeedAddress();
+
         }
 
 
-        internal void SeedBookingItems()
-        {
-            var bookingItems = new BookingItem[]
-            {
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Vaskemaskine",
-            Price = 20,
-            Description = "Booking af vaskemaskine",
-            Rules = "Kan bookes alle dage",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Tørretumbler",
-            Price = 25,
-            Description = "Booking af tørretumbler",
-            Rules = "Kan bookes efter kl. 16:00",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Opvaskemaskine",
-            Price = 15,
-            Description = "Booking af opvaskemaskine",
-            Rules = "Kan bookes alle hverdage",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Køleskab",
-            Price = 30,
-            Description = "Booking af køleskab",
-            Rules = "Kan bookes i weekenden",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Ovn",
-            Price = 20,
-            Description = "Booking af ovn",
-            Rules = "Kan bookes fra kl. 8:00 til 20:00",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Mikroovn",
-            Price = 15,
-            Description = "Booking af mikroovn",
-            Rules = "Kan bookes i hverdagene",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Kaffemaskine",
-            Price = 10,
-            Description = "Booking af kaffemaskine",
-            Rules = "Kan bookes fra kl. 7:00 til 22:00",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Blender",
-            Price = 15,
-            Description = "Booking af blender",
-            Rules = "Kan bookes alle dage",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Grill",
-            Price = 20,
-            Description = "Booking af grill",
-            Rules = "Kan bookes om sommeren",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Hårtørrer",
-            Price = 10,
-            Description = "Booking af hårtørrer",
-            Rules = "Kan bookes i badetiden",
-            Repairs = "Ingen reparationer"
-        },
-        new BookingItem
-        {
-            Id = Guid.NewGuid(),
-            Name = "Strygejern",
-            Price = 15,
-            Description = "Booking af strygejern",
-            Rules = "Kan bookes alle hverdage",
-            Repairs = "Ingen reparationer"
-        }
-            };
-
-            foreach (var bookingItem in bookingItems)
-            {
-                if (!_context.BookingItems.Any(bi => bi.Name == bookingItem.Name))
-                {
-                    _context.BookingItems.Add(bookingItem);
-                }
-            }
-
-            _context.SaveChanges();
-        }
 
 
         internal void SeedUsers()
         {
+            if (_context.Users.Any()) return;
+
             var users = new User[]
             {
                 new User
                 {
-                    Id = Guid.NewGuid(),
                     FirstName = "Ronni",
                     LastName = "Jorgensen",
                     EmailAddress = "Ronni@Mail.dk",
@@ -158,7 +43,6 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new User
                 {
-                    Id = Guid.NewGuid(),
                     FirstName = "Christoffer",
                     LastName = "Skafte",
                     EmailAddress = "Skafte@Mail.dk",
@@ -166,7 +50,6 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new User
                 {
-                    Id = Guid.NewGuid(),
                     FirstName = "Alexander",
                     LastName = "Larsen",
                     EmailAddress = "Alex@Mail.dk",
@@ -185,23 +68,31 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedAddress()
         {
+            if (_context.Adresses.Any()) return;
+
             var Address = new Address[]
             {
+
                 new Address
                 {
-                    Street = "Vejlevej",
-                    HouseNumber = "10",
+                    Street = "Findlandsvej",
+                    HouseNumber = "51",
                     Floor = "1",
                     DoorNumber = "th",
-                    PostalCode = new PostalCode("Vejle", "7100")
+                    PostalCode = new PostalCode("Vejle", "7100"),
+                    Bookings = _context.Bookings.Where(b => b.Item.Name == "Vaskemaskine").ToList(),
+                    Users = _context.Users.Where(b => b.EmailAddress == "Alex@Mail.dk" || b.EmailAddress == "Skafte@Mail.dk").ToList()
+
                 },
                 new Address
                 {
-                    Street = "lundesvej",
-                    HouseNumber = "10",
-                    Floor = "1",
+                    Street = "Findlandsvej",
+                    HouseNumber = "51",
+                    Floor = "2",
                     DoorNumber = "th",
-                    PostalCode = new PostalCode("Vejle", "7100")
+                    PostalCode = new PostalCode("Vejle", "7100"),
+                    Bookings = _context.Bookings.Where(b => b.Item.Name == "Trailer").ToList(),
+                    Users = _context.Users.Where(b => b.EmailAddress == "Ronni@Mail.dk").ToList()
                 }
             };
 
@@ -217,25 +108,24 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedBoardMembers()
         {
+            if (_context.BoardMembers.Any()) return;
+
             var boardMembers = new BoardMember[]
             {
                 new BoardMember
                 {
-                    Id = Guid.NewGuid(),
                     Title = "Formand",
                     Description = "Formandspost",
                     User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Alex@Mail.dk")
                 },
                 new BoardMember
                 {
-                    Id = Guid.NewGuid(),
                     Title = "Næstformand",
                     Description = "Næstformandspost",
                     User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Skafte@Mail.dk")
                 },
                 new BoardMember
                 {
-                    Id = Guid.NewGuid(),
                     Title = "Kasser",
                     Description = "Kasserpost",
                     User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Ronni@Mail.dk")
@@ -256,11 +146,12 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedMeeting()
         {
+            if (_context.Meetings.Any()) return;
+
             var meetings = new Meeting[]
             {
                 new Meeting
                 {
-                    Id = Guid.NewGuid(),
                     Start = DateTime.Now,
                     End = DateTime.Now + TimeSpan.FromHours(5),
                     Description = "Møde ang. Ronni",
@@ -268,7 +159,6 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new Meeting
                 {
-                    Id = Guid.NewGuid(),
                     Start = DateTime.Now,
                     End = DateTime.Now + TimeSpan.FromHours(5),
                     Description = "Vigigt Møde",
@@ -285,11 +175,12 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedBookingItem()
         {
+            if (_context.BookingItems.Any()) return;
+
             var bookingItems = new BookingItem[]
             {
                 new BookingItem
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Vaskemaskine",
                     Price = 20,
                     Description = "Booking af vaskemaskine",
@@ -299,8 +190,7 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new BookingItem
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "test",
+                    Name = "Trailer",
                     Price = 100,
                     Description = "The budget for the year",
                     Rules = "test",
@@ -318,10 +208,26 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedBooking()
         {
-            var bookings = new Booking[]
-            {
+            if (_context.Bookings.Any()) return;
 
+                var bookings = new Booking[]
+            {
+                new Booking(
+                    DateTime.Now.AddHours(1),
+                    DateTime.Now.AddHours(2),
+                     _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
+
+                new Booking(
+                    DateTime.Now.AddHours(3),
+                    DateTime.Now.AddHours(4),
+                    _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
+
+                new Booking(
+                DateTime.Now.AddHours(6),
+                DateTime.Now.AddHours(7),
+                _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer"))
             };
+
 
             foreach (var booking in bookings)
             {
@@ -331,30 +237,6 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
-        //internal void SeedProperty()
-        //{
-        //    var properties = new Property[]
-        //    {
-        //        new Property
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            BoardMember = _context.BoardMembers.FirstOrDefault(t => t.Title == "Formand"),
-        //            Addresses = new List<Address>()
-        //            {
-        //            }
-        //        }
-        //    };
 
-        //    foreach (var user in _context.BoardMembers)
-        //    {
-        //        if (!_context.Properties.Any(property => property.BoardMember.Id == BoardMember.tit))
-        //        {
-        //            properties[0].Addresses.Add(user.Address);
-        //        }
-        //    }
-
-        //    _context.Properties.AddRange(properties);
-        //    _context.SaveChanges();
-        //}
     }
 }

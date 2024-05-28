@@ -85,7 +85,7 @@
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
                                 <div class="dropdown-menu rounded">
                                     <a asp-controller="Booking" asp-action="NewBookingIndex" class="dropdown-item">Ny Booking</a>
-                                    <a href="/Booking/YoursBookings" class="dropdown-item">Dine Bookinger</a>
+                                    <a asp-controller="Booking" asp-action="GetUserBookings" class="dropdown-item">Mine Bookings</a>
                                 </div>
                             </div>
                             <!-- Booking End -->

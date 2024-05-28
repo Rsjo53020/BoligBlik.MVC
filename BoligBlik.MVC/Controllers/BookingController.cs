@@ -18,7 +18,7 @@ namespace BoligBlik.MVC.Controllers
     {
         private readonly IBookingItemsProxy _bookingItemsProxy;
         private readonly IBookingProxy _bookingProxy;
-        private readonly IUserProxy _UserProxy;
+        private readonly IUserProxy _userProxy;
         private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
 
@@ -27,7 +27,7 @@ namespace BoligBlik.MVC.Controllers
         {
             _bookingItemsProxy = bookingItemsProxy;
             _bookingProxy = bookingProxy;
-            _UserProxy = userProxy;
+            _userProxy = userProxy;
             _addressProxy = addressProxy;
             _mapper = mapper;
         }
@@ -46,7 +46,7 @@ namespace BoligBlik.MVC.Controllers
 
             CreateBookingViewModel bookingViewModel = new CreateBookingViewModel
             {
-                BookingItem = _mapper.Map<BookingItemViewModel>(bookingItemViewModel)
+                Item = _mapper.Map<BookingItemViewModel>(bookingItemViewModel)
             };
 
             return View(bookingViewModel);
@@ -56,14 +56,14 @@ namespace BoligBlik.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBooking(CreateBookingViewModel bookingViewModel)
         {
-            var user = await _UserProxy.GetUserAsync(User.Identity.Name);
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
 
             var allAddress = await _addressProxy.GetAllAddressAsync();
 
             var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
 
             var userAdressDTO = _mapper.Map<AddressViewModel>(userAddress);
-            bookingViewModel.Address = userAdressDTO;
+           
 
             try
             {
@@ -79,16 +79,14 @@ namespace BoligBlik.MVC.Controllers
                 return View(bookingViewModel);
             }
         }
-
-        public async Task<IActionResult> GetAllUserBookings(Guid addressId)
+        [HttpGet]
+        public async Task<IActionResult> GetUserBookings()
         {
-            if (addressId == Guid.Empty) return NotFound();
+            var userAddress = await _addressProxy.GetUserAddress(User.Identity.Name);
 
-            var address = await _addressProxy.GetAddressAsync(addressId);
-            if (address == null) return NotFound();
+            var userAddressViewModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
 
-            var response = _mapper.Map<IEnumerable<BookingViewModel>>(address.Bookings);
-            return View(response);
+            return View(userAddressViewModel);
         }
     }
 }

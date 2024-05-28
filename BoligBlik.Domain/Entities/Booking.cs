@@ -12,7 +12,6 @@ namespace BoligBlik.Domain.Entities
     public class Booking : Entity
     {
         public BookingDates BookingDates { get; set; }
-        public Address Address { get; set; }
         public BookingItem Item { get; set; }
 
 
@@ -21,11 +20,10 @@ namespace BoligBlik.Domain.Entities
             
         }
 
-        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Address address) : base()
+        public Booking(DateTime startTime, DateTime endTime, BookingItem item) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
-            this.Address = address;
 
             ValidateBooking();
         }

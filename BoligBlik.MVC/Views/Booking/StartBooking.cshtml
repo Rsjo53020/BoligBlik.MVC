@@ -5,13 +5,13 @@
 <h1>Opret Booking</h1>
 
 <form asp-controller="Booking" asp-action="CreateBooking" method="post">
-    <input type="hidden" asp-for="BookingItem.Id" />
-    <input type="hidden" asp-for="BookingItem.Description" />
-    <input type="hidden" asp-for="BookingItem.Name" />
-    <input type="hidden" asp-for="BookingItem.Price" />
-    <input type="hidden" asp-for="BookingItem.Repairs" />
-    <input type="hidden" asp-for="BookingItem.Rules" />
-    <input type="hidden" asp-for="BookingItem.RowVersion" />
+    <input type="hidden" asp-for="Item.Id" />
+    <input type="hidden" asp-for="Item.Description" />
+    <input type="hidden" asp-for="Item.Name" />
+    <input type="hidden" asp-for="Item.Price" />
+    <input type="hidden" asp-for="Item.Repairs" />
+    <input type="hidden" asp-for="Item.Rules" />
+    <input type="hidden" asp-for="Item.RowVersion" />
 
     <div class="form-group">
         <label asp-for="StartTime" class="form-label">Starttidspunkt:</label>

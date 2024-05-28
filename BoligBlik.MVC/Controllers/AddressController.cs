@@ -15,8 +15,6 @@ namespace BoligBlik.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<AddressController> _logger;
 
-        [BindProperty]
-        public AddressViewModel AddressModel { get; set; } = new();
         public AddressController(IMapper mapper, IAddressProxy addressProxy)
         {
 
@@ -94,17 +92,6 @@ namespace BoligBlik.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber, RowVersion")] UpdateAddressViewModel address)
         {
-
-            if (id != address.Id) return NotFound();
-
-            //Ret ! når der er hele modellen med = book + user
-            //if (!ModelState.IsValid)
-            // {
-            //     foreach (var error in ModelState)
-            //     {
-            //         _logger.LogError($"Property: {error.Key} Error: {string.Join(", ", error.Value.Errors.Select(e => e.ErrorMessage))}");
-            //     }
-            // }
 
 
             try

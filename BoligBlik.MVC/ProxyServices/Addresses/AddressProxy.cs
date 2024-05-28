@@ -85,12 +85,6 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                //var currentItem = await GetAddressAsync(updateAddressDTO.Id);
-
-                //if (!currentItem.RowVersion.SequenceEqual(updateAddressDTO.RowVersion))
-                //{
-                //    throw new DbUpdateConcurrencyException("Concurrency conflict occurred.");
-                //}
 
                 var response = await httpClient.PutAsJsonAsync("/api/Address", updateAddressDTO);
                 response.EnsureSuccessStatusCode();

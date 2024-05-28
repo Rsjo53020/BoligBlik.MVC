@@ -42,8 +42,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
                 if (comparer)
                 {
                     var newBooking = new Booking(booking.BookingDates.startTime, booking.BookingDates.endTime,
-                        booking.Item,
-                        booking.Address);
+                        booking.Item);
 
 
                     _bookingCommandRepo.CreateBooking(newBooking);

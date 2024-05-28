@@ -46,7 +46,6 @@ namespace BoligBlik.Application.Features.Addresses.Commands
 
                 var address = _mapper.Map<Address>(request);
 
-
                 var resultat = _addressValidationInf.ValidateAddressAsync(address);
                
                     _addressRepo.CreateAddress(address);

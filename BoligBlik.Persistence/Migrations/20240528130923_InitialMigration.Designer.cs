@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.Persistence.Migrations
 {
     [DbContext(typeof(BoligBlikContext))]
-    [Migration("20240526101159_initial")]
-    partial class initial
+    [Migration("20240528130923_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,7 +62,7 @@ namespace BoligBlik.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AddressId")
+                    b.Property<Guid?>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ItemId")
@@ -109,7 +109,7 @@ namespace BoligBlik.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Repairs")
                         .IsRequired()
@@ -252,19 +252,15 @@ namespace BoligBlik.Persistence.Migrations
 
             modelBuilder.Entity("BoligBlik.Domain.Entities.Booking", b =>
                 {
-                    b.HasOne("BoligBlik.Entities.Address", "Address")
+                    b.HasOne("BoligBlik.Entities.Address", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("BoligBlik.Domain.Entities.BookingItem", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Address");
 
                     b.Navigation("Item");
                 });

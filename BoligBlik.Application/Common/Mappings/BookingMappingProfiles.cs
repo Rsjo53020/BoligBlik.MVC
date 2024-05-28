@@ -13,10 +13,12 @@ namespace BoligBlik.Application.Common.Mappings
         {
             //CreateUserDTO
             CreateMap<CreateBookingDTO, Booking>().ConstructUsing((src, context) =>
-                    new Booking(src.StartTime, src.EndTime, context.Mapper.Map<BookingItem>(src.BookingItem), context.Mapper.Map<Address>(src.Address)))
+                    new Booking(src.StartTime, src.EndTime, context.Mapper
+                        .Map<BookingItem>(src.Item)))
+                        
 
                 .ForPath(dest => dest.Item, act => act
-                    .MapFrom(src => src.BookingItem))
+                    .MapFrom(src => src.Item))
 
                 .ForPath(dest => dest.BookingDates.startTime, act => act
                     .MapFrom(scr => scr.StartTime))

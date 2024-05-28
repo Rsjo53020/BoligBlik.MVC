@@ -10,8 +10,6 @@ namespace BoligBlik.Application.DTO.Bookings
 {
     public class BookingDTO : EntityDTO
     {
-        [JsonIgnore]
-        public AddressDTO Address { get; set; }
         public BookingItemDTO Item { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
