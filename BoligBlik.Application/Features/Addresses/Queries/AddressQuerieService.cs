@@ -23,20 +23,9 @@ namespace BoligBlik.Application.Features.Addresses.Queries
         {
             try
             {
-                //var bookingItems = await _bookingItemsRepo.ReadAllBookingItemsAsync();
-                //return _mapper.Map<IEnumerable<BookingItemDTO>>(bookingItems);
-
                 var addresses = await _addressRepo.ReadAllAsync();
                 
                 var dtoList = _mapper.Map<IEnumerable<AddressDTO>>(addresses);
-
-                //List<AddressDTO> addressList = new List<AddressDTO>();
-
-                //foreach (var address in addresses)
-                //{
-                //    var dto = _mapper.Map<AddressDTO>(address);
-                //    addressList.Add(dto);
-                //}
 
                 return dtoList;
             }
