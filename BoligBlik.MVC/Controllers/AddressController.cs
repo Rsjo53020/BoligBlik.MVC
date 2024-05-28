@@ -88,7 +88,6 @@ namespace BoligBlik.MVC.Controllers
 
             var response = _mapper.Map<AddressViewModel>(address);
             return View(response);
-
         }
 
         [HttpPost]

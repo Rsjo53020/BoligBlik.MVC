@@ -79,5 +79,16 @@ namespace BoligBlik.MVC.Controllers
                 return View(bookingViewModel);
             }
         }
+
+        public async Task<IActionResult> GetAllUserBookings(Guid addressId)
+        {
+            if (addressId == Guid.Empty) return NotFound();
+
+            var address = await _addressProxy.GetAddressAsync(addressId);
+            if (address == null) return NotFound();
+
+            var response = _mapper.Map<IEnumerable<BookingViewModel>>(address.Bookings);
+            return View(response);
+        }
     }
 }

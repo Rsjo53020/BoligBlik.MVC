@@ -10,16 +10,12 @@ namespace BoligBlik.MVC.Mappings
     {
         public BookingMappingProfile()
         {
-            CreateMap<BookingItemDTO, BookingItemViewModel>();
-            CreateMap<BookingItemViewModel, BookingItemDTO>();
+            CreateMap<CreateBookingDTO, CreateBookingViewModel>()
+                .ForMember(dest => dest.BookingItem, opt => opt
+                    .MapFrom(src => src.BookingItem))
+                .ReverseMap();
 
-            CreateMap<BookingDTO, CreateBookingViewModel>()
-                .ForMember(dest => dest.BookingItem, opt => opt.MapFrom(src => src.BookingItem)); // Map BookingDTO to CreateBookingViewModel
-
-            CreateMap<CreateBookingViewModel, BookingDTO>()
-                .ForMember(dest => dest.BookingItem, opt => opt.MapFrom(src => src.BookingItem)); // Reverse map CreateBookingViewModel to BookingDTO
-
-            CreateMap<CreateBookingViewModel, CreateBookingDTO>(); 
+            CreateMap<BookingViewModel, BookingDTO>().ReverseMap();
         }
     }
 }
