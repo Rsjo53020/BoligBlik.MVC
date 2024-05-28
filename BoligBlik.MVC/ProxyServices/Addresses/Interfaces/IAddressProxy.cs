@@ -12,5 +12,6 @@ namespace BoligBlik.MVC.ProxyServices.Addresses.Interfaces
         //Task<bool> DeleteAddressAsync(DeleteAddressDTO deleteAddressDto);
 
         Task<bool> DeleteAddressAsync(AddressDTO response);
+        Task<AddressDTO> GetUserAddress(string email);
     }
 }

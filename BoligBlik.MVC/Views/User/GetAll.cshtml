@@ -8,27 +8,28 @@
 
 <table class="table table-striped">
     <thead>
-    <tr>
-        <th>Fornavn</th>
-        <th>Efternavn</th>
-        <th>Telefonnummer</th>
-        <th>E-Mail</th>
-        <th>Foretag ændringer</th>
-    </tr>
+        <tr>
+            <th>Fornavn</th>
+            <th>Efternavn</th>
+            <th>Telefonnummer</th>
+            <th>E-Mail</th>
+            <th>Foretag ændringer</th>
+        </tr>
     </thead>
     <tbody id="userTableBody">
-    @foreach (var user in Model)
-    {
-        <tr>
-            <td>@user.FirstName</td>
-            <td>@user.LastName</td>
-            <td>@user.PhoneNumber</td>
-            <td>@user.EmailAddress</td>
-            <td>
-                <a asp-action="Edit" asp-controller="User" asp-route-email="@user.EmailAddress  " class="btn btn-primary btn-sm">Opdater Bruger</a>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.EmailAddress</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-primary btn-sm">Opdater Bruger</a>
                     <a asp-action="Delete" asp-controller="User" asp-route-id="@user.Id" class="btn btn-secondary btn-sm">Fjern bruger</a>
-            </td>
-        </tr>
-    }
+                    <a asp-action="Claims" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-secondary btn-sm">Rettigheder</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -106,7 +106,9 @@ namespace BoligBlik.MVC.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            if (await _userProxy.GetUserAsync(Input.Email) is not null)
+
+            var userDTO = await _userProxy.GetUserAsync(Input.Email);
+            if (userDTO is not null)
             {
 
                 returnUrl ??= Url.Content("~/");

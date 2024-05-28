@@ -73,12 +73,11 @@ namespace BoligBlik.MVC.ProxyServices.Users
         {
             try
             {
-                var httpClient = _clientFactory.CreateClient("BaseClient");
+                var userDTOs = await GetAllUsersAsync();
 
-                var response = await httpClient.GetAsync($"api/User/{id}");
-                response.EnsureSuccessStatusCode();
-                var user = await response.Content.ReadFromJsonAsync<UserDTO>();
-                return user;
+                var userDTO = userDTOs.Where(x => x.Id == id).FirstOrDefault();
+
+                return userDTO;
             }
             catch (HttpRequestException ex)
             {
@@ -121,6 +120,5 @@ namespace BoligBlik.MVC.ProxyServices.Users
                 _logger.LogError("an error occured while creating a user", ex.Message);
             }
         }
-
     }
 }
