@@ -2,6 +2,7 @@
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Persistence.Repositories
@@ -19,36 +20,37 @@ namespace BoligBlik.Persistence.Repositories
         {
             try
             {
-                _dbContext.AddAsync(booking);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Attach(booking.Item);
+                _dbContext.Add(booking);
             }
-            catch (SqlException ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError("Error in create in Booking: " + ex.Message);
             }
-
         }
+
+
 
 
         public void UpdateBooking(Booking booking)
         {
             try
             {
-                _dbContext.Update(booking);
-                _dbContext.SaveChangesAsync();
+                _dbContext.Update(booking).Property(b => b.RowVersion).OriginalValue = booking.RowVersion;
             }
             catch (SqlException ex)
             {
+                throw new Exception("Error in update in Booking: " + ex.Message);
                 _logger.LogError("Error in update in Booking: " + ex.Message);
             }
         }
 
-        public void DeleteBooking(Booking booking)
+        public void DeleteBooking(Guid id)
         {
             try
             {
-                _dbContext.Remove(booking);
-                _dbContext.SaveChangesAsync();
+                var booking = _dbContext.Bookings.Find(id);
+                _dbContext.Bookings.Remove(booking);
             }
             catch (SqlException ex)
             {

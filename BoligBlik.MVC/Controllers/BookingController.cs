@@ -63,7 +63,7 @@ namespace BoligBlik.MVC.Controllers
             var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
 
             var userAdressDTO = _mapper.Map<AddressViewModel>(userAddress);
-           
+
 
             try
             {
@@ -87,6 +87,50 @@ namespace BoligBlik.MVC.Controllers
             var userAddressViewModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
 
             return View(userAddressViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var bookingDTO = await _bookingProxy.GetBooking(id);
+            if (bookingDTO == null)
+            {
+                return NotFound();
+            }
+
+            var bookingViewModel = _mapper.Map<BookingViewModel>(bookingDTO);
+            return View(bookingViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(BookingViewModel bookingViewModel)
+        {
+            try
+            {
+                var bookingDTO = _mapper.Map<BookingDTO>(bookingViewModel);
+                await _bookingProxy.UpdateBookingAsync(bookingDTO);
+                return RedirectToAction("GetUserBookings");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"An error occurred while updating the booking: {ex.Message}");
+                return View(bookingViewModel);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _bookingProxy.DeleteBooking(id);
+                return RedirectToAction("GetUserBookings");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"An error occurred while deleting the booking: {ex.Message}");
+                return View();
+            }
         }
     }
 }

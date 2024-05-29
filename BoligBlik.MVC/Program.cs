@@ -11,7 +11,7 @@ namespace BoligBlik.MVC
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("SkafteFrontEndLocal") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
             // Add services to the container -- move to a ServiceExtension.cs
 
