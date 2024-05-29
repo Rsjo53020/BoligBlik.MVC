@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Runtime.InteropServices;
 using BoligBlik.Domain.Value;
 using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Common.Shared;
@@ -20,7 +21,7 @@ namespace BoligBlik.Domain.Entities
             
         }
 
-        public Booking(DateTime startTime, DateTime endTime, BookingItem item) : base()
+        private Booking(DateTime startTime, DateTime endTime, BookingItem item) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
@@ -44,6 +45,17 @@ namespace BoligBlik.Domain.Entities
             {
                 throw new TimeInPastException($"{parameter} is not set in the future");
             }
+        }
+
+        public void IsOverlapping(IBookingDomainService ds)
+        {
+
+        }
+
+        public static void Create(DateTime startTime, DateTime endTime, BookingItem item, IBookingDomainService service)
+        {
+            var n = new Booking(startTime, endTime, item);
+            n.IsOverlapping();
         }
     }
 }

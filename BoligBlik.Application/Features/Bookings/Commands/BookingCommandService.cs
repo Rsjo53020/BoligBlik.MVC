@@ -38,8 +38,10 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
-                var booking = _mapper.Map<Booking>(request);
+                //var booking = _mapper.Map<Booking>(request);
+                var booking = Booking.Create(request.StartTime, request.EndTime, request.Item, _bookingDomainService);
 
+                booking.IsOverlapping(_bookingDomainService);
                 var isOverlapping = _bookingDomainService.IsBookingOverlapping(booking);
                 if (!isOverlapping)
                 {
