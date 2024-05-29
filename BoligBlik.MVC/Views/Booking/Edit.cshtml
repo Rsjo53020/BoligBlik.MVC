@@ -13,6 +13,8 @@
         <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for= "RowVersion" />
+            <input type="hidden" asp-for="Item.Id" />
+            <input type="hidden" asp-for="Item.RowVersion" />
           
             <div class="form-group">
                 <label class="control-label">Booking</label>

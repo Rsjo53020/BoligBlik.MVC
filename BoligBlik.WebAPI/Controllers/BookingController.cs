@@ -92,10 +92,10 @@ namespace BoligBlik.WebAPI.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult UpdateBooking([FromBody] BookingDTO updateBookingDto)
+        [HttpPut()]
+        public IActionResult UpdateBooking([FromBody]BookingDTO bookingDTO)
         {
-            _bookingCommand.UpdateBooking(updateBookingDto);
+            _bookingCommand.UpdateBooking(bookingDTO);
             return Ok();
         }
     }
