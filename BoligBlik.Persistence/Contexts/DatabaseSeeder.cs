@@ -1,4 +1,5 @@
-﻿using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Domain.Entities;
 using BoligBlik.Domain.Value;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts.Interfaces;
@@ -8,10 +9,12 @@ namespace BoligBlik.Persistence.Contexts
     public class DatabaseSeeder : IDatabaseSeeder
     {
         private readonly BoligBlikContext _context;
+        private readonly IBookingDomainService _domainService;
 
-        public DatabaseSeeder(BoligBlikContext context)
+        public DatabaseSeeder(BoligBlikContext context, IBookingDomainService domainService)
         {
             _context = context;
+            _domainService = domainService;
         }
 
         public void SeedDB()
@@ -212,20 +215,20 @@ namespace BoligBlik.Persistence.Contexts
 
                 var bookings = new Booking[]
             {
-                new Booking(
+                Booking.Create(
                     DateTime.Now.AddHours(1),
                     DateTime.Now.AddHours(2),
-                     _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
+                     _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine"), _domainService),
 
-                new Booking(
+                Booking.Create(
                     DateTime.Now.AddHours(3),
                     DateTime.Now.AddHours(4),
-                    _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
+                    _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine"), _domainService),
 
-                new Booking(
+                Booking.Create(
                 DateTime.Now.AddHours(6),
                 DateTime.Now.AddHours(7),
-                _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer"))
+                _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer"), _domainService)
             };
 
 

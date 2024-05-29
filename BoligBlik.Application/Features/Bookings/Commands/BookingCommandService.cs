@@ -38,21 +38,13 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
-                //var booking = _mapper.Map<Booking>(request);
-                var booking = Booking.Create(request.StartTime, request.EndTime, request.Item, _bookingDomainService);
+                var bookingItem = _mapper.Map<BookingItem>(request.Item);
 
-                booking.IsOverlapping(_bookingDomainService);
-                var isOverlapping = _bookingDomainService.IsBookingOverlapping(booking);
-                if (!isOverlapping)
-                {
-                    _bookingCommandRepo.CreateBooking(booking);
-                    _unitOfWork.Commit();
-                }
-                else
-                {
-                    _unitOfWork.Rollback();
-                    throw new Exception("The booking overlaps with existing bookings.");
-                }
+
+                var createdBooking = Booking.Create(request.StartTime, request.EndTime, bookingItem, _bookingDomainService);
+
+                _bookingCommandRepo.CreateBooking(createdBooking);
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
