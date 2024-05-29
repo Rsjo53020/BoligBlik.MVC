@@ -148,11 +148,7 @@ namespace BoligBlik.MVC.Controllers
 
 
 
-        /// <summary>
-        /// til database leg
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+   
         //private bool AddressExists(Guid id)
         //{
         //   // return _VoresDbcontext.Addresses.Any(e => e.Id == id);

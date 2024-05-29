@@ -45,10 +45,10 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult DeleteBookingItem(Guid id)
+        [HttpDelete("{id}/{rowVersion}")]
+        public ActionResult DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
-            _bookItemCommandService.DeleteBookingItem(id);
+            _bookItemCommandService.DeleteBookingItem(id,rowVersion);
             return Ok();
         }
 

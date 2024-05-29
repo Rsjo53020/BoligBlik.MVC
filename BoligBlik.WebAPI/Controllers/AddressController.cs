@@ -2,6 +2,7 @@
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Addresses.Queries;
+using BoligBlik.Application.Interfaces.Users.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -46,7 +47,9 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                return await _addressQuerieService.ReadAddress(id);
+
+                var address = await _addressQuerieService.ReadAddress(id);
+                return Ok(address);
             }
             catch (Exception ex)
             {

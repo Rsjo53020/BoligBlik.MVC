@@ -32,7 +32,7 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
         {
             try
             {
-                _dbContext.Update(bookingItem).Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion; ;
+                _dbContext.Update(bookingItem).Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion;
             }
             catch (Exception ex)
             {
@@ -40,11 +40,12 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             }
         }
 
-        public void DeleteBookingItem(Guid id)
+        public void DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
             try
             {
-                _dbContext.Remove(_dbContext.BookingItems.Where(x => x.Id == id).FirstOrDefault());
+                _dbContext.Remove(_dbContext.BookingItems.Where(x => x.Id == id).FirstOrDefault())
+                    .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }
             catch (Exception ex)
             {

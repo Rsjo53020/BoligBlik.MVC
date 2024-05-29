@@ -55,7 +55,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Error create address with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error create address with request. Exception:", ex.Message);
                 throw new ValidationException("Validation failed on address");
             }
         }
@@ -66,13 +66,15 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var address = _mapper.Map<Address>(request);
+                var resultat = _addressValidationInf.ValidateAddressAsync(address);
+
                 _addressRepo.UpdateAddress(address);
                 _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Error updating address with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error updating address with request. Exception:", ex.Message);
             }
         }
 
@@ -88,7 +90,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Error deleting address with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error deleting address with request. Exception:", ex.Message);
             }
         }
     }
