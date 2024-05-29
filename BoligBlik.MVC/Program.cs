@@ -13,11 +13,11 @@ namespace BoligBlik.MVC
             var builder = WebApplication.CreateBuilder(args);
             var connectionString = builder.Configuration
 
-            // Add services to the container -- move to a ServiceExtension.cs
+                // Add services to the container -- move to a ServiceExtension.cs
 
-                .GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-                //.GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-                //.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                //.GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                .GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            //.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 
             // move to a ServiceExtension.cs

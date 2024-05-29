@@ -32,41 +32,31 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             _logger = logger;
         }
 
-        //public void CreateBooking(CreateBookingDTO request)
-        //{
-        //    try
-        //    {
-        //        _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-
-        //        //var booking = _mapper.Map<Booking>(request);
-        //        var booking = Booking.Create(request.StartTime, request.EndTime, request.Item, _bookingDomainService);
-
-        //        booking.IsOverlapping(_bookingDomainService);
-        //        var isOverlapping = _bookingDomainService.IsBookingOverlapping(booking);
-        //        if (!isOverlapping)
-        //        {
-        //            _bookingCommandRepo.CreateBooking(booking);
-        //            _unitOfWork.Commit();
-        //        }
-        //        else
-        //        {
-        //            _unitOfWork.Rollback();
-        //            throw new Exception("The booking overlaps with existing bookings.");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _unitOfWork.Rollback();
-        //        _logger.LogError("Could not create booking", ex);
-        //        throw new Exception("Error occurred while creating booking", ex);
-        //    }
-        //}
-
-
         public void CreateBooking(CreateBookingDTO request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
+
+                var bookingItem = _mapper.Map<BookingItem>(request.Item);
+
+
+                var createdBooking = Booking.Create(request.StartTime, request.EndTime, bookingItem, _bookingDomainService);
+
+                _bookingCommandRepo.CreateBooking(createdBooking);
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                _logger.LogError("Could not create booking", ex);
+                throw new Exception("Error occurred while creating booking", ex);
+            }
         }
+
+
+
+
 
         public void UpdateBooking(BookingDTO request)
         {
@@ -88,13 +78,13 @@ namespace BoligBlik.Application.Features.Bookings.Commands
         }
 
 
-        public void DeleteBooking(Guid id, Byte[] rowVersion)
+        public void DeleteBooking(Guid id, byte[] rowVersion)
         {
             try
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
-                _bookingCommandRepo.DeleteBooking(id, rowVersion);
+                _bookingCommandRepo.DeleteBooking(id,rowVersion);
 
                 _unitOfWork.Commit();
             }

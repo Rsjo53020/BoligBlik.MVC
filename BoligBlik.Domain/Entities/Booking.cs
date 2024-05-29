@@ -47,15 +47,30 @@ namespace BoligBlik.Domain.Entities
             }
         }
 
-        public void IsOverlapping(IBookingDomainService ds)
+        private bool IsOverlapping(IBookingDomainService _bookingDomainService, Booking booking)
         {
-
+            return _bookingDomainService.IsBookingOverlapping(booking);
         }
 
-        public static void Create(DateTime startTime, DateTime endTime, BookingItem item, IBookingDomainService service)
+        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, IBookingDomainService _bookingDomainService)
         {
-            var n = new Booking(startTime, endTime, item);
-            n.IsOverlapping(service);
+            var booking = new Booking(startTime, endTime, item);
+            var isOverlapping = booking.IsOverlapping(_bookingDomainService, booking);
+          
+            if (!isOverlapping)
+            {
+                return booking;
+            }
+
+            if (isOverlapping)
+            {
+                throw new Exception("Booking is overlapping");
+            }
+
+            else
+            {
+                throw new Exception("Fail during create booking");
+            }
         }
     }
 }
