@@ -52,11 +52,12 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         /// </summary>
         /// <param name="boardMember"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void DeleteBoardMember(Guid id)
+        public void DeleteBoardMember(Guid id, Byte[] rowVersion)
         {
             try
             {
-                _db.Remove(_db.BoardMembers.Where(b => b.Id == id).FirstOrDefault());
+                _db.Remove(_db.BoardMembers.Where(b => b.Id == id).FirstOrDefault())
+                    .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }
             catch (SqlException ex)
             {

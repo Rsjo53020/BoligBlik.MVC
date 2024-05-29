@@ -71,12 +71,12 @@ namespace BoligBlik.Application.Features.Users.Commands
         /// <summary>
         /// this method Deletes a user using Unit of Work pattern
         /// </summary>
-        public void DeleteUser(Guid id)
+        public void DeleteUser(Guid id, Byte[] rowVersion)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
-                _userRepo.DeleteUser(id);
+                _userRepo.DeleteUser(id, rowVersion);
                 _uow.Commit();
             }
             catch (Exception ex)
