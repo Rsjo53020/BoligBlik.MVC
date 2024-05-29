@@ -17,7 +17,6 @@ namespace BoligBlik.MVC.Mappings
                     .MapFrom(src => src.Users))
                 .ReverseMap();
 
-            CreateMap<UpdateAddressDTO, UpdateAddressViewModel>().ReverseMap();
             CreateMap<CreateAddressDTO, CreateAddressViewModel>().ReverseMap();
 
         }

@@ -9,8 +9,11 @@ namespace BoligBlik.MVC.Controllers
 {
     public class BookingItemsController : Controller
     {
+        //proxy
         private readonly IBookingItemsProxy _bookingItemsProxy;
+        //logger
         private readonly ILogger<BookingItemsController> _logger;
+        //mapper
         private readonly IMapper _mapper;
 
         public BookingItemsController(IBookingItemsProxy bookingItemsProxy, ILogger<BookingItemsController> logger, IMapper mapper = null)
@@ -20,7 +23,10 @@ namespace BoligBlik.MVC.Controllers
             _mapper = mapper;
         }
 
-        // GET: BookingItemsController
+        /// <summary>
+        /// gets the view with all booking items
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> List()
         {
             try
@@ -35,15 +41,21 @@ namespace BoligBlik.MVC.Controllers
                 return NotFound();
             }
         }
-
+        /// <summary>
+        /// gets the create view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        // GET: BookingItemsController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: BookingItemsController/Create
+        /// <summary>
+        /// method for creating a booking item
+        /// </summary>
+        /// <param name="createBookingItemViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Create(CreateBookingItemViewModel createBookingItemViewModel)
         {
@@ -59,7 +71,11 @@ namespace BoligBlik.MVC.Controllers
                 return NotFound();
             }
         }
-
+        /// <summary>
+        /// gets the edit page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
         {
@@ -75,7 +91,11 @@ namespace BoligBlik.MVC.Controllers
                 return NotFound();
             }
         }
-
+        /// <summary>
+        /// method for editing a booking item
+        /// </summary>
+        /// <param name="bookingItemViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Edit(BookingItemViewModel bookingItemViewModel)
         {
@@ -91,14 +111,19 @@ namespace BoligBlik.MVC.Controllers
             }
         }
 
-        // GET: BookingItemsController/Delete/5
+        /// <summary>
+        /// method for deleting a booking item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        /// <returns></returns>
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
-                await _bookingItemsProxy.DeleteBookingItem(id);
+                await _bookingItemsProxy.DeleteBookingItem(id, rowVersion);
                 return RedirectToAction("List", "BookingItems");
             }
             catch (Exception ex)

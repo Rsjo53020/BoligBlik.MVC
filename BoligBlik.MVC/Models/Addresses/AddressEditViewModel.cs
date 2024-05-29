@@ -6,6 +6,6 @@ namespace BoligBlik.MVC.Models.Addresses
     {
         public AddressViewModel Address { get; set; }
         public IEnumerable<UserViewModel> UsersWithoutAddress { get; set; }
-        public Guid SelectedUserId { get; set; }
+        public UserViewModel selectedUser { get; set; }
     }
 }

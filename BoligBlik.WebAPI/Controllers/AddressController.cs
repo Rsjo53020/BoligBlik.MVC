@@ -74,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressDTO request)
+        public async Task<IActionResult> UpdateAddress([FromBody] AddressDTO request)
         {
 
             try

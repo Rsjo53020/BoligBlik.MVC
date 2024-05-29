@@ -45,7 +45,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while creating a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
         }
 
@@ -71,7 +71,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while reading all boardMembers", ex);
-                return View(new List<BoardMemberViewModel>());
+                return NotFound();
             }
         }
 
@@ -100,7 +100,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while reading a boardMember", ex);
-                return View();
+                return NotFound();
             }
         }
 
@@ -123,7 +123,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while updating a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
         }
 
@@ -133,7 +133,7 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="deleteBoardMemberViewModel"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace BoligBlik.MVC.Controllers
 
                 if (boardMember != null && boardMember.Id == id)
                 {
-                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id);
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id, rowVersion);
                 }
                 return RedirectToAction("ReadAll", "BoardMember");
 
@@ -149,7 +149,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while deleting a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
             
         }

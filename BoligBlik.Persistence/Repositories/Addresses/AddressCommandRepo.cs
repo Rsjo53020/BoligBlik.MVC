@@ -1,5 +1,4 @@
-﻿using System.Data;
-using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
@@ -25,7 +24,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                _dbContext.AddAsync(address);
+                if (!AddressExists(address)) 
+                    _dbContext.AddAsync(address);
             }
             catch (SqlException ex)
             {
@@ -38,12 +38,10 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                _dbContext.Adresses.Include(a => a.Users)
-                    .Include(a => a.Bookings)
-                    .FirstOrDefaultAsync(m => m.Id == address.Id);
+                if (AddressExists(address)) return;
+
 
                 _dbContext.Update(address).Property(b => b.RowVersion).OriginalValue = address.RowVersion;
-                /*_dbContext.SaveChangesAsync();*/
 
             }
             catch (Exception ex)
@@ -63,6 +61,18 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             {
                 _logger.LogError("Error in deleteAddress", ex.Message);
             }
+        }
+
+
+        private bool AddressExists(Address address)
+        {
+            var result =_dbContext.Adresses.Any(x => x.DoorNumber == address.DoorNumber
+            && x.HouseNumber == address.HouseNumber
+            && x.Floor == address.Floor
+            && x.Street == address.Street
+            && x.PostalCode.PostalcodeNumber == address.PostalCode.PostalcodeNumber
+            && x.PostalCode.City == address.PostalCode.City);
+            return result;
         }
     }
 }

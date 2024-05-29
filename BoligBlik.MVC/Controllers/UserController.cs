@@ -9,18 +9,26 @@ namespace BoligBlik.MVC.Controllers
 {
     public class UserController : Controller
     {
+        //identity user services
         private readonly UserManager<IdentityUser> _userManager;
+        //proxy
         private readonly IUserProxy _userProxy;
+        //mapper
         private readonly IMapper _mapper;
+        //logger
         private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserProxy userProxy, IMapper mapper, UserManager<IdentityUser> userManager)
+        public UserController(IUserProxy userProxy, IMapper mapper, UserManager<IdentityUser> userManager, ILogger<UserController> logger)
         {
             _userProxy = userProxy;
             _mapper = mapper;
             _userManager = userManager;
+            _logger = logger;
         }
-
+        /// <summary>
+        /// gets view for all users
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -29,7 +37,11 @@ namespace BoligBlik.MVC.Controllers
             return View(userViewModel);
         }
 
-
+        /// <summary>
+        /// get user update view 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(string email)
         {
@@ -37,7 +49,11 @@ namespace BoligBlik.MVC.Controllers
             var updateUserViewModel = _mapper.Map<UserViewModel>(user);
             return View(updateUserViewModel);
         }
-
+        /// <summary>
+        /// update a user
+        /// </summary>
+        /// <param name="updateUserViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Edit(UserViewModel updateUserViewModel)
         {
@@ -51,17 +67,27 @@ namespace BoligBlik.MVC.Controllers
 
             return RedirectToAction("GetAll");
         }
-
+        /// <summary>
+        /// deletes a user in frontend and backend
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="email"></param>
+        /// <param name="rowVersion"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string email, string rowVersion)
         {
             try
             {
-                var userDTO = await _userProxy.GetUserAsync(id);
-                var identityUser = _userManager.Users.FirstOrDefault(x => x.Email == userDTO.EmailAddress);
-                _userManager.DeleteAsync(identityUser);
-                await _userProxy.DeleteUserAsync(id);
+                //find login 
+                var identityUser = _userManager.Users.FirstOrDefault(x => x.Email == email);
+                //backend
                 
+                await _userProxy.DeleteUserAsync(id, rowVersion);
+
+                //delete login
+                _userManager.DeleteAsync(identityUser);
+
                 return RedirectToAction("GetAll");
             }
             catch (Exception ex)

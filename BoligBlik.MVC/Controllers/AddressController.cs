@@ -5,6 +5,9 @@ using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using BoligBlik.MVC.ProxyServices.Users.Interfaces;
+using BoligBlik.MVC.Models.Users;
+using BoligBlik.MVC.DTO.User;
 
 
 namespace BoligBlik.MVC.Controllers
@@ -14,12 +17,15 @@ namespace BoligBlik.MVC.Controllers
         private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
         private readonly ILogger<AddressController> _logger;
+        private readonly IUserProxy _userProxy;
 
-        public AddressController(IMapper mapper, IAddressProxy addressProxy)
+        public AddressController(IMapper mapper, IAddressProxy addressProxy, IUserProxy userProxy, ILogger<AddressController> logger)
         {
 
             _mapper = mapper;
             _addressProxy = addressProxy;
+            _userProxy = userProxy;
+            _logger = logger;
         }
 
         public IActionResult Create()
@@ -74,7 +80,40 @@ namespace BoligBlik.MVC.Controllers
                 return NotFound();
             }
 
-            return View(address);
+            var userDTOs = await _userProxy.GetUsersWithoutAddressAsync();
+            var usersVithoutAddresses = _mapper.Map<IEnumerable<UserViewModel>>(userDTOs);
+            var editAddress = new AddressEditViewModel();
+            editAddress.Address = address;
+            editAddress.UsersWithoutAddress = usersVithoutAddresses;
+            return View(editAddress);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Details(AddressEditViewModel addressEditViewModel)
+        {
+            try
+            {
+                var userDTO = await _userProxy.GetUserAsync(addressEditViewModel.selectedUser.EmailAddress);
+
+                List<UserDTO> users = new();
+                users.Add(userDTO);
+
+
+                var addressDTO = _mapper.Map<AddressDTO>(addressEditViewModel.Address);
+
+                addressDTO.Users = users;
+
+                await _addressProxy.UpdateAddressAsync(addressDTO);
+
+                return RedirectToAction(nameof(GetAllAddress));
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("something went wront when adding a user to an address", ex.Message);
+                return NotFound();
+            }
+
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -90,13 +129,14 @@ namespace BoligBlik.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber, RowVersion")] UpdateAddressViewModel address)
+        public async Task<IActionResult> Edit(AddressViewModel addressViewModel)
         {
 
 
             try
             {
-                var dto = _mapper.Map<UpdateAddressDTO>(address);
+
+                var dto = _mapper.Map<AddressDTO>(addressViewModel);
                 var response = await _addressProxy.UpdateAddressAsync(dto);
                 return RedirectToAction(nameof(GetAllAddress));
 
@@ -112,46 +152,8 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var address = await _addressProxy.GetAddressAsync(id);
-            var response = _mapper.Map<AddressViewModel>(address);
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            return View(response);
-        }
-
-        public async Task<ActionResult> Delete(AddressViewModel deleteAddressViewModel)
-        {
-            var response = _mapper.Map<AddressDTO>(deleteAddressViewModel);
-            var address = await _addressProxy.DeleteAddressAsync(response);
-
-            return RedirectToAction(nameof(GetAllAddress));
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var address = await _addressProxy.GetAddressAsync(id);
-
-            return RedirectToAction(nameof(GetAllAddress));
-        }
 
 
 
-   
-        //private bool AddressExists(Guid id)
-        //{
-        //   // return _VoresDbcontext.Addresses.Any(e => e.Id == id);
-        //}
     }
 }
