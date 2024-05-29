@@ -45,12 +45,13 @@ namespace BoligBlik.Persistence.Repositories
             }
         }
 
-        public void DeleteBooking(Guid id)
+        public void DeleteBooking(Guid id, Byte[] rowVersion)
         {
             try
             {
                 var booking = _dbContext.Bookings.Find(id);
-                _dbContext.Bookings.Remove(booking);
+                _dbContext.Bookings.Remove(booking)
+                    .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }
             catch (SqlException ex)
             {

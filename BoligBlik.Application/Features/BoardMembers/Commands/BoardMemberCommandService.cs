@@ -79,13 +79,13 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         /// delete BoardMember
         /// </summary>
         /// <param name="request"></param>
-        public void DeleteBoardMember(Guid id)
+        public void DeleteBoardMember(Guid id, Byte[] rowVersion)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-                _boardMemberRepo.DeleteBoardMember(id);
+                _boardMemberRepo.DeleteBoardMember(id, rowVersion);
 
                 _uow.Commit();
             }

@@ -59,13 +59,13 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
         }
 
         //Delete a booking item
-        public void DeleteBookingItem(Guid id)
+        public void DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
             try
             {
                 _uow.BeginTransaction(System.Data.IsolationLevel.Serializable);
 
-                _bookingItemRepo.DeleteBookingItem(id);
+                _bookingItemRepo.DeleteBookingItem(id, rowVersion);
                 _uow.Commit();
             }
             catch (Exception ex)

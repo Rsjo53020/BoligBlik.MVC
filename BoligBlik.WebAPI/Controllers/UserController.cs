@@ -104,12 +104,12 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(Guid id)
+        [HttpDelete("{id}/{rowVersion}")]
+        public ActionResult DeleteUser(Guid id, Byte[] rowVersion)
         {
             try
             {
-                _commandService.DeleteUser(id);
+                _commandService.DeleteUser(id, rowVersion);
                 return Ok();
             }
             catch (Exception ex)

@@ -85,12 +85,12 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteBooking(Guid id)
+        [HttpDelete("{id}/{rowVersion}")]
+        public IActionResult DeleteBooking(Guid id, Byte[] rowVersion)
         {
             try
             {
-                _bookingCommand.DeleteBooking(id);
+                _bookingCommand.DeleteBooking(id, rowVersion);
                 return Ok();
             }
             catch (Exception e)
