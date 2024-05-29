@@ -79,11 +79,15 @@ namespace BoligBlik.MVC.Controllers
         {
             try
             {
+                //find login 
                 var identityUser = _userManager.Users.FirstOrDefault(x => x.Email == email);
                 //backend
-                _userManager.DeleteAsync(identityUser);
-                await _userProxy.DeleteUserAsync(id, rowVersion);
                 
+                await _userProxy.DeleteUserAsync(id, rowVersion);
+
+                //delete login
+                _userManager.DeleteAsync(identityUser);
+
                 return RedirectToAction("GetAll");
             }
             catch (Exception ex)

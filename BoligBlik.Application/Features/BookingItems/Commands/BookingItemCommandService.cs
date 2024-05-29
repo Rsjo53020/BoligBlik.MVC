@@ -22,7 +22,10 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             _bookingItemRepo = bookingItemRepo;
         }
 
-        //Create a booking item
+        /// <summary>
+        /// Create a booking item
+        /// </summary>
+        /// <param name="request"></param>
         public void CreateBookingItem(CreateBookingItemDTO request)
         {
             try
@@ -36,11 +39,14 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error creating booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error creating booking item", ex.Message);
             }
         }
 
-        //Update a booking item
+        /// <summary>
+        /// Update a booking item
+        /// </summary>
+        /// <param name="request"></param>
         public void UpdateBookingItem(BookingItemDTO request)
         {
             try
@@ -54,11 +60,15 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error updating booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error updating booking", ex.Message);
             }
         }
 
-        //Delete a booking item
+        /// <summary>
+        /// Delete a booking item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         public void DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
             try

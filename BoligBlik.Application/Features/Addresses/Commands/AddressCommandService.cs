@@ -46,7 +46,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
 
                 var address = _mapper.Map<Address>(request);
 
-                var resultat = _addressValidationInf.ValidateAddressAsync(address);
+                var resultat = _addressValidationInf.ValidateAddress(address);
                
                     _addressRepo.CreateAddress(address);
                     _unitOfWork.Commit();
@@ -60,16 +60,22 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             }
         }
 
-        public void UpdateAddress(UpdateAddressDTO request)
+        public void UpdateAddress(AddressDTO request)
         {
             try
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
                 var address = _mapper.Map<Address>(request);
-                var resultat = _addressValidationInf.ValidateAddressAsync(address);
-
-                _addressRepo.UpdateAddress(address);
-                _unitOfWork.Commit();
+                var result = _addressValidationInf.ValidateAddress(address);
+                if (result)
+                {
+                    _addressRepo.UpdateAddress(address);
+                    _unitOfWork.Commit();
+                }
+                else
+                {
+                    throw new ValidationException();
+                }
             }
             catch (Exception ex)
             {

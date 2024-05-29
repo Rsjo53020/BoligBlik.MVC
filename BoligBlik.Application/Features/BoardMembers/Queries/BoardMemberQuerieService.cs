@@ -42,7 +42,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             }
             catch (Exception ex)
             {
-                _logger.LogError("something went wrong when reading a boardmember");
+                _logger.LogError("something went wrong when reading a boardmember", ex.Message);
                 return null;
             }
         }
@@ -68,7 +68,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Queries
             }
             catch (Exception ex)
             {
-                _logger.LogError("something went wrong when reading all boardmembers");
+                _logger.LogError("something went wrong when reading all boardmembers", ex.Message);
                 return null;
             }
         }

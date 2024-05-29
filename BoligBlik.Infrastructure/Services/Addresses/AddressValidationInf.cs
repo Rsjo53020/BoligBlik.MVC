@@ -20,7 +20,7 @@ namespace BoligBlik.Infrastructure.Services.Addresses
         }
 
       
-        public async Task<bool> ValidateAddressAsync(Address address)
+        public bool ValidateAddress(Address address)
         {
             var dawaAddress = $"{address.Street} {address.HouseNumber}, {address.Floor}, {address.DoorNumber}, {address.PostalCode.PostalcodeNumber} {address.PostalCode.City}&status=1&struktur=mini";
 
@@ -29,7 +29,7 @@ namespace BoligBlik.Infrastructure.Services.Addresses
             var requestUri = $"https://api.dataforsyningen.dk/datavask/adresser?betegnelse={dawaAddress}";
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
 
-            var response = await client.SendAsync(request);
+            var response = client.Send(request);
             response.EnsureSuccessStatusCode();
 
             var responseContent = response.Content.ReadAsStringAsync().Result;

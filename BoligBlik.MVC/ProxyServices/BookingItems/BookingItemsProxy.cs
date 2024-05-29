@@ -7,7 +7,9 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
 {
     public class BookingItemsProxy : IBookingItemsProxy
     {
+        //client factory 
         private readonly IHttpClientFactory _clientFactory;
+        //logger
         private readonly ILogger<BookingItemsProxy> _logger;
 
         public BookingItemsProxy(IHttpClientFactory clientFactory, ILogger<BookingItemsProxy> logger)
@@ -15,6 +17,12 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             _clientFactory = clientFactory;
             _logger = logger;
         }
+        /// <summary>
+        /// creates a booking item with http call
+        /// </summary>
+        /// <param name="bookingItemDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task CreateBookingItem(CreateBookingItemDTO bookingItemDTO)
         {
             try
@@ -31,7 +39,11 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
                 throw new Exception("Error occurred while fetching booking items data", ex);
             }
         }
-
+        /// <summary>
+        /// reads all booking items from backend with http call
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<BookingItemDTO>> GetAllBookingItems()
         {
             try
@@ -49,7 +61,12 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
                 throw new Exception("Error occurred while fetching booking items data", ex);
             }
         }
-
+        /// <summary>
+        /// reads a booking item by id with http call
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<BookingItemDTO> GetBookingItem(Guid itemId)
         {
             try
@@ -66,7 +83,11 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
                 throw new Exception("Error occurred while fetching booking item data");
             }
         }
-
+        /// <summary>
+        /// updates a booking item in backend with http call
+        /// </summary>
+        /// <param name="bookingItemDTO"></param>
+        /// <returns></returns>
         public async Task UpdateBookingItem(BookingItemDTO bookingItemDTO)
         {
             try
@@ -81,7 +102,12 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
                 _logger.LogError("something went wrong when updating bookingitem", ex.Message);
             }
         }
-
+        /// <summary>
+        /// deletes a booking item from backend with http call
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        /// <returns></returns>
         public async Task DeleteBookingItem(Guid id, string rowVersion)
         {
             try

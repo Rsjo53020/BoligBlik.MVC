@@ -7,7 +7,9 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
 {
     public class BookingItemCommandRepo : IBookingItemCommandRepo
     {
+        //context
         private readonly BoligBlikContext _dbContext;
+        //logger
         private readonly ILogger<BookingItem> _logger;
 
         public BookingItemCommandRepo(BoligBlikContext dbContext, ILogger<BookingItem> logger)
@@ -15,7 +17,10 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             _dbContext = dbContext;
             _logger = logger;
         }
-
+        /// <summary>
+        /// Creates a booking item
+        /// </summary>
+        /// <param name="bookingItem"></param>
         public void CreateBookingItem(BookingItem bookingItem)
         {
             try
@@ -27,19 +32,27 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
                 _logger.LogError(ex, "Error in CreateBookingItem");
             }
         }
-
+        /// <summary>
+        /// updates a booking item
+        /// </summary>
+        /// <param name="bookingItem"></param>
         public void UpdateBookingItem(BookingItem bookingItem)
         {
             try
             {
-                _dbContext.Update(bookingItem).Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion;
+                _dbContext.Update(bookingItem)
+                    .Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in UpdateBookingItem");
             }
         }
-
+        /// <summary>
+        /// deletes a booking item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         public void DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
             try

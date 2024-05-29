@@ -90,13 +90,14 @@ namespace BoligBlik.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber, RowVersion")] UpdateAddressViewModel address)
+        public async Task<IActionResult> Edit(AddressViewModel addressViewModel)
         {
 
 
             try
             {
-                var dto = _mapper.Map<UpdateAddressDTO>(address);
+
+                var dto = _mapper.Map<AddressDTO>(addressViewModel);
                 var response = await _addressProxy.UpdateAddressAsync(dto);
                 return RedirectToAction(nameof(GetAllAddress));
 
@@ -112,46 +113,8 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var address = await _addressProxy.GetAddressAsync(id);
-            var response = _mapper.Map<AddressViewModel>(address);
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            return View(response);
-        }
-
-        public async Task<ActionResult> Delete(AddressViewModel deleteAddressViewModel)
-        {
-            var response = _mapper.Map<AddressDTO>(deleteAddressViewModel);
-            var address = await _addressProxy.DeleteAddressAsync(response);
-
-            return RedirectToAction(nameof(GetAllAddress));
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var address = await _addressProxy.GetAddressAsync(id);
-
-            return RedirectToAction(nameof(GetAllAddress));
-        }
 
 
 
-   
-        //private bool AddressExists(Guid id)
-        //{
-        //   // return _VoresDbcontext.Addresses.Any(e => e.Id == id);
-        //}
     }
 }

@@ -79,14 +79,14 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
         }
 
 
-        public async Task<bool> UpdateAddressAsync(UpdateAddressDTO updateAddressDTO)
+        public async Task<bool> UpdateAddressAsync(AddressDTO addressDTO)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
 
-                var response = await httpClient.PutAsJsonAsync("/api/Address", updateAddressDTO);
+                var response = await httpClient.PutAsJsonAsync("/api/Address", addressDTO);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
