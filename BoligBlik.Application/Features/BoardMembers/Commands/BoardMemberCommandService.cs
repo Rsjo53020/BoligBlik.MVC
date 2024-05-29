@@ -29,7 +29,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         }
 
         /// <summary>
-        /// Create a boardMember as a role
+        /// Create a boardMember 
         /// </summary>
         /// <param name="request"></param>
         public void CreateBoardMember(CreateBoardMemberDTO request)

@@ -24,9 +24,11 @@
                 <td>@user.LastName</td>
                 <td>@user.PhoneNumber</td>
                 <td>@user.EmailAddress</td>
+                <input type="hidden" asp-for="@user.Id" />
+                <input type="hidden" asp-for="@user.RowVersion" />
                 <td>
                     <a asp-action="Edit" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-primary btn-sm">Opdater Bruger</a>
-                    <a asp-action="Delete" asp-controller="User" asp-route-id="@user.Id" class="btn btn-secondary btn-sm">Fjern bruger</a>
+                    <a asp-action="Delete" asp-controller="User" asp-route-id="@user.Id" asp-route-email="@user.EmailAddress" asp-route-rowVersion="@Convert.ToBase64String(user.RowVersion)" class="btn btn-secondary btn-sm">Fjern bruger</a>
                     <a asp-action="Claims" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-secondary btn-sm">Rettigheder</a>
                 </td>
             </tr>

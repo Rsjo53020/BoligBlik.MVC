@@ -42,13 +42,10 @@ namespace BoligBlik.Application.Features.Users.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError($"Error creating user with request: {@request}, Exception: {ex}");
+                _logger.LogError("Error creating user", ex.Message);
 
             }
         }
-
-       
-
         /// <summary>
         /// this method updates a user using Unit of Work pattern
         /// </summary>
@@ -67,7 +64,6 @@ namespace BoligBlik.Application.Features.Users.Commands
                 _logger.LogError("Error updating user with request", ex.Message);
             }
         }
-
         /// <summary>
         /// this method Deletes a user using Unit of Work pattern
         /// </summary>

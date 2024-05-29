@@ -29,7 +29,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             catch (Exception ex)
             {
                 _logger.LogError("Error in ReadAll in BoardMember: " + ex.Message);
-                return Enumerable.Empty<BoardMember>();
+                throw new Exception("something went wrong when reading all boardMembers");
 
             }
         }
@@ -49,7 +49,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
             catch (Exception ex)
             {
                 _logger.LogError("Error in Read in Booking: " + ex.Message);
-                return null; /*new BoardMember();*/
+                throw new Exception("something went wrong when reading a boardMember");
             }
         }
     }
