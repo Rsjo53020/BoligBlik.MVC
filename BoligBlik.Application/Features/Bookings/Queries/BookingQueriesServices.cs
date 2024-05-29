@@ -27,17 +27,12 @@ namespace BoligBlik.Application.Features.Bookings.Queries
             _mapper = mapper;
         }
 
-        //public IEnumerable<Domain.Entities.Booking> Bookings(Domain.Entities.Booking booking)
-        //{
-        //    return _bookingDbContext.Bookings.AsNoTracking()
-        //        .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
-        //}
-        public async Task<BookingDTO> ReadBooking(BookingDTO bookingDto)
+        public async Task<BookingDTO> ReadBooking(Guid id)
         {
-            var booking = await _bookingRepo.ReadBooking(bookingDto.Id);
+            var booking = await _bookingRepo.ReadBooking(id);
             if (booking is null)
             {
-                throw new BookingNotFoundException(bookingDto.Id);
+                throw new BookingNotFoundException(id);
             }
             var resultat = _mapper.Map<BookingDTO>(booking);
             return resultat;

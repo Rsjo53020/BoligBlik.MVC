@@ -10,7 +10,7 @@ namespace BoligBlik.Application.Interfaces.Bookings
 {
     public interface IBookingQuerieService
     {
-        public Task<BookingDTO> ReadBooking(BookingDTO bookingDto);
+        public Task<BookingDTO> ReadBooking(Guid id);
         public Task<IEnumerable<BookingDTO>> ReadAllBooking();
 
     }

@@ -6,6 +6,6 @@ namespace BoligBlik.Application.Interfaces.Bookings
     {
         void CreateBooking(CreateBookingDTO request);
         void UpdateBooking(BookingDTO updateBookingDTO);
-        void DeleteBooking(BookingDTO deleteBookingDTO);
+        void DeleteBooking(Guid id);
     }
 }

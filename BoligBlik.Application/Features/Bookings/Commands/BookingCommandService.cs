@@ -23,12 +23,13 @@ namespace BoligBlik.Application.Features.Bookings.Commands
         //private readonly IPaymentQuerieRepo _paymentQuerieRepo;
 
 
-        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, IMapper mapper, IBookingDomainService bookingDomainService)
+        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, IMapper mapper, IBookingDomainService bookingDomainService, ILogger<BookingCommandService> logger)
         {
             _unitOfWork = unitOfWork;
             _bookingCommandRepo = bookingCommandRepo;
             _mapper = mapper;
             _bookingDomainService = bookingDomainService;
+            _logger = logger;
         }
 
         public void CreateBooking(CreateBookingDTO request)
@@ -37,64 +38,69 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
-                var booking = _mapper.Map<Booking>(request);
-                var comparer = _bookingDomainService.IsBookingOverlapping(booking);
-                if (comparer)
+                //var booking = _mapper.Map<Booking>(request);
+                var booking = Booking.Create(request.StartTime, request.EndTime, request.Item, _bookingDomainService);
+
+                booking.IsOverlapping(_bookingDomainService);
+                var isOverlapping = _bookingDomainService.IsBookingOverlapping(booking);
+                if (!isOverlapping)
                 {
-                    var newBooking = new Booking(booking.BookingDates.startTime, booking.BookingDates.endTime,
-                        booking.Item);
-
-
-                    _bookingCommandRepo.CreateBooking(newBooking);
-
+                    _bookingCommandRepo.CreateBooking(booking);
                     _unitOfWork.Commit();
+                }
+                else
+                {
+                    _unitOfWork.Rollback();
+                    throw new Exception("The booking overlaps with existing bookings.");
                 }
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-
                 _logger.LogError("Could not create booking", ex);
-
                 throw new Exception("Error occurred while creating booking", ex);
             }
         }
 
 
+
+
+
         public void UpdateBooking(BookingDTO request)
         {
-
             try
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-                var bookings = _mapper.Map<Booking>(request);
+                var booking = _mapper.Map<Booking>(request);
 
-                _bookingCommandRepo.UpdateBooking(bookings);
+                _bookingCommandRepo.UpdateBooking(booking);
 
                 _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("could not update booking", ex);
+                _logger.LogError("Could not update booking", ex);
+                throw;
             }
         }
 
-        public void DeleteBooking(BookingDTO request)
+
+        public void DeleteBooking(Guid id)
         {
             try
             {
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
-                var bookings = _mapper.Map<Booking>(request);
 
-                _bookingCommandRepo.DeleteBooking(bookings);
+                _bookingCommandRepo.DeleteBooking(id);
 
                 _unitOfWork.Commit();
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("could not delete booking", ex);
+                _logger.LogError("Could not delete booking", ex);
+                throw;
             }
         }
     }

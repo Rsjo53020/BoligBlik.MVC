@@ -6,6 +6,7 @@ using BoligBlik.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using BoligBlik.Persistence.Repositories.Bookings;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BoligBlik.WebAPI.Controllers
@@ -44,19 +45,23 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookingDTO>> GetBooking([FromQuery] BookingDTO id)
+        public async Task<ActionResult<BookingDTO>> GetBooking(Guid id)
         {
             try
             {
-                
-                return await _bookingQuerie.ReadBooking(id);
+                var booking = await _bookingQuerie.ReadBooking(id);
+                if (booking == null)
+                {
+                    return NotFound();
+                }
+                return Ok(booking);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
         }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingDTO>>> GetAllBookingsAsync()
@@ -73,25 +78,19 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBooking(Guid id, [FromBody] BookingDTO updateBookingDto)
+        [HttpPut()]
+        public ActionResult PutBoardMember([FromBody] BookingDTO request)
         {
-            if (id != updateBookingDto.Id)
-            {
-                return BadRequest();
-            }
-            
-            _bookingCommand.UpdateBooking(updateBookingDto);
-
-            return Ok(updateBookingDto);
+            _bookingCommand.UpdateBooking(request);
+            return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteBooking([FromBody] BookingDTO deleteBookingDto)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBooking(Guid id)
         {
             try
             {
-                _bookingCommand.DeleteBooking(deleteBookingDto);
+                _bookingCommand.DeleteBooking(id);
                 return Ok();
             }
             catch (Exception e)

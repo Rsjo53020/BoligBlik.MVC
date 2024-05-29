@@ -8,10 +8,8 @@ services:
       dockerfile: BoligBlik.MVC/Dockerfile
     ports:
         - "5000:80"
-    networks:
-        - boligblik   
     environment:
-        BaseAddress: "http://boligblik.webapi:5001"
+        BaseAddress: "http://boligblik.webapi:8080"
         ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=FrontEndDb; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     depends_on: 
         - boligblik.webapi
@@ -23,9 +21,7 @@ services:
       context: .
       dockerfile: BoligBlik.WebAPI/Dockerfile
     ports:
-        - "5001:80"
-    networks:
-        - boligblik   
+        - "5001:8080"
     environment:
         ConnectionStrings__DefaultConnection: "Data Source=sqlserver; Initial Catalog=BackEndDB; User Id=sa; Password=BoligBlikDb!;Trust Server Certificate=True"
     depends_on:
@@ -43,17 +39,3 @@ services:
       - MSSQL_PID=Evaluation
     ports:
       - "1433:1433"
-    networks:
-        - boligblik  
-    volumes:
-      - ./sqlserver-init/init-db.sql:/init-db.sql
-      - ./sqlserver-init/entrypoint.sh:/entrypoint.sh
-    command: ["/bin/bash", "/entrypoint.sh"]
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P BoligBlikDb! -Q 'select 1'"]
-      interval: 10s
-      retries: 5
-     
-networks:
-  boligblik:
-    driver: bridge
