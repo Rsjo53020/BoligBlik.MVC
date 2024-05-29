@@ -59,20 +59,19 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
         }
 
         //Delete a booking item
-        public void DeleteBookingItem(BookingItemDTO request)
+        public void DeleteBookingItem(Guid id)
         {
             try
             {
                 _uow.BeginTransaction(System.Data.IsolationLevel.Serializable);
 
-                var bookingItem = _mapper.Map<Domain.Entities.BookingItem>(request);
-                _bookingItemRepo.DeleteBookingItem(bookingItem);
+                _bookingItemRepo.DeleteBookingItem(id);
                 _uow.Commit();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error deleting booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error deleting booking item", ex.Message);
             }
         }
     }

@@ -11,6 +11,6 @@ namespace BoligBlik.Application.Interfaces.BookingItems.Commands
     {
         public void CreateBookingItem(CreateBookingItemDTO request);
         public void UpdateBookingItem(BookingItemDTO request);
-        public void DeleteBookingItem(BookingItemDTO request);
+        public void DeleteBookingItem(Guid id);
     }
 }

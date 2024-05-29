@@ -12,6 +12,6 @@ namespace BoligBlik.Application.Interfaces.Repositories
     {
         public void CreateBookingItem(BookingItem request);
         public void UpdateBookingItem(BookingItem request);
-        public void DeleteBookingItem(BookingItem request);
+        public void DeleteBookingItem(Guid id);
     }
 }

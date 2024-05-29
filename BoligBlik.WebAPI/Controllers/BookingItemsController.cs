@@ -27,9 +27,9 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<BookingItemDTO> GetBookingItem([FromQuery] string name)
+        public async Task<IEnumerable<BookingItemDTO>> GetAllBookingItems()
         {
-            return await _bookItemQuerieService.ReadBookingItemAsync(name);
+            return await _bookItemQuerieService.ReadAllBookingItemsAsync();
         }
 
         [HttpGet("{itemId}")]
@@ -45,17 +45,13 @@ namespace BoligBlik.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public ActionResult DeleteBookingItem([FromBody] BookingItemDTO request)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteBookingItem(Guid id)
         {
-            _bookItemCommandService.DeleteBookingItem(request);
+            _bookItemCommandService.DeleteBookingItem(id);
             return Ok();
         }
 
-        [HttpGet("All")]
-        public async Task<IEnumerable<BookingItemDTO>> GetAllBookingItems()
-        {
-            return await _bookItemQuerieService.ReadAllBookingItemsAsync();
-        }
+
     }
 }
