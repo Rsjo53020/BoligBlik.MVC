@@ -55,7 +55,7 @@ namespace BoligBlik.Domain.Entities
         public static void Create(DateTime startTime, DateTime endTime, BookingItem item, IBookingDomainService service)
         {
             var n = new Booking(startTime, endTime, item);
-            n.IsOverlapping();
+            n.IsOverlapping(service);
         }
     }
 }

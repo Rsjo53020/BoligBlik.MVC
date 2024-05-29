@@ -79,15 +79,6 @@ namespace BoligBlik.MVC.Controllers
                 return View(bookingViewModel);
             }
         }
-        [HttpGet]
-        public async Task<IActionResult> GetUserBookings()
-        {
-            var userAddress = await _addressProxy.GetUserAddress(User.Identity.Name);
-
-            var userAddressViewModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
-
-            return View(userAddressViewModel);
-        }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
