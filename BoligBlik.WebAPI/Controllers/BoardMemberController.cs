@@ -88,12 +88,12 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="rowVersion"></param>
         /// <returns></returns>
         [HttpDelete("{id}/{rowVersion}")]
-        public ActionResult DeleteBoardMember(Guid id, Byte[] rowVersion)
+        public ActionResult DeleteBoardMember(Guid id, string rowVersion)
         {
             if(id == null || rowVersion == null) return BadRequest();
             try
             {
-                _commandService.DeleteBoardMember(id, rowVersion);
+                _commandService.DeleteBoardMember(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }
             catch (Exception ex)

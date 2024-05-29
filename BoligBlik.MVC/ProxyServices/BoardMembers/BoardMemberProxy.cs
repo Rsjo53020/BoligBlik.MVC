@@ -98,13 +98,13 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteBoardMemberAsync(Guid id)
+        public async Task<bool> DeleteBoardMemberAsync(Guid id, string rowVersion)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.DeleteAsync($"/api/BoardMember/{id}");
+                var response = await httpClient.DeleteAsync($"/api/BoardMember/{id}/{rowVersion}");
                 response.EnsureSuccessStatusCode();
                 return true;
             }

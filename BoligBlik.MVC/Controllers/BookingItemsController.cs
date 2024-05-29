@@ -94,11 +94,11 @@ namespace BoligBlik.MVC.Controllers
         // GET: BookingItemsController/Delete/5
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
-                await _bookingItemsProxy.DeleteBookingItem(id);
+                await _bookingItemsProxy.DeleteBookingItem(id, rowVersion);
                 return RedirectToAction("List", "BookingItems");
             }
             catch (Exception ex)

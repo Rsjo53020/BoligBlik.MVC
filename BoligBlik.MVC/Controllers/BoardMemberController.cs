@@ -133,7 +133,7 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="deleteBoardMemberViewModel"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace BoligBlik.MVC.Controllers
 
                 if (boardMember != null && boardMember.Id == id)
                 {
-                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id);
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id, rowVersion);
                 }
                 return RedirectToAction("ReadAll", "BoardMember");
 

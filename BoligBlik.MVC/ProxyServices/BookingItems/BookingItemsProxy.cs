@@ -82,13 +82,13 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             }
         }
 
-        public async Task DeleteBookingItem(Guid id)
+        public async Task DeleteBookingItem(Guid id, string rowVersion)
         {
             try
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.DeleteAsync($"/api/BookingItems/{id}");
+                var response = await httpClient.DeleteAsync($"/api/BookingItems/{id}/{rowVersion}");
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)

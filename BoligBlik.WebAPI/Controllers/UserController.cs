@@ -130,6 +130,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
+                if (id == null || rowVersion == null) return BadRequest();
                 _commandService.DeleteUser(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }
