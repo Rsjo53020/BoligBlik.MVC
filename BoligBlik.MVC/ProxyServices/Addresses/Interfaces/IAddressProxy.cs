@@ -9,9 +9,11 @@ namespace BoligBlik.MVC.ProxyServices.Addresses.Interfaces
         Task<AddressDTO> GetAddressAsync(Guid id);
         Task<bool> CreateAddressAsync(CreateAddressDTO createAddressDTO);
         Task<bool> UpdateAddressAsync(UpdateAddressDTO updateAddressDTO);
-        //Task<bool> DeleteAddressAsync(DeleteAddressDTO deleteAddressDto);
 
         Task<bool> DeleteAddressAsync(AddressDTO response);
-        Task<AddressDTO> GetUserAddress(string email);
+        
+
+        //Task AddUserToAddressAsync(Guid addressId, Guid userId);
+        //Task<bool> DeleteAddressAsync(DeleteAddressDTO deleteAddressDto);
     }
 }
