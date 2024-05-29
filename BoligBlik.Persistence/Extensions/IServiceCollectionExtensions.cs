@@ -66,7 +66,7 @@ namespace BoligBlik.Persistence.Extensions
         {
             //var connectionString = configuration.GetConnectionString("SkafteLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             //var connectionString = configuration.GetConnectionString("AlexBackEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            var connectionString = configuration.GetConnectionString("RSBackEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<BoligBlikContext>(options =>
             {
                 options.UseSqlServer(connectionString);
