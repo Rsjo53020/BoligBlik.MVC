@@ -1,5 +1,6 @@
 ﻿using BoligBlik.MVC.DTO.Address;
 using BoligBlik.MVC.DTO.BoardMember;
+using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -12,12 +13,10 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<AddressProxy> _logger;
-        private readonly IUserProxy _userProxy;
 
-        public AddressProxy(IHttpClientFactory httpClientFactory, IUserProxy userProxy)
+        public AddressProxy(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _userProxy = userProxy;
         }
 
 
@@ -127,27 +126,7 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
 
         }
-
-        public async Task<AddressDTO> GetUserAddress(string email)
-        {
-            try
-            {
-                var addressDTOs = await GetAllAddressAsync();
-
-                var userDTO = await _userProxy.GetUserAsync(email);
-
-                var userAddressDTO = addressDTOs.Where(a => a.Users
-                .Any(u => u.Id == userDTO.Id)).FirstOrDefault();
-
-
-                return userAddressDTO;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error occurred while retrieving an address", ex.Message);
-                throw new Exception($"Error occurred while retrieving an address data: {ex.Message}");
-            }
-        }
+        
 
     }
 }

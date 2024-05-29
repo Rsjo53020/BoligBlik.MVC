@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.User;
+using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +12,13 @@ namespace BoligBlik.MVC.ProxyServices.Users
         private readonly IHttpClientFactory _clientFactory;
         //logger
         private readonly ILogger<UserProxy> _logger;
+        //other proxys
+        private readonly IAddressProxy _addressProxy;
 
-        public UserProxy(IHttpClientFactory clientFactory)
+        public UserProxy(IHttpClientFactory clientFactory, IAddressProxy addressProxy)
         {
             _clientFactory = clientFactory;
+            _addressProxy = addressProxy;
         }
         /// <summary>
         /// creates a user with http call to backend
@@ -128,6 +132,37 @@ namespace BoligBlik.MVC.ProxyServices.Users
             catch (Exception ex)
             {
                 _logger.LogError("an error occured while deleting a user", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// gets all users without an address 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<IEnumerable<UserDTO>> GetUsersWithoutAddressAsync()
+        {
+            try
+            {
+                var userResponse = await GetAllUsersAsync();
+                var addressResponse = await _addressProxy.GetAllAddressAsync();
+
+
+                var addressUserIds = new HashSet<Guid>(
+                    addressResponse.SelectMany(a => a.Users.Select(u => u.Id))
+                );
+                //filter
+                var response = userResponse
+                    .Where(u => !addressUserIds.Contains(u.Id))
+                    .ToList();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error in UserWithOutAddress in UserRepository " + ex.Message);
+                throw new ApplicationException("Error in UserWithOutAddress in UserRepository", ex);
             }
         }
     }
