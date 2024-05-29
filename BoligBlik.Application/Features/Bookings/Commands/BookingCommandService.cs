@@ -41,7 +41,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
                 var bookingItem = _mapper.Map<BookingItem>(request.Item);
 
 
-                var createdBooking = Booking.Create(request.StartTime, request.EndTime, bookingItem, _bookingDomainService);
+                var createdBooking = Booking.Create(request.StartTime, request.EndTime, bookingItem, request.AddressId,_bookingDomainService);
 
                 _bookingCommandRepo.CreateBooking(createdBooking);
                 _unitOfWork.Commit();

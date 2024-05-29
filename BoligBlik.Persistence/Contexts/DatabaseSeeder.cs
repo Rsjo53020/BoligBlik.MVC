@@ -23,9 +23,8 @@ namespace BoligBlik.Persistence.Contexts
             SeedBoardMembers();
             SeedMeeting();
             SeedBookingItem();
-            SeedBooking();
             SeedAddress();
-
+            SeedBooking();
         }
 
 
@@ -73,12 +72,14 @@ namespace BoligBlik.Persistence.Contexts
         {
             if (_context.Adresses.Any()) return;
 
+
+
             var Address = new Address[]
             {
 
                 new Address
                 {
-                    Street = "Findlandsvej",
+                    Street = "Finlandsvej",
                     HouseNumber = "51",
                     Floor = "1",
                     DoorNumber = "th",
@@ -89,7 +90,7 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new Address
                 {
-                    Street = "Findlandsvej",
+                    Street = "Finlandsvej",
                     HouseNumber = "51",
                     Floor = "2",
                     DoorNumber = "th",
@@ -211,35 +212,53 @@ namespace BoligBlik.Persistence.Contexts
 
         internal void SeedBooking()
         {
-            if (_context.Bookings.Any()) return;
+            if (_context.Bookings.Any())
+                return;
 
-                var bookings = new Booking[]
+            var address1 = _context.Adresses.FirstOrDefault(a =>
+                a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "1" && a.DoorNumber == "th");
+            var address2 = _context.Adresses.FirstOrDefault(a =>
+                a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "2" && a.DoorNumber == "th");
+
+            if (address1 == null || address2 == null)
             {
-                Booking.Create(
-                    DateTime.Now.AddHours(1),
-                    DateTime.Now.AddHours(2),
-                     _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine"), _domainService),
+                throw new Exception("Addresses not found.");
+            }
 
-                Booking.Create(
-                    DateTime.Now.AddHours(3),
-                    DateTime.Now.AddHours(4),
-                    _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine"), _domainService),
+            var washingMachineItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine");
+            var trailerItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer");
 
-                Booking.Create(
-                DateTime.Now.AddHours(6),
-                DateTime.Now.AddHours(7),
-                _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer"), _domainService)
+            if (washingMachineItem == null || trailerItem == null)
+            {
+                throw new Exception("Booking items not found.");
+            }
+
+            var booking1 = new Booking
+            {
+                BookingDates = new BookingDates(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2)),
+                Item = washingMachineItem,
+                AddressId = address1.Id
             };
 
-
-            foreach (var booking in bookings)
+            var booking2 = new Booking
             {
-                _context.Bookings.Add(booking);
-            }
+                BookingDates = new BookingDates(DateTime.Now.AddHours(3), DateTime.Now.AddHours(4)),
+                Item = washingMachineItem,
+                AddressId = address1.Id
+            };
+
+            var booking3 = new Booking
+            {
+                BookingDates = new BookingDates(DateTime.Now.AddHours(6), DateTime.Now.AddHours(7)),
+                Item = trailerItem,
+                AddressId = address2.Id
+            };
+
+            _context.Bookings.Add(booking1);
+            _context.Bookings.Add(booking2);
+            _context.Bookings.Add(booking3);
 
             _context.SaveChanges();
         }
-
-
     }
 }

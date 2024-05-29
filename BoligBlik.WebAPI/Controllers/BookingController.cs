@@ -78,25 +78,25 @@ namespace BoligBlik.WebAPI.Controllers
 
         }
 
-        [HttpPut()]
-        public ActionResult PutBoardMember([FromBody] BookingDTO request)
-        {
-            _bookingCommand.UpdateBooking(request);
-            return Ok();
-        }
-
         [HttpDelete("{id}/{rowVersion}")]
-        public IActionResult DeleteBooking(Guid id, Byte[] rowVersion)
+        public IActionResult DeleteBooking(Guid id, string rowVersion)
         {
             try
             {
-                _bookingCommand.DeleteBooking(id, rowVersion);
+                _bookingCommand.DeleteBooking(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateBooking([FromBody] BookingDTO updateBookingDto)
+        {
+            _bookingCommand.UpdateBooking(updateBookingDto);
+            return Ok();
         }
     }
 }

@@ -12,19 +12,21 @@ namespace BoligBlik.Domain.Entities
 {
     public class Booking : Entity
     {
+        public Guid AddressId { get; set; }
         public BookingDates BookingDates { get; set; }
         public BookingItem Item { get; set; }
 
 
-        internal Booking() : base()
+        public Booking() : base()
         {
             
         }
 
-        private Booking(DateTime startTime, DateTime endTime, BookingItem item) : base()
+        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
+            this.AddressId = addressId;
 
             ValidateBooking();
         }
@@ -52,9 +54,9 @@ namespace BoligBlik.Domain.Entities
             return _bookingDomainService.IsBookingOverlapping(booking);
         }
 
-        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, IBookingDomainService _bookingDomainService)
+        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId,IBookingDomainService _bookingDomainService)
         {
-            var booking = new Booking(startTime, endTime, item);
+            var booking = new Booking(startTime, endTime, item, addressId);
             var isOverlapping = booking.IsOverlapping(_bookingDomainService, booking);
           
             if (!isOverlapping)

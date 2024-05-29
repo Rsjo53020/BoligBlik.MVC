@@ -44,9 +44,17 @@ namespace BoligBlik.MVC.Controllers
         {
             var bookingItemViewModel = await _bookingItemsProxy.GetBookingItem(itemId);
 
+            var allAddress = await _addressProxy.GetAllAddressAsync();
+
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
+
+            var userAddressDTO = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+
+
             CreateBookingViewModel bookingViewModel = new CreateBookingViewModel
             {
-                Item = _mapper.Map<BookingItemViewModel>(bookingItemViewModel)
+                Item = _mapper.Map<BookingItemViewModel>(bookingItemViewModel),
+                AddressId = userAddressDTO.Id
             };
 
             return View(bookingViewModel);
@@ -110,18 +118,31 @@ namespace BoligBlik.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
-                await _bookingProxy.DeleteBooking(id);
+                await _bookingProxy.DeleteBooking(id, rowVersion);
                 return RedirectToAction("GetUserBookings");
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"An error occurred while deleting the booking: {ex.Message}");
-                return View();
             }
+            return RedirectToAction("GetUserBookings");
+        }
+
+        public async Task<IActionResult> GetUserBookings()
+        {
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
+
+            var allAddress = await _addressProxy.GetAllAddressAsync();
+
+            var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+
+            var BookingVieModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
+
+            return View(BookingVieModel);
         }
     }
 }
