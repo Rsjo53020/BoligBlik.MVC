@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
 using BoligBlik.MVC.Models.BoardMembers;
-using BoligBlik.MVC.Models.Users;
 
 namespace BoligBlik.MVC.Mappings
 {

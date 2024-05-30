@@ -1,5 +1,4 @@
-﻿using BoligBlik.MVC.DTO.User;
-using BoligBlik.MVC.Models.Common;
+﻿using BoligBlik.MVC.Models.Common;
 using BoligBlik.MVC.Models.Users;
 
 namespace BoligBlik.MVC.Models.BoardMembers

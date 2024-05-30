@@ -1,5 +1,4 @@
-﻿using BoligBlik.MVC.DTO.Address;
-using BoligBlik.MVC.DTO.BookingItems;
+﻿using BoligBlik.MVC.DTO.BookingItems;
 using BoligBlik.MVC.DTO.Common;
 
 namespace BoligBlik.MVC.DTO.Bookings

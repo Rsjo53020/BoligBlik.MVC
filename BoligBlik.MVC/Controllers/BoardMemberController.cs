@@ -1,24 +1,26 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
-using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Security.Claims;
 
 namespace BoligBlik.MVC.Controllers
 {
     public class BoardMemberController : Controller
     {
-        private readonly IBoardMemberProxy _boardMemberProxy;
+        //SUPPORT
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ILogger<BoardMemberController> _logger;
+
+        //Proxy
         private readonly IUserProxy _userProxy;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IBoardMemberProxy _boardMemberProxy;
         public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager, ILogger<BoardMemberController> logger)
         {
             _boardMemberProxy = boardMemberProxy;
@@ -27,14 +29,19 @@ namespace BoligBlik.MVC.Controllers
             _userManager = userManager;
             _logger = logger;
         }
-
+        
+        /// <summary>
+        /// Create view for BoardMember
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
         /// <summary>
-        /// Creates a BoardMember async 
+        /// Create a BoardMember
         /// </summary>
         /// <param name="createBoardMemberViewModel"></param>
         /// <returns></returns>
@@ -58,6 +65,7 @@ namespace BoligBlik.MVC.Controllers
         /// Reads all BoardMembers async
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> ReadAll()
         {
@@ -76,15 +84,16 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while reading all boardMembers", ex);
-                return NotFound();
+                return View(new List<BoardMemberViewModel>());
             }
         }
 
         /// <summary>
-        /// gets the update page
+        /// Update view for a BoardMember
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -112,9 +121,11 @@ namespace BoligBlik.MVC.Controllers
 
 
         /// <summary>
-        /// Update a BoardMember async
+        /// Update a BoardMember and add a claim with the boardmember title
         /// </summary>
+        /// <param name="boardMemberViewModel"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
@@ -168,7 +179,7 @@ namespace BoligBlik.MVC.Controllers
 
             if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
             {
-                
+
                 var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
                 var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
 
@@ -181,7 +192,7 @@ namespace BoligBlik.MVC.Controllers
             }
 
             if (boardMemberDTO.Title == "Næstformand" || boardMemberDTO.Title == "Kassérer" || boardMemberDTO.Title == "Bestyrelse")
-            {  
+            {
                 var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
                 var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
 
@@ -189,7 +200,7 @@ namespace BoligBlik.MVC.Controllers
                 {
                     await _userManager.RemoveClaimAsync(identityUser, claim);
                 }
-              
+
                 var claimToUser = new Claim("Boardmembers", boardMemberDTO.Title);
                 await _userManager.AddClaimAsync(identityUser, claimToUser);
             }
@@ -198,10 +209,12 @@ namespace BoligBlik.MVC.Controllers
         }
 
         /// <summary>
-        /// Deletes a BoardMember async
+        /// Delete a BoardMember
         /// </summary>
-        /// <param name="deleteBoardMemberViewModel"></param>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {

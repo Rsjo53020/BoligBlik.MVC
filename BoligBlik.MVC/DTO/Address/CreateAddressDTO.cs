@@ -1,5 +1,4 @@
-﻿
-namespace BoligBlik.MVC.DTO.Address
+﻿namespace BoligBlik.MVC.DTO.Address
 {
     public class CreateAddressDTO 
     {
