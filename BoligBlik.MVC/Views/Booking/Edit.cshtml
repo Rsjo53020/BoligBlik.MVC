@@ -12,15 +12,10 @@
     <div class="col-md-4">
         <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="RowVersion" />
-          
-            <input type="hidden" asp-for="Item.RowVersion" />
+            <input type="hidden" asp-for= "RowVersion" />
             <input type="hidden" asp-for="Item.Id" />
-            <input type="hidden" asp-for="Item.Name" />
-            <input type="hidden" asp-for="Item.Price" />
-            <input type="hidden" asp-for="Item.Description" />
-            <input type="hidden" asp-for="Item.Rules" />
-            <input type="hidden" asp-for="Item.Repairs" />
+            <input type="hidden" asp-for="Item.RowVersion" />
+          
             <div class="form-group">
                 <label class="control-label">Booking</label>
                 <input class="form-control" value="@Model.Item.Name" readonly />
@@ -38,7 +33,7 @@
             <div class="form-group">
                 <input type="submit" value="Opdater Booking" class="btn btn-primary" />
                
-                <a asp-action="Delete" asp-controller="Booking" asp-route-id="@Model.Id" class="btn btn-danger">Slet Booking</a>
+                <a asp-action="Delete" asp-controller="Booking" asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(@Model.RowVersion)" class="btn btn-danger">Slet Booking</a>
             </div>
         </form>
     </div>

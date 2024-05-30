@@ -9,7 +9,6 @@ namespace BoligBlik.MVC.Models.Bookings
 {
     public class BookingViewModel : EntityViewModel
     {
-        public AddressViewModel Address { get; set; }
         public BookingItemViewModel Item { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
