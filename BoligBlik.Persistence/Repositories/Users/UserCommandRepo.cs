@@ -13,9 +13,10 @@ namespace BoligBlik.Persistence.Repositories.Users
         //logger
         private readonly ILogger<User> _logger;
 
-        public UserCommandRepo(BoligBlikContext dbContext)
+        public UserCommandRepo(BoligBlikContext dbContext, ILogger<User> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
         /// <summary>
         /// create a user
@@ -31,8 +32,8 @@ namespace BoligBlik.Persistence.Repositories.Users
             {
                 _logger.LogError("Error in create in user: " + ex.Message);
             }
-
         }
+
         /// <summary>
         /// update a user
         /// </summary>
@@ -41,6 +42,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
+                //handle concurrency
                 _dbContext.Update(user)
                     .Property(b => b.RowVersion).OriginalValue = user.RowVersion;
             }
@@ -49,6 +51,7 @@ namespace BoligBlik.Persistence.Repositories.Users
                 _logger.LogError("Error in update in user: " + ex.Message);
             }
         }
+
         /// <summary>
         /// delete a user
         /// </summary>
@@ -58,6 +61,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
+                //handle concurrency
                 _dbContext.Remove(_dbContext.Users
                     .Where(b => b.Id == id).FirstOrDefault())
                     .Property(b => b.RowVersion).OriginalValue = rowVersion;

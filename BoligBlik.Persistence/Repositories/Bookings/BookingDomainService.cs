@@ -8,13 +8,23 @@ namespace BoligBlik.Persistence.Repositories.Bookings
 {
     public class BookingDomainService : IBookingDomainService
     {
+        //Dependencies
         private readonly BoligBlikContext _dbContext;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dbContext"></param>
         public BookingDomainService(BoligBlikContext dbContext)
         {
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Booking Overlapping Validation
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns></returns>
         public bool IsBookingOverlapping(Booking booking)
         {
             return _dbContext.Bookings
@@ -24,11 +34,9 @@ namespace BoligBlik.Persistence.Repositories.Bookings
                     (booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.endTime)
                 );
         }
-
         public DateTime NowTime()
         {
             return DateTime.Now;
         }
     }
-
 }

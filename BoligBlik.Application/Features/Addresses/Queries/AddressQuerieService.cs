@@ -5,20 +5,34 @@ using BoligBlik.Application.Common.Exceptions;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.Addresses.Queries
 {
     public class AddressQuerieService : IAddressQuerieService
     {
+        //Dependencies 
         private readonly IAddressQuerieRepo _addressRepo;
         private readonly IMapper _mapper;
-        public AddressQuerieService(IAddressQuerieRepo addressRepo, IMapper mapper)
+        private readonly ILogger<AddressQuerieService> _logger;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="addressRepo"></param>
+        /// <param name="mapper"></param>
+        public AddressQuerieService(IAddressQuerieRepo addressRepo, IMapper mapper, ILogger<AddressQuerieService> logger)
         {
             _addressRepo = addressRepo;
             _mapper = mapper;
+            _logger = logger;
         }
 
-
+        /// <summary>
+        /// Read all addresses asynchronously  
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="AddressesNotFoundException"></exception>
         public async Task<IEnumerable<AddressDTO>> ReadAllAsync()
         {
             try
@@ -35,7 +49,12 @@ namespace BoligBlik.Application.Features.Addresses.Queries
             }
         }
 
-        public async Task<AddressDTO> ReadAddress(Guid id)
+        /// <summary>
+        /// Read Address asynchronously by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<AddressDTO> ReadAddressAsync(Guid id)
         {
             var response = await _addressRepo.ReadAddress(id);
             var addressMap = _mapper.Map<AddressDTO>(response);

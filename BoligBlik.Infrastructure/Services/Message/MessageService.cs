@@ -3,6 +3,7 @@ using BoligBlik.Application.DTO.Message;
 using System.Net;
 using BoligBlik.Application.Interfaces.Message;
 
+// NOT IMPLEMENTET
 namespace BoligBlik.Infrastructure.Services.Message
 {
     public class MessageService : IMessageService
@@ -12,18 +13,13 @@ namespace BoligBlik.Infrastructure.Services.Message
         /// </summary>
         public void SendMessage(CreateMessageDTO request)
         {
-            // create a MailMessage object with the sender, recipient, subject and body
             MailMessage message = new MailMessage(request.Sender, request.Recipient, request.Subject, request.Body);
-
-            // create a SmtpClient object 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
             {
                 UseDefaultCredentials = false,
                 EnableSsl = true,
                 Credentials = new NetworkCredential("boligforeningenUnik@gmail.com", "Unik1234")
             };
-
-            // try to send the message
             try
             {
                 client.Send(message);

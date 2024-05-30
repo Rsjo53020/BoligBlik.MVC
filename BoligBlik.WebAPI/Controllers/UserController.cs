@@ -36,7 +36,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (request != null)
+                if (ModelState.IsValid)
                 {
 
                     _commandService.CreateUser(request);
@@ -45,7 +45,7 @@ namespace BoligBlik.WebAPI.Controllers
                 }
                 else
                 {
-                    return BadRequest("Something went wrong");
+                    return BadRequest("Request cannot be null");
                 }
             }
             catch (Exception ex)
@@ -63,13 +63,22 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpGet("{email}")]
-        public async Task<ActionResult> GetUser(string email)
+        public async Task<ActionResult> GetUserAsync(string email)
         {
-            if (string.IsNullOrEmpty(email)) return BadRequest();
-            var restult = await _querieService.ReadUserAsync(email);
+            try
+            {
+                if (string.IsNullOrEmpty(email)) return BadRequest();
+                var restult = await _querieService.ReadUserAsync(email);
 
-            if (restult == null) return NotFound();
-            return Ok(restult);
+                if (restult == null) return NotFound();
+                return Ok(restult);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError("Error reading user", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         /// <summary>
@@ -79,10 +88,20 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllUsers()
         {
-            var result = await _querieService.ReadAllUsersAsync();
+            try
+            {
+                var result = await _querieService.ReadAllUsersAsync();
 
-            if (result == null) return NotFound();
-            return Ok(result);
+                if (result == null) return NotFound();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError("Error reading users", ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+
         }
         /// <summary>
         /// updates a user
@@ -95,15 +114,11 @@ namespace BoligBlik.WebAPI.Controllers
 
             try
             {
-                if (request == null)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest("Request cannot be null.");
                 }
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
                 _commandService.UpdateUser(request);
                 return Ok();
             }
@@ -130,7 +145,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (id == null || rowVersion == null) return BadRequest();
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
                 _commandService.DeleteUser(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }

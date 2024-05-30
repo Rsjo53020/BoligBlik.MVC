@@ -5,7 +5,6 @@ using BoligBlik.Domain.Common.Interfaces;
 using BoligBlik.Domain.Common.Shared;
 using BoligBlik.Domain.Exceptions;
 using BoligBlik.Entities;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace BoligBlik.Domain.Entities
@@ -16,7 +15,21 @@ namespace BoligBlik.Domain.Entities
         public BookingDates BookingDates { get; set; }
         public BookingItem Item { get; set; }
 
-        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId, IBookingDomainService _bookingDomainService)
+        /// <summary>
+        /// Factory for creating a booking, Domain driven design pattern.
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="item"></param>
+        /// <param name="addressId"></param>
+        /// <param name="_bookingDomainService"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Booking Create(DateTime startTime,
+            DateTime endTime,
+            BookingItem item,
+            Guid addressId,
+            IBookingDomainService _bookingDomainService)
         {
             var booking = new Booking(startTime, endTime, item, addressId);
             var isOverlapping = booking.IsOverlapping(_bookingDomainService, booking);
@@ -25,23 +38,28 @@ namespace BoligBlik.Domain.Entities
             {
                 return booking;
             }
-
             if (isOverlapping)
             {
-                throw new Exception("Booking is overlapping");
+                throw new Exception("Booking Is Overlapping with another Booking.");
             }
-
             else
             {
-                throw new Exception("Fail during create booking");
+                throw new Exception("Operation failed during create booking");
             }
         }
 
-        private Booking() : base()
-        {
-            
-        }
+        /// <summary>
+        /// Private Constructor for Entity Framework. 
+        /// </summary>
+        private Booking() : base() { }
 
+        /// <summary>
+        /// Private Constructor
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="item"></param>
+        /// <param name="addressId"></param>
         private Booking(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
@@ -51,12 +69,22 @@ namespace BoligBlik.Domain.Entities
             ValidateBooking();
         }
 
+        /// <summary>
+        ///  ValidateBooking Start and EndTime.
+        /// </summary>
         private void ValidateBooking()
         {
             ValidateTimeInput(nameof(BookingDates.startTime), BookingDates.startTime);
             ValidateTimeInput(nameof(BookingDates.endTime), BookingDates.endTime);
         }
 
+        /// <summary>
+        /// Validate Booking Start and EndTime Indput.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="dateTime"></param>
+        /// <exception cref="TimeNotSetException"></exception>
+        /// <exception cref="TimeInPastException"></exception>
         private void ValidateTimeInput(string parameter, DateTime dateTime)
         {
             if (dateTime == null || dateTime == default)
@@ -73,7 +101,5 @@ namespace BoligBlik.Domain.Entities
         {
             return _bookingDomainService.IsBookingOverlapping(booking);
         }
-
-        
     }
 }
