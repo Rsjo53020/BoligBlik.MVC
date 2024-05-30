@@ -18,7 +18,6 @@ namespace BoligBlik.WebAPI.Controllers
     public class BookingController : ControllerBase
     {
         //Dependencies
-        private readonly IMapper _mapper;
         private readonly IBookingCommandService _bookingCommandService;
         private readonly IBookingQuerieService _bookingQuerieService;
         private readonly Logger<BookingController> _logger;
@@ -30,12 +29,10 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="bookingCommand"></param>
         /// <param name="mapper"></param>
         public BookingController(IBookingQuerieService bookingQuerie,
-            IBookingCommandService bookingCommand,
-            IMapper mapper, Logger<BookingController> logger)
+            IBookingCommandService bookingCommand, Logger<BookingController> logger)
         {
             _bookingQuerieService = bookingQuerie;
             _bookingCommandService = bookingCommand;
-            _mapper = mapper;
             _logger = logger;
         }
 
@@ -49,7 +46,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _bookingCommandService.CreateBooking(request);
                     return Created();
@@ -144,7 +141,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _bookingCommandService.UpdateBooking(request);
                     return Ok();

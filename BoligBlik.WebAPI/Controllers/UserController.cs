@@ -20,11 +20,12 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IMapper _mapper;
 
         public UserController(IUserCommandService userCommandService,
-            IUserQuerieService userQuerieService, IMapper mapper)
+            IUserQuerieService userQuerieService, IMapper mapper, ILogger<UserController> logger)
         {
             _commandService = userCommandService;
             _querieService = userQuerieService;
             _mapper = mapper;
+            _logger = logger;
         }
         /// <summary>
         /// Creates a user
@@ -36,7 +37,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _commandService.CreateUser(request);
                     return Created();
@@ -110,13 +111,9 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (request == null)
                 {
                     return BadRequest("Request cannot be null.");
-                }
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
                 }
                 _commandService.UpdateUser(request);
                 return Ok();

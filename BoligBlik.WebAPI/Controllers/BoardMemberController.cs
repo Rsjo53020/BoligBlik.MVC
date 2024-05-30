@@ -34,7 +34,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _commandService.CreateBoardMember(request);
                     return Created();
@@ -103,7 +103,7 @@ namespace BoligBlik.WebAPI.Controllers
             
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _commandService.UpdateBoardMember(request);
                     return Ok();
