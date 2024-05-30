@@ -132,6 +132,7 @@ namespace BoligBlik.MVC.Controllers
             return RedirectToAction("GetUserBookings");
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetUserBookings()
         {
             var user = await _userProxy.GetUserAsync(User.Identity.Name);
@@ -144,5 +145,24 @@ namespace BoligBlik.MVC.Controllers
 
             return View(BookingVieModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllBookings()
+        {
+            try
+            {
+                IEnumerable<BookingDTO> allBookings = await _bookingProxy.GetAllBookingsAsync();
+
+                var allBookingsViewModel = _mapper.Map<IEnumerable<BookingViewModel>>(allBookings);
+
+                return View(allBookingsViewModel);
+            }
+            catch (Exception ex)
+            {
+               // _logger.LogError(ex, "An error occurred while getting all bookings.");
+                return View("Error");
+            }
+        }
+
     }
 }

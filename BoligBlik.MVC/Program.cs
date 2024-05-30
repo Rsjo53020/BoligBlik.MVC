@@ -1,7 +1,9 @@
+using BoligBlik.MVC.Common.Interfaces;
 using BoligBlik.MVC.Data;
 using BoligBlik.MVC.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace BoligBlik.MVC
@@ -56,9 +58,9 @@ namespace BoligBlik.MVC
 
             // move to a ServiceExtension.cs
             builder.Services.AddAuthorization(options => options
-                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin")));
+                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin", "Formand", "Admin")));
             builder.Services.AddAuthorization(options => options
-                .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Member")));
+                .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Boardmembers")));
 
             // Add more claims as necessary
 
@@ -68,8 +70,8 @@ namespace BoligBlik.MVC
             {
                 scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
             }
-
             var baseAddress = Environment.GetEnvironmentVariable("BaseAddress");
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -93,19 +95,6 @@ namespace BoligBlik.MVC
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-
-            using (var scope = app.Services.CreateScope())
-            {
-                var claimManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-
-                var claims = new[] { "Admin", "Boardmember", "Member" };
-
-                foreach (var claim in claims)
-                {
-                    await claimManager.CreateAsync(new IdentityUser(claim));
-                }
-
-            }
 
             app.Run();
         }

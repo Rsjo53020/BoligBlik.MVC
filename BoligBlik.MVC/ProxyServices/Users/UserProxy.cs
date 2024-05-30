@@ -140,7 +140,7 @@ namespace BoligBlik.MVC.ProxyServices.Users
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ApplicationException"></exception>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="NotImplementedException"></exception> 
         public async Task<IEnumerable<UserDTO>> GetUsersWithoutAddressAsync()
         {
             try
