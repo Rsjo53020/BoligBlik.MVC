@@ -24,7 +24,6 @@ namespace BoligBlik.Persistence.Contexts
             SeedMeeting();
             SeedBookingItem();
             SeedAddress();
-            SeedBooking();
         }
 
 
@@ -210,55 +209,55 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
-        internal void SeedBooking()
-        {
-            if (_context.Bookings.Any())
-                return;
+        //internal void SeedBooking()
+        //{
+        //    if (_context.Bookings.Any())
+        //        return;
 
-            var address1 = _context.Adresses.FirstOrDefault(a =>
-                a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "1" && a.DoorNumber == "th");
-            var address2 = _context.Adresses.FirstOrDefault(a =>
-                a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "2" && a.DoorNumber == "th");
+        //    var address1 = _context.Adresses.FirstOrDefault(a =>
+        //        a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "1" && a.DoorNumber == "th");
+        //    var address2 = _context.Adresses.FirstOrDefault(a =>
+        //        a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "2" && a.DoorNumber == "th");
 
-            if (address1 == null || address2 == null)
-            {
-                throw new Exception("Addresses not found.");
-            }
+        //    if (address1 == null || address2 == null)
+        //    {
+        //        throw new Exception("Addresses not found.");
+        //    }
 
-            var washingMachineItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine");
-            var trailerItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer");
+        //    var washingMachineItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine");
+        //    var trailerItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer");
 
-            if (washingMachineItem == null || trailerItem == null)
-            {
-                throw new Exception("Booking items not found.");
-            }
+        //    if (washingMachineItem == null || trailerItem == null)
+        //    {
+        //        throw new Exception("Booking items not found.");
+        //    }
 
-            var booking1 = new Booking
-            {
-                BookingDates = new BookingDates(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2)),
-                Item = washingMachineItem,
-                AddressId = address1.Id
-            };
+        //    var booking1 = new Booking
+        //    {
+        //        BookingDates = new BookingDates(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2)),
+        //        Item = washingMachineItem,
+        //        AddressId = address1.Id
+        //    };
 
-            var booking2 = new Booking
-            {
-                BookingDates = new BookingDates(DateTime.Now.AddHours(3), DateTime.Now.AddHours(4)),
-                Item = washingMachineItem,
-                AddressId = address1.Id
-            };
+        //    var booking2 = new Booking
+        //    {
+        //        BookingDates = new BookingDates(DateTime.Now.AddHours(3), DateTime.Now.AddHours(4)),
+        //        Item = washingMachineItem,
+        //        AddressId = address1.Id
+        //    };
 
-            var booking3 = new Booking
-            {
-                BookingDates = new BookingDates(DateTime.Now.AddHours(6), DateTime.Now.AddHours(7)),
-                Item = trailerItem,
-                AddressId = address2.Id
-            };
+        //    var booking3 = new Booking
+        //    {
+        //        BookingDates = new BookingDates(DateTime.Now.AddHours(6), DateTime.Now.AddHours(7)),
+        //        Item = trailerItem,
+        //        AddressId = address2.Id
+        //    };
 
-            _context.Bookings.Add(booking1);
-            _context.Bookings.Add(booking2);
-            _context.Bookings.Add(booking3);
+        //    _context.Bookings.Add(booking1);
+        //    _context.Bookings.Add(booking2);
+        //    _context.Bookings.Add(booking3);
 
-            _context.SaveChanges();
-        }
+        //    _context.SaveChanges();
+        //}
     }
 }

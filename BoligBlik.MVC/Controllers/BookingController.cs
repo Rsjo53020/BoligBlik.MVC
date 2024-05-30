@@ -1,28 +1,33 @@
 ﻿using AutoMapper;
-using BoligBlik.MVC.DTO.BookingItems;
 using BoligBlik.MVC.DTO.Bookings;
 using BoligBlik.MVC.Models.Addresses;
 using BoligBlik.MVC.Models.BookingItems;
 using BoligBlik.MVC.Models.Bookings;
-using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BoligBlik.MVC.Controllers
 {
     public class BookingController : Controller
     {
+        //Dependencies
         private readonly IBookingItemsProxy _bookingItemsProxy;
         private readonly IBookingProxy _bookingProxy;
         private readonly IUserProxy _userProxy;
         private readonly IAddressProxy _addressProxy;
         private readonly IMapper _mapper;
 
-        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IAddressProxy addressProxy, IUserProxy userProxy,
+        /// <summary>
+        /// Controller
+        /// </summary>
+        public BookingController(
+            IBookingItemsProxy bookingItemsProxy, 
+            IBookingProxy bookingProxy, 
+            IAddressProxy addressProxy, 
+            IUserProxy userProxy,
             IMapper mapper)
         {
             _bookingItemsProxy = bookingItemsProxy;
@@ -32,6 +37,10 @@ namespace BoligBlik.MVC.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> NewBookingIndex()
         {
             var bookingItems = await _bookingItemsProxy.GetAllBookingItems();
@@ -159,7 +168,7 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-               // _logger.LogError(ex, "An error occurred while getting all bookings.");
+                // _logger.LogError(ex, "An error occurred while getting all bookings.");
                 return View("Error");
             }
         }
