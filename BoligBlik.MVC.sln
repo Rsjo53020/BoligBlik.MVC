@@ -29,7 +29,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3283BBB2-F9B8-4943-9295-D0BB29DCA330}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoligBlik.Core.Test", "..\BoligBlik.Core.Test\BoligBlik.Core.Test.csproj", "{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoligBlik.Core.Test", "..\BoligBlik.Core.Test\BoligBlik.Core.Test.csproj", "{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoligBlik.CoreTest", "..\BoligBlik.DomainTest\BoligBlik.CoreTest.csproj", "{EB400C13-E063-4D83-A0F1-054AA2AB44D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB400C13-E063-4D83-A0F1-054AA2AB44D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB400C13-E063-4D83-A0F1-054AA2AB44D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB400C13-E063-4D83-A0F1-054AA2AB44D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB400C13-E063-4D83-A0F1-054AA2AB44D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{BD83FBF3-5295-492C-A288-7B5386B3CE05} = {ABFC8E28-9642-4BDA-B9F0-624E34747060}
 		{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3} = {3283BBB2-F9B8-4943-9295-D0BB29DCA330}
 		{D26E4B7E-3DE0-4837-85A0-F8321BF8183B} = {3283BBB2-F9B8-4943-9295-D0BB29DCA330}
+		{EB400C13-E063-4D83-A0F1-054AA2AB44D8} = {3283BBB2-F9B8-4943-9295-D0BB29DCA330}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8229D6BB-536D-4084-A53B-FAD4A07F5055}
