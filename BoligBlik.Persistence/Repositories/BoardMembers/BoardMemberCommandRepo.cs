@@ -56,6 +56,7 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         {
             try
             {
+                //handle concurrency
                 _db.Remove(_db.BoardMembers.Where(b => b.Id == id).FirstOrDefault())
                     .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }

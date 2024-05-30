@@ -41,6 +41,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
+                //handle concurrency
                 _dbContext.Update(user)
                     .Property(b => b.RowVersion).OriginalValue = user.RowVersion;
             }
@@ -58,6 +59,7 @@ namespace BoligBlik.Persistence.Repositories.Users
         {
             try
             {
+                //handle concurrency
                 _dbContext.Remove(_dbContext.Users
                     .Where(b => b.Id == id).FirstOrDefault())
                     .Property(b => b.RowVersion).OriginalValue = rowVersion;

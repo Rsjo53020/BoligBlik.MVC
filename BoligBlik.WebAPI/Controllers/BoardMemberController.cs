@@ -14,11 +14,15 @@ namespace BoligBlik.WebAPI.Controllers
         //services
         private readonly IBoardMemberCommandService _commandService;
         private readonly IBoardMemberQuerieService _querieService;
+        //logger
+        private readonly ILogger<BoardMemberController> _logger;
         public BoardMemberController(IBoardMemberCommandService boardMemberCommandService,
-            IBoardMemberQuerieService boardMemberQuerieService)
+            IBoardMemberQuerieService boardMemberQuerieService,
+            ILogger<BoardMemberController> logger)
         {
             _commandService = boardMemberCommandService;
             _querieService = boardMemberQuerieService;
+            _logger = logger;
         }
         /// <summary>
         /// creates a boardmember
@@ -28,9 +32,17 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public ActionResult PostBoardMember([FromBody] CreateBoardMemberDTO request)
         {
-            if (request == null) return BadRequest();
-            _commandService.CreateBoardMember(request);
-            return Created();
+            try
+            {
+                if (request == null) return BadRequest();
+                _commandService.CreateBoardMember(request);
+                return Created();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when creating a boardmember", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
         /// <summary>
         /// reads a single boardmember from id
@@ -40,12 +52,20 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetBoardMemberAsync(Guid id)
         {
-            if(id == Guid.Empty) return BadRequest();
+            try
+            {
+                if (id == Guid.Empty) return BadRequest();
 
-            var result = await _querieService.ReadBoardMemberAsync(id);
+                var result = await _querieService.ReadBoardMemberAsync(id);
 
-            if (result == null) return NotFound();
-            return Ok(result);
+                if (result == null) return StatusCode(500);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading a boardmember", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
         /// <summary>
@@ -55,10 +75,18 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllBoardMembersAsync()
         {
-            var result = await _querieService.ReadAllBoardMembersAsync();
+            try
+            {
+                var result = await _querieService.ReadAllBoardMembersAsync();
 
-            if (result == null) return NotFound();
-            return Ok(result);
+                if (result == null) return NotFound();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading all boardmembers", ex.Message);
+                return StatusCode(500, ex);
+            }
 
         }
         /// <summary>
@@ -77,7 +105,8 @@ namespace BoligBlik.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError("sommething went wrong when updating a boardmember", ex.Message);
+                return StatusCode(500, ex);
             }
 
         }
@@ -98,7 +127,8 @@ namespace BoligBlik.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError("sommething went wrong when deleting a boardmember", ex.Message);
+                return StatusCode(500, ex);
             }
         }
     }
