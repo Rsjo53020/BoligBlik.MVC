@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.User;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.Users.Querie;
 using BoligBlik.Application.Interfaces.Users.Queries;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +13,12 @@ namespace BoligBlik.Application.Features.Users.Queries
         private readonly IMapper _mapper;
         private readonly ILogger<UserQueriesService> _logger;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="userQuerieRepo"></param>
+        /// <param name="logger"></param>
         public UserQueriesService(IMapper mapper, IUserQuerieRepo userQuerieRepo, ILogger<UserQueriesService> logger)
         {
             _mapper = mapper;

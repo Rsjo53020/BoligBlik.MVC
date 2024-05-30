@@ -10,12 +10,17 @@ namespace BoligBlik.WebAPI.Controllers
     [ApiController]
     public class BookingItemsController : ControllerBase
     {
-        //services
+        //Dependencies
         private readonly IBookingItemCommandService _bookItemCommandService;
         private readonly IBookingItemQuerieService _bookItemQuerieService;
         //logger
         private readonly ILogger<BookingItemsController> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bookingItemCommandService"></param>
+        /// <param name="bookingItemQuerieService"></param>
         public BookingItemsController(IBookingItemCommandService bookingItemCommandService,
             IBookingItemQuerieService bookingItemQuerieService,
             ILogger<BookingItemsController> logger)
@@ -24,6 +29,7 @@ namespace BoligBlik.WebAPI.Controllers
             _bookItemQuerieService = bookingItemQuerieService;
             _logger = logger;
         }
+
         /// <summary>
         /// creates a booking item
         /// </summary>
@@ -73,7 +79,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="itemId"></param>
         /// <returns></returns>
         [HttpGet("{itemId}")]
-        public async Task<ActionResult> GetBookingItem(Guid itemId)
+        public async Task<ActionResult> GetBookingItemAsync(Guid itemId)
         {
             try
             {

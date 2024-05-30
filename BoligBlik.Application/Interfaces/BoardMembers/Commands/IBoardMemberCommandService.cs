@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Application.Interfaces.BoardMembers.Commands
 {
+    /// <summary>
+    /// Interface for BoardMemberCommandService
+    /// </summary>
     public interface IBoardMemberCommandService
     {
-        public void CreateBoardMember(CreateBoardMemberDTO request);
-        public void UpdateBoardMember(BoardMemberDTO request);
+        void CreateBoardMember(CreateBoardMemberDTO request);
+        void UpdateBoardMember(BoardMemberDTO request);
         public void DeleteBoardMember(Guid id, Byte[] rowVersion);
     }
 }

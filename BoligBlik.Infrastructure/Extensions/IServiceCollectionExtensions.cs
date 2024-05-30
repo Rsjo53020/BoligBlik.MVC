@@ -13,7 +13,6 @@ namespace BoligBlik.Infrastructure.Extensions
         {
             AddServices(services);
             HttpClientFactory (services);
-
         }
 
         private static void AddServices(this IServiceCollection services)
@@ -23,7 +22,6 @@ namespace BoligBlik.Infrastructure.Extensions
 
         private static void HttpClientFactory (this IServiceCollection services)
         {
-
             services.AddScoped<IAddressValidationInf, AddressValidationInf>();
         }
     }

@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;

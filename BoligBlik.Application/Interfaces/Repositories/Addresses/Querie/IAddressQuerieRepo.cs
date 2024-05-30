@@ -1,6 +1,6 @@
 ﻿using BoligBlik.Entities;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.Addresses.Querie
 {
     public interface IAddressQuerieRepo
     {

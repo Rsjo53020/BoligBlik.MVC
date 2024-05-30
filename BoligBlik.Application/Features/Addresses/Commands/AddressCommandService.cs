@@ -1,29 +1,34 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.Interfaces.Addresses.Commands;
 using BoligBlik.Application.Interfaces.Infrastructure;
-using BoligBlik.Application.Interfaces.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
 using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using BoligBlik.Application.Interfaces.Repositories.Addresses.Command;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 
 namespace BoligBlik.Application.Features.Addresses.Commands
 {
     public class AddressCommandService : IAddressCommandService
     {
-        //Repositories
+        //Dependencies
         private readonly IAddressCommandRepo _addressRepo;
-        //Validate address API.DAWA
         private readonly IAddressValidationInf _addressValidationInf;
-        //Mappers
         private readonly IMapper _mapper;
-        //UnitOfWork
         private readonly IUnitOfWork _unitOfWork;
-        //Logger
         private readonly ILogger<IAddressCommandService> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="addressRepo"></param>
+        /// <param name="mapper"></param>
+        /// <param name="addressValidationInf"></param>
+        /// <param name="unitOfWork"></param>
+        /// <param name="logger"></param>
         public AddressCommandService(IAddressCommandRepo addressRepo, IMapper mapper, IAddressValidationInf addressValidationInf, IUnitOfWork unitOfWork, ILogger<IAddressCommandService> logger)
         {
             _addressRepo = addressRepo;
@@ -50,7 +55,6 @@ namespace BoligBlik.Application.Features.Addresses.Commands
                
                     _addressRepo.CreateAddress(address);
                     _unitOfWork.Commit();
-                
             }
             catch (Exception ex)
             {
@@ -60,6 +64,11 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             }
         }
 
+        /// <summary>
+        /// Update Address
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="ValidationException"></exception>
         public void UpdateAddress(AddressDTO request)
         {
             try
@@ -84,6 +93,10 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             }
         }
 
+        /// <summary>
+        /// Delete Address
+        /// </summary>
+        /// <param name="request"></param>
         public void DeleteAddress(AddressDTO request)
         {
             try

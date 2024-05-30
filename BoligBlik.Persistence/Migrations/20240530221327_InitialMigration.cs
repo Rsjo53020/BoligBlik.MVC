@@ -54,21 +54,6 @@ namespace BoligBlik.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meetings",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Meetings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -97,8 +82,8 @@ namespace BoligBlik.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     BookingDates_endTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BookingDates_startTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
@@ -111,7 +96,8 @@ namespace BoligBlik.Persistence.Migrations
                         column: x => x.AddressId,
                         principalSchema: "address",
                         principalTable: "Address",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Booking_BookingItems_ItemId",
                         column: x => x.ItemId,
@@ -172,9 +158,6 @@ namespace BoligBlik.Persistence.Migrations
             migrationBuilder.DropTable(
                 name: "Booking",
                 schema: "booking");
-
-            migrationBuilder.DropTable(
-                name: "Meetings");
 
             migrationBuilder.DropTable(
                 name: "Users");

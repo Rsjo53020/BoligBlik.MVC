@@ -6,29 +6,40 @@ using BoligBlik.Persistence.Contexts.Interfaces;
 
 namespace BoligBlik.Persistence.Contexts
 {
+    /// <summary>
+    /// Database Seeder 
+    /// </summary>
     public class DatabaseSeeder : IDatabaseSeeder
     {
+        //Dependencies
         private readonly BoligBlikContext _context;
         private readonly IBookingDomainService _domainService;
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="domainService"></param>
         public DatabaseSeeder(BoligBlikContext context, IBookingDomainService domainService)
         {
             _context = context;
             _domainService = domainService;
         }
 
+        /// <summary>
+        /// Seed Method call
+        /// </summary>
         public void SeedDB()
         {
             SeedUsers();
             SeedBoardMembers();
-            SeedMeeting();
             SeedBookingItem();
             SeedAddress();
         }
 
-
-
-
+        /// <summary>
+        /// Seed Users
+        /// </summary>
         internal void SeedUsers()
         {
             if (_context.Users.Any()) return;
@@ -67,11 +78,12 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Seed Address
+        /// </summary>
         internal void SeedAddress()
         {
             if (_context.Adresses.Any()) return;
-
-
 
             var Address = new Address[]
             {
@@ -109,6 +121,9 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Seed Board Members
+        /// </summary>
         internal void SeedBoardMembers()
         {
             if (_context.BoardMembers.Any()) return;
@@ -145,37 +160,10 @@ namespace BoligBlik.Persistence.Contexts
 
             _context.SaveChanges();
         }
-
-
-        internal void SeedMeeting()
-        {
-            if (_context.Meetings.Any()) return;
-
-            var meetings = new Meeting[]
-            {
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Møde ang. Ronni",
-
-                },
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Vigigt Møde",
-                }
-            };
-
-            foreach (var meeting in meetings)
-            {
-                _context.Meetings.Add(meeting);
-            }
-
-            _context.SaveChanges();
-        }
-
+        
+        /// <summary>
+        /// Seed Booking ITem
+        /// </summary>
         internal void SeedBookingItem()
         {
             if (_context.BookingItems.Any()) return;
@@ -208,56 +196,5 @@ namespace BoligBlik.Persistence.Contexts
 
             _context.SaveChanges();
         }
-
-        //internal void SeedBooking()
-        //{
-        //    if (_context.Bookings.Any())
-        //        return;
-
-        //    var address1 = _context.Adresses.FirstOrDefault(a =>
-        //        a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "1" && a.DoorNumber == "th");
-        //    var address2 = _context.Adresses.FirstOrDefault(a =>
-        //        a.Street == "Finlandsvej" && a.HouseNumber == "51" && a.Floor == "2" && a.DoorNumber == "th");
-
-        //    if (address1 == null || address2 == null)
-        //    {
-        //        throw new Exception("Addresses not found.");
-        //    }
-
-        //    var washingMachineItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine");
-        //    var trailerItem = _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer");
-
-        //    if (washingMachineItem == null || trailerItem == null)
-        //    {
-        //        throw new Exception("Booking items not found.");
-        //    }
-
-        //    var booking1 = new Booking
-        //    {
-        //        BookingDates = new BookingDates(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2)),
-        //        Item = washingMachineItem,
-        //        AddressId = address1.Id
-        //    };
-
-        //    var booking2 = new Booking
-        //    {
-        //        BookingDates = new BookingDates(DateTime.Now.AddHours(3), DateTime.Now.AddHours(4)),
-        //        Item = washingMachineItem,
-        //        AddressId = address1.Id
-        //    };
-
-        //    var booking3 = new Booking
-        //    {
-        //        BookingDates = new BookingDates(DateTime.Now.AddHours(6), DateTime.Now.AddHours(7)),
-        //        Item = trailerItem,
-        //        AddressId = address2.Id
-        //    };
-
-        //    _context.Bookings.Add(booking1);
-        //    _context.Bookings.Add(booking2);
-        //    _context.Bookings.Add(booking3);
-
-        //    _context.SaveChanges();
-        //}
     }
 }

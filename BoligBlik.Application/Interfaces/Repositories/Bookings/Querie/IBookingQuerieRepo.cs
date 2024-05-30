@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.Bookings.Querie
 {
     public interface IBookingQuerieRepo
     {

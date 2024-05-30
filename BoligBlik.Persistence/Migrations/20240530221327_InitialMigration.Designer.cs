@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.Persistence.Migrations
 {
     [DbContext(typeof(BoligBlikContext))]
-    [Migration("20240528130923_InitialMigration")]
+    [Migration("20240530221327_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace BoligBlik.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AddressId")
+                    b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ItemId")
@@ -128,33 +128,6 @@ namespace BoligBlik.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BookingItems");
-                });
-
-            modelBuilder.Entity("BoligBlik.Domain.Entities.Meeting", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Meetings");
                 });
 
             modelBuilder.Entity("BoligBlik.Domain.Entities.User", b =>
@@ -254,7 +227,9 @@ namespace BoligBlik.Persistence.Migrations
                 {
                     b.HasOne("BoligBlik.Entities.Address", null)
                         .WithMany("Bookings")
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BoligBlik.Domain.Entities.BookingItem", "Item")
                         .WithMany()

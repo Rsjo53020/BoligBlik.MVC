@@ -2,6 +2,9 @@
 
 namespace BoligBlik.Application.Interfaces.Bookings
 {
+    /// <summary>
+    /// Interface for BookingCommandService
+    /// </summary>
     public interface IBookingCommandService
     {
         void CreateBooking(CreateBookingDTO request);

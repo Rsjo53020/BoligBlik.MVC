@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.Addresses.Querie;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

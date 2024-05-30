@@ -8,6 +8,9 @@ using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.Common.Entity
 {
+    /// <summary>
+    /// Interface for EntityDTO
+    /// </summary>
     public abstract class EntityDTO : IEntity
     {
         [Key]

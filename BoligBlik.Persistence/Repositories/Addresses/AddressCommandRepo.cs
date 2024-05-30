@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.Addresses.Command;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts;
