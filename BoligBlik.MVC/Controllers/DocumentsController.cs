@@ -1,7 +1,9 @@
-﻿using BoligBlik.MVC.Features.Documents.Interfaces;
+﻿using BoligBlik.MVC.Features.Documents;
+using BoligBlik.MVC.Features.Documents.Interfaces;
 using BoligBlik.MVC.Models.Documents;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -15,7 +17,7 @@ namespace BoligBlik.MVC.Controllers
             _documentService = documentService;
         }
 
-        public async Task<IActionResult> Upload( DocumentViewModel documentViewModel, IFormFile fileUpload)
+        public async Task<IActionResult> Upload(DocumentViewModel documentViewModel, IFormFile fileUpload)
         {
             if (ModelState.IsValid)
             {
@@ -33,7 +35,7 @@ namespace BoligBlik.MVC.Controllers
             return View(documentViewModel);
         }
 
-    public IActionResult GetAll([FromServices] IDocumentService documentService)
+        public IActionResult GetAll([FromServices] IDocumentService documentService)
         {
             List<DocumentViewModel> documents = new List<DocumentViewModel>();
 

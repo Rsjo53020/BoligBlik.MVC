@@ -16,13 +16,33 @@ namespace BoligBlik.Domain.Entities
         public BookingDates BookingDates { get; set; }
         public BookingItem Item { get; set; }
 
+        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId, IBookingDomainService _bookingDomainService)
+        {
+            var booking = new Booking(startTime, endTime, item, addressId);
+            var isOverlapping = booking.IsOverlapping(_bookingDomainService, booking);
 
-        public Booking() : base()
+            if (!isOverlapping)
+            {
+                return booking;
+            }
+
+            if (isOverlapping)
+            {
+                throw new Exception("Booking is overlapping");
+            }
+
+            else
+            {
+                throw new Exception("Fail during create booking");
+            }
+        }
+
+        private Booking() : base()
         {
             
         }
 
-        public Booking(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId) : base()
+        private Booking(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId) : base()
         {
             BookingDates = new BookingDates(startTime, endTime);
             this.Item = item;
@@ -37,7 +57,7 @@ namespace BoligBlik.Domain.Entities
             ValidateTimeInput(nameof(BookingDates.endTime), BookingDates.endTime);
         }
 
-        public void ValidateTimeInput(string parameter, DateTime dateTime)
+        private void ValidateTimeInput(string parameter, DateTime dateTime)
         {
             if (dateTime == null || dateTime == default)
             {
@@ -54,25 +74,6 @@ namespace BoligBlik.Domain.Entities
             return _bookingDomainService.IsBookingOverlapping(booking);
         }
 
-        public static Booking Create(DateTime startTime, DateTime endTime, BookingItem item, Guid addressId,IBookingDomainService _bookingDomainService)
-        {
-            var booking = new Booking(startTime, endTime, item, addressId);
-            var isOverlapping = booking.IsOverlapping(_bookingDomainService, booking);
-          
-            if (!isOverlapping)
-            {
-                return booking;
-            }
-
-            if (isOverlapping)
-            {
-                throw new Exception("Booking is overlapping");
-            }
-
-            else
-            {
-                throw new Exception("Fail during create booking");
-            }
-        }
+        
     }
 }

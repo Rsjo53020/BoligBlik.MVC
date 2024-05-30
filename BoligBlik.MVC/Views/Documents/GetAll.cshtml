@@ -10,8 +10,6 @@
         <thead>
         <tr>
             <th>Titel</th>
-            <th>Beskrivelse</th>
-            <th>Kategori</th>
             <th></th>
         </tr>
         </thead>
@@ -20,11 +18,7 @@
         {
             <tr>
                 <td>@document.Title</td>
-                <td>@document.Description</td>
-                <td>@document.Category</td>
                 <td>
-                    <a asp-action="Delete" asp-controller="Documents" asp-route-FileUpload="@document.FileUpload" class="btn btn-primary btn-m" style="background-color: red; color: white; border-color: red;">Slet Dokument</a>
-                    <a asp-action="Delete" asp-controller="Documents" asp-route-FileUpload="@document.FileUpload" class="btn btn-primary btn-m" style="background-color: blue; color: white; border-color: blue;">Hent Dokument</a>
                 </td>
             </tr>
         }

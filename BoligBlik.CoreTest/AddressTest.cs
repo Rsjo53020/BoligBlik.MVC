@@ -38,13 +38,14 @@ namespace BoligBlik.CoreTest
 
                 var address = mapper.Map<Address>(addressDto);
 
-                Assert.True(address.Id== addressDto.Id);
-                Assert.True(address.Street== addressDto.Street);
-                Assert.True(address.HouseNumber== addressDto.HouseNumber);
-                Assert.True(address.Floor== addressDto.Floor);
-                Assert.True(address.DoorNumber== addressDto.DoorNumber);
-                Assert.True(address.PostalCode.City== addressDto.City);
-                Assert.True(address.PostalCode.PostalcodeNumber== addressDto.PostalCodeNumber);
+                Assert.True(address.Id == addressDto.Id);
+                Assert.True(address.Street == addressDto.Street);
+                Assert.True(address.HouseNumber == addressDto.HouseNumber);
+                Assert.True(address.Floor == addressDto.Floor);
+                Assert.True(address.DoorNumber == addressDto.DoorNumber);
+                Assert.True(address.PostalCode.City == addressDto.City);
+                Assert.True(address.PostalCode.PostalcodeNumber == addressDto.PostalCodeNumber);
             }
         }
+    }
 }
