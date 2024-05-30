@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BoligBlik.MVC.Common.Interfaces;
 using BoligBlik.MVC.Features.Documents;
 using BoligBlik.MVC.Features.Documents.Interfaces;
 using BoligBlik.MVC.Mappings;

@@ -19,12 +19,13 @@ namespace BoligBlik.MVC.Controllers
         private readonly ILogger<BoardMemberController> _logger;
         private readonly IUserProxy _userProxy;
         private readonly UserManager<IdentityUser> _userManager;
-        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager)
+        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager, ILogger<BoardMemberController> logger)
         {
             _boardMemberProxy = boardMemberProxy;
             _mapper = mapper;
             _userProxy = userProxy;
             _userManager = userManager;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -100,7 +101,7 @@ namespace BoligBlik.MVC.Controllers
                     return View(boardMember);
                 }
                 return View();
-                
+
             }
             catch (Exception ex)
             {
@@ -124,7 +125,33 @@ namespace BoligBlik.MVC.Controllers
                 boardMemberDTO.User = userDTO;
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
 
-                AddClaimToBoardMember(boardMemberDTO);
+
+                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
+                if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
+                {
+                    var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
+
+                    foreach (var claim in existingAdminClaims.Where(c => c.Type != "Admin" || c.Type == "Admin"))
+                    {
+                        await _userManager.RemoveClaimAsync(identityUser, claim);
+                    }
+                    var claimToUser = new Claim("Admin", boardMemberDTO.Title);
+                    await _userManager.AddClaimAsync(identityUser, claimToUser);
+                }
+
+                if (boardMemberDTO.Title == "Næstformand" || boardMemberDTO.Title == "Kasserer" ||
+                    boardMemberDTO.Title == "Bestyrelse")
+                {
+                    var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
+                    foreach (var claim in existingAdminClaims.Where(c => c.Type != "Boardmembers" || c.Type == "Boardmembers"))
+                    {
+                        await _userManager.RemoveClaimAsync(identityUser, claim);
+                    }
+                    var claimToUser = new Claim("Boardmembers", boardMemberDTO.Title);
+                    await _userManager.AddClaimAsync(identityUser, claimToUser);
+                }
+
+                //var addClaimToBoardMember = AddClaimToBoardMember(boardMemberDTO);
 
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -136,12 +163,38 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
-        private async void AddClaimToBoardMember(BoardMemberDTO boardMember)
+        private async Task<bool> AddClaimToBoardMember(BoardMemberDTO boardMemberDTO)
         {
-            var identityUser = await _userManager.FindByEmailAsync(boardMember.User.EmailAddress);
-            var claim = new Claim("Admin", boardMember.Title);
-            await _userManager.AddClaimAsync(identityUser, claim);
 
+            if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
+            {
+                
+                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
+                var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
+
+                foreach (var claim in existingAdminClaims.Where(c => c.Type != "Admin"))
+                {
+                    await _userManager.RemoveClaimAsync(identityUser, claim);
+                }
+                var claimToUser = new Claim("Admin", boardMemberDTO.Title);
+                await _userManager.AddClaimAsync(identityUser, claimToUser);
+            }
+
+            if (boardMemberDTO.Title == "Næstformand" || boardMemberDTO.Title == "Kassérer" || boardMemberDTO.Title == "Bestyrelse")
+            {  
+                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
+                var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
+
+                foreach (var claim in existingAdminClaims.Where(c => c.Type != "Boardmembers"))
+                {
+                    await _userManager.RemoveClaimAsync(identityUser, claim);
+                }
+              
+                var claimToUser = new Claim("Boardmembers", boardMemberDTO.Title);
+                await _userManager.AddClaimAsync(identityUser, claimToUser);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -168,7 +221,7 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while deleting a boardMember", ex);
                 return NotFound();
             }
-            
+
         }
     }
 }
