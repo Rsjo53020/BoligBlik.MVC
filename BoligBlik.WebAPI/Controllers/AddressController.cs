@@ -90,7 +90,7 @@ namespace BoligBlik.WebAPI.Controllers
 
 
         [HttpDelete]
-        public ActionResult DeleteUser([FromBody] AddressDTO request)
+        public ActionResult DeleteAddress([FromBody] AddressDTO request)
         {
             _addressCommandService.DeleteAddress(request);
             return Ok();
