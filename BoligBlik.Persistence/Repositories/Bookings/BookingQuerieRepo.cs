@@ -1,8 +1,8 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Extensions.Logging;
+using BoligBlik.Application.Interfaces.Repositories.Bookings.Querie;
 
 namespace BoligBlik.Persistence.Repositories.Bookings
 {

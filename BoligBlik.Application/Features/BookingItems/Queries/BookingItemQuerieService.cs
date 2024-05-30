@@ -2,7 +2,7 @@
 using BoligBlik.Application.DTO;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.Interfaces.BookingItems.Queries;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.BookingItems.Querie;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.BookingItems.Queries
@@ -14,12 +14,19 @@ namespace BoligBlik.Application.Features.BookingItems.Queries
         private readonly IMapper _mapper;
         private readonly ILogger<BookingItemQuerieService> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bookingItemsRepo"></param>
+        /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         public BookingItemQuerieService(IBookingItemQuerieRepo bookingItemsRepo, IMapper mapper, ILogger<BookingItemQuerieService> logger)
         {
             _bookingItemsRepo = bookingItemsRepo;
             _mapper = mapper;
             _logger = logger;
         }
+
         /// <summary>
         /// reads all booking items
         /// </summary>
@@ -41,6 +48,7 @@ namespace BoligBlik.Application.Features.BookingItems.Queries
             }
 
         }
+
         /// <summary>
         /// reads a booking item from an id
         /// </summary>

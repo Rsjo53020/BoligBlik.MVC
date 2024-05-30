@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using BoligBlik.Entities;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.Addresses.Command
 {
     public interface IAddressCommandRepo
     {

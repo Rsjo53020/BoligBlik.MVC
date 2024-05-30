@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.BookingItems.Querie;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

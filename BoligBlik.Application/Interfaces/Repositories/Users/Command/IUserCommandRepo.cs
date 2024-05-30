@@ -1,15 +1,12 @@
 ﻿using BoligBlik.Domain.Entities;
 using System.Runtime.ConstrainedExecution;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.Users.Command
 {
-    /// <summary>
-    /// Interface for the UserCommandRepo
-    /// </summary>
     public interface IUserCommandRepo
     {
         void CreateUser(User user);
         void UpdateUser(User user);
-        void DeleteUser(Guid id, Byte[] rowVersion);
+        void DeleteUser(Guid id, byte[] rowVersion);
     }
 }

@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.BookingItems.Command;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Extensions.Logging;
@@ -40,7 +40,6 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
         {
             try
             {
-                //handle concurrency
                 _dbContext.Update(bookingItem)
                     .Property(b => b.RowVersion).OriginalValue = bookingItem.RowVersion;
             }
@@ -58,7 +57,6 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
         {
             try
             {
-                //handle concurrency
                 _dbContext.Remove(_dbContext.BookingItems.Where(x => x.Id == id).FirstOrDefault())
                     .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }

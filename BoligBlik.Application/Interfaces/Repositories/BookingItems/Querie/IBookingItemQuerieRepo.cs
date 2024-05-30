@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.BookingItems.Querie
 {
     public interface IBookingItemQuerieRepo
     {
-        public Task<BookingItem> ReadBookingItemsAsync(Guid itemId);
-        public Task<IEnumerable<BookingItem>> ReadAllBookingItemsAsync();
+        Task<BookingItem> ReadBookingItemsAsync(Guid itemId);
+        Task<IEnumerable<BookingItem>> ReadAllBookingItemsAsync();
     }
 }

@@ -62,8 +62,10 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet("{email}")]
         public async Task<ActionResult> GetUserAsync(string email)
         {
-            if (string.IsNullOrEmpty(email)) return BadRequest();
-            var restult = await _querieService.ReadUserAsync(email);
+            try
+            {
+                if (string.IsNullOrEmpty(email)) return BadRequest();
+                var restult = await _querieService.ReadUserAsync(email);
 
                 if (restult == null) return NotFound();
                 return Ok(restult);
@@ -115,7 +117,6 @@ namespace BoligBlik.WebAPI.Controllers
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
-                }
                 }
                 _commandService.UpdateUser(request);
                 return Ok();

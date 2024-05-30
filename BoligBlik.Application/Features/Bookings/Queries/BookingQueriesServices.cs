@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Application.Interfaces.Bookings;
 using System.Threading;
 using BoligBlik.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
+using BoligBlik.Application.Interfaces.Repositories.Bookings.Querie;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 
 namespace BoligBlik.Application.Features.Bookings.Queries
 {

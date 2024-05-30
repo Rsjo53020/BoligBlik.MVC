@@ -33,7 +33,6 @@ namespace BoligBlik.Persistence.Contexts
         {
             SeedUsers();
             SeedBoardMembers();
-            SeedMeeting();
             SeedBookingItem();
             SeedAddress();
         }
@@ -157,38 +156,6 @@ namespace BoligBlik.Persistence.Contexts
                 {
                     _context.BoardMembers.Add(boardMember);
                 }
-            }
-
-            _context.SaveChanges();
-        }
-
-        /// <summary>
-        /// seed Meeting 
-        /// </summary>
-        internal void SeedMeeting()
-        {
-            if (_context.Meetings.Any()) return;
-
-            var meetings = new Meeting[]
-            {
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Møde ang. Ronni",
-
-                },
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Vigigt Møde",
-                }
-            };
-
-            foreach (var meeting in meetings)
-            {
-                _context.Meetings.Add(meeting);
             }
 
             _context.SaveChanges();

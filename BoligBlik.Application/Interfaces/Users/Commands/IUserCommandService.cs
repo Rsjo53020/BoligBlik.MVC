@@ -3,9 +3,6 @@ using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Application.Interfaces.Users.Commands
 {
-    /// <summary>
-    /// Interface for the UserCommandService
-    /// </summary>
     public interface IUserCommandService
     {
         void CreateUser(CreateUserDTO request);

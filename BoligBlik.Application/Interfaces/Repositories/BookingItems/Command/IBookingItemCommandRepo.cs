@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.BookingItems.Command
 {
     public interface IBookingItemCommandRepo
     {
-        public void CreateBookingItem(BookingItem request);
-        public void UpdateBookingItem(BookingItem request);
-        public void DeleteBookingItem(Guid id, Byte[] rowVersion);
+        void CreateBookingItem(BookingItem request);
+        void UpdateBookingItem(BookingItem request);
+        void DeleteBookingItem(Guid id, byte[] rowVersion);
     }
 }

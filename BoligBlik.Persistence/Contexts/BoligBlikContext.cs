@@ -22,7 +22,6 @@ namespace BoligBlik.Persistence.Contexts
         public DbSet<BoardMember> BoardMembers { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingItem> BookingItems { get; set; }
-        public DbSet<Meeting> Meetings { get; set; }
         public DbSet<User> Users { get; set; }
 
         /// <summary>

@@ -1,11 +1,11 @@
 ﻿using BoligBlik.Application.Interfaces.Addresses.Queries;
-using BoligBlik.Application.Interfaces.Repositories;
 using AutoMapper;
 using BoligBlik.Application.Common.Exceptions;
 using BoligBlik.Application.DTO.Address;
 using BoligBlik.Entities;
 using System.Net;
 using Microsoft.Extensions.Logging;
+using BoligBlik.Application.Interfaces.Repositories.Addresses.Querie;
 
 namespace BoligBlik.Application.Features.Addresses.Queries
 {
@@ -60,7 +60,6 @@ namespace BoligBlik.Application.Features.Addresses.Queries
             var addressMap = _mapper.Map<AddressDTO>(response);
             return addressMap;
             //throw new AddressNotFoundException(response.Id);
-            
         }
     }
 }

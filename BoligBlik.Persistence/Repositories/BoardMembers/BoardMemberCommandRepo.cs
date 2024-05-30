@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.BoardMembers.Command;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
@@ -56,7 +56,6 @@ namespace BoligBlik.Persistence.Repositories.BoardMembers
         {
             try
             {
-                //handle concurrency
                 _db.Remove(_db.BoardMembers.Where(b => b.Id == id).FirstOrDefault())
                     .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }

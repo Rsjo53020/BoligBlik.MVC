@@ -1,11 +1,8 @@
 ﻿using BoligBlik.Application.DTO.User;
 using BoligBlik.Domain.Entities;
 
-namespace BoligBlik.Application.Interfaces.Repositories
+namespace BoligBlik.Application.Interfaces.Repositories.Users.Querie
 {
-    /// <summary>
-    /// Ínterface for the UserQuerieRepo
-    /// </summary>
     public interface IUserQuerieRepo
     {
         Task<User> ReadUserAsync(string email);

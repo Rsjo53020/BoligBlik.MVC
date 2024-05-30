@@ -2,7 +2,8 @@
 using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.DTO.User;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.BoardMembers.Querie;
+using BoligBlik.Application.Interfaces.Repositories.Users.Querie;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.BoardMembers.Queries

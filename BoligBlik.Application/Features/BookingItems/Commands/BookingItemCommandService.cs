@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.Interfaces.BookingItems.Commands;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.BookingItems.Command;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.BookingItems.Commands
@@ -14,7 +15,12 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
         private readonly IBookingItemCommandRepo _bookingItemRepo;
         private readonly ILogger<IBookingItemCommandService> _logger;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="uow"></param>
+        /// <param name="mapper"></param>
+        /// <param name="bookingItemRepo"></param>
         public BookingItemCommandService(IUnitOfWork uow, IMapper mapper, IBookingItemCommandRepo bookingItemRepo)
         {
             _uow = uow;
