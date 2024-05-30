@@ -13,6 +13,8 @@ namespace BoligBlik.WebAPI.Controllers
         //Dependencies
         private readonly IBookingItemCommandService _bookItemCommandService;
         private readonly IBookingItemQuerieService _bookItemQuerieService;
+        //logger
+        private readonly ILogger<BookingItemsController> _logger;
 
         /// <summary>
         /// Constructor
@@ -20,10 +22,12 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="bookingItemCommandService"></param>
         /// <param name="bookingItemQuerieService"></param>
         public BookingItemsController(IBookingItemCommandService bookingItemCommandService,
-            IBookingItemQuerieService bookingItemQuerieService)
+            IBookingItemQuerieService bookingItemQuerieService,
+            ILogger<BookingItemsController> logger)
         {
             _bookItemCommandService = bookingItemCommandService;
             _bookItemQuerieService = bookingItemQuerieService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -34,9 +38,21 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public ActionResult PostBookingItem([FromBody] CreateBookingItemDTO request)
         {
-            if (request == null) return BadRequest();
-            _bookItemCommandService.CreateBookingItem(request);
-            return Created();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _bookItemCommandService.CreateBookingItem(request);
+                    return Created();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when creating bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
+
         }
         /// <summary>
         /// reads all booking items
@@ -45,9 +61,17 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllBookingItems()
         {
-            var result = await _bookItemQuerieService.ReadAllBookingItemsAsync();
-            if(result == null) return BadRequest();
-            return Ok(result);
+            try
+            {
+                var result = await _bookItemQuerieService.ReadAllBookingItemsAsync();
+                if (result == null) return BadRequest();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading bookingitems", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
         /// <summary>
         /// reads a booking item
@@ -57,10 +81,18 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpGet("{itemId}")]
         public async Task<ActionResult> GetBookingItemAsync(Guid itemId)
         {
-            if (itemId == null) return BadRequest();
-            var result = await _bookItemQuerieService.ReadBookingItemAsync(itemId);
-            if(result == null) return NotFound();
-            return Ok(result);
+            try
+            {
+                if (itemId == null) return BadRequest();
+                var result = await _bookItemQuerieService.ReadBookingItemAsync(itemId);
+                if (result == null) return NotFound();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
         /// <summary>
@@ -71,17 +103,22 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateBookingItem([FromBody] BookingItemDTO request)
         {
-            if (request == null) return BadRequest();
+            
             try
             {
-                _bookItemCommandService.UpdateBookingItem(request);
-                return Ok();
+                if (ModelState.IsValid)
+                {
+                    _bookItemCommandService.UpdateBookingItem(request);
+                    return Ok();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError("sommething went wrong when updating bookingitem", ex.Message);
+                return StatusCode(500, ex);
             }
-            
+
         }
         /// <summary>
         /// deletes a booking item
@@ -92,8 +129,17 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpDelete("{id}/{rowVersion}")]
         public ActionResult DeleteBookingItem(Guid id, string rowVersion)
         {
-            _bookItemCommandService.DeleteBookingItem(id, Convert.FromBase64String(rowVersion));
-            return Ok();
+            try
+            {
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
+                _bookItemCommandService.DeleteBookingItem(id, Convert.FromBase64String(rowVersion));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when delete bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
 

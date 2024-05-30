@@ -13,60 +13,16 @@ namespace BoligBlik.MVC
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration
-
-                // Add services to the container -- move to a ServiceExtension.cs
-
-                //.GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-                //.GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            .GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-
-            // move to a ServiceExtension.cs
-            builder.Services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(connectionString));
-
-            // move to a ServiceExtension.cs
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            //flyt til en ServiceExtension.cs (identities) 
-            builder.Services.AddDefaultIdentity<IdentityUser>(
-                    options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.AddFrontEnd();
-
-
-
-            //// move to a ServiceExtension.cs
-            //builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-            //    {
-            //        options.Password.RequiredUniqueChars = 0;
-            //        options.Password.RequireUppercase = false;
-            //        options.Password.RequiredLength = 8;
-            //        options.Password.RequireNonAlphanumeric = false;
-            //        options.Password.RequireDigit = false;
-            //        options.Password.RequireLowercase = false;
-            //    })
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddControllersWithViews();
 
-
-            // move to a ServiceExtension.cs
-            builder.Services.AddAuthorization(options => options
-                .AddPolicy("ManagementPolicy", policyBuilder => policyBuilder.RequireClaim("Admin", "Formand", "Admin")));
-            builder.Services.AddAuthorization(options => options
-                .AddPolicy("MemberPolicy", policyBuilder => policyBuilder.RequireClaim("Boardmembers")));
-
-            // Add more claims as necessary
-
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope())
+            using
+                (var scope = app.Services.CreateScope())
             {
                 scope.ServiceProvider.GetRequiredService<ApplicationDbContext>().Database.EnsureCreated();
             }
@@ -81,21 +37,19 @@ namespace BoligBlik.MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            
             app.MapRazorPages();
-
             app.Run();
         }
     }

@@ -3,17 +3,23 @@
 @{
     string title = "Alle Profiler";
 }
-
-<h1>@title</h1>
+<p></p>
+<div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+    <h1>Alle Beboer</h1>
+    <h5 class="text-primary">Oplysninger</h5>
+</div>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Fornavn</th>
             <th>Efternavn</th>
-            <th>Telefonnummer</th>
+            <th>Telefon nr.</th>
             <th>E-Mail</th>
-            <th>Foretag ændringer</th>
+        @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+            {
+                <th>Foretag ændringer</th>
+            }
         </tr>
     </thead>
     <tbody id="userTableBody">
@@ -27,9 +33,11 @@
                 <input type="hidden" asp-for="@user.Id" />
                 <input type="hidden" asp-for="@user.RowVersion" />
                 <td>
+                    @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+                    {
                     <a asp-action="Edit" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-primary btn-sm">Opdater Bruger</a>
                     <a asp-action="Delete" asp-controller="User" asp-route-id="@user.Id" asp-route-email="@user.EmailAddress" asp-route-rowVersion="@Convert.ToBase64String(user.RowVersion)" class="btn btn-secondary btn-sm">Fjern bruger</a>
-                    <a asp-action="Claims" asp-controller="User" asp-route-email="@user.EmailAddress" class="btn btn-secondary btn-sm">Rettigheder</a>
+                    }
                 </td>
             </tr>
         }

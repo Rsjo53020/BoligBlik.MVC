@@ -49,8 +49,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                _bookingCommandService.CreateBooking(request);
-                return Created();
+                if (ModelState.IsValid)
+                {
+                    _bookingCommandService.CreateBooking(request);
+                    return Created();
+                }
+                return BadRequest();
             }
             catch (ArgumentException ex)
             {
@@ -74,6 +78,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
+                if (id == Guid.Empty) return BadRequest();
                 var booking = await _bookingQuerieService.ReadBookingAsync(id);
                 if (booking == null)
                 {
@@ -118,6 +123,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
                 _bookingCommandService.DeleteBooking(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }
@@ -138,8 +144,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                _bookingCommandService.UpdateBooking(request);
-                return Ok();
+                if (ModelState.IsValid)
+                {
+                    _bookingCommandService.UpdateBooking(request);
+                    return Ok();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {

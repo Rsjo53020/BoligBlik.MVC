@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    @*     <link rel="stylesheet" href="~/BoligBlik.MVC.styles.css" asp-append-version="true" />
-    *@
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -44,7 +43,6 @@
         <div class="container-fluid bg-white py-2 d-none d-md-flex">
             <div class="container">
                 <div class="d-flex justify-content-between topbar">
-                    <div class="text-secondary d-none d-xl-flex"><small>Note : Vi hjælper dig med at få din virksomhed til at vokse</small></div>
                     <div class="top-link">
                         <a href="https://www.facebook.com/uniksystemdesign" class="btn-light nav-fill btn btn-square rounded-circle me-2"><i class="fab fa-facebook-f text-primary"></i></a>
                         <a href="https://www.linkedin.com/company/unik-system-design/" class="btn-light nav-fill btn btn-square rounded-circle me-0"><i class="fab fa-linkedin-in text-primary"></i></a>
@@ -60,7 +58,7 @@
 
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <h1 class="text-white fw-bold d-block">U<span class="text-secondary">NI</span>K</h1>
+                        <h1 class="text-white fw-bold d-block">BOL<span class="text-secondary">IGB</span>LIK</h1>
                     </a>
                     <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -73,9 +71,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bestyrelsen</a>
                                 <div class="dropdown-menu rounded">
-                                    <a asp-controller="BoardMember" asp-action="ReadAll" class="dropdown-item">Mød bestyrelsen</a>
-                                    <a href="/Admin/Claims" class="dropdown-item">Rettigheder</a>
-
+                                    <a asp-controller="BoardMember" asp-action="ReadAll" class="dropdown-item">Mød os</a>
                                 </div>
                             </div>
                             }
@@ -84,10 +80,13 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Booking</a>
                                 <div class="dropdown-menu rounded">
-                                    <a asp-controller="Booking" asp-action="NewBookingIndex" class="dropdown-item">Ny Booking</a>
-                                    <a asp-controller="Booking" asp-action="GetUserBookings" class="dropdown-item">Mine Bookings</a>
-                                    <a asp-controller="Booking" asp-action="GetAllBookings" class="dropdown-item">Alle Bookings</a>
-                                    <a asp-controller="BookingItems" asp-action="List" class="dropdown-item">Booking objekter</a>
+                                    <a asp-controller="Booking" asp-action="GetUserBookings" class="dropdown-item">Mine Bookinger</a>
+                                    <a asp-controller="Booking" asp-action="NewBookingIndex" class="dropdown-item">Opret Booking</a>
+                                    <a asp-controller="Booking" asp-action="GetAllBookings" class="dropdown-item">Alle Bookinger</a>
+                                    @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded || AuthorizationService.AuthorizeAsync(User, "MemberPolicy").Result.Succeeded)
+                                    {
+                                        <a asp-controller="BookingItems" asp-action="List" class="dropdown-item">Opret nyt element til bookingslisten</a>
+                                    }
                                 </div>
                             </div>
                             <!-- Booking End -->
@@ -95,22 +94,20 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dokumenter</a>
                                 <div class="dropdown-menu rounded">
-                                    <a asp-controller="Documents" asp-action="Upload" class="dropdown-item">Upload Dokument</a>
-                                    <a asp-controller="Documents" asp-action="GetAll" class="dropdown-item">Se alle Dokumenter</a>
+                                    @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded || AuthorizationService.AuthorizeAsync(User, "MemberPolicy").Result.Succeeded)
+                                    {
+                                        <a asp-controller="Documents" asp-action="Upload" class="dropdown-item">Upload Dokumentation</a>
+                                    }
+                                    <a asp-controller="Documents" asp-action="GetAll" class="dropdown-item">Alle Dokumentation</a>
                                 </div>
                             </div>
                             <!-- Documents End -->
                             <!-- Address Start -->
                             {
                             <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Address</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Adresser</a>
                                 <div class="dropdown-menu rounded">
-                                    <a asp-controller="Address" asp-action="GetAllAddress" class="dropdown-item">Adresser</a>
-                                   @*  <a href="/Address/Create" class="dropdown-item">Opret adr.</a>
-                                    <a href="/Address/Edit" class="dropdown-item">Ændre adr.</a>
-                                    <a href="/Address/Delete" class="dropdown-item">Slet.</a> *@
-
-
+                                    <a asp-controller="Address" asp-action="GetAllAddress" class="dropdown-item">Alle adresser</a>
                                 </div>
                             </div>
                             }
@@ -120,9 +117,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Brugerprofiler</a>
                                 <div class="dropdown-menu rounded">
-                                    <a asp-controller="User" asp-action="GetAll" class="dropdown-item">Alle Profiler</a>
-@*                                     <a asp-controller="User" asp-action="Delete" class="dropdown-item">Deaktiver Profil</a>
-                                    <a asp-controller="User" asp-action="AssignIdentityRole" class="dropdown-item">Administer systemadgang</a> *@
+                                    <a asp-controller="User" asp-action="GetAll" class="dropdown-item">Beborer</a>
                                 </div>
                             </div>
                             }
@@ -141,12 +136,6 @@
                         <div class="d-flex flex-column pe-4 border-end">
                             <span class="text-white-50">Spørgsmål?</span>
                             <span class="text-secondary">Ring: +45 76 42 11 00</span>
-                        </div>
-
-
-                        <!-- SKAL vi tilføje et søge felt ??? -->
-                        <div class="d-flex align-items-center justify-content-center ms-4 ">
-                            <a href="#"><i class="bi bi-search text-white fa-2x"></i> </a>
                         </div>
                     </div>
                     <partial name="_LoginPartial" />
@@ -201,6 +190,7 @@
                     <a class="h3 text-secondary">Kontakt os</a>
                     <div class="text-white mt-4 d-flex flex-column contact-link">
                         <a href="https://map.krak.dk/s/Boulevarden,%2019E,%20VEJLE" class="pb-3 text-light border-bottom border-primary"><i class="fas fa-map-marker-alt text-secondary me-2"></i>Boulevarden 19E, 7100 Vejle </a>
+                        <p></p>
                         <i class="fas fa-phone-alt text-secondary me-2"> +45 76 42 11 00 </i>
                         <p> </p>
                         <i class="fas fa-envelope text-secondary me-2"> support-bolig@unik.dk </i>
