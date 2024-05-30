@@ -73,7 +73,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.Rollback();
                 _logger.LogError("Could not update booking", ex);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 

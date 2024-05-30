@@ -14,7 +14,7 @@ namespace BoligBlik.WebAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : Controller
+    public class BookingController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IBookingCommandService _bookingCommand;
@@ -31,12 +31,12 @@ namespace BoligBlik.WebAPI.Controllers
         //[Consumes(MediaTypeNames.Application.Json)]
         //[ProducesResponseType(StatusCodes.Status201Created)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody] CreateBookingDTO createBookingDTO)
+        public async Task<IActionResult> Create([FromBody] CreateBookingDTO request)
         {
             try
             {
-              _bookingCommand.CreateBooking(createBookingDTO);
-                return Ok(createBookingDTO);
+              _bookingCommand.CreateBooking(request);
+                return Ok(request);
             }
             catch (Exception e)
             {
@@ -92,11 +92,18 @@ namespace BoligBlik.WebAPI.Controllers
             }
         }
 
-        [HttpPut()]
-        public IActionResult UpdateBooking([FromBody]BookingDTO bookingDTO)
+        [HttpPut]
+        public ActionResult UpdateBooking([FromBody] BookingDTO request)
         {
-            _bookingCommand.UpdateBooking(bookingDTO);
-            return Ok();
+            try
+            {
+                _bookingCommand.UpdateBooking(request);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
