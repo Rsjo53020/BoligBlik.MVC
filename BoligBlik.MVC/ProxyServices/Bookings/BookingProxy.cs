@@ -57,7 +57,6 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
                 var response = await httpClient.PutAsJsonAsync("/api/Booking", booking);
-
                 response.EnsureSuccessStatusCode();
                 return true;
             }
