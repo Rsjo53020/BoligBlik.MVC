@@ -41,7 +41,7 @@ namespace BoligBlik.WebAPI.Controllers
             
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     _addressCommandService.CreateAddress(request);
                     return Created();
@@ -65,7 +65,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var address = await _addressQuerieService.ReadAddressAsync(id);
                     return Ok(address);
@@ -109,7 +109,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     _addressCommandService.UpdateAddress(request);
                     return Ok(request);

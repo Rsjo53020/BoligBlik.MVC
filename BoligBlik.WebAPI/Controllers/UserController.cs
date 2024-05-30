@@ -36,7 +36,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     _commandService.CreateUser(request);
@@ -119,10 +119,6 @@ namespace BoligBlik.WebAPI.Controllers
                     return BadRequest("Request cannot be null.");
                 }
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
                 _commandService.UpdateUser(request);
                 return Ok();
             }
