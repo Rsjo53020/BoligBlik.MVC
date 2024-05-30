@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using BoligBlik.MVC.DTO.User;
+﻿using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace BoligBlik.MVC.ProxyServices.Users
 {
@@ -15,13 +13,14 @@ namespace BoligBlik.MVC.ProxyServices.Users
         //other proxys
         private readonly IAddressProxy _addressProxy;
 
-        public UserProxy(IHttpClientFactory clientFactory, IAddressProxy addressProxy)
+        public UserProxy(IHttpClientFactory clientFactory, IAddressProxy addressProxy, ILogger<UserProxy> logger)
         {
             _clientFactory = clientFactory;
             _addressProxy = addressProxy;
+            _logger = logger;
         }
         /// <summary>
-        /// creates a user with http call to backend
+        /// Creates an User
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -37,16 +36,12 @@ namespace BoligBlik.MVC.ProxyServices.Users
             }
             catch (Exception ex)
             {
-                _logger.LogError("an error occured while creating a user", ex.Message);
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return false;
             }
         }
 
-        /// <summary>
-        /// reads all users with http call to backend
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+
         public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
         {
             try
@@ -56,20 +51,19 @@ namespace BoligBlik.MVC.ProxyServices.Users
                 var response = await httpClient.GetAsync("api/User");
                 response.EnsureSuccessStatusCode();
                 var users = await response.Content.ReadFromJsonAsync<List<UserDTO>>();
-                return users;
+                return users ?? new List<UserDTO>();
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                _logger.LogError("an error occured while reading all users", ex.Message);
-                return null;
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new List<UserDTO>();
             }
         }
         /// <summary>
-        /// reads a user from backend using http call with an email
+        /// Reads an User
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         public async Task<UserDTO> GetUserAsync(string email)
         {
             try
@@ -81,44 +75,39 @@ namespace BoligBlik.MVC.ProxyServices.Users
                 var user = await response.Content.ReadFromJsonAsync<UserDTO>();
                 return user;
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                _logger.LogError("an error occured while reading a user", ex.Message);
-                return null;
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new UserDTO();
             }
         }
         /// <summary>
-        /// updates a user in the backend using http call
+        /// Updates an User
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         public async Task<bool> UpdateUserAsync(UserDTO user)
         {
             try
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
 
-
                 var response = await httpClient.PutAsJsonAsync("/api/User", user);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                _logger.LogError("an error occured while updating a user", ex.Message);
-                return false;
-            }
             catch (Exception ex)
             {
-                _logger.LogError("an error occured while updating a user", ex.Message);
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return false;
             }
         }
+
         /// <summary>
-        /// deletes a user in the backend using http call
+        /// Deletes an User
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         /// <returns></returns>
         public async Task DeleteUserAsync(Guid id, string rowVersion)
         {
@@ -131,16 +120,14 @@ namespace BoligBlik.MVC.ProxyServices.Users
             }
             catch (Exception ex)
             {
-                _logger.LogError("an error occured while deleting a user", ex.Message);
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
         }
 
         /// <summary>
-        /// gets all users without an address 
+        /// Read all Users Without an Address 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ApplicationException"></exception>
-        /// <exception cref="NotImplementedException"></exception> 
         public async Task<IEnumerable<UserDTO>> GetUsersWithoutAddressAsync()
         {
             try
@@ -148,10 +135,9 @@ namespace BoligBlik.MVC.ProxyServices.Users
                 var userResponse = await GetAllUsersAsync();
                 var addressResponse = await _addressProxy.GetAllAddressAsync();
 
-
-                var addressUserIds = new HashSet<Guid>(
-                    addressResponse.SelectMany(a => a.Users.Select(u => u.Id))
-                );
+                var addressUserIds = new HashSet<Guid>(addressResponse
+                    .SelectMany(a => a.Users
+                        .Select(u => u.Id)));
                 //filter
                 var response = userResponse
                     .Where(u => !addressUserIds.Contains(u.Id))
@@ -161,8 +147,8 @@ namespace BoligBlik.MVC.ProxyServices.Users
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error in UserWithOutAddress in UserRepository " + ex.Message);
-                throw new ApplicationException("Error in UserWithOutAddress in UserRepository", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new List<UserDTO>();
             }
         }
     }

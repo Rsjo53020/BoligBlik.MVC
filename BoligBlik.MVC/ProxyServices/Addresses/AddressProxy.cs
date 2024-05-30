@@ -1,11 +1,5 @@
 ﻿using BoligBlik.MVC.DTO.Address;
-using BoligBlik.MVC.DTO.BoardMember;
-using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
-using BoligBlik.MVC.ProxyServices.Users.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace BoligBlik.MVC.ProxyServices.Addresses
 {
@@ -20,7 +14,11 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Create an Address
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public async Task<bool> CreateAddressAsync(CreateAddressDTO address)
         {
             try
@@ -33,11 +31,15 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
-                throw new Exception($"Error occurred while create a address data: {ex.Message}");
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return false;
             }
         }
 
+        /// <summary>
+        /// Read All Address
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<AddressDTO>> GetAllAddressAsync()
         {
             try
@@ -48,19 +50,18 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 var address = await response.Content.ReadFromJsonAsync<IEnumerable<AddressDTO>>();
                 return address ?? new List<AddressDTO>();
             }
-            catch (HttpRequestException httpRequestException)
-            {
-                new Exception("HTTP Request Error: " + httpRequestException.Message, httpRequestException);
-                return new List<AddressDTO>();
-            }
             catch (Exception ex)
             {
-                new Exception("Error occurred while getting all addresses data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return new List<AddressDTO>();
-
             }
         }
 
+        /// <summary>
+        /// Read one Address
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<AddressDTO> GetAddressAsync(Guid id)
         {
             try
@@ -72,13 +73,18 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 var address = await response.Content.ReadFromJsonAsync<AddressDTO>();
                 return address;
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error occurred while getting a address data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new AddressDTO();
             }
         }
 
-
+        /// <summary>
+        /// Update an Address
+        /// </summary>
+        /// <param name="addressDTO"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateAddressAsync(AddressDTO addressDTO)
         {
             try
@@ -90,13 +96,11 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 response.EnsureSuccessStatusCode();
                 return true;
             }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
+
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while updating a address data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return false;
             }
         }
     }

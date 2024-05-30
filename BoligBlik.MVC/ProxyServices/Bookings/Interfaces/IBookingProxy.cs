@@ -6,8 +6,9 @@ namespace BoligBlik.MVC.ProxyServices.Bookings.Interfaces
     {
         Task CreateBooking(CreateBookingDTO createBookingDTO);
         Task<BookingDTO> GetBooking(Guid id);
+        Task<IEnumerable<BookingDTO>> GetAllBookingsAsync();
         Task<bool> UpdateBookingAsync(BookingDTO booking);
         Task DeleteBooking(Guid id, string rowVersion);
-        Task<IEnumerable<BookingDTO>> GetAllBookingsAsync();
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BoligBlik.MVC.DTO.User;
-using BoligBlik.MVC.Models.Users;
 
 namespace BoligBlik.MVC.ProxyServices.Users.Interfaces
 {
@@ -7,9 +6,9 @@ namespace BoligBlik.MVC.ProxyServices.Users.Interfaces
     {
         Task<bool> CreateUserAsync(CreateUserDTO user);
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
-        Task<bool> UpdateUserAsync(UserDTO user);
+        Task<IEnumerable<UserDTO>> GetUsersWithoutAddressAsync();
         Task<UserDTO> GetUserAsync(string email);
         Task DeleteUserAsync(Guid id, string rowVersion);
-        Task<IEnumerable<UserDTO>> GetUsersWithoutAddressAsync();
+        Task<bool> UpdateUserAsync(UserDTO user);
     }
 }

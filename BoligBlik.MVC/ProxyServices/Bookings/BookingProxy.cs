@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using Azure;
+﻿using AutoMapper;
 using BoligBlik.MVC.DTO.Bookings;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +8,19 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
     public class BookingProxy : IBookingProxy
     {
         private readonly IHttpClientFactory _clientFactory;
+        private readonly ILogger<BookingProxy> _logger;
 
-        public BookingProxy(IHttpClientFactory clientFactory)
+        public BookingProxy(IHttpClientFactory clientFactory, ILogger<BookingProxy> logger)
         {
             _clientFactory = clientFactory;
+            _logger = logger;
         }
 
+        /// <summary>
+        /// Create a Booking
+        /// </summary>
+        /// <param name="createBookingDTO"></param>
+        /// <returns></returns>
         public async Task CreateBooking(CreateBookingDTO createBookingDTO)
         {
             try
@@ -28,10 +32,15 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error occurred while create a booking data: {ex.Message}");
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
         }
 
+        /// <summary>
+        /// Read a Booking 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<BookingDTO> GetBooking(Guid id)
         {
             try
@@ -42,16 +51,18 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
                 var booking = await response.Content.ReadFromJsonAsync<BookingDTO>();
                 return booking;
             }
-            catch (HttpRequestException httpRequestException)
-            {
-                throw new Exception("HTTP Request Error: " + httpRequestException.Message);
-            }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while getting booking data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new BookingDTO();
             }
         }
 
+        /// <summary>
+        /// Update a Booking
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateBookingAsync(BookingDTO booking)
         {
             try
@@ -61,16 +72,20 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
                 response.EnsureSuccessStatusCode();
                 return true;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                return false;
-            }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while updating booking data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return false;
             }
         }
 
+        /// <summary>
+        /// Delete a Booking
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task DeleteBooking(Guid id, string rowVersion)
         {
             try
@@ -81,10 +96,14 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while deleting booking data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
         }
 
+        /// <summary>
+        /// Read All Booking
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<BookingDTO>> GetAllBookingsAsync()
         {
             try
@@ -100,15 +119,13 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
 
                 var allBookings = await response.Content.ReadFromJsonAsync<IEnumerable<BookingDTO>>();
 
-                return allBookings;
+                return allBookings ?? new List<BookingDTO>();
             }
-            catch (HttpRequestException ex)
-            {
-                throw new Exception("Error occurred while making HTTP request to retrieve booking data", ex);
-            }
+
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while processing booking data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new List<BookingDTO>();
             }
         }
     }

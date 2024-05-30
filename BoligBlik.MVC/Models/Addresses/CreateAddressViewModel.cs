@@ -1,7 +1,4 @@
-﻿using BoligBlik.MVC.Models.Common;
-using System.ComponentModel.DataAnnotations;
-
-namespace BoligBlik.MVC.Models.Addresses
+﻿namespace BoligBlik.MVC.Models.Addresses
 {
     public class CreateAddressViewModel 
     {
