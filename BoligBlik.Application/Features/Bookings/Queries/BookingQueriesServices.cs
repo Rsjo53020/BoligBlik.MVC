@@ -76,7 +76,6 @@ namespace BoligBlik.Application.Features.Bookings.Queries
                 _logger.LogError(ex.Message, ex);
                 return null;
             }
-
         }
     }
 }

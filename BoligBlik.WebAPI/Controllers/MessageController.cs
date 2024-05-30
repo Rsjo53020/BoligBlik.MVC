@@ -30,7 +30,6 @@ namespace BoligBlik.WebAPI.Controllers
                 Subject = request.Subject,
                 Body = request.Body
             };
-
             _messageService.SendMessage(createMessageDTO);
             return Ok();
         }

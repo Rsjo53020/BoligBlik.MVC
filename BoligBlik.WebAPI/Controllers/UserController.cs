@@ -38,10 +38,8 @@ namespace BoligBlik.WebAPI.Controllers
             {
                 if (request != null)
                 {
-
                     _commandService.CreateUser(request);
                     return Created();
-
                 }
                 else
                 {
@@ -50,7 +48,6 @@ namespace BoligBlik.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 _logger.LogError("Error creating user", ex.Message);
                 return StatusCode(500, "Internal server error");
             }
@@ -63,7 +60,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpGet("{email}")]
-        public async Task<ActionResult> GetUser(string email)
+        public async Task<ActionResult> GetUserAsync(string email)
         {
             if (string.IsNullOrEmpty(email)) return BadRequest();
             var restult = await _querieService.ReadUserAsync(email);
@@ -77,7 +74,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetAllUsers()
+        public async Task<ActionResult> GetAllUsersAsync()
         {
             var result = await _querieService.ReadAllUsersAsync();
 
@@ -92,14 +89,12 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateUser([FromBody] UserDTO request)
         {
-
             try
             {
                 if (request == null)
                 {
                     return BadRequest("Request cannot be null.");
                 }
-
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);

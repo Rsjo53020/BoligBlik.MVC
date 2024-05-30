@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Domain.Common.Interfaces
 {
+    /// <summary>
+    /// Interface for bookingDomainService
+    /// </summary>
     public interface IBookingDomainService
     {
        public bool IsBookingOverlapping(Booking booking);
-
        public DateTime NowTime();
     }
 }

@@ -15,11 +15,20 @@ namespace BoligBlik.Entities
 
         public List<Booking> Bookings { get; set; }
 
-        public Address()
-        {
+        /// <summary>
+        /// Constructor used for Entity Framework.
+        /// </summary>
+        public Address() { }
 
-        }
-
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="street"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="floor"></param>
+        /// <param name="doorNumber"></param>
+        /// <param name="city"></param>
+        /// <param name="postalCodeNumber"></param>
         public Address(string street, string houseNumber, string floor, string doorNumber, string city, string postalCodeNumber)
         {
             Street = street;

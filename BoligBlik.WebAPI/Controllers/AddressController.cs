@@ -36,7 +36,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
+        public IActionResult Post([FromBody] CreateAddressDTO request)
         {
             if (request is null) return BadRequest();
             try
@@ -57,7 +57,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<AddressDTO>> GetAddress(Guid id)
+        public async Task<ActionResult<AddressDTO>> GetAddressAsync(Guid id)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IEnumerable<AddressDTO>> GetAllAddresses()
+        public async Task<IEnumerable<AddressDTO>> GetAllAddressesAsync()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateAddress([FromBody] AddressDTO request)
+        public IActionResult UpdateAddress([FromBody] AddressDTO request)
         {
             try
             {

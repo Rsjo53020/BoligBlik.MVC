@@ -7,17 +7,19 @@ using Moq;
 
 namespace BoligBlik.InfrastructureTest
 {
+    /// <summary>
+    /// Unit Test, Testing Booking.Create factory. 
+    /// </summary>
     public class BookingTest
     {
-        private void SetUp()
-        {
-
-
-        }
         [Theory]
-        [InlineData(0, 1, false, false)]
-        [InlineData(1, 2, false, true)]
-        [InlineData(2, 1, false, false)]
+
+        [InlineData(0, 1, false, false)]     //Add hours, Result, ExpectedResult.
+        [InlineData(1, 2, false, true)]     //Add hours, Result, ExpectedResult.
+        [InlineData(2, 1, false, false)]   //Add hours, Result, ExpectedResult.
+        [InlineData(-1, 1, false, false)] //Add hours, Result, ExpectedResult.
+        [InlineData(1, 2, true, false)]  //Add hours, Result, ExpectedResult.
+
         public void TestBookingOverlapping(int start, int end, bool overlappingResult, bool expectedResult)
         {
             //arrange
@@ -31,11 +33,12 @@ namespace BoligBlik.InfrastructureTest
                 Price = 0,
                 Rules = "rules",
                 Repairs = "repairs"
-
             };
-            //define if booking is overlapping
+
+            //Define if booking is overlapping
             bookingService.Setup(x => x.IsBookingOverlapping(It.IsAny<Booking>())).Returns(overlappingResult);
             bool result = false;
+            
             //act
             try
             {   //if validation succeds set result to true
@@ -47,6 +50,7 @@ namespace BoligBlik.InfrastructureTest
                 //if validation fails set result to false
                 result = false;
             }
+
             //assert
             Assert.True(result == expectedResult);
         }
