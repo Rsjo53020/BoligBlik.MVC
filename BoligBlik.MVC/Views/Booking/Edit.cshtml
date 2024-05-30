@@ -4,6 +4,8 @@
     ViewData["Title"] = "Rediger Booking";
 }
 
+<h1 class="text-primary">Rediger dine Bookinger</h1>
+
 <h1>Rediger Booking</h1>
 
 <h4>Booking</h4>
@@ -41,7 +43,7 @@
             <div class="form-group">
                 <input type="submit" value="Opdater Booking" class="btn btn-primary" />
 
-                <a asp-action="Delete" asp-controller="Booking" asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(@Model.RowVersion)" class="btn btn-danger">Slet Booking</a>
+                <a asp-action="Delete" asp-controller="Booking" asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(@Model.RowVersion)" class="btn btn-danger">Slet Bookingen</a>
             </div>
         </form>
     </div>
