@@ -13,9 +13,10 @@ namespace BoligBlik.Persistence.Repositories.Users
         //logger
         private readonly ILogger<User> _logger;
 
-        public UserCommandRepo(BoligBlikContext dbContext)
+        public UserCommandRepo(BoligBlikContext dbContext, ILogger<User> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
         /// <summary>
         /// create a user
@@ -31,8 +32,8 @@ namespace BoligBlik.Persistence.Repositories.Users
             {
                 _logger.LogError("Error in create in user: " + ex.Message);
             }
-
         }
+
         /// <summary>
         /// update a user
         /// </summary>
@@ -49,6 +50,7 @@ namespace BoligBlik.Persistence.Repositories.Users
                 _logger.LogError("Error in update in user: " + ex.Message);
             }
         }
+
         /// <summary>
         /// delete a user
         /// </summary>

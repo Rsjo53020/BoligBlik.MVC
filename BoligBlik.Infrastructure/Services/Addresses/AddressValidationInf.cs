@@ -7,23 +7,30 @@ using BoligBlik.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-
 namespace BoligBlik.Infrastructure.Services.Addresses
 {
     public class AddressValidationInf : IAddressValidationInf
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="httpClientFactory"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public AddressValidationInf(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
-      
+        /// <summary>
+        /// Implementation of DAWA Address Validation
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public bool ValidateAddress(Address address)
         {
             var dawaAddress = $"{address.Street} {address.HouseNumber}, {address.Floor}, {address.DoorNumber}, {address.PostalCode.PostalcodeNumber} {address.PostalCode.City}&status=1&struktur=mini";
-
 
             var client = _httpClientFactory.CreateClient("AddressValidationClient");
             var requestUri = $"https://api.dataforsyningen.dk/datavask/adresser?betegnelse={dawaAddress}";
@@ -39,13 +46,11 @@ namespace BoligBlik.Infrastructure.Services.Addresses
 
             return kategori switch
             {
-                "A" => true,
-                "B" => false,
-                "C" => false,
+                "A" => true,    // Address great validation 
+                "B" => false,  // Address good validation
+                "C" => false, // Address bad validation
                 _ => false,
             };
-
         }
-
     }
 }

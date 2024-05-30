@@ -11,19 +11,23 @@ namespace BoligBlik.Application.Features.Bookings.Commands
 {
     public class BookingCommandService : IBookingCommandService
     {
+        //Dependencies
         public readonly IUnitOfWork _unitOfWork;
         private readonly IBookingDomainService _bookingDomainService;
         private readonly IBookingCommandRepo _bookingCommandRepo;
         private readonly IMapper _mapper;
         private readonly ILogger<BookingCommandService> _logger;
 
-        private readonly IUserQuerieRepo _userQuerieRepo;
-        private readonly IAddressQuerieRepo _addressQuerieRepo;
-        private readonly IBookingItemQuerieRepo _itemQuerieRepo;
-        //private readonly IPaymentQuerieRepo _paymentQuerieRepo;
-
-
-        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, IMapper mapper, IBookingDomainService bookingDomainService, ILogger<BookingCommandService> logger)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="bookingCommandRepo"></param>
+        /// <param name="mapper"></param>
+        /// <param name="bookingDomainService"></param>
+        /// <param name="logger"></param>
+        public BookingCommandService(IUnitOfWork unitOfWork, IBookingCommandRepo bookingCommandRepo, 
+            IMapper mapper, IBookingDomainService bookingDomainService, ILogger<BookingCommandService> logger)
         {
             _unitOfWork = unitOfWork;
             _bookingCommandRepo = bookingCommandRepo;
@@ -32,6 +36,11 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             _logger = logger;
         }
 
+        /// <summary>
+        /// Create Booking 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public void CreateBooking(CreateBookingDTO request)
         {
             try
@@ -39,7 +48,6 @@ namespace BoligBlik.Application.Features.Bookings.Commands
                 _unitOfWork.BeginTransaction(IsolationLevel.Serializable);
 
                 var bookingItem = _mapper.Map<BookingItem>(request.Item);
-
 
                 var createdBooking = Booking.Create(request.StartTime, request.EndTime, bookingItem, request.AddressId,_bookingDomainService);
 
@@ -49,15 +57,15 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Could not create booking", ex);
-                throw new Exception("Error occurred while creating booking", ex);
+                _logger.LogError(ex.Message.ToString());
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Create Booking
+        /// </summary>
+        /// <param name="request"></param>
+        /// <exception cref="Exception"></exception>
         public void UpdateBooking(BookingDTO request)
         {
             try
@@ -72,12 +80,15 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Could not update booking", ex);
-                throw new Exception(ex.Message);
+                _logger.LogError(ex.Message.ToString());
             }
         }
 
-
+        /// <summary>
+        /// Delete Booking by BookingId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         public void DeleteBooking(Guid id, byte[] rowVersion)
         {
             try
@@ -91,8 +102,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-                _logger.LogError("Could not delete booking", ex);
-                throw;
+                _logger.LogError(ex.Message.ToString());
             }
         }
     }
