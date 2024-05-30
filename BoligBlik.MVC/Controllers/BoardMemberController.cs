@@ -5,8 +5,10 @@ using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Security.Claims;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -16,11 +18,13 @@ namespace BoligBlik.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<BoardMemberController> _logger;
         private readonly IUserProxy _userProxy;
-        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy)
+        private readonly UserManager<IdentityUser> _userManager;
+        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager)
         {
             _boardMemberProxy = boardMemberProxy;
             _mapper = mapper;
             _userProxy = userProxy;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -90,6 +94,7 @@ namespace BoligBlik.MVC.Controllers
                 if (result != null && result.Id == id)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+
                     boardMember.User = _mapper.Map<UserViewModel>(result.User);
 
                     return View(boardMember);
@@ -110,14 +115,17 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Update(BoardMemberViewModel BoardMemberViewModel)
+        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
             try
             {
-                var userDTO = await _userProxy.GetUserAsync(BoardMemberViewModel.User.EmailAddress);
-                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(BoardMemberViewModel);
+                var userDTO = await _userProxy.GetUserAsync(boardMemberViewModel.User.EmailAddress);
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
                 boardMemberDTO.User = userDTO;
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
+
+                AddClaimToBoardMember(boardMemberDTO);
+
                 return RedirectToAction("ReadAll", "BoardMember");
             }
             catch (Exception ex)
@@ -125,6 +133,15 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while updating a boardMember", ex);
                 return NotFound();
             }
+
+        }
+
+        private async void AddClaimToBoardMember(BoardMemberDTO boardMember)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(boardMember.User.EmailAddress);
+            var claim = new Claim("Admin", boardMember.Title);
+            await _userManager.AddClaimAsync(identityUser, claim);
+
         }
 
         /// <summary>

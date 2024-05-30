@@ -38,7 +38,7 @@ namespace BoligBlik.Persistence.Repositories.Addresses
         {
             try
             {
-                if (AddressExists(address)) return;
+                //if (AddressExists(address)) return;
 
 
                 _dbContext.Update(address).Property(b => b.RowVersion).OriginalValue = address.RowVersion;
@@ -71,7 +71,8 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             && x.Floor == address.Floor
             && x.Street == address.Street
             && x.PostalCode.PostalcodeNumber == address.PostalCode.PostalcodeNumber
-            && x.PostalCode.City == address.PostalCode.City);
+            && x.PostalCode.City == address.PostalCode.City
+            && x.Users == address.Users);
             return result;
         }
     }
