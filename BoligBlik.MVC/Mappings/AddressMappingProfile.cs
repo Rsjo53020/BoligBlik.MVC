@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.Address;
-using BoligBlik.MVC.DTO.BookingItems;
 using BoligBlik.MVC.Models.Addresses;
-using BoligBlik.MVC.Models.BookingItems;
 
 namespace BoligBlik.MVC.Mappings
 {

@@ -40,7 +40,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _bookItemCommandService.CreateBookingItem(request);
                     return Created();
@@ -106,7 +106,7 @@ namespace BoligBlik.WebAPI.Controllers
             
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _bookItemCommandService.UpdateBookingItem(request);
                     return Ok();

@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoligBlik.MVC.Common.Interfaces;
-using BoligBlik.MVC.Models.Common;
-
-namespace BoligBlik.MVC.Models.Users
+﻿namespace BoligBlik.MVC.Models.Users
 {
     public class CreateUserViewModel 
     {

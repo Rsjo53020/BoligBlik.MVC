@@ -15,7 +15,6 @@ namespace BoligBlik.WebAPI.Controllers
         private readonly IAddressCommandService _addressCommandService;
         private readonly IAddressQuerieService _addressQuerieService;
         private readonly ILogger<AddressController> _logger;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Constructor
@@ -23,11 +22,12 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="addressCommandService"></param>
         /// <param name="addressQuerieService"></param>
         /// <param name="mapper"></param>
-        public AddressController(IAddressCommandService addressCommandService, IAddressQuerieService addressQuerieService, IMapper mapper)
+        public AddressController(IAddressCommandService addressCommandService, IAddressQuerieService addressQuerieService,
+            ILogger<AddressController> logger)
         {
             _addressCommandService = addressCommandService;
             _addressQuerieService = addressQuerieService;
-            _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BoligBlik.WebAPI.Controllers
             
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _addressCommandService.CreateAddress(request);
                     return Created();
@@ -109,7 +109,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (request != null)
                 {
                     _addressCommandService.UpdateAddress(request);
                     return Ok(request);

@@ -4,14 +4,16 @@ using BoligBlik.MVC.Models.Addresses;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.DTO.User;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace BoligBlik.MVC.Controllers
 {
+    
+    
     public class AddressController : Controller
     {
         private readonly IAddressProxy _addressProxy;
@@ -28,11 +30,16 @@ namespace BoligBlik.MVC.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
-
+        /// <summary>
+        /// Create an Address
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Street,HouseNumber,Floor, DoorNumber,City,PostalCodeNumber")] CreateAddressViewModel address)
@@ -50,9 +57,14 @@ namespace BoligBlik.MVC.Controllers
                 return RedirectToAction(nameof(GetAllAddress));
             }
 
-            return new RedirectResult(nameof(GetAllAddress));// RedirectToAction(nameof(GetAllAddress)); 
+            return new RedirectResult(nameof(GetAllAddress));
         }
 
+        [AllowAnonymous]
+        /// <summary>
+        /// Read All Address
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAllAddress()
         {
@@ -68,7 +80,12 @@ namespace BoligBlik.MVC.Controllers
                 return View(new List<AddressViewModel>());
             }
         }
-
+        [Authorize]
+        /// <summary>
+        /// Read an Address
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(Guid id)
         {
             if (id == null) return NotFound();
@@ -87,7 +104,12 @@ namespace BoligBlik.MVC.Controllers
             editAddress.UsersWithoutAddress = usersVithoutAddresses;
             return View(editAddress);
         }
-
+        [Authorize]
+        /// <summary>
+        /// Update an Address by aad an user
+        /// </summary>
+        /// <param name="addressEditViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Details(AddressEditViewModel addressEditViewModel)
         {
@@ -116,6 +138,12 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
+        [Authorize]
+        /// <summary>
+        /// Read an Address
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
             if (id == Guid.Empty) return NotFound();
@@ -127,12 +155,16 @@ namespace BoligBlik.MVC.Controllers
             return View(response);
         }
 
+        [Authorize]
+        /// <summary>
+        /// Update an Address
+        /// </summary>
+        /// <param name="addressViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AddressViewModel addressViewModel)
         {
-
-
             try
             {
 
@@ -148,12 +180,6 @@ namespace BoligBlik.MVC.Controllers
                 ModelState.AddModelError(string.Empty, "Unable to save changes. The address was updated by another user.");
             }
             return RedirectToAction(nameof(GetAllAddress));
-
-
         }
-
-
-
-
     }
 }

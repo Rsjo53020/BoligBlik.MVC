@@ -17,8 +17,9 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             _clientFactory = clientFactory;
             _logger = logger;
         }
+
         /// <summary>
-        /// creates a booking item with http call
+        /// Creates an item
         /// </summary>
         /// <param name="bookingItemDTO"></param>
         /// <returns></returns>
@@ -35,12 +36,11 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError("something went wrong when creating a bookiing item", ex.Message);
-                throw new Exception("Error occurred while fetching booking items data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
         }
         /// <summary>
-        /// reads all booking items from backend with http call
+        /// Reads all booking items
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
@@ -54,37 +54,39 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
                 response.EnsureSuccessStatusCode();
 
                 var bookingItems = await response.Content.ReadFromJsonAsync<IEnumerable<BookingItemDTO>>();
-                return bookingItems;
+                return bookingItems ?? new List<BookingItemDTO>();
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error occurred while fetching booking items data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new List<BookingItemDTO>();
             }
         }
         /// <summary>
-        /// reads a booking item by id with http call
+        /// Read an item 
         /// </summary>
-        /// <param name="itemId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<BookingItemDTO> GetBookingItem(Guid itemId)
+        public async Task<BookingItemDTO> GetBookingItem(Guid id)
         {
             try
             {
                 var httpClient = _clientFactory.CreateClient("BaseClient");
-                var response = await httpClient.GetAsync($"api/BookingItems/{itemId}");
+                var response = await httpClient.GetAsync($"api/BookingItems/{id}");
                 response.EnsureSuccessStatusCode();
 
                 var bookingItem = await response.Content.ReadFromJsonAsync<BookingItemDTO>();
                 return bookingItem;
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("Error occurred while fetching booking item data");
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new BookingItemDTO();
             }
         }
         /// <summary>
-        /// updates a booking item in backend with http call
+        /// Updates an item
         /// </summary>
         /// <param name="bookingItemDTO"></param>
         /// <returns></returns>
@@ -99,11 +101,12 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             }
             catch (Exception ex)
             {
-                _logger.LogError("something went wrong when updating bookingitem", ex.Message);
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
         }
+
         /// <summary>
-        /// deletes a booking item from backend with http call
+        /// Delete an item
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>
@@ -119,7 +122,7 @@ namespace BoligBlik.MVC.ProxyServices.BookingItems
             }
             catch (Exception ex)
             {
-                _logger.LogError("something went wrong when deleting a booking item", ex.Message);
+                _logger.LogError("HTTP Request Error:", ex.Message);
             }
 
         }

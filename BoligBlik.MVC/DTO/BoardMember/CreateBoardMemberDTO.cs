@@ -1,5 +1,4 @@
-﻿
-namespace BoligBlik.MVC.DTO.BoardMember
+﻿namespace BoligBlik.MVC.DTO.BoardMember
 {
     public class CreateBoardMemberDTO 
     {

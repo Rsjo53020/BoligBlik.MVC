@@ -1,6 +1,4 @@
-﻿using BoligBlik.MVC.Common.Interfaces;
-
-namespace BoligBlik.MVC.Models.Common
+﻿namespace BoligBlik.MVC.Models.Common
 {
     public abstract class EntityViewModel 
     {
