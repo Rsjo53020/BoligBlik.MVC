@@ -94,20 +94,18 @@ namespace BoligBlik.MVC
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            using (var scope = app.Services.CreateScope())
+            {
+                var claimManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            //    var roles = new[] { "Admin", "Manager", "Member" };
+                var claims = new[] { "Admin", "Boardmember", "Member" };
 
-            //    foreach (var role in roles)
-            //    {
-            //        if (!await roleManager.RoleExistsAsync(role))
-            //            await roleManager.CreateAsync(new IdentityRole(role));
+                foreach (var claim in claims)
+                {
+                    await claimManager.CreateAsync(new IdentityUser(claim));
+                }
 
-            //    }
-
-            //}
+            }
 
             app.Run();
         }
