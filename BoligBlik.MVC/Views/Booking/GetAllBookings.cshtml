@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BoligBlik.MVC.Models.Bookings.BookingViewModel>
+
+@{
+    ViewData["Title"] = "Alle Bookinger";
+}
+
+<h1>GetUserBookings</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Item.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.Item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.EndTime)
+                </td>
+                <td>
+            </tr>
+        }
+    </tbody>
+</table>

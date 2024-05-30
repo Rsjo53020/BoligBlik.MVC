@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using BoligBlik.MVC.DTO.Bookings;
 using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -84,5 +85,31 @@ namespace BoligBlik.MVC.ProxyServices.Bookings
             }
         }
 
+        public async Task<IEnumerable<BookingDTO>> GetAllBookingsAsync()
+        {
+            try
+            {
+                using var httpClient = _clientFactory.CreateClient("BaseClient");
+
+                var response = await httpClient.GetAsync("/api/Booking");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return Enumerable.Empty<BookingDTO>();
+                }
+
+                var allBookings = await response.Content.ReadFromJsonAsync<IEnumerable<BookingDTO>>();
+
+                return allBookings;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception("Error occurred while making HTTP request to retrieve booking data", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while processing booking data", ex);
+            }
+        }
     }
 }
