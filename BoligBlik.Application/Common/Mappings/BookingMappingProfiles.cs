@@ -31,15 +31,12 @@ namespace BoligBlik.Application.Common.Mappings
             //    .ReverseMap();
 
 
-            //BookingDTO
             CreateMap<BookingDTO, Booking>()
-                .ForPath(dest => dest.BookingDates.startTime, act => act
-                    .MapFrom(scr => scr.StartTime))
-                .ForPath(dest => dest.BookingDates.endTime, act => act
-                    .MapFrom(scr => scr.EndTime))
-                .ReverseMap();
+                       .ForPath(dest => dest.BookingDates.startTime, act => act.MapFrom(src => src.StartTime))
+                       .ForPath(dest => dest.BookingDates.endTime, act => act.MapFrom(src => src.EndTime))
+                       .ForMember(dest => dest.Item, opt => opt.MapFrom(src => src.Item))
+                       .ReverseMap();
 
-            
         }
     }
 }
