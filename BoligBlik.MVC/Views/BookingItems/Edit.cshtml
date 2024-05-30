@@ -4,9 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Opdater</h1>
+<div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+    <h1>Bookingselementerne</h1>
+    <h5> class="text-primary">opdager / tilføjh</h5>
+</div>
 
-<h4>Booking objekt</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -51,5 +53,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

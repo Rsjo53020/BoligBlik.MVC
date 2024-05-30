@@ -2,12 +2,11 @@
 @{
     ViewData["Title"] = "ReadAll";
 }
-<h1>Bestyrelsen</h1>
 <div class="container-fluid py-5 mb-5 team">
     <div class="container">
         <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
-            <h5 class="text-primary">Bestyrelsen</h5>
-            <h1>Mød vores Bestyrelse</h1>
+            <h1>Bestyrelsen</h1>            
+            <h5 class="text-primary">MØD OS HER</h5>
         </div>
         <div class="owl-carousel team-carousel wow fadeIn" data-wow-delay=".5s">
         </div>
@@ -31,26 +30,28 @@
                     {
                         <h4>Ikke besat</h4>
                     }
-                    <p class="m-0"> @item.Title </p>
+                    <h5 class="text-primary">@item.Title</h5>
+
                     <p>@item.Description</p>
+
+                    <p>@item.User.EmailAddress</p>
+                    
+                    <p>@item.User.PhoneNumber</p>
                     <input type="hidden" asp-for="@item.Id" />
                     <input type="hidden" asp-for="@item.RowVersion" />
-                    @*                     @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
-                {
-                <a asp-controller="BoardMember" asp-action="Update" asp-route-id="@item">Ret</a>
-                <a asp-controller="BoardMember" asp-action="Delete" asp-route-id="@item">Slet</a>
-                <div class="container" align="right">
-                <a asp-controller="BoardMember" asp-action="Create" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Tilføj medlem</button></a>
-                <a href="" class="ms-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight">Fjern medlem</button></a>
-                </div>
-                } *@
-                    <div class="container" align="center">
-                        <a asp-controller="BoardMember" asp-action="Update" asp-route-id="@item.Id" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Opdater medlem</button></a>
-                        <a asp-controller="BoardMember" asp-action="Delete" asp-route-id="@item.Id" asp-route-rowVersion="@Convert.ToBase64String(item.RowVersion)" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Fjern medlem</button></a>
-                    </div>
+                    @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+                    {
+                        <div class="container" align="center">
+                            <a asp-controller="BoardMember" asp-action="Update" asp-route-id="@item.Id" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Opdater medlem</button></a>
+                            <a asp-controller="BoardMember" asp-action="Delete" asp-route-id="@item.Id" asp-route-rowVersion="@Convert.ToBase64String(item.RowVersion)" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Fjern medlem</button></a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 }
-<a asp-controller="BoardMember" asp-action="Create" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Tilføj medlem</button></a>
+@if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+{
+    <a asp-controller="BoardMember" asp-action="Create" class="me-2"><button type="button" class="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft">Tilføj medlem</button></a>
+}
