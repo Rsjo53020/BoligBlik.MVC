@@ -12,9 +12,10 @@ namespace BoligBlik.MVC.Controllers
         private readonly IDocumentService _documentService;
         private readonly ILogger<DocumentsController> _logger;
 
-        public DocumentsController(IDocumentService documentService)
+        public DocumentsController(IDocumentService documentService, ILogger<DocumentsController> logger)
         {
             _documentService = documentService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Upload(DocumentViewModel documentViewModel, IFormFile fileUpload)
