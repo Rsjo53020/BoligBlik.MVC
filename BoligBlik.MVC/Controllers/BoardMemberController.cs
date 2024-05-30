@@ -124,9 +124,7 @@ namespace BoligBlik.MVC.Controllers
                 boardMemberDTO.User = userDTO;
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
 
-                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
-                var claim = new Claim("Admin", boardMemberDTO.Title);
-                await _userManager.AddClaimAsync(identityUser, claim);
+                AddClaimToBoardMember(boardMemberDTO);
 
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -135,6 +133,15 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while updating a boardMember", ex);
                 return NotFound();
             }
+
+        }
+
+        private async void AddClaimToBoardMember(BoardMemberDTO boardMember)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(boardMember.User.EmailAddress);
+            var claim = new Claim("Admin", boardMember.Title);
+            await _userManager.AddClaimAsync(identityUser, claim);
+
         }
 
         /// <summary>
