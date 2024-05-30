@@ -34,9 +34,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (request == null) return BadRequest();
-                _commandService.CreateBoardMember(request);
-                return Created();
+                if (!ModelState.IsValid)
+                {
+                    _commandService.CreateBoardMember(request);
+                    return Created();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -97,11 +100,15 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut()]
         public ActionResult PutBoardMember([FromBody]BoardMemberDTO request)
         {
-            if (request == null) return BadRequest();
+            
             try
             {
-                _commandService.UpdateBoardMember(request);
-                return Ok();
+                if (!ModelState.IsValid)
+                {
+                    _commandService.UpdateBoardMember(request);
+                    return Ok();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -119,9 +126,10 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpDelete("{id}/{rowVersion}")]
         public ActionResult DeleteBoardMember(Guid id, string rowVersion)
         {
-            if(id == null || rowVersion == null) return BadRequest();
+            
             try
             {
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
                 _commandService.DeleteBoardMember(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }

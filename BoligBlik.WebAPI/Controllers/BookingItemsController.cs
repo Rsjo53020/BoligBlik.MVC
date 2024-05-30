@@ -34,9 +34,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (request == null) return BadRequest();
-                _bookItemCommandService.CreateBookingItem(request);
-                return Created();
+                if (!ModelState.IsValid)
+                {
+                    _bookItemCommandService.CreateBookingItem(request);
+                    return Created();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -94,11 +97,15 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPut]
         public ActionResult UpdateBookingItem([FromBody] BookingItemDTO request)
         {
-            if (request == null) return BadRequest();
+            
             try
             {
-                _bookItemCommandService.UpdateBookingItem(request);
-                return Ok();
+                if (!ModelState.IsValid)
+                {
+                    _bookItemCommandService.UpdateBookingItem(request);
+                    return Ok();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -118,6 +125,7 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
                 _bookItemCommandService.DeleteBookingItem(id, Convert.FromBase64String(rowVersion));
                 return Ok();
             }

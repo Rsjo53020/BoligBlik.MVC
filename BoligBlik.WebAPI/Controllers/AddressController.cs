@@ -38,11 +38,15 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAddressDTO request)
         {
-            if (request is null) return BadRequest();
+            
             try
             {
-                _addressCommandService.CreateAddress(request);
-                return Created();
+                if (!ModelState.IsValid)
+                {
+                    _addressCommandService.CreateAddress(request);
+                    return Created();
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -61,8 +65,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                var address = await _addressQuerieService.ReadAddressAsync(id);
-                return Ok(address);
+                if (!ModelState.IsValid)
+                {
+                    var address = await _addressQuerieService.ReadAddressAsync(id);
+                    return Ok(address);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -101,8 +109,12 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                _addressCommandService.UpdateAddress(request);
-                return Ok(request);
+                if (!ModelState.IsValid)
+                {
+                    _addressCommandService.UpdateAddress(request);
+                    return Ok(request);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
