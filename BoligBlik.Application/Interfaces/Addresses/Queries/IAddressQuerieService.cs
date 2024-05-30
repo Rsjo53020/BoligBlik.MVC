@@ -6,6 +6,6 @@ namespace BoligBlik.Application.Interfaces.Addresses.Queries
     public interface IAddressQuerieService
     {
         Task<IEnumerable<AddressDTO>> ReadAllAsync();
-        Task<AddressDTO> ReadAddress(Guid id);
+        Task<AddressDTO> ReadAddressAsync(Guid id);
     }
 }
