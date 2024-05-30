@@ -14,9 +14,10 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<AddressProxy> _logger;
 
-        public AddressProxy(IHttpClientFactory httpClientFactory)
+        public AddressProxy(IHttpClientFactory httpClientFactory, ILogger<AddressProxy> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
 
 
@@ -98,36 +99,6 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 throw new Exception("Error occurred while updating a address data", ex);
             }
         }
-
-        public async Task<bool> DeleteAddressAsync(AddressDTO addressDto)
-        {
-            try
-            {
-                //var httpClient = _httpClientFactory.CreateClient("BaseClient");
-
-                //var currentItem = await DeleteAddressAsync(addressDto);
-
-                //if (!currentItem.RowVersion.SequenceEqual(addressDto.RowVersion))
-                //{
-                //    throw new Exception("Concurrency conflict occurred.");
-                //}
-
-                //var response = await httpClient.DeleteFromJsonAsync("/api/Address", addressDto);
-                //response.EnsureSuccessStatusCode();
-                return true;
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
-
-        }
-        
-
     }
 }
 
