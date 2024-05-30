@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240526101251_Initial")]
-    partial class Initial
+    [Migration("20240530231325_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
