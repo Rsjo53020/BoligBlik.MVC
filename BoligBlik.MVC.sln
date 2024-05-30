@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3283BBB2-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoligBlik.Domain.Test", "..\BoligBlik.Domain.Test\BoligBlik.Domain.Test.csproj", "{A0D0B2D2-AC64-4119-A8BF-150C2B6022F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoligBlik.Core.Test", "..\BoligBlik.Core.Test\BoligBlik.Core.Test.csproj", "{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoligBlik.Core.Test", "..\BoligBlik.Core.Test\BoligBlik.Core.Test.csproj", "{D26E4B7E-3DE0-4837-85A0-F8321BF8183B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
