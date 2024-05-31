@@ -144,8 +144,8 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new BoardMember
                 {
-                    Title = "Kasser",
-                    Description = "Kasserpost",
+                    Title = "Kasserer",
+                    Description = "Kassererpost",
                     User = _context.Users.FirstOrDefault(user => user.EmailAddress == "Ronni@Mail.dk")
                 }
             };
