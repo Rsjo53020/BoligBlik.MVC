@@ -103,7 +103,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult UpdateAddress([FromBody] AddressDTO request)
+        public IActionResult UpdateAddress([FromBody] UpdateAddressDTO request)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace BoligBlik.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500);
             }
         }
     }

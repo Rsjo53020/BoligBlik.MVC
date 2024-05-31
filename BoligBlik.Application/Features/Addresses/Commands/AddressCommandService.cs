@@ -69,7 +69,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
         /// </summary>
         /// <param name="request"></param>
         /// <exception cref="ValidationException"></exception>
-        public void UpdateAddress(AddressDTO request)
+        public void UpdateAddress(UpdateAddressDTO request)
         {
             try
             {
@@ -90,6 +90,7 @@ namespace BoligBlik.Application.Features.Addresses.Commands
             {
                 _unitOfWork.Rollback();
                 _logger.LogError("Error updating address with request. Exception:", ex.Message);
+                throw new DBConcurrencyException();
             }
         }
 
