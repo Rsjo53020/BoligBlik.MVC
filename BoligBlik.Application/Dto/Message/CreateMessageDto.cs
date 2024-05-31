@@ -1,8 +1,9 @@
-﻿namespace BoligBlik.Application.DTO.Message
+﻿using BoligBlik.Domain.Common.Interfaces;
+
+namespace BoligBlik.Application.DTO.Message
 {
-    public class CreateMessageDTO
+    public class CreateMessageDTO 
     {
-        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public string Sender { get; set; }
         public string Recipient { get; set; }
         public string Subject { get; set; }

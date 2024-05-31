@@ -2,14 +2,15 @@
 using BoligBlik.Domain.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
+using BoligBlik.Persistence.Contexts.Interfaces;
 using BoligBlik.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using BoligBlik.Application.Interfaces.Users.Commands;
-using BoligBlik.Application.Interfaces.Users.Queries;
 using BoligBlik.Persistence.Repositories.BoardMembers;
 using BoligBlik.Persistence.Repositories.Bookings;
 using BoligBlik.Persistence.Repositories.Users;
+using BoligBlik.Persistence.Repositories.Addresses;
+using BoligBlik.Persistence.Repositories.BookingItems;
 
 //using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
@@ -30,8 +31,9 @@ namespace BoligBlik.Persistence.Extensions
 
             services.AddTransient<IUnitOfWork, UnitOfWork>(p =>
             {
-                var db = p.GetService<BoligBlikContext>();
-                return new UnitOfWork(db);
+                var BoligBlikDb = p.GetService<BoligBlikContext>();
+                var dbContext = p.GetService<DbContext>();
+                return new UnitOfWork(BoligBlikDb);
             });
 
             //Booking Repo
@@ -47,22 +49,28 @@ namespace BoligBlik.Persistence.Extensions
             services.AddScoped<IBoardMemberCommandRepo, BoardMemberCommandRepo>();
             services.AddScoped<IBoardMemberQuerieRepo, BoardMemberQuerieRepo>();
 
+            //Addresses
+            services.AddScoped<IAddressCommandRepo, AddressCommandRepo>();
+            services.AddScoped<IAddressQuerieRepo, AddressQuerieRepo>();
 
-            //fremgår to steder dette IoC tilhører database !!!
-            //services.AddScoped<IUserQuerieService, UserQuerieService>();
+            //BookingItem
+            services.AddScoped<IBookingItemCommandRepo, BookingItemCommandRepo>();
+            services.AddScoped<IBookingItemQuerieRepo, BookingItemQuerieRepo>();
+
+            //Database Seeder
+            services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
         }
+
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-            //services.AddDbContext<BookingDbContext>(options =>
-            //    options.UseSqlServer(connectionString,
-            //        builder => builder.MigrationsAssembly(typeof(BookingDbContext).Assembly.FullName)));
-
+            //var connectionString = configuration.GetConnectionString("SkafteLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            //var connectionString = configuration.GetConnectionString("AlexBackEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = configuration.GetConnectionString("RSBackEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<BoligBlikContext>(options =>
-                options.UseSqlServer(connectionString,
-                    builder => builder.MigrationsAssembly(typeof(BoligBlikContext).Assembly.FullName)));
+            {
+                options.UseSqlServer(connectionString);
+            });
         }
 
 

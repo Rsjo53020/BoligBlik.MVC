@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BoligBlik.MVC.Models.Addresses;
 
 namespace BoligBlik.MVC.Data
 {
@@ -12,7 +13,6 @@ namespace BoligBlik.MVC.Data
 
         }
     }
-
 
 
     // Add-Migration InitialMigration -Context ApplicationDbContext -Project Boligblik.DatabaseMigration

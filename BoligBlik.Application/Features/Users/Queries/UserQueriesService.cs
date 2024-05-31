@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.User;
+using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Queries;
 
 namespace BoligBlik.Application.Features.Users.Queries
@@ -23,6 +24,13 @@ namespace BoligBlik.Application.Features.Users.Queries
         public async Task<UserDTO> ReadUserAsync(string email)
         {
             var user = await _userRepo.ReadUserAsync(email);
+            var userDTO = _mapper.Map<UserDTO>(user);
+            return userDTO;
+        }
+
+        public async Task<UserDTO> ReadUserAsync(Guid Id)
+        {
+            var user = await _userRepo.ReadUserAsync(Id);
             var userDTO = _mapper.Map<UserDTO>(user);
             return userDTO;
         }

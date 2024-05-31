@@ -1,6 +1,7 @@
 ﻿using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.BoardMembers.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.WebAPI.Controllers
@@ -25,44 +26,30 @@ namespace BoligBlik.WebAPI.Controllers
             return Created();
         }
 
-        [HttpGet("{title}")]
-        public BoardMemberDTO GetBoardMember(string title)
+        [HttpGet("{id}")]
+        public async Task<BoardMemberDTO> GetBoardMember(Guid id)
         {
-            return _querieService.ReadBoardMember(title);
+            return await _querieService.ReadBoardMemberAsync(id);
         }
 
-        [HttpGet()]
-        public IEnumerable<BoardMemberDTO> GetAllBoardMembers()
+        [HttpGet]
+        public async Task<IEnumerable<BoardMemberDTO>> GetAllBoardMembers()
         {
-            return _querieService.ReadAllBoardMembers();
+            return await _querieService.ReadAllBoardMembersAsync();
         }
 
         [HttpPut()]
-        public ActionResult UpdateBoardMember([FromBody] UpdateBoardMemberDTO request)
+        public ActionResult PutBoardMember([FromBody]BoardMemberDTO request)
         {
             _commandService.UpdateBoardMember(request);
             return Ok();
         }
 
-        [HttpDelete]
-        public ActionResult DeleteBoardMember([FromBody]DeleteBoardMemberDTO request)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteBoardMember(Guid id)
         {
-            _commandService.DeleteBoardMember(request);
+            _commandService.DeleteBoardMember(id);
             return Ok();
-        }
-
-        [HttpPut("AddUserToMember")]
-        public ActionResult AddUserToMember([FromBody] AddUserToBoardMemberDTO request)
-        {
-            _commandService.AddUserToBoardMember(request);
-            return Ok();
-        }
-
-        [HttpPut("Parameters")]
-        public ActionResult UpdateBoardmemberParameters([FromBody] UpdateBoardMemberParametersDTO request) 
-        {
-            _commandService.UpdateBoardMemberPatameters(request);
-            return Ok(); 
         }
     }
 }

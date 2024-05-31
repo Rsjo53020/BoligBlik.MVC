@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using AutoMapper;
 using BoligBlik.Application.DTO.User;
-using BoligBlik.Application.Features.BoardMembers.Commands;
 using BoligBlik.Application.Interfaces.Repositories;
 using BoligBlik.Application.Interfaces.Users.Commands;
 using BoligBlik.Domain.Entities;
@@ -15,7 +14,7 @@ namespace BoligBlik.Application.Features.Users.Commands
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IUserCommandRepo _userRepo;
-        private readonly ILogger<BoardMemberCommandService> _logger;
+        private readonly ILogger<IUserCommandService> _logger;
 
         /// <summary>
         /// Constructor
@@ -38,50 +37,52 @@ namespace BoligBlik.Application.Features.Users.Commands
 
                 var user = _mapper.Map<User>(request);
                 _userRepo.CreateUser(user);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error creating user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError($"Error creating user with request: {@request}, Exception: {ex}");
+
             }
         }
 
-        /// <summary>
-        /// this method Deletes a user using Unit of Work pattern
-        /// </summary>
-        public void DeleteUser(DeleteUserDTO request)
-        {
-            try
-            {
-                _uow.BeginTransaction(IsolationLevel.Serializable);
-                var user = _mapper.Map<User>(request);
-                _userRepo.DeleteUser(user);
-                _uow.CommitChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _uow.Rollback();
-                _logger.LogError("Error deleting user with request: {@request}, Exception: {ex}", request, ex);
-            }
-        }
+       
 
         /// <summary>
         /// this method updates a user using Unit of Work pattern
         /// </summary>
-        public void UpdateUser(UpdateUserDTO request)
+        public void UpdateUser(UserDTO request)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
                 var user = _mapper.Map<User>(request);
                 _userRepo.UpdateUser(user);
-                _uow.CommitChangesAsync();
+                _uow.Commit();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error updating user with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error updating user with request", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// this method Deletes a user using Unit of Work pattern
+        /// </summary>
+        public void DeleteUser(Guid id)
+        {
+            try
+            {
+                _uow.BeginTransaction(IsolationLevel.Serializable);
+                _userRepo.DeleteUser(id);
+                _uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                _uow.Rollback();
+                _logger.LogError("Error deleting user with request", ex.Message);
             }
         }
     }

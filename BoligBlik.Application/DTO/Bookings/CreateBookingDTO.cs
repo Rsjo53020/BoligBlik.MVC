@@ -1,30 +1,15 @@
-﻿using BoligBlik.Application.DTO.Item;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoligBlik.Application.DTO.Address;
+using BoligBlik.Application.DTO.BookingItems;
+using BoligBlik.Application.DTO.User;
+using BoligBlik.Domain.Common.Interfaces;
 
 namespace BoligBlik.Application.DTO.Bookings
 {
-
     public class CreateBookingDTO
     {
-        [Required]
-        public Guid AddressId { get; set; }
-        public Guid UserId { get; set; }
-        public Guid ItemId { get; set; }
-
-        [Required] 
-        public DateOnly CreationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
-        [Required]
+ 
+        public BookingItemDTO Item { get; set; }
         public DateTime StartTime { get; set; }
-        [Required]
         public DateTime EndTime { get; set; }
-
-        public bool Approved { get; set; }
-
-        public byte[] RowVersion { get; set; } = [];
     }
 }

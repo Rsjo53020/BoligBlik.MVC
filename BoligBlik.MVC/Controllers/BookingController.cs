@@ -1,96 +1,92 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using BoligBlik.MVC.DTO.BookingItems;
+using BoligBlik.MVC.DTO.Bookings;
+using BoligBlik.MVC.Models.Addresses;
+using BoligBlik.MVC.Models.BookingItems;
+using BoligBlik.MVC.Models.Bookings;
+using BoligBlik.MVC.Models.Users;
+using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
+using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
+using BoligBlik.MVC.ProxyServices.Bookings.Interfaces;
+using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BoligBlik.MVC.Controllers
 {
     public class BookingController : Controller
     {
-        // GET: BookingController
-        public IActionResult Index()
-        {
+        private readonly IBookingItemsProxy _bookingItemsProxy;
+        private readonly IBookingProxy _bookingProxy;
+        private readonly IUserProxy _userProxy;
+        private readonly IAddressProxy _addressProxy;
+        private readonly IMapper _mapper;
 
-            return View();
+        public BookingController(IBookingItemsProxy bookingItemsProxy, IBookingProxy bookingProxy, IAddressProxy addressProxy, IUserProxy userProxy,
+            IMapper mapper)
+        {
+            _bookingItemsProxy = bookingItemsProxy;
+            _bookingProxy = bookingProxy;
+            _userProxy = userProxy;
+            _addressProxy = addressProxy;
+            _mapper = mapper;
         }
 
-        // GET: BookingController/Details/5
-        public IActionResult Details(int id)
+        public async Task<IActionResult> NewBookingIndex()
         {
-            return View();
+            var bookingItems = await _bookingItemsProxy.GetAllBookingItems();
+            var userViewModel = _mapper.Map<IEnumerable<BookingItemViewModel>>(bookingItems);
+            return View(userViewModel);
         }
 
-        // GET: BookingController/NewBooking (Create)
-        public IActionResult YoursBookings()
+        [HttpGet]
+        public async Task<IActionResult> StartBooking(Guid itemId)
         {
-            //try
-            //{
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-            return View();
-        }
-        public IActionResult NewBooking()
-        {
-            return View();
+            var bookingItemViewModel = await _bookingItemsProxy.GetBookingItem(itemId);
+
+            CreateBookingViewModel bookingViewModel = new CreateBookingViewModel
+            {
+                Item = _mapper.Map<BookingItemViewModel>(bookingItemViewModel)
+            };
+
+            return View(bookingViewModel);
         }
 
-        // POST: BookingController/Create
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult NewBooking(IFormCollection collection)
+        public async Task<IActionResult> CreateBooking(CreateBookingViewModel bookingViewModel)
         {
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
+
+            var allAddress = await _addressProxy.GetAllAddressAsync();
+
+            var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+
+            var userAdressDTO = _mapper.Map<AddressViewModel>(userAddress);
+           
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                var createBookingDTO = _mapper.Map<CreateBookingDTO>(bookingViewModel);
+
+                await _bookingProxy.CreateBooking(createBookingDTO);
+
+                return RedirectToAction("NewBookingIndex");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", $"An error occurred while creating the booking: {ex.Message}");
+                return View(bookingViewModel);
             }
         }
-
-        // GET: BookingController/Edit/5
-        public IActionResult Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetUserBookings()
         {
-            return View();
-        }
+            var userAddress = await _addressProxy.GetUserAddress(User.Identity.Name);
 
-        // POST: BookingController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var userAddressViewModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
 
-        // GET: BookingController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BookingController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(userAddressViewModel);
         }
     }
 }

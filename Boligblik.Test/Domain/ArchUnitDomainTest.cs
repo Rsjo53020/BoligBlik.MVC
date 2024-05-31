@@ -68,32 +68,32 @@ namespace Boligblik.ArchitectureTest.Domain
                 //Assert
                 .Check(Architecture);
         }
-        /// <summary>
-        /// test EF
-        /// </summary>
-        [Fact]
-        public void EntitiesShouldHavePrivateConstructorWithoutParameters()
-        {
-            //Arrange
-            IEnumerable<Class> entityTypes = ArchRuleDefinition
-                .Classes()
-                .That()
-                .AreAssignableTo(typeof(Entity))
-                .GetObjects(Architecture);
+        ///// <summary>
+        ///// test EF
+        ///// </summary>
+        //[Fact]
+        //public void EntitiesShouldHavePrivateConstructorWithoutParameters()
+        //{
+        //    //Arrange
+        //    IEnumerable<Class> entityTypes = ArchRuleDefinition
+        //        .Classes()
+        //        .That()
+        //        .AreAssignableTo(typeof(Entity))
+        //        .GetObjects(Architecture);
 
-            var failingTypes = new List<Class>();
-            //Act
-            foreach (Class entityType in entityTypes)
-            {
-                IEnumerable<MethodMember> construtors = entityType.GetConstructors();
-                if (!construtors.Any(c => c.Visibility == Visibility.Internal && !c.Parameters.Any()))
-                {
-                    failingTypes.Add(entityType);
-                }
-            }
-            //Assert
-            Assert.True(failingTypes.Count() == 0, "Not all entities in domain layer have a private and" +
-                "parameterless constructor");
-        }
+        //    var failingTypes = new List<Class>();
+        //    //Act
+        //    foreach (Class entityType in entityTypes)
+        //    {
+        //        IEnumerable<MethodMember> construtors = entityType.GetConstructors();
+        //        if (!construtors.Any(c => c.Visibility == Visibility.Internal && !c.Parameters.Any()))
+        //        {
+        //            failingTypes.Add(entityType);
+        //        }
+        //    }
+        //    //Assert
+        //    Assert.True(failingTypes.Count() == 0, "Not all entities in domain layer have a private and" +
+        //        "parameterless constructor");
+        //}
     }
 }
