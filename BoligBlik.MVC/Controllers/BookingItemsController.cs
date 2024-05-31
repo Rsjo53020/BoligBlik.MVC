@@ -2,11 +2,12 @@
 using BoligBlik.MVC.DTO.BookingItems;
 using BoligBlik.MVC.Models.BookingItems;
 using BoligBlik.MVC.ProxyServices.BookingItems.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
 {
+    [Authorize]
     public class BookingItemsController : Controller
     {
         //proxy
@@ -24,7 +25,7 @@ namespace BoligBlik.MVC.Controllers
         }
 
         /// <summary>
-        /// gets the view with all booking items
+        /// Read All items
         /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> List()
@@ -37,12 +38,12 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("something went wrong when getting all booking items", ex);
-                return NotFound();
+                _logger.LogError("something went wrong when getting all booking items", ex.Message);
+                return View(new List<BookingItemViewModel>());
             }
         }
         /// <summary>
-        /// gets the create view
+        /// Create view
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -52,7 +53,7 @@ namespace BoligBlik.MVC.Controllers
         }
 
         /// <summary>
-        /// method for creating a booking item
+        /// Create an item
         /// </summary>
         /// <param name="createBookingItemViewModel"></param>
         /// <returns></returns>
@@ -72,7 +73,7 @@ namespace BoligBlik.MVC.Controllers
             }
         }
         /// <summary>
-        /// gets the edit page
+        /// Read an item
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -92,7 +93,7 @@ namespace BoligBlik.MVC.Controllers
             }
         }
         /// <summary>
-        /// method for editing a booking item
+        /// Update an item
         /// </summary>
         /// <param name="bookingItemViewModel"></param>
         /// <returns></returns>
@@ -112,7 +113,7 @@ namespace BoligBlik.MVC.Controllers
         }
 
         /// <summary>
-        /// method for deleting a booking item
+        /// Delete an item
         /// </summary>
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>

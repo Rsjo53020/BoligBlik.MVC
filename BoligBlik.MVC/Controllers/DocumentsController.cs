@@ -1,17 +1,16 @@
-﻿using BoligBlik.MVC.Features.Documents;
-using BoligBlik.MVC.Features.Documents.Interfaces;
+﻿using BoligBlik.MVC.Features.Documents.Interfaces;
 using BoligBlik.MVC.Models.Documents;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace BoligBlik.MVC.Controllers
 {
+    [Authorize]
     public class DocumentsController : Controller
     {
         private readonly IDocumentService _documentService;
         private readonly ILogger<DocumentsController> _logger;
-
+        
         public DocumentsController(IDocumentService documentService, ILogger<DocumentsController> logger)
         {
             _documentService = documentService;
@@ -46,7 +45,7 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Documents could not be loaded.");
+              _logger.LogError("Documents could not be loaded.", ex.Message);
             }
 
             return View(documents);

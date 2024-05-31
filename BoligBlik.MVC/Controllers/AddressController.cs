@@ -30,7 +30,7 @@ namespace BoligBlik.MVC.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -104,7 +104,7 @@ namespace BoligBlik.MVC.Controllers
             editAddress.UsersWithoutAddress = usersVithoutAddresses;
             return View(editAddress);
         }
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Update an Address by aad an user
         /// </summary>
@@ -138,7 +138,7 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Read an Address
         /// </summary>
@@ -155,7 +155,7 @@ namespace BoligBlik.MVC.Controllers
             return View(response);
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Update an Address
         /// </summary>
