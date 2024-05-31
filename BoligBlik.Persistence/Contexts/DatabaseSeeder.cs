@@ -1,33 +1,45 @@
-﻿using BoligBlik.Domain.Entities;
+﻿using BoligBlik.Domain.Common.Interfaces;
+using BoligBlik.Domain.Entities;
 using BoligBlik.Domain.Value;
 using BoligBlik.Entities;
 using BoligBlik.Persistence.Contexts.Interfaces;
 
 namespace BoligBlik.Persistence.Contexts
 {
+    /// <summary>
+    /// Database Seeder 
+    /// </summary>
     public class DatabaseSeeder : IDatabaseSeeder
     {
+        //Dependencies
         private readonly BoligBlikContext _context;
+        private readonly IBookingDomainService _domainService;
 
-        public DatabaseSeeder(BoligBlikContext context)
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="domainService"></param>
+        public DatabaseSeeder(BoligBlikContext context, IBookingDomainService domainService)
         {
             _context = context;
+            _domainService = domainService;
         }
 
+        /// <summary>
+        /// Seed Method call
+        /// </summary>
         public void SeedDB()
         {
             SeedUsers();
             SeedBoardMembers();
-            SeedMeeting();
             SeedBookingItem();
-            SeedBooking();
             SeedAddress();
-
         }
 
-
-
-
+        /// <summary>
+        /// Seed Users
+        /// </summary>
         internal void SeedUsers()
         {
             if (_context.Users.Any()) return;
@@ -66,6 +78,9 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Seed Address
+        /// </summary>
         internal void SeedAddress()
         {
             if (_context.Adresses.Any()) return;
@@ -75,7 +90,7 @@ namespace BoligBlik.Persistence.Contexts
 
                 new Address
                 {
-                    Street = "Findlandsvej",
+                    Street = "Finlandsvej",
                     HouseNumber = "51",
                     Floor = "1",
                     DoorNumber = "th",
@@ -86,7 +101,7 @@ namespace BoligBlik.Persistence.Contexts
                 },
                 new Address
                 {
-                    Street = "Findlandsvej",
+                    Street = "Finlandsvej",
                     HouseNumber = "51",
                     Floor = "2",
                     DoorNumber = "th",
@@ -106,6 +121,9 @@ namespace BoligBlik.Persistence.Contexts
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Seed Board Members
+        /// </summary>
         internal void SeedBoardMembers()
         {
             if (_context.BoardMembers.Any()) return;
@@ -142,37 +160,10 @@ namespace BoligBlik.Persistence.Contexts
 
             _context.SaveChanges();
         }
-
-
-        internal void SeedMeeting()
-        {
-            if (_context.Meetings.Any()) return;
-
-            var meetings = new Meeting[]
-            {
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Møde ang. Ronni",
-
-                },
-                new Meeting
-                {
-                    Start = DateTime.Now,
-                    End = DateTime.Now + TimeSpan.FromHours(5),
-                    Description = "Vigigt Møde",
-                }
-            };
-
-            foreach (var meeting in meetings)
-            {
-                _context.Meetings.Add(meeting);
-            }
-
-            _context.SaveChanges();
-        }
-
+        
+        /// <summary>
+        /// Seed Booking ITem
+        /// </summary>
         internal void SeedBookingItem()
         {
             if (_context.BookingItems.Any()) return;
@@ -205,38 +196,5 @@ namespace BoligBlik.Persistence.Contexts
 
             _context.SaveChanges();
         }
-
-        internal void SeedBooking()
-        {
-            if (_context.Bookings.Any()) return;
-
-                var bookings = new Booking[]
-            {
-                new Booking(
-                    DateTime.Now.AddHours(1),
-                    DateTime.Now.AddHours(2),
-                     _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
-
-                new Booking(
-                    DateTime.Now.AddHours(3),
-                    DateTime.Now.AddHours(4),
-                    _context.BookingItems.FirstOrDefault(i => i.Name == "Vaskemaskine")),
-
-                new Booking(
-                DateTime.Now.AddHours(6),
-                DateTime.Now.AddHours(7),
-                _context.BookingItems.FirstOrDefault(i => i.Name == "Trailer"))
-            };
-
-
-            foreach (var booking in bookings)
-            {
-                _context.Bookings.Add(booking);
-            }
-
-            _context.SaveChanges();
-        }
-
-
     }
 }

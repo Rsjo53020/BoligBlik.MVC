@@ -1,10 +1,5 @@
 ﻿using BoligBlik.MVC.DTO.Address;
-using BoligBlik.MVC.DTO.BoardMember;
 using BoligBlik.MVC.ProxyServices.Addresses.Interfaces;
-using BoligBlik.MVC.ProxyServices.Users.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace BoligBlik.MVC.ProxyServices.Addresses
 {
@@ -12,15 +7,18 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<AddressProxy> _logger;
-        private readonly IUserProxy _userProxy;
 
-        public AddressProxy(IHttpClientFactory httpClientFactory, IUserProxy userProxy)
+        public AddressProxy(IHttpClientFactory httpClientFactory, ILogger<AddressProxy> logger)
         {
             _httpClientFactory = httpClientFactory;
-            _userProxy = userProxy;
+            _logger = logger;
         }
 
-
+        /// <summary>
+        /// Create an Address
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public async Task<bool> CreateAddressAsync(CreateAddressDTO address)
         {
             try
@@ -33,11 +31,15 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
-                throw new Exception($"Error occurred while create a address data: {ex.Message}");
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return false;
             }
         }
 
+        /// <summary>
+        /// Read All Address
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<AddressDTO>> GetAllAddressAsync()
         {
             try
@@ -48,19 +50,18 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 var address = await response.Content.ReadFromJsonAsync<IEnumerable<AddressDTO>>();
                 return address ?? new List<AddressDTO>();
             }
-            catch (HttpRequestException httpRequestException)
-            {
-                new Exception("HTTP Request Error: " + httpRequestException.Message, httpRequestException);
-                return new List<AddressDTO>();
-            }
             catch (Exception ex)
             {
-                new Exception("Error occurred while getting all addresses data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return new List<AddressDTO>();
-
             }
         }
 
+        /// <summary>
+        /// Read one Address
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<AddressDTO> GetAddressAsync(Guid id)
         {
             try
@@ -72,83 +73,36 @@ namespace BoligBlik.MVC.ProxyServices.Addresses
                 var address = await response.Content.ReadFromJsonAsync<AddressDTO>();
                 return address;
             }
-            catch (HttpRequestException ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error occurred while getting a address data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return new AddressDTO();
             }
         }
 
-
-        public async Task<bool> UpdateAddressAsync(UpdateAddressDTO updateAddressDTO)
+        /// <summary>
+        /// Update an Address
+        /// </summary>
+        /// <param name="addressDTO"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateAddressAsync(AddressDTO addressDTO)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
 
-                var response = await httpClient.PutAsJsonAsync("/api/Address", updateAddressDTO);
+                var response = await httpClient.PutAsJsonAsync("/api/Address", addressDTO);
                 response.EnsureSuccessStatusCode();
                 return true;
             }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
+
             catch (Exception ex)
             {
-                throw new Exception("Error occurred while updating a address data", ex);
+                _logger.LogError("HTTP Request Error:", ex.Message);
+                return false;
             }
         }
-
-        public async Task<bool> DeleteAddressAsync(AddressDTO addressDto)
-        {
-            try
-            {
-                //var httpClient = _httpClientFactory.CreateClient("BaseClient");
-
-                //var currentItem = await DeleteAddressAsync(addressDto);
-
-                //if (!currentItem.RowVersion.SequenceEqual(addressDto.RowVersion))
-                //{
-                //    throw new Exception("Concurrency conflict occurred.");
-                //}
-
-                //var response = await httpClient.DeleteFromJsonAsync("/api/Address", addressDto);
-                //response.EnsureSuccessStatusCode();
-                return true;
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error occurred while updating a address data", ex);
-            }
-
-        }
-
-        public async Task<AddressDTO> GetUserAddress(string email)
-        {
-            try
-            {
-                var addressDTOs = await GetAllAddressAsync();
-
-                var userDTO = await _userProxy.GetUserAsync(email);
-
-                var userAddressDTO = addressDTOs.Where(a => a.Users
-                .Any(u => u.Id == userDTO.Id)).FirstOrDefault();
-
-
-                return userAddressDTO;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error occurred while retrieving an address", ex.Message);
-                throw new Exception($"Error occurred while retrieving an address data: {ex.Message}");
-            }
-        }
-
     }
 }
 

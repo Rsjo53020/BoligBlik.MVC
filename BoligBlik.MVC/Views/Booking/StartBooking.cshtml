@@ -2,7 +2,9 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model BoligBlik.MVC.Models.Bookings.CreateBookingViewModel
 
-<h1>Opret Booking</h1>
+
+<h1 class="text-primary">Opret Booking</h1>
+<h5 class="text-black">alle elementerne</h5>
 
 <form asp-controller="Booking" asp-action="CreateBooking" method="post">
     <input type="hidden" asp-for="Item.Id" />
@@ -12,6 +14,8 @@
     <input type="hidden" asp-for="Item.Repairs" />
     <input type="hidden" asp-for="Item.Rules" />
     <input type="hidden" asp-for="Item.RowVersion" />
+    <input type="hidden" asp-for="AddressId" />
+
 
     <div class="form-group">
         <label asp-for="StartTime" class="form-label">Starttidspunkt:</label>

@@ -12,38 +12,13 @@
         <input asp-for="Title" class="form-control" placeholder="Titel" />
         <span asp-validation-for="Title" class="text-danger">Titel er påkrævet.</span>
     </div>
-    <div class="form-group">
-        <label asp-for="Description" class="control-label">Beskrivelse</label>
-        <textarea asp-for="Description" class="form-control" placeholder="Beskrivelse"></textarea>
-        <span asp-validation-for="Description" class="text-danger">Beskrivelse er påkrævet.</span>
-
-    </div>
-    <div class="form-group">
-        <label asp-for="Category" class="control-label">Kategori</label>
-        <select asp-for="Category" class="form-control">
-            <option value="Referat">Referat</option>
-            <option value="Vedtægt">Vedtægt</option>
-            <option value="Andet">Andet</option>
-        </select>
-        <span asp-validation-for="Category" class="text-danger">Kategori er påkrævet.</span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Acces" class="control-label">Adgang</label>
-        <select asp-for="Acces" class="form-control">
-            <option value="Administrator">Administrator</option>
-            <option value="Formand">Formand</option>
-            <option value="Medlem">Medlem</option>
-        </select>
-        <span asp-validation-for="Acces" class="text-danger">Adgang er påkrævet.</span>
-    </div>
 
     <div class="form-group">
         <label for="FileUpload" class="control-label">Dokument</label>
         <input type="file" name="FileUpload" class="form-control" />
         <span asp-validation-for="FileUpload" class="text-danger">Filsti er påkrævet.</span>
-
     </div>
+
     <div class="form-group">
         <input type="submit" value="Upload" class="btn btn-primary" />
     </div>

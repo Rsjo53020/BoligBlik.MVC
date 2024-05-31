@@ -1,5 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
-using BoligBlik.Domain.Common.Interfaces;
+﻿using BoligBlik.Domain.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using BoligBlik.Persistence.Contexts;
 using BoligBlik.Persistence.Contexts.Interfaces;
@@ -11,6 +10,17 @@ using BoligBlik.Persistence.Repositories.Bookings;
 using BoligBlik.Persistence.Repositories.Users;
 using BoligBlik.Persistence.Repositories.Addresses;
 using BoligBlik.Persistence.Repositories.BookingItems;
+using BoligBlik.Application.Interfaces.Repositories.Addresses.Command;
+using BoligBlik.Application.Interfaces.Repositories.Addresses.Querie;
+using BoligBlik.Application.Interfaces.Repositories.BoardMembers.Command;
+using BoligBlik.Application.Interfaces.Repositories.BoardMembers.Querie;
+using BoligBlik.Application.Interfaces.Repositories.Bookings.Command;
+using BoligBlik.Application.Interfaces.Repositories.Bookings.Querie;
+using BoligBlik.Application.Interfaces.Repositories.BookingItems.Command;
+using BoligBlik.Application.Interfaces.Repositories.BookingItems.Querie;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
+using BoligBlik.Application.Interfaces.Repositories.Users.Command;
+using BoligBlik.Application.Interfaces.Repositories.Users.Querie;
 
 //using UserQuerieService = BoligBlik.Application.Features.User.Queries.UserQuerieService;
 
@@ -64,9 +74,10 @@ namespace BoligBlik.Persistence.Extensions
 
         public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
+            //var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
             //var connectionString = configuration.GetConnectionString("SkafteLocal") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            //var connectionString = configuration.GetConnectionString("AlexBackEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            var connectionString = configuration.GetConnectionString("RSBackEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<BoligBlikContext>(options =>
             {
                 options.UseSqlServer(connectionString);

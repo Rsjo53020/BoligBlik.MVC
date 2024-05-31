@@ -8,10 +8,12 @@ using BoligBlik.Application.DTO.Bookings;
 
 namespace BoligBlik.Application.Interfaces.Bookings
 {
+    /// <summary>
+    /// Interface for BookingQuerieService
+    /// </summary>
     public interface IBookingQuerieService
     {
-        public Task<BookingDTO> ReadBooking(BookingDTO bookingDto);
-        public Task<IEnumerable<BookingDTO>> ReadAllBooking();
-
+        Task<BookingDTO> ReadBookingAsync(Guid id);
+        Task<IEnumerable<BookingDTO>> ReadAllBookingAsync();
     }
 }

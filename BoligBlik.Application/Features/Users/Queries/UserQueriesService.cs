@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.User;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.Users.Querie;
 using BoligBlik.Application.Interfaces.Users.Queries;
+using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.Users.Queries
 {
@@ -10,12 +11,19 @@ namespace BoligBlik.Application.Features.Users.Queries
         //Dependencies
         private readonly IUserQuerieRepo _userRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserQueriesService> _logger;
 
-        //Constructor
-        public UserQueriesService(IMapper mapper, IUserQuerieRepo userQuerieRepo)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="userQuerieRepo"></param>
+        /// <param name="logger"></param>
+        public UserQueriesService(IMapper mapper, IUserQuerieRepo userQuerieRepo, ILogger<UserQueriesService> logger)
         {
             _mapper = mapper;
             _userRepo = userQuerieRepo;
+            _logger = logger;
         }
 
         /// <summary>
@@ -23,16 +31,17 @@ namespace BoligBlik.Application.Features.Users.Queries
         /// </summary>
         public async Task<UserDTO> ReadUserAsync(string email)
         {
-            var user = await _userRepo.ReadUserAsync(email);
-            var userDTO = _mapper.Map<UserDTO>(user);
-            return userDTO;
-        }
-
-        public async Task<UserDTO> ReadUserAsync(Guid Id)
-        {
-            var user = await _userRepo.ReadUserAsync(Id);
-            var userDTO = _mapper.Map<UserDTO>(user);
-            return userDTO;
+            try
+            {
+                var user = await _userRepo.ReadUserAsync(email);
+                var userDTO = _mapper.Map<UserDTO>(user);
+                return userDTO;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("something went wrong when reading a user", ex.Message);
+                return null;
+            }
         }
 
         /// <summary>
@@ -40,13 +49,21 @@ namespace BoligBlik.Application.Features.Users.Queries
         /// </summary>
         public async Task<IEnumerable<UserDTO>> ReadAllUsersAsync()
         {
-            var users = await _userRepo.ReadAllUsersAsync();
-            List<UserDTO> userDTOs = new List<UserDTO>();
-            foreach (var user in users)
+            try
             {
-                userDTOs.Add(_mapper.Map<UserDTO>(user));
+                var users = await _userRepo.ReadAllUsersAsync();
+                List<UserDTO> userDTOs = new List<UserDTO>();
+                foreach (var user in users)
+                {
+                    userDTOs.Add(_mapper.Map<UserDTO>(user));
+                }
+                return userDTOs;
             }
-            return userDTOs;
+            catch (Exception ex)
+            {
+                _logger.LogError("something went wrong when reading all users", ex.Message);
+                return null;
+            }
         }
     }
 }

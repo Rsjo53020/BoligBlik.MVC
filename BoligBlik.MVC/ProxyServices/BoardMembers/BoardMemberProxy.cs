@@ -6,10 +6,12 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
     public class BoardMemberProxy : IBoardMemberProxy
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<BoardMemberProxy> _logger;
 
-        public BoardMemberProxy(IHttpClientFactory httpClientFactory)
+        public BoardMemberProxy(IHttpClientFactory httpClientFactory, ILogger<BoardMemberProxy> logger)
         {
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
         }
         /// <summary>
         /// Read all boardmembers
@@ -28,14 +30,15 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             }
             catch (Exception ex)
             {
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return new List<BoardMemberDTO>();
             }
 
         }
         /// <summary>
-        /// read a boardmember from title
+        /// Read a boardmember 
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task<BoardMemberDTO> GetBoardMemberAsync(Guid id)
         {
@@ -50,11 +53,12 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             }
             catch (Exception ex)
             {
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return new BoardMemberDTO();
             }
         }
         /// <summary>
-        /// create a boardmember
+        /// Create a boardmember
         /// </summary>
         /// <param name="boardMember"></param>
         /// <returns></returns>
@@ -70,11 +74,12 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             }
             catch (Exception ex)
             {
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return false;
             }
         }
         /// <summary>
-        /// update a boardmember
+        /// Update a boardmember
         /// </summary>
         /// <param name="boardMember"></param>
         /// <returns></returns>
@@ -90,26 +95,29 @@ namespace BoligBlik.MVC.ProxyServices.BoardMembers
             }
             catch (Exception ex)
             {
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return false;
             }
         }
         /// <summary>
-        /// deletes a boardmember from id
+        /// Delete a boardmember
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteBoardMemberAsync(Guid id)
+        public async Task<bool> DeleteBoardMemberAsync(Guid id, string rowVersion)
         {
             try
             {
                 var httpClient = _httpClientFactory.CreateClient("BaseClient");
 
-                var response = await httpClient.DeleteAsync($"/api/BoardMember/{id}");
+                var response = await httpClient.DeleteAsync($"/api/BoardMember/{id}/{rowVersion}");
                 response.EnsureSuccessStatusCode();
                 return true;
             }
             catch (Exception ex)
             {
+                _logger.LogError("HTTP Request Error:", ex.Message);
                 return false;
             }
         }

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BoligBlik.MVC.Models.Bookings.BookingViewModel>
+
+@{
+    ViewData["Title"] = "Alle Bookinger";
+}
+
+<div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+    <h1>Alle bookingerne</h1>
+    <h5 class="text-primary">Fra ejendommen</h5>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Navn
+            </th>
+            <th>
+                Starttid
+            </th>
+            <th>
+                Sluttid
+            </th>
+            <th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.Item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.EndTime)
+                </td>
+                <td>
+            </tr>
+        }
+    </tbody>
+</table>

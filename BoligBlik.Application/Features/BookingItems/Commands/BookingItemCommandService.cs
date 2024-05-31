@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.Interfaces.BookingItems.Commands;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.BookingItems.Command;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 using Microsoft.Extensions.Logging;
 
 namespace BoligBlik.Application.Features.BookingItems.Commands
@@ -14,7 +15,12 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
         private readonly IBookingItemCommandRepo _bookingItemRepo;
         private readonly ILogger<IBookingItemCommandService> _logger;
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="uow"></param>
+        /// <param name="mapper"></param>
+        /// <param name="bookingItemRepo"></param>
         public BookingItemCommandService(IUnitOfWork uow, IMapper mapper, IBookingItemCommandRepo bookingItemRepo)
         {
             _uow = uow;
@@ -22,7 +28,10 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             _bookingItemRepo = bookingItemRepo;
         }
 
-        //Create a booking item
+        /// <summary>
+        /// Create a booking item
+        /// </summary>
+        /// <param name="request"></param>
         public void CreateBookingItem(CreateBookingItemDTO request)
         {
             try
@@ -36,11 +45,14 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error creating booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error creating booking item", ex.Message);
             }
         }
 
-        //Update a booking item
+        /// <summary>
+        /// Update a booking item
+        /// </summary>
+        /// <param name="request"></param>
         public void UpdateBookingItem(BookingItemDTO request)
         {
             try
@@ -54,25 +66,28 @@ namespace BoligBlik.Application.Features.BookingItems.Commands
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error updating booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error updating booking", ex.Message);
             }
         }
 
-        //Delete a booking item
-        public void DeleteBookingItem(BookingItemDTO request)
+        /// <summary>
+        /// Delete a booking item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        public void DeleteBookingItem(Guid id, Byte[] rowVersion)
         {
             try
             {
                 _uow.BeginTransaction(System.Data.IsolationLevel.Serializable);
 
-                var bookingItem = _mapper.Map<Domain.Entities.BookingItem>(request);
-                _bookingItemRepo.DeleteBookingItem(bookingItem);
+                _bookingItemRepo.DeleteBookingItem(id, rowVersion);
                 _uow.Commit();
             }
             catch (Exception ex)
             {
                 _uow.Rollback();
-                _logger.LogError("Error deleting booking item with request: {@request}, Exception: {ex}", request, ex);
+                _logger.LogError("Error deleting booking item", ex.Message);
             }
         }
     }

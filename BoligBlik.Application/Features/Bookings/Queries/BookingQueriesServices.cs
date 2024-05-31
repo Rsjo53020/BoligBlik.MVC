@@ -5,51 +5,78 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BoligBlik.Application.DTO.Bookings;
-using BoligBlik.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Application.Interfaces.Bookings;
 using System.Threading;
 using BoligBlik.Domain.Exceptions;
+using Microsoft.Extensions.Logging;
+using BoligBlik.Application.Interfaces.Repositories.Bookings.Querie;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 
 namespace BoligBlik.Application.Features.Bookings.Queries
 {
     public class BookingQueriesServices : IBookingQuerieService
     {
+        //Dependencies
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookingQuerieRepo _bookingRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger<BookingQueriesServices> _logger;
 
-        public BookingQueriesServices(IUnitOfWork unitOfWork, IBookingQuerieRepo bookingRepo, IMapper mapper)
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="bookingRepo"></param>
+        /// <param name="mapper"></param>
+        public BookingQueriesServices(IUnitOfWork unitOfWork,
+            IBookingQuerieRepo bookingRepo, IMapper mapper, ILogger<BookingQueriesServices> logger)
         {
             _unitOfWork = unitOfWork;
             _bookingRepo = bookingRepo;
             _mapper = mapper;
+            _logger = logger;
         }
 
-        //public IEnumerable<Domain.Entities.Booking> Bookings(Domain.Entities.Booking booking)
-        //{
-        //    return _bookingDbContext.Bookings.AsNoTracking()
-        //        .Where(a => /*a.Address.Id == booking.Address.Id &&*/ a.Id != booking.Id).ToList();
-        //}
-        public async Task<BookingDTO> ReadBooking(BookingDTO bookingDto)
+        /// <summary>
+        /// Read booking by BookingId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="BookingNotFoundException"></exception>
+        public async Task<BookingDTO> ReadBookingAsync(Guid id)
         {
-            var booking = await _bookingRepo.ReadBooking(bookingDto.Id);
-            if (booking is null)
+            try
             {
-                throw new BookingNotFoundException(bookingDto.Id);
+                var booking = await _bookingRepo.ReadBooking(id);
+                var BookingDTO = _mapper.Map<BookingDTO>(booking);
+                return BookingDTO;
             }
-            var resultat = _mapper.Map<BookingDTO>(booking);
-            return resultat;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return null;
+            }
         }
 
-        public async Task<IEnumerable<BookingDTO>> ReadAllBooking()
+        /// <summary>
+        /// Read All Bookings
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookingDTO>> ReadAllBookingAsync()
         {
-            var bookings = await _bookingRepo.ReadAllAsync();
-
-            var bookingDTO = _mapper.Map<IEnumerable<BookingDTO>>(bookings);
-
-            return bookingDTO;
+            try
+            {
+                var bookings = await _bookingRepo.ReadAllAsync();
+                var bookingDTO = _mapper.Map<IEnumerable<BookingDTO>>(bookings);
+                return bookingDTO;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return null;
+            }
         }
     }
 }

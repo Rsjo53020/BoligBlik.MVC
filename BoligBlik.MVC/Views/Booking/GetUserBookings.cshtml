@@ -4,13 +4,8 @@
     ViewData["Title"] = "Dine Bookinger";
 }
 
-<h1>GetUserBookings</h1>
+<h1 class="text-primary">Alle Adressens Bookinger</h1>
 
-
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -41,8 +36,7 @@
                     @Html.DisplayFor(modelItem => booking.EndTime)
                 </td>
                 <td>
-                    <a asp-action="Update" asp-controller="Booking" asp-route-id="@booking.Id" class="btn btn-primary btn-sm">Opdater Booking</a>
-                    <a asp-action="Delete" asp-controller="Booking" asp-route-id="@booking.Id" class="btn btn-secondary btn-sm">Delete Booking</a>
+                    <a asp-action="Edit" asp-controller="Booking" asp-route-id="@booking.Id" class="btn btn-primary btn-sm">Opdater Booking</a>
                 </td>
             </tr>
         }

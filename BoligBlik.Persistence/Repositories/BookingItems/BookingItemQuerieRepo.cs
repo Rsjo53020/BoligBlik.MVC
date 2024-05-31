@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.BookingItems.Querie;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,9 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
 {
     public class BookingItemQuerieRepo : IBookingItemQuerieRepo
     {
+        //context
         private readonly BoligBlikContext _db;
+        //logger
         private readonly ILogger<BookingItem> _logger;
 
         public BookingItemQuerieRepo(BoligBlikContext db, ILogger<BookingItem> logger)
@@ -17,19 +19,12 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             _logger = logger;
         }
 
-        public async Task<BookingItem> ReadBookingItemsAsync(string title)
-        {
-            try
-            {
-                return await _db.BookingItems.FirstOrDefaultAsync(x => x.Name == title);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error in ReadBookingItem {ex}");
-                return null;
-            }
-        }
-
+        /// <summary>
+        /// reads a booking item from an id
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<BookingItem> ReadBookingItemsAsync(Guid itemId)
         {
             try
@@ -38,12 +33,16 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error in ReadBookingItem: {ex}");
-                return null;
+                _logger.LogError("Error in ReadBookingItem", ex.Message);
+                throw new Exception("something went wrong when reading all boardMembers");
             }
         }
 
-
+        /// <summary>
+        /// reads all booking items
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<BookingItem>> ReadAllBookingItemsAsync()
         {
             try
@@ -52,8 +51,8 @@ namespace BoligBlik.Persistence.Repositories.BookingItems
             }
             catch (Exception ex)
             {
-                _logger.LogError("Error in ReadAllBookingItems {ex}");
-                return Enumerable.Empty<BookingItem>();
+                _logger.LogError("Error in ReadBookingItem", ex.Message);
+                throw new Exception("something went wrong when reading all boardMembers");
             }
         }
     }

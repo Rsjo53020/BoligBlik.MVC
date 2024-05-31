@@ -3,8 +3,11 @@ using BoligBlik.Entities;
 
 namespace BoligBlik.Application.Interfaces.Infrastructure
 {
+    /// <summary>
+    /// Interface for AddressValidationInf
+    /// </summary>
     public interface IAddressValidationInf
     {
-        Task<bool> ValidateAddressAsync(Address address);
+        bool ValidateAddress(Address address);
     }
 }

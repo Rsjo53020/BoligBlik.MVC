@@ -1,4 +1,4 @@
-﻿using BoligBlik.Application.Interfaces.Repositories;
+﻿using BoligBlik.Application.Interfaces.Repositories.Users.Command;
 using BoligBlik.Domain.Entities;
 using BoligBlik.Persistence.Contexts;
 using Microsoft.Data.SqlClient;
@@ -8,13 +8,20 @@ namespace BoligBlik.Persistence.Repositories.Users
 {
     public class UserCommandRepo : IUserCommandRepo
     {
+        //context
         private readonly BoligBlikContext _dbContext;
+        //logger
         private readonly ILogger<User> _logger;
 
-        public UserCommandRepo(BoligBlikContext dbContext)
+        public UserCommandRepo(BoligBlikContext dbContext, ILogger<User> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
+        /// <summary>
+        /// create a user
+        /// </summary>
+        /// <param name="user"></param>
         public void CreateUser(User user)
         {
             try
@@ -25,14 +32,18 @@ namespace BoligBlik.Persistence.Repositories.Users
             {
                 _logger.LogError("Error in create in user: " + ex.Message);
             }
-
         }
 
+        /// <summary>
+        /// update a user
+        /// </summary>
+        /// <param name="user"></param>
         public void UpdateUser(User user)
         {
             try
             {
-                _dbContext.Update(user).Property(b => b.RowVersion).OriginalValue = user.RowVersion;
+                _dbContext.Update(user)
+                    .Property(b => b.RowVersion).OriginalValue = user.RowVersion;
             }
             catch (SqlException ex)
             {
@@ -40,11 +51,18 @@ namespace BoligBlik.Persistence.Repositories.Users
             }
         }
 
-        public void DeleteUser(Guid id)
+        /// <summary>
+        /// delete a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        public void DeleteUser(Guid id, Byte[] rowVersion)
         {
             try
             {
-                _dbContext.Remove(_dbContext.Users.Where(b => b.Id == id).FirstOrDefault());
+                _dbContext.Remove(_dbContext.Users
+                    .Where(b => b.Id == id).FirstOrDefault())
+                    .Property(b => b.RowVersion).OriginalValue = rowVersion;
             }
             catch (SqlException ex)
             {

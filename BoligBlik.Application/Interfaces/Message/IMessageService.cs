@@ -2,7 +2,9 @@
 
 namespace BoligBlik.Application.Interfaces.Message
 {
-    // Interface for sending a message
+    /// <summary>
+    /// Interface for MessageService
+    /// </summary>
     public interface IMessageService
     {
         void SendMessage(CreateMessageDTO request);

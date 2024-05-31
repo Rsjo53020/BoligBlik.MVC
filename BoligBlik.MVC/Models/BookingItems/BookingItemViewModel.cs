@@ -1,5 +1,4 @@
-﻿using BoligBlik.MVC.DTO.BookingItems;
-using BoligBlik.MVC.Models.Common;
+﻿using BoligBlik.MVC.Models.Common;
 
 namespace BoligBlik.MVC.Models.BookingItems
 {

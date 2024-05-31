@@ -1,12 +1,14 @@
 using BoligBlik.Persistence.Extensions;
 using BoligBlik.Infrastructure.Extensions;
 using BoligBlik.Application.Extensions;
-using BoligBlik.Persistence.Contexts.Interfaces;
 using BoligBlik.Persistence.Contexts;
-
+using BoligBlik.Persistence.Contexts.Interfaces;
 
 namespace BoligBlik.WebAPI
 {
+    /// <summary>
+    /// BoligBlik.API Startup
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)
@@ -19,11 +21,10 @@ namespace BoligBlik.WebAPI
             builder.Services.AddApplicationLayer();
             builder.Services.AddAutoMapper(typeof(StartupBase));
             builder.Services.AddControllers();
-
-            // Learn more about configuing Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //DAWA API Configuration
             builder.Services.AddHttpClient("AddressValidationClient", client =>
             {
                 client.BaseAddress = new Uri(builder.Configuration
@@ -34,11 +35,10 @@ namespace BoligBlik.WebAPI
 
             var app = builder.Build();
 
-
+            //
             using (var scope = app.Services.CreateScope())
             {
                 scope.ServiceProvider.GetRequiredService<BoligBlikContext>().Database.EnsureCreated();
-                
             }
 
             if (app.Environment.IsDevelopment())
@@ -56,15 +56,9 @@ namespace BoligBlik.WebAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
             app.Run();
         }
-
-       
     }
 }

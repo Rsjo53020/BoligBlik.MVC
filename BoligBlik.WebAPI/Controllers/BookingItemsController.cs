@@ -1,4 +1,5 @@
-﻿using BoligBlik.Application.DTO.BookingItems;
+﻿using Azure.Core;
+using BoligBlik.Application.DTO.BookingItems;
 using BoligBlik.Application.Interfaces.BookingItems.Commands;
 using BoligBlik.Application.Interfaces.BookingItems.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -9,53 +10,138 @@ namespace BoligBlik.WebAPI.Controllers
     [ApiController]
     public class BookingItemsController : ControllerBase
     {
+        //Dependencies
         private readonly IBookingItemCommandService _bookItemCommandService;
         private readonly IBookingItemQuerieService _bookItemQuerieService;
+        //logger
+        private readonly ILogger<BookingItemsController> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bookingItemCommandService"></param>
+        /// <param name="bookingItemQuerieService"></param>
         public BookingItemsController(IBookingItemCommandService bookingItemCommandService,
-            IBookingItemQuerieService bookingItemQuerieService)
+            IBookingItemQuerieService bookingItemQuerieService,
+            ILogger<BookingItemsController> logger)
         {
             _bookItemCommandService = bookingItemCommandService;
             _bookItemQuerieService = bookingItemQuerieService;
+            _logger = logger;
         }
 
+        /// <summary>
+        /// creates a booking item
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult PostBookingItem([FromBody] CreateBookingItemDTO request)
         {
-            _bookItemCommandService.CreateBookingItem(request);
-            return Created();
-        }
+            try
+            {
+                if (request != null)
+                {
+                    _bookItemCommandService.CreateBookingItem(request);
+                    return Created();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when creating bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
 
+        }
+        /// <summary>
+        /// reads all booking items
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<BookingItemDTO> GetBookingItem([FromQuery] string name)
+        public async Task<ActionResult> GetAllBookingItems()
         {
-            return await _bookItemQuerieService.ReadBookingItemAsync(name);
+            try
+            {
+                var result = await _bookItemQuerieService.ReadAllBookingItemsAsync();
+                if (result == null) return BadRequest();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading bookingitems", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
-
+        /// <summary>
+        /// reads a booking item
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         [HttpGet("{itemId}")]
-        public async Task<BookingItemDTO> GetBookingItem(Guid itemId)
+        public async Task<ActionResult> GetBookingItemAsync(Guid itemId)
         {
-            return await _bookItemQuerieService.ReadBookingItemAsync(itemId);
+            try
+            {
+                if (itemId == null) return BadRequest();
+                var result = await _bookItemQuerieService.ReadBookingItemAsync(itemId);
+                if (result == null) return NotFound();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when reading bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
+        /// <summary>
+        /// updates a booking item
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         public ActionResult UpdateBookingItem([FromBody] BookingItemDTO request)
         {
-            _bookItemCommandService.UpdateBookingItem(request);
-            return Ok();
+            
+            try
+            {
+                if (request != null)
+                {
+                    _bookItemCommandService.UpdateBookingItem(request);
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when updating bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
+
+        }
+        /// <summary>
+        /// deletes a booking item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}/{rowVersion}")]
+        public ActionResult DeleteBookingItem(Guid id, string rowVersion)
+        {
+            try
+            {
+                if (id == Guid.Empty || rowVersion == null) return BadRequest();
+                _bookItemCommandService.DeleteBookingItem(id, Convert.FromBase64String(rowVersion));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("sommething went wrong when delete bookingitem", ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
-        [HttpDelete]
-        public ActionResult DeleteBookingItem([FromBody] BookingItemDTO request)
-        {
-            _bookItemCommandService.DeleteBookingItem(request);
-            return Ok();
-        }
 
-        [HttpGet("All")]
-        public async Task<IEnumerable<BookingItemDTO>> GetAllBookingItems()
-        {
-            return await _bookItemQuerieService.ReadAllBookingItemsAsync();
-        }
     }
 }

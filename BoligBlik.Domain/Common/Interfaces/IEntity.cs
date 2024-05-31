@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BoligBlik.Domain.Common.Interfaces
 {
+    /// <summary>
+    /// Interface for IEntity
+    /// </summary>
     public interface IEntity
     {
         [Key]

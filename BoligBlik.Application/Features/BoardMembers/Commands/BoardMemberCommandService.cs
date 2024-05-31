@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BoligBlik.Application.DTO.BoardMember;
 using BoligBlik.Application.Interfaces.BoardMembers.Commands;
-using BoligBlik.Application.Interfaces.Repositories;
+using BoligBlik.Application.Interfaces.Repositories.BoardMembers.Command;
+using BoligBlik.Application.Interfaces.Repositories.UnitOfWork;
 using BoligBlik.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using System.Data;
@@ -29,7 +30,7 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
         }
 
         /// <summary>
-        /// Create a boardMember as a role
+        /// Create a boardMember 
         /// </summary>
         /// <param name="request"></param>
         public void CreateBoardMember(CreateBoardMemberDTO request)
@@ -64,7 +65,6 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
                 var boardMember = _mapper.Map<BoardMember>(request);
                 boardMember.User = _mapper.Map<User>(request.User);
 
-
                 _boardMemberRepo.UpdateBoardMember(boardMember);
 
                 _uow.Commit();
@@ -75,17 +75,18 @@ namespace BoligBlik.Application.Features.BoardMembers.Commands
                 _logger.LogError("could not update BoardMember", ex);
             }
         }
+
         /// <summary>
         /// delete BoardMember
         /// </summary>
         /// <param name="request"></param>
-        public void DeleteBoardMember(Guid id)
+        public void DeleteBoardMember(Guid id, Byte[] rowVersion)
         {
             try
             {
                 _uow.BeginTransaction(IsolationLevel.Serializable);
 
-                _boardMemberRepo.DeleteBoardMember(id);
+                _boardMemberRepo.DeleteBoardMember(id, rowVersion);
 
                 _uow.Commit();
             }

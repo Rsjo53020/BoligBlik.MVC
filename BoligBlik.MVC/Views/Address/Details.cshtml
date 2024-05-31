@@ -1,55 +1,109 @@
-﻿@model BoligBlik.MVC.Models.Addresses.AddressViewModel
+﻿@model BoligBlik.MVC.Models.Addresses.AddressEditViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
+<p></p>
+<h1>Adresse</h1>
+<form method="post">
+    <div class="container">
+        <p></p>
+        <h4>Oplysninger:</h4>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Address.Street" class="control-label">Vejnavn</label>
+                    <input asp-for="Address.Street" class="form-control" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.HouseNumber" class="control-label">Hus nr</label>
+                    <input asp-for="Address.HouseNumber" class="form-control" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.Floor" class="control-label">Etage</label>
+                    <input asp-for="Address.Floor" class="form-control" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.DoorNumber" class="control-label">Dør nr.</label>
+                    <input asp-for="Address.DoorNumber" class="form-control" readonly="readonly"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Address.City" class="control-label">By</label>
+                    <input asp-for="Address.City" class="form-control" readonly="readonly"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.PostalCodeNumber" class="control-label">Post nr.</label>
+                    <input asp-for="Address.PostalCodeNumber" class="form-control" readonly="readonly"/>
+                </div>
+                <input type="hidden" asp-for="Address.Id"/>
+                <input type="hidden" asp-for="Address.RowVersion"/>
+            </div>
+        </div>
+        <p></p>
 
-<h1>Details</h1>
+        <h2>Beboer:</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Fornavn</th>
+                <th>Efternavn</th>
+                <th>Telefon nr.</th>
+                <th>E-Mail</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model.Address.Users)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.EmailAddress</td>
+                    <input type="hidden" asp-for="@user.Id"/>
+                    <input type="hidden" asp-for="@user.RowVersion"/>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <p></p>
+        @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
+        {
+            <h2>Brugere uden adresse</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Fornavn</th>
+                    <th>Efternavn</th>
+                    <th>Telefon nr</th>
+                    <th>E-Mail</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model.UsersWithoutAddress)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>@user.EmailAddress</td>
+                        <input type="hidden" asp-for="@user.Id"/>
+                        <input type="hidden" asp-for="@user.RowVersion"/>
+                    </tr>
+                }
+                </tbody>
+            </table>
 
-<div>
-    <h4>AddressViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Street)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HouseNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HouseNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Floor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Floor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DoorNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DoorNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostalCodeNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostalCodeNumber)
-        </dd>
-  
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="GetAllAddress">Tilbage</a>
-</div>
+            <div class="form-group">
+                <label asp-for="selectedUser.EmailAddress" class="control-label">Indsæt mail på den nye beboer</label>
+                <input asp-for="selectedUser.EmailAddress" class="form-control"/>
+                <span asp-validation-for="selectedUser.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Gem" class="btn btn-primary"/>
+            </div>
+        }
+    </div>
+</form>

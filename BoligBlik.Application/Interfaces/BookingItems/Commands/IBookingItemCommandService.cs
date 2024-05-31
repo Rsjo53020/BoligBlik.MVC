@@ -7,10 +7,13 @@ using BoligBlik.Application.DTO.BookingItems;
 
 namespace BoligBlik.Application.Interfaces.BookingItems.Commands
 {
+    /// <summary>
+    /// Interface for BookingItemCommandService
+    /// </summary>
     public interface IBookingItemCommandService
     {
-        public void CreateBookingItem(CreateBookingItemDTO request);
-        public void UpdateBookingItem(BookingItemDTO request);
-        public void DeleteBookingItem(BookingItemDTO request);
+        void CreateBookingItem(CreateBookingItemDTO request);
+        void UpdateBookingItem(BookingItemDTO request);
+        void DeleteBookingItem(Guid id, Byte[] rowVersion);
     }
 }

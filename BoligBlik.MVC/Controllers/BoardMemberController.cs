@@ -1,35 +1,49 @@
 ﻿using AutoMapper;
 using BoligBlik.MVC.DTO.BoardMember;
-using BoligBlik.MVC.DTO.User;
 using BoligBlik.MVC.Models.BoardMembers;
 using BoligBlik.MVC.Models.Users;
 using BoligBlik.MVC.ProxyServices.BoardMembers.Interfaces;
 using BoligBlik.MVC.ProxyServices.Users.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Security.Claims;
+
 
 namespace BoligBlik.MVC.Controllers
 {
+    [Authorize]
     public class BoardMemberController : Controller
     {
-        private readonly IBoardMemberProxy _boardMemberProxy;
+        //SUPPORT
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ILogger<BoardMemberController> _logger;
+
+        //Proxy
         private readonly IUserProxy _userProxy;
-        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy)
+        private readonly IBoardMemberProxy _boardMemberProxy;
+
+        public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager, ILogger<BoardMemberController> logger)
         {
             _boardMemberProxy = boardMemberProxy;
             _mapper = mapper;
             _userProxy = userProxy;
+            _userManager = userManager;
+            _logger = logger;
         }
 
+        /// <summary>
+        /// Create view for BoardMember
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
         /// <summary>
-        /// Creates a BoardMember async 
+        /// Create a BoardMember
         /// </summary>
         /// <param name="createBoardMemberViewModel"></param>
         /// <returns></returns>
@@ -45,7 +59,7 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while creating a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
         }
 
@@ -53,6 +67,7 @@ namespace BoligBlik.MVC.Controllers
         /// Reads all BoardMembers async
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> ReadAll()
         {
@@ -76,7 +91,7 @@ namespace BoligBlik.MVC.Controllers
         }
 
         /// <summary>
-        /// gets the update page
+        /// Update view for a BoardMember
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -90,50 +105,87 @@ namespace BoligBlik.MVC.Controllers
                 if (result != null && result.Id == id)
                 {
                     var boardMember = _mapper.Map<BoardMemberViewModel>(result);
+
                     boardMember.User = _mapper.Map<UserViewModel>(result.User);
 
                     return View(boardMember);
                 }
                 return View();
-                
+
             }
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while reading a boardMember", ex);
-                return View();
+                return NotFound();
             }
         }
 
 
         /// <summary>
-        /// Update a BoardMember async
+        /// Update a BoardMember and add a claim with the boardmember title
         /// </summary>
+        /// <param name="boardMemberViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Update(BoardMemberViewModel BoardMemberViewModel)
+        public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
             try
             {
-                var userDTO = await _userProxy.GetUserAsync(BoardMemberViewModel.User.EmailAddress);
-                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(BoardMemberViewModel);
+                //get user from email
+                var userDTO = await _userProxy.GetUserAsync(boardMemberViewModel.User.EmailAddress);
+                var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
                 boardMemberDTO.User = userDTO;
+                //update in backend
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
+
+                //get identity user
+                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
+                //if formand/ admin 
+                if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
+                {
+                    await SetNewClaim(identityUser, "Admin", boardMemberDTO.Title);
+                }
+                //everybody else
+                else 
+                {
+                    await SetNewClaim(identityUser, "Boardmembers", boardMemberDTO.Title);
+                }
+
                 return RedirectToAction("ReadAll", "BoardMember");
             }
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while updating a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
+            
+
+        }
+
+        private async Task SetNewClaim(IdentityUser identityUser, string claimType, string title)
+        {
+            //find claims for identity user
+            var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
+
+            //remove existing claims
+            foreach (var claim in existingAdminClaims.Where(c => c.Type != claimType || c.Type == claimType))
+            {
+                await _userManager.RemoveClaimAsync(identityUser, claim);
+            }
+
+            //add new claim
+            var claimToUser = new Claim(claimType, title);
+            await _userManager.AddClaimAsync(identityUser, claimToUser);
         }
 
         /// <summary>
-        /// Deletes a BoardMember async
+        /// Delete a BoardMember
         /// </summary>
-        /// <param name="deleteBoardMemberViewModel"></param>
+        /// <param name="id"></param>
+        /// <param name="rowVersion"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
             try
             {
@@ -141,7 +193,7 @@ namespace BoligBlik.MVC.Controllers
 
                 if (boardMember != null && boardMember.Id == id)
                 {
-                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id);
+                    var result = await _boardMemberProxy.DeleteBoardMemberAsync(boardMember.Id, rowVersion);
                 }
                 return RedirectToAction("ReadAll", "BoardMember");
 
@@ -149,9 +201,9 @@ namespace BoligBlik.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("An error occured while deleting a boardMember", ex);
-                return RedirectToAction("ReadAll", "BoardMember");
+                return NotFound();
             }
-            
+
         }
     }
 }

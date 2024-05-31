@@ -1,9 +1,6 @@
-﻿using BoligBlik.MVC.Common.Interfaces;
-using BoligBlik.MVC.Models.Bookings;
+﻿using BoligBlik.MVC.Models.Bookings;
 using BoligBlik.MVC.Models.Common;
 using BoligBlik.MVC.Models.Users;
-using Microsoft.Build.Framework;
-using System.ComponentModel.DataAnnotations;
 
 namespace BoligBlik.MVC.Models.Addresses
 {

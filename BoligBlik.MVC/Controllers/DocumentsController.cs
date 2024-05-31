@@ -1,21 +1,22 @@
 ﻿using BoligBlik.MVC.Features.Documents.Interfaces;
 using BoligBlik.MVC.Models.Documents;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoligBlik.MVC.Controllers
 {
+    [Authorize]
     public class DocumentsController : Controller
     {
         private readonly IDocumentService _documentService;
         private readonly ILogger<DocumentsController> _logger;
-
-        public DocumentsController(IDocumentService documentService)
+        
+        public DocumentsController(IDocumentService documentService, ILogger<DocumentsController> logger)
         {
             _documentService = documentService;
+            _logger = logger;
         }
-
-        public async Task<IActionResult> Upload( DocumentViewModel documentViewModel, IFormFile fileUpload)
+        public async Task<IActionResult> Upload(DocumentViewModel documentViewModel, IFormFile fileUpload)
         {
             if (ModelState.IsValid)
             {
@@ -33,7 +34,7 @@ namespace BoligBlik.MVC.Controllers
             return View(documentViewModel);
         }
 
-    public IActionResult GetAll([FromServices] IDocumentService documentService)
+        public IActionResult GetAll([FromServices] IDocumentService documentService)
         {
             List<DocumentViewModel> documents = new List<DocumentViewModel>();
 
@@ -43,7 +44,7 @@ namespace BoligBlik.MVC.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Documents could not be loaded.");
+              _logger.LogError("Documents could not be loaded.", ex.Message);
             }
 
             return View(documents);

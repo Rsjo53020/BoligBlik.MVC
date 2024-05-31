@@ -13,6 +13,10 @@ namespace BoligBlik.MVC.Features.Documents
             _logger = logger;
         }
 
+        /// <summary>
+        /// Read All Documents from root
+        /// </summary>
+        /// <returns></returns>
         public List<DocumentViewModel> GetAllDocuments()
         {
             var documents = new List<DocumentViewModel>();
@@ -31,11 +35,18 @@ namespace BoligBlik.MVC.Features.Documents
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Documents could not be loaded.");
+                return new List<DocumentViewModel>();
             }
 
             return documents;
         }
 
+        /// <summary>
+        /// Create / Upload a Document with file path
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="fileUpload"></param>
+        /// <returns></returns>
         public async Task UploadDocumentAsync(DocumentViewModel model, IFormFile fileUpload)
         {
             if (fileUpload != null && fileUpload.Length > 0)

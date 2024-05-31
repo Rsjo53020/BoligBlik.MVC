@@ -9,6 +9,9 @@ using BoligBlik.Domain.Entities;
 
 namespace BoligBlik.Domain.Common.Shared
 {
+    /// <summary>
+    /// Entity abstract class, used for Update,Delete 
+    /// </summary>
     public abstract class Entity : IEntity
     {
         [Key]
