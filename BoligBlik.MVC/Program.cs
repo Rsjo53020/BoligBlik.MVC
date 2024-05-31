@@ -41,6 +41,7 @@ namespace BoligBlik.MVC
             }
 
             app.UseStaticFiles();
+
             app.UseRouting();
             app.UseAuthorization();
 

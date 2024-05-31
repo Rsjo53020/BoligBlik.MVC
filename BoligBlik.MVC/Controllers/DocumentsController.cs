@@ -16,8 +16,6 @@ namespace BoligBlik.MVC.Controllers
             _documentService = documentService;
             _logger = logger;
         }
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         public async Task<IActionResult> Upload(DocumentViewModel documentViewModel, IFormFile fileUpload)
         {
             if (ModelState.IsValid)
@@ -35,7 +33,7 @@ namespace BoligBlik.MVC.Controllers
             }
             return View(documentViewModel);
         }
-        [Authorize]
+
         public IActionResult GetAll([FromServices] IDocumentService documentService)
         {
             List<DocumentViewModel> documents = new List<DocumentViewModel>();

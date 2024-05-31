@@ -1,7 +1,6 @@
 using BoligBlik.Persistence.Extensions;
 using BoligBlik.Infrastructure.Extensions;
 using BoligBlik.Application.Extensions;
-using BoligBlik.Persistence.Contexts.Interfaces;
 using BoligBlik.Persistence.Contexts;
 
 namespace BoligBlik.WebAPI

@@ -5,7 +5,6 @@ using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BoligBlik.MVC.Models.BoardMembers;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -55,7 +54,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(string email)
         {
@@ -78,7 +76,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="updateUserViewModel"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UserViewModel updateUserViewModel)
         {
@@ -110,7 +107,6 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="email"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string email, string rowVersion)
         {

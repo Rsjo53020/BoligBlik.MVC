@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+
 namespace BoligBlik.MVC.Controllers
 {
+    [Authorize]
     public class BoardMemberController : Controller
     {
         //SUPPORT
@@ -21,6 +23,7 @@ namespace BoligBlik.MVC.Controllers
         //Proxy
         private readonly IUserProxy _userProxy;
         private readonly IBoardMemberProxy _boardMemberProxy;
+
         public BoardMemberController(IBoardMemberProxy boardMemberProxy, IMapper mapper, IUserProxy userProxy, UserManager<IdentityUser> userManager, ILogger<BoardMemberController> logger)
         {
             _boardMemberProxy = boardMemberProxy;
@@ -34,7 +37,6 @@ namespace BoligBlik.MVC.Controllers
         /// Create view for BoardMember
         /// </summary>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -45,7 +47,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="createBoardMemberViewModel"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateBoardMemberViewModel createBoardMemberViewModel)
         {
@@ -94,7 +95,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -126,7 +126,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="boardMemberViewModel"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
@@ -185,7 +184,6 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {

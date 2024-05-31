@@ -46,8 +46,6 @@ namespace BoligBlik.MVC.Controllers
         /// Create view
         /// </summary>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -59,8 +57,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="createBookingItemViewModel"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         [HttpPost]
         public async Task<ActionResult> Create(CreateBookingItemViewModel createBookingItemViewModel)
         {
@@ -81,8 +77,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
         {
@@ -103,8 +97,6 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="bookingItemViewModel"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         [HttpPost]
         public async Task<ActionResult> Edit(BookingItemViewModel bookingItemViewModel)
         {
@@ -126,8 +118,6 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
-        [Authorize(Policy = "Admin")]
-        [Authorize(Policy = "Boardmembers")]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {
