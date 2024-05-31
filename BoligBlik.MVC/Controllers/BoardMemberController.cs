@@ -29,12 +29,12 @@ namespace BoligBlik.MVC.Controllers
             _userManager = userManager;
             _logger = logger;
         }
-        
+
         /// <summary>
         /// Create view for BoardMember
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -45,6 +45,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="createBoardMemberViewModel"></param>
         /// <returns></returns>
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateBoardMemberViewModel createBoardMemberViewModel)
         {
@@ -93,7 +94,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
@@ -125,7 +126,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="boardMemberViewModel"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Update(BoardMemberViewModel boardMemberViewModel)
         {
@@ -184,7 +185,7 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {

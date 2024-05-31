@@ -55,6 +55,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(string email)
         {
@@ -77,6 +78,7 @@ namespace BoligBlik.MVC.Controllers
         /// </summary>
         /// <param name="updateUserViewModel"></param>
         /// <returns></returns>
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UserViewModel updateUserViewModel)
         {
@@ -100,7 +102,7 @@ namespace BoligBlik.MVC.Controllers
             }
 
         }
-        
+
         /// <summary>
         /// Delete an user in frontend and backend
         /// </summary>
@@ -108,6 +110,7 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="email"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string email, string rowVersion)
         {
