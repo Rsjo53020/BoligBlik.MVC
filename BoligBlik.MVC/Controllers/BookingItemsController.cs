@@ -118,7 +118,6 @@ namespace BoligBlik.MVC.Controllers
         /// <param name="id"></param>
         /// <param name="rowVersion"></param>
         /// <returns></returns>
-
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id, string rowVersion)
         {

@@ -5,7 +5,6 @@ using BoligBlik.MVC.ProxyServices.Users.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BoligBlik.MVC.Models.BoardMembers;
 
 namespace BoligBlik.MVC.Controllers
 {
@@ -100,7 +99,7 @@ namespace BoligBlik.MVC.Controllers
             }
 
         }
-        
+
         /// <summary>
         /// Delete an user in frontend and backend
         /// </summary>

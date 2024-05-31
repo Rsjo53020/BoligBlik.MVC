@@ -88,9 +88,8 @@ namespace BoligBlik.MVC.Extensions
         private static void AddDbContext(this WebApplicationBuilder builder)
         {
             var connectionString = builder.Configuration
-                .GetConnectionString("DefaultConnection")
-                                   ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            //.GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                //.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            .GetConnectionString("RSFrontEndConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             //.GetConnectionString("AlexFrontEndLocalConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 

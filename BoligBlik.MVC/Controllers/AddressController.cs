@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BoligBlik.MVC.Controllers
 {
-    
-    
+
+    [Authorize]
     public class AddressController : Controller
     {
         private readonly IAddressProxy _addressProxy;
@@ -30,7 +30,6 @@ namespace BoligBlik.MVC.Controllers
             _logger = logger;
         }
 
-        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -80,7 +79,6 @@ namespace BoligBlik.MVC.Controllers
                 return View(new List<AddressViewModel>());
             }
         }
-        [Authorize]
         /// <summary>
         /// Read an Address
         /// </summary>
@@ -104,7 +102,6 @@ namespace BoligBlik.MVC.Controllers
             editAddress.UsersWithoutAddress = usersVithoutAddresses;
             return View(editAddress);
         }
-        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Update an Address by aad an user
         /// </summary>
@@ -138,7 +135,6 @@ namespace BoligBlik.MVC.Controllers
 
         }
 
-        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Read an Address
         /// </summary>
@@ -155,7 +151,6 @@ namespace BoligBlik.MVC.Controllers
             return View(response);
         }
 
-        [Authorize(Policy = "Admin")]
         /// <summary>
         /// Update an Address
         /// </summary>

@@ -16,7 +16,6 @@ namespace BoligBlik.MVC.Controllers
             _documentService = documentService;
             _logger = logger;
         }
-
         public async Task<IActionResult> Upload(DocumentViewModel documentViewModel, IFormFile fileUpload)
         {
             if (ModelState.IsValid)
