@@ -131,38 +131,25 @@ namespace BoligBlik.MVC.Controllers
         {
             try
             {
+                //get user from email
                 var userDTO = await _userProxy.GetUserAsync(boardMemberViewModel.User.EmailAddress);
                 var boardMemberDTO = _mapper.Map<BoardMemberDTO>(boardMemberViewModel);
                 boardMemberDTO.User = userDTO;
+                //update in backend
                 var result = await _boardMemberProxy.UpdateBoardMemberAsync(boardMemberDTO);
 
-
+                //get identity user
                 var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
+                //if formand/ admin 
                 if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
                 {
-                    var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
-
-                    foreach (var claim in existingAdminClaims.Where(c => c.Type != "Admin" || c.Type == "Admin"))
-                    {
-                        await _userManager.RemoveClaimAsync(identityUser, claim);
-                    }
-                    var claimToUser = new Claim("Admin", boardMemberDTO.Title);
-                    await _userManager.AddClaimAsync(identityUser, claimToUser);
+                    await SetNewClaim(identityUser, "Admin", boardMemberDTO.Title);
                 }
-
-                if (boardMemberDTO.Title == "Næstformand" || boardMemberDTO.Title == "Kasserer" ||
-                    boardMemberDTO.Title == "Bestyrelse")
+                //everybody else
+                else 
                 {
-                    var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
-                    foreach (var claim in existingAdminClaims.Where(c => c.Type != "Boardmembers" || c.Type == "Boardmembers"))
-                    {
-                        await _userManager.RemoveClaimAsync(identityUser, claim);
-                    }
-                    var claimToUser = new Claim("Boardmembers", boardMemberDTO.Title);
-                    await _userManager.AddClaimAsync(identityUser, claimToUser);
+                    await SetNewClaim(identityUser, "Boardmembers", boardMemberDTO.Title);
                 }
-
-                //var addClaimToBoardMember = AddClaimToBoardMember(boardMemberDTO);
 
                 return RedirectToAction("ReadAll", "BoardMember");
             }
@@ -171,41 +158,24 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while updating a boardMember", ex);
                 return NotFound();
             }
+            
 
         }
 
-        private async Task<bool> AddClaimToBoardMember(BoardMemberDTO boardMemberDTO)
+        private async Task SetNewClaim(IdentityUser identityUser, string claimType, string title)
         {
+            //find claims for identity user
+            var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
 
-            if (boardMemberDTO.Title == "Formand" || boardMemberDTO.Title == "Admin")
+            //remove existing claims
+            foreach (var claim in existingAdminClaims.Where(c => c.Type != claimType || c.Type == claimType))
             {
-
-                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
-                var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
-
-                foreach (var claim in existingAdminClaims.Where(c => c.Type != "Admin"))
-                {
-                    await _userManager.RemoveClaimAsync(identityUser, claim);
-                }
-                var claimToUser = new Claim("Admin", boardMemberDTO.Title);
-                await _userManager.AddClaimAsync(identityUser, claimToUser);
+                await _userManager.RemoveClaimAsync(identityUser, claim);
             }
 
-            if (boardMemberDTO.Title == "Næstformand" || boardMemberDTO.Title == "Kassérer" || boardMemberDTO.Title == "Bestyrelse")
-            {
-                var identityUser = await _userManager.FindByEmailAsync(boardMemberDTO.User.EmailAddress);
-                var existingAdminClaims = await _userManager.GetClaimsAsync(identityUser);
-
-                foreach (var claim in existingAdminClaims.Where(c => c.Type != "Boardmembers"))
-                {
-                    await _userManager.RemoveClaimAsync(identityUser, claim);
-                }
-
-                var claimToUser = new Claim("Boardmembers", boardMemberDTO.Title);
-                await _userManager.AddClaimAsync(identityUser, claimToUser);
-            }
-
-            return true;
+            //add new claim
+            var claimToUser = new Claim(claimType, title);
+            await _userManager.AddClaimAsync(identityUser, claimToUser);
         }
 
         /// <summary>

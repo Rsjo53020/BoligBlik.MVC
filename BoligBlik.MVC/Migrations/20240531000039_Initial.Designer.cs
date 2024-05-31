@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoligBlik.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240526101251_Initial")]
+    [Migration("20240531000039_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
