@@ -23,8 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FB6920
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoligBlik.WebAPI", "BoligBlik.WebAPI\BoligBlik.WebAPI.csproj", "{BD83FBF3-5295-492C-A288-7B5386B3CE05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boligblik.ArchitectureTest", "Boligblik.Test\Boligblik.ArchitectureTest.csproj", "{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,10 +53,6 @@ Global
 		{BD83FBF3-5295-492C-A288-7B5386B3CE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD83FBF3-5295-492C-A288-7B5386B3CE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD83FBF3-5295-492C-A288-7B5386B3CE05}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A716B04-D8D6-40AA-AB7D-E33B3F1654D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
