@@ -38,7 +38,7 @@ namespace BoligBlik.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateAddressDTO request)
         {
-            
+
             try
             {
                 if (request != null)
@@ -65,11 +65,9 @@ namespace BoligBlik.WebAPI.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var address = await _addressQuerieService.ReadAddressAsync(id);
-                    return Ok(address);
-                }
+                var address = await _addressQuerieService.ReadAddressAsync(id);
+                return Ok(address);
+
                 return BadRequest();
             }
             catch (Exception ex)
