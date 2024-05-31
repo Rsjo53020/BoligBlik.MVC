@@ -20,7 +20,7 @@ namespace BoligBlik.WebAPI.Controllers
         //Dependencies
         private readonly IBookingCommandService _bookingCommandService;
         private readonly IBookingQuerieService _bookingQuerieService;
-        private readonly Logger<BookingController> _logger;
+        private readonly ILogger<BookingController> _logger;
 
         /// <summary>
         /// Constructor
@@ -29,7 +29,7 @@ namespace BoligBlik.WebAPI.Controllers
         /// <param name="bookingCommand"></param>
         /// <param name="mapper"></param>
         public BookingController(IBookingQuerieService bookingQuerie,
-            IBookingCommandService bookingCommand, Logger<BookingController> logger)
+            IBookingCommandService bookingCommand, ILogger<BookingController> logger)
         {
             _bookingQuerieService = bookingQuerie;
             _bookingCommandService = bookingCommand;

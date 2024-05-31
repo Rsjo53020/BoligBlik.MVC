@@ -82,6 +82,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.Rollback();
                 _logger.LogError(ex.Message.ToString());
+                throw new DBConcurrencyException();
             }
         }
 
@@ -104,6 +105,7 @@ namespace BoligBlik.Application.Features.Bookings.Commands
             {
                 _unitOfWork.Rollback();
                 _logger.LogError(ex.Message.ToString());
+                throw new DBConcurrencyException();
             }
         }
     }
