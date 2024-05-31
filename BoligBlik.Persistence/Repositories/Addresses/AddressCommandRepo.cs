@@ -95,8 +95,7 @@ namespace BoligBlik.Persistence.Repositories.Addresses
             && x.Floor == address.Floor
             && x.Street == address.Street
             && x.PostalCode.PostalcodeNumber == address.PostalCode.PostalcodeNumber
-            && x.PostalCode.City == address.PostalCode.City
-            && x.Users == address.Users);
+            && x.PostalCode.City == address.PostalCode.City);
             return result;
         }
     }

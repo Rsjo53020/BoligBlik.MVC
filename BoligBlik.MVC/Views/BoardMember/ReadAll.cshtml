@@ -24,6 +24,9 @@
                     @if (item.User is not null)
                     {
                         <h4>@item.User.FirstName @item.User.LastName</h4>
+                        <p>@item.User.EmailAddress</p>
+
+                        <p>@item.User.PhoneNumber</p>
                     }
                     else
                     {
@@ -33,9 +36,7 @@
 
                     <p>@item.Description</p>
 
-                    <p>@item.User.EmailAddress</p>
 
-                    <p>@item.User.PhoneNumber</p>
                     <input type="hidden" asp-for="@item.Id" />
                     <input type="hidden" asp-for="@item.RowVersion" />
                     @if (AuthorizationService.AuthorizeAsync(User, "ManagementPolicy").Result.Succeeded)
