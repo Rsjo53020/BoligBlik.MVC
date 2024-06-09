@@ -49,6 +49,15 @@ namespace BoligBlik.MVC.Controllers
         /// <returns></returns>
         public async Task<IActionResult> NewBookingIndex()
         {
+
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
+            var allAddress = await _addressProxy.GetAllAddressAsync();
+            var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+            if (userAddress is null)
+            {
+               return RedirectToAction("Index", "Home");
+            }
+
             try
             {
                 var bookingItems = await _bookingItemsProxy.GetAllBookingItems();
@@ -60,7 +69,6 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while reading all item", ex.Message);
                 return NotFound();
             }
-
         }
 
         /// <summary>
@@ -74,13 +82,10 @@ namespace BoligBlik.MVC.Controllers
             try
             {
                 var bookingItemViewModel = await _bookingItemsProxy.GetBookingItem(itemId);
-
                 var allAddress = await _addressProxy.GetAllAddressAsync();
-
                 var user = await _userProxy.GetUserAsync(User.Identity.Name);
 
                 var userAddressDTO = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
-
 
                 CreateBookingViewModel bookingViewModel = new CreateBookingViewModel
                 {
@@ -95,7 +100,6 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError("An error occured while starting a booking of an item", ex.Message);
                 return NotFound();
             }
-
         }
 
         /// <summary>
@@ -107,13 +111,10 @@ namespace BoligBlik.MVC.Controllers
         public async Task<IActionResult> CreateBooking(CreateBookingViewModel bookingViewModel)
         {
             var user = await _userProxy.GetUserAsync(User.Identity.Name);
-
             var allAddress = await _addressProxy.GetAllAddressAsync();
-
             var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
 
             var userAdressDTO = _mapper.Map<AddressViewModel>(userAddress);
-
 
             try
             {
@@ -209,14 +210,13 @@ namespace BoligBlik.MVC.Controllers
             try
             {
                 var user = await _userProxy.GetUserAsync(User.Identity.Name);
-
                 var allAddress = await _addressProxy.GetAllAddressAsync();
-
                 var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
                 if (userAddress is null)
                 {
-                    return NotFound();
+                    return RedirectToAction("Index", "Home");
                 }
+
                 var BookingVieModel = _mapper.Map<IEnumerable<BookingViewModel>>(userAddress.Bookings);
 
                 return View(BookingVieModel);
@@ -226,7 +226,6 @@ namespace BoligBlik.MVC.Controllers
                 _logger.LogError( "An error occurred while getting all bookings.", ex.Message);
                 return View("Error");
             }
-
         }
 
         /// <summary>
@@ -236,6 +235,14 @@ namespace BoligBlik.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBookings()
         {
+            var user = await _userProxy.GetUserAsync(User.Identity.Name);
+            var allAddress = await _addressProxy.GetAllAddressAsync();
+            var userAddress = allAddress.FirstOrDefault(u => u.Users.Any(a => a.Id == user.Id));
+            if (userAddress is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             try
             {
                 IEnumerable<BookingDTO> allBookings = await _bookingProxy.GetAllBookingsAsync();
