@@ -27,7 +27,7 @@ namespace BoligBlik.Persistence.Repositories.Bookings
         /// <returns></returns>
         public bool IsBookingOverlapping(Booking booking)
         {
-            return _dbContext.Bookings
+            return _dbContext.Bookings.Where(x => x.Item.Id == booking.Item.Id )
                 .Any(other =>
                     (booking.BookingDates.startTime <= other.BookingDates.startTime && booking.BookingDates.endTime >= other.BookingDates.startTime) ||
                     (booking.BookingDates.startTime >= other.BookingDates.startTime && booking.BookingDates.startTime <= other.BookingDates.endTime) ||

@@ -72,7 +72,7 @@ namespace BoligBlik.WebAPI.Controllers
         }
 
         /// <summary>
-        /// reads all boardmembers
+        /// Reads all boardmembers
         /// </summary>
         /// <returns></returns>
         [HttpGet]

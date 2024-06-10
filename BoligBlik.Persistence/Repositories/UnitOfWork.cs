@@ -19,24 +19,18 @@ namespace BoligBlik.Persistence.Repositories
         {
             _transaction = _db.Database.CurrentTransaction ?? _db.Database.BeginTransaction(isolationLevel);
         }
-
         public void Commit()
         {
             _db.SaveChanges();
             _transaction.Commit();
             _transaction.Dispose();
         }
-
-
-
-
         public void Rollback()
         {
             _transaction.Rollback();
             _transaction.Dispose();
             _db.Dispose();
         }
-
     }
 }
 
