@@ -14,11 +14,11 @@ namespace BoligBlik.InfrastructureTest
     {
         [Theory]
 
-        [InlineData(0, 1, false, false)]     //Add hours, Result, ExpectedResult.
-        [InlineData(1, 2, false, true)]     //Add hours, Result, ExpectedResult.
-        [InlineData(2, 1, false, false)]   //Add hours, Result, ExpectedResult.
-        [InlineData(-1, 1, false, false)] //Add hours, Result, ExpectedResult.
-        [InlineData(1, 2, true, false)]  //Add hours, Result, ExpectedResult.
+        [InlineData(0, 1, false, false)]     //starttime is tome now (should fail)
+        [InlineData(1, 2, false, true)]     //times are okay (should succed)
+        [InlineData(2, 1, false, false)]   //starttime bigger than endtime (should fail)
+        [InlineData(-1, 1, false, false)] //starttime less than time now (should fail)
+        [InlineData(1, 2, true, false)]  //times are okay, but booking is overlapping (should fail)
 
         public void TestBookingOverlapping(int start, int end, bool overlappingResult, bool expectedResult)
         {
